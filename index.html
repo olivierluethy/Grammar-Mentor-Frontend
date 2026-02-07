@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Grammar Mentor | Precision without losing your voice</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        .editor-min-h { min-height: 300px; }
+    </style>
+</head>
+
+<body class="bg-gray-50 text-gray-900 font-sans">
+
+<!-- Navigation -->
+<nav class="flex items-center justify-between px-8 py-4 bg-white shadow-sm">
+    <div class="flex items-center gap-2">
+        <i data-lucide="pen-tool" class="text-indigo-600"></i>
+        <span class="text-xl font-bold tracking-tight">AI Grammar Mentor</span>
+    </div>
+    <div class="hidden md:flex gap-8 text-sm font-medium text-gray-600">
+        <a href="#" class="hover:text-indigo-600">Features</a>
+        <a href="#" class="hover:text-indigo-600">Privacy (Datacloak)</a>
+        <a href="#" class="hover:text-indigo-600">Pricing</a>
+    </div>
+    <button class="bg-indigo-600 text-white px-5 py-2 rounded-full text-sm font-semibold hover:bg-indigo-700 transition">
+        Start for free
+    </button>
+</nav>
+
+<!-- Hero -->
+<header class="max-w-6xl mx-auto px-4 py-14 text-center">
+    <h1 class="text-4xl md:text-5xl font-extrabold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-indigo-600 to-purple-600">
+        Fix grammar. Keep your voice.
+    </h1>
+    <p class="text-gray-600 text-lg mb-10 max-w-2xl mx-auto">
+        The only AI grammar mentor that corrects real mistakes,
+        explains <em>why</em> they happen,
+        and preserves your personal writing style.
+        No clicking. No rewriting. Just clarity.
+    </p>
+
+    <!-- Editor -->
+    <div class="bg-white rounded-2xl shadow-2xl border border-gray-200 overflow-hidden text-left">
+
+        <!-- Toolbar -->
+        <div class="bg-gray-50 border-b border-gray-200 p-4 flex flex-wrap items-center justify-between gap-4">
+            <div class="flex items-center gap-4">
+                <label class="text-sm font-semibold text-gray-700 flex items-center gap-2">
+                    <i data-lucide="sliders-horizontal" class="w-4 h-4"></i>
+                    Correction mode
+                </label>
+                <select class="bg-white border border-gray-300 rounded-md px-3 py-1 text-sm focus:ring-2 focus:ring-indigo-500 outline-none">
+                    <option>Authentic (errors only)</option>
+                    <option>Academic writing</option>
+                    <option>Business professional</option>
+                </select>
+
+                <!-- Language selector (optional fallback) -->
+                <select class="bg-white border border-gray-300 rounded-md px-3 py-1 text-sm text-gray-600">
+                    <option>Auto-detect language</option>
+                    <option>English</option>
+                    <option>German</option>
+                    <option>French</option>
+                </select>
+            </div>
+
+            <div class="flex items-center gap-2 text-xs text-gray-500">
+                Data anonymized via <strong>Datacloak</strong>
+                <i data-lucide="shield-check" class="w-4 h-4 text-green-500"></i>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-3">
+
+            <!-- Input -->
+            <div class="lg:col-span-2 p-6 border-r border-gray-100">
+                <textarea
+                    class="w-full editor-min-h p-4 text-lg border-none focus:ring-0 outline-none resize-none"
+                    placeholder="Paste or write your text here…"></textarea>
+
+                <div class="mt-4 flex justify-between items-center">
+                    <span class="text-sm text-gray-400">0 characters</span>
+                    <button class="bg-indigo-600 text-white px-8 py-3 rounded-xl font-bold flex items-center gap-2 hover:bg-indigo-700 shadow-lg shadow-indigo-200 transition">
+                        <i data-lucide="sparkles" class="w-5 h-5"></i>
+                        Check now
+                    </button>
+                </div>
+            </div>
+
+            <!-- Mentor -->
+            <div class="bg-indigo-50 p-6">
+                <h3 class="font-bold text-indigo-900 mb-4 flex items-center gap-2">
+                    <i data-lucide="graduation-cap"></i>
+                    Mentor feedback
+                </h3>
+
+                <p class="text-sm text-indigo-700 italic">
+                    Add a text to receive clear explanations and writing insights —
+                    not just corrections.
+                </p>
+            </div>
+        </div>
+    </div>
+</header>
+
+<!-- Features -->
+<section class="max-w-6xl mx-auto px-4 py-20 grid md:grid-cols-3 gap-12">
+    <div class="text-center">
+        <div class="w-12 h-12 bg-indigo-100 text-indigo-600 rounded-full flex items-center justify-center mx-auto mb-4">
+            <i data-lucide="zap"></i>
+        </div>
+        <h4 class="font-bold mb-2">Instant corrections</h4>
+        <p class="text-gray-600 text-sm">
+            Apply all fixes at once — no tedious clicking through suggestions.
+        </p>
+    </div>
+
+    <div class="text-center">
+        <div class="w-12 h-12 bg-purple-100 text-purple-600 rounded-full flex items-center justify-center mx-auto mb-4">
+            <i data-lucide="user-check"></i>
+        </div>
+        <h4 class="font-bold mb-2">Your style stays yours</h4>
+        <p class="text-gray-600 text-sm">
+            We only correct what’s actually wrong.
+            Tone, intensity, and personality remain intact.
+        </p>
+    </div>
+
+    <div class="text-center">
+        <div class="w-12 h-12 bg-green-100 text-green-600 rounded-full flex items-center justify-center mx-auto mb-4">
+            <i data-lucide="book-open"></i>
+        </div>
+        <h4 class="font-bold mb-2">Learn while writing</h4>
+        <p class="text-gray-600 text-sm">
+            Every correction comes with a clear explanation — so you improve long-term.
+        </p>
+    </div>
+</section>
+
+<script>
+    lucide.createIcons();
+</script>
+
+</body>
+</html>
