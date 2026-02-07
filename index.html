@@ -1,81 +1,111 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="dark">
 <head>
     <!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-PRESJVG5VB"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-
-  gtag('js', new Date());
-
-  gtag('config', 'G-PRESJVG5VB', {
-    send_page_view: true,
-    debug_mode: true
-  });
-</script>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-PRESJVG5VB"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-PRESJVG5VB', {
+        send_page_view: true,
+        debug_mode: true
+      });
+    </script>
 
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AI Grammar Mentor | Precision without losing your voice</title>
+
+    <!-- Tailwind + dark mode -->
     <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        darkMode: 'class',
+        theme: {
+          extend: {
+            colors: {
+              'bg-primary': '#0f0f17',
+              'bg-secondary': '#171725',
+              'bg-editor': '#111827',
+              'text-primary': '#f1f5f9',
+              'text-secondary': '#cbd5e1',
+              'accent': '#6366f1',
+              'accent-dark': '#818cf8',
+            }
+          }
+        }
+      }
+    </script>
+
+    <!-- Lucide -->
     <script src="https://unpkg.com/lucide@latest"></script>
+
+    <!-- Framer Motion (minimal, nur was wir brauchen) -->
+    <script src="https://cdn.jsdelivr.net/npm/framer-motion@11.11.9/dist/framer-motion.js"></script>
+
     <style>
-        .editor-min-h { min-height: 300px; }
+        .editor-min-h { min-height: 320px; }
+        .glow-indigo {
+            box-shadow: 0 0 25px -5px rgba(99, 102, 241, 0.35);
+        }
+        .glow-purple {
+            box-shadow: 0 0 30px -8px rgba(168, 85, 247, 0.3);
+        }
     </style>
 </head>
 
-<body class="bg-gray-50 text-gray-900 font-sans">
+<body class="bg-bg-primary text-text-primary font-sans antialiased">
 
 <!-- Navigation -->
-<nav class="flex items-center justify-between px-8 py-4 bg-white shadow-sm">
-    <div class="flex items-center gap-2">
-        <i data-lucide="pen-tool" class="text-indigo-600"></i>
-        <span class="text-xl font-bold tracking-tight">AI Grammar Mentor</span>
+<nav class="flex items-center justify-between px-6 md:px-10 py-5 bg-bg-secondary/70 backdrop-blur-md border-b border-slate-800/60 sticky top-0 z-50">
+    <div class="flex items-center gap-2.5">
+        <i data-lucide="pen-tool" class="w-7 h-7 text-accent"></i>
+        <span class="text-xl md:text-2xl font-extrabold tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-accent to-indigo-400">
+            AI Grammar Mentor
+        </span>
     </div>
-    <div class="hidden md:flex gap-8 text-sm font-medium text-gray-600">
-        <a href="#" class="hover:text-indigo-600">Features</a>
-        <a href="#" class="hover:text-indigo-600">Privacy (Datacloak)</a>
-        <a href="#" class="hover:text-indigo-600">Pricing</a>
+
+    <div class="hidden md:flex gap-10 text-sm font-medium text-text-secondary">
+        <a href="#" class="hover:text-accent transition-colors">Features</a>
+        <a href="#" class="hover:text-accent transition-colors">Privacy (Datacloak)</a>
+        <a href="#" class="hover:text-accent transition-colors">Pricing</a>
     </div>
-    <button onclick="gtag('event', 'check_text_clicked', {
-    event_category: 'engagement',
-    event_label: 'hero_editor'
-  })" class="bg-indigo-600 text-white px-5 py-2 rounded-full text-sm font-semibold hover:bg-indigo-700 transition">
+
+    <button onclick="gtag('event', 'check_text_clicked', {event_category: 'engagement', event_label: 'hero_editor'})"
+            class="bg-gradient-to-r from-accent to-indigo-500 text-white px-6 py-2.5 rounded-full text-sm font-semibold hover:brightness-110 hover:scale-105 transition-all duration-300 shadow-lg shadow-indigo-900/30">
         Start for free
     </button>
 </nav>
 
 <!-- Hero -->
-<header class="max-w-6xl mx-auto px-4 py-14 text-center">
-    <h1 class="text-4xl md:text-5xl font-extrabold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-indigo-600 to-purple-600">
-        Fix grammar. Keep your voice.
+<header class="max-w-6xl mx-auto px-5 sm:px-8 py-16 md:py-24 text-center">
+    <h1 class="text-4xl sm:text-5xl md:text-6xl font-extrabold mb-6 leading-tight bg-clip-text text-transparent bg-gradient-to-r from-indigo-400 via-purple-400 to-pink-400">
+        Fix grammar.<br class="sm:hidden"> Keep your voice.
     </h1>
-    <p class="text-gray-600 text-lg mb-10 max-w-2xl mx-auto">
-        The only AI grammar mentor that corrects real mistakes,
-        explains <em>why</em> they happen,
-        and preserves your personal writing style.
-        No clicking. No rewriting. Just clarity.
+
+    <p class="text-text-secondary text-lg md:text-xl mb-12 max-w-3xl mx-auto leading-relaxed">
+        The only AI grammar mentor that corrects real mistakes,<br class="hidden sm:inline">
+        explains <em>why</em> they happen, and preserves your personal writing style.
     </p>
 
     <!-- Editor -->
-    <div class="bg-white rounded-2xl shadow-2xl border border-gray-200 overflow-hidden text-left">
+    <div class="bg-bg-editor rounded-2xl shadow-2xl border border-slate-700/60 overflow-hidden glow-indigo transition-all duration-500">
 
         <!-- Toolbar -->
-        <div class="bg-gray-50 border-b border-gray-200 p-4 flex flex-wrap items-center justify-between gap-4">
-            <div class="flex items-center gap-4">
-                <label class="text-sm font-semibold text-gray-700 flex items-center gap-2">
-                    <i data-lucide="sliders-horizontal" class="w-4 h-4"></i>
+        <div class="bg-bg-secondary/80 border-b border-slate-700/60 p-4 flex flex-wrap items-center justify-between gap-4">
+            <div class="flex items-center gap-5">
+                <label class="text-sm font-semibold text-text-secondary flex items-center gap-2">
+                    <i data-lucide="sliders-horizontal" class="w-4 h-4 text-accent"></i>
                     Correction mode
                 </label>
-                <select class="bg-white border border-gray-300 rounded-md px-3 py-1 text-sm focus:ring-2 focus:ring-indigo-500 outline-none">
+                <select class="bg-bg-secondary border border-slate-600 rounded-lg px-4 py-1.5 text-sm focus:ring-2 focus:ring-accent/50 focus:border-accent/50 outline-none text-text-primary">
                     <option>Authentic (errors only)</option>
                     <option>Academic writing</option>
                     <option>Business professional</option>
                 </select>
 
-                <!-- Language selector (optional fallback) -->
-                <select class="bg-white border border-gray-300 rounded-md px-3 py-1 text-sm text-gray-600">
+                <select class="bg-bg-secondary border border-slate-600 rounded-lg px-4 py-1.5 text-sm text-text-secondary focus:ring-accent/40 outline-none">
                     <option>Auto-detect language</option>
                     <option>English</option>
                     <option>German</option>
@@ -83,41 +113,40 @@
                 </select>
             </div>
 
-            <div class="flex items-center gap-2 text-xs text-gray-500">
-                Data anonymized via <strong>Datacloak</strong>
-                <i data-lucide="shield-check" class="w-4 h-4 text-green-500"></i>
+            <div class="flex items-center gap-2.5 text-xs text-slate-400">
+                Data anonymized via <strong class="text-slate-300">Datacloak</strong>
+                <i data-lucide="shield-check" class="w-4 h-4 text-emerald-500"></i>
             </div>
         </div>
 
         <div class="grid grid-cols-1 lg:grid-cols-3">
 
-            <!-- Input -->
-            <div class="lg:col-span-2 p-6 border-r border-gray-100">
+            <!-- Input Area -->
+            <div class="lg:col-span-2 p-6 md:p-8 border-r border-slate-700/40">
                 <textarea
-                    class="w-full editor-min-h p-4 text-lg border-none focus:ring-0 outline-none resize-none"
-                    placeholder="Paste or write your text here…"></textarea>
+                    class="w-full editor-min-h bg-transparent text-lg text-text-primary placeholder-slate-500 border-none focus:ring-0 outline-none resize-none font-medium leading-relaxed"
+                    placeholder="Paste or write your text here…"
+                ></textarea>
 
-                <div class="mt-4 flex justify-between items-center">
-                    <span class="text-sm text-gray-400">0 characters</span>
-                    <button onclick="gtag('event', 'check_text_clicked', {
-    event_category: 'engagement',
-    event_label: 'hero_editor'
-  })" class="bg-indigo-600 text-white px-8 py-3 rounded-xl font-bold flex items-center gap-2 hover:bg-indigo-700 shadow-lg shadow-indigo-200 transition">
+                <div class="mt-6 flex flex-col sm:flex-row justify-between items-center gap-4">
+                    <span class="text-sm text-slate-500">0 characters</span>
+
+                    <button onclick="gtag('event', 'check_text_clicked', {event_category: 'engagement', event_label: 'hero_editor'})"
+                            class="bg-gradient-to-r from-accent to-indigo-500 text-white px-9 py-3.5 rounded-xl font-bold flex items-center gap-2.5 hover:brightness-110 hover:scale-[1.03] shadow-xl shadow-indigo-950/40 transition-all duration-300">
                         <i data-lucide="sparkles" class="w-5 h-5"></i>
                         Check now
                     </button>
                 </div>
             </div>
 
-            <!-- Mentor -->
-            <div class="bg-indigo-50 p-6">
-                <h3 class="font-bold text-indigo-900 mb-4 flex items-center gap-2">
-                    <i data-lucide="graduation-cap"></i>
+            <!-- Mentor Feedback -->
+            <div class="bg-gradient-to-b from-indigo-950/30 to-transparent p-6 md:p-8 flex flex-col">
+                <h3 class="font-bold text-lg text-indigo-300 mb-5 flex items-center gap-3">
+                    <i data-lucide="graduation-cap" class="w-5 h-5"></i>
                     Mentor feedback
                 </h3>
-
-                <p class="text-sm text-indigo-700 italic">
-                    Add a text to receive clear explanations and writing insights —
+                <p class="text-sm text-indigo-200/80 leading-relaxed">
+                    Add a text to receive clear explanations and writing insights —<br>
                     not just corrections.
                 </p>
             </div>
@@ -126,41 +155,55 @@
 </header>
 
 <!-- Features -->
-<section class="max-w-6xl mx-auto px-4 py-20 grid md:grid-cols-3 gap-12">
-    <div class="text-center">
-        <div class="w-12 h-12 bg-indigo-100 text-indigo-600 rounded-full flex items-center justify-center mx-auto mb-4">
-            <i data-lucide="zap"></i>
+<section class="max-w-6xl mx-auto px-6 py-20 md:py-28 grid md:grid-cols-3 gap-10 md:gap-14">
+
+    <div class="text-center group">
+        <div class="w-16 h-16 bg-indigo-950/40 text-accent rounded-2xl flex items-center justify-center mx-auto mb-6 group-hover:scale-110 group-hover:rotate-3 transition-all duration-400 glow-indigo/50">
+            <i data-lucide="zap" class="w-8 h-8"></i>
         </div>
-        <h4 class="font-bold mb-2">Instant corrections</h4>
-        <p class="text-gray-600 text-sm">
+        <h4 class="font-bold text-xl mb-3">Instant corrections</h4>
+        <p class="text-text-secondary text-sm leading-relaxed">
             Apply all fixes at once — no tedious clicking through suggestions.
         </p>
     </div>
 
-    <div class="text-center">
-        <div class="w-12 h-12 bg-purple-100 text-purple-600 rounded-full flex items-center justify-center mx-auto mb-4">
-            <i data-lucide="user-check"></i>
+    <div class="text-center group">
+        <div class="w-16 h-16 bg-purple-950/40 text-purple-400 rounded-2xl flex items-center justify-center mx-auto mb-6 group-hover:scale-110 group-hover:-rotate-3 transition-all duration-400 glow-purple/50">
+            <i data-lucide="user-check" class="w-8 h-8"></i>
         </div>
-        <h4 class="font-bold mb-2">Your style stays yours</h4>
-        <p class="text-gray-600 text-sm">
-            We only correct what’s actually wrong.
-            Tone, intensity, and personality remain intact.
+        <h4 class="font-bold text-xl mb-3">Your style stays yours</h4>
+        <p class="text-text-secondary text-sm leading-relaxed">
+            We only correct what’s actually wrong.<br>Tone, intensity, personality — untouched.
         </p>
     </div>
 
-    <div class="text-center">
-        <div class="w-12 h-12 bg-green-100 text-green-600 rounded-full flex items-center justify-center mx-auto mb-4">
-            <i data-lucide="book-open"></i>
+    <div class="text-center group">
+        <div class="w-16 h-16 bg-emerald-950/40 text-emerald-400 rounded-2xl flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-all duration-400">
+            <i data-lucide="book-open" class="w-8 h-8"></i>
         </div>
-        <h4 class="font-bold mb-2">Learn while writing</h4>
-        <p class="text-gray-600 text-sm">
-            Every correction comes with a clear explanation — so you improve long-term.
+        <h4 class="font-bold text-xl mb-3">Learn while writing</h4>
+        <p class="text-text-secondary text-sm leading-relaxed">
+            Every correction comes with a clear explanation — long-term improvement.
         </p>
     </div>
 </section>
 
 <script>
     lucide.createIcons();
+
+    // Kleiner Framer-Motion Effekt nur für die Features-Icons (optional)
+    // Kann komplett entfernt werden, wenn du keine externen Libs willst
+    document.addEventListener('DOMContentLoaded', () => {
+        const icons = document.querySelectorAll('.group');
+        icons.forEach(el => {
+            el.addEventListener('mouseenter', () => {
+                el.style.transform = 'translateY(-6px)';
+            });
+            el.addEventListener('mouseleave', () => {
+                el.style.transform = 'translateY(0)';
+            });
+        });
+    });
 </script>
 
 </body>
