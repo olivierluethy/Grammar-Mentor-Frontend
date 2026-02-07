@@ -107,9 +107,12 @@
 
                 <select class="bg-bg-secondary border border-slate-600 rounded-lg px-4 py-1.5 text-sm text-text-secondary focus:ring-accent/40 outline-none">
                     <option>Auto-detect language</option>
+                    <option>Dutch</option>
                     <option>English</option>
                     <option>German</option>
                     <option>French</option>
+                    <option>Portuguese</option>
+                    <option>Spanish</option>
                 </select>
             </div>
 
@@ -122,22 +125,51 @@
         <div class="grid grid-cols-1 lg:grid-cols-3">
 
             <!-- Input Area -->
-            <div class="lg:col-span-2 p-6 md:p-8 border-r border-slate-700/40">
-                <textarea
-                    class="w-full editor-min-h bg-transparent text-lg text-text-primary placeholder-slate-500 border-none focus:ring-0 outline-none resize-none font-medium leading-relaxed"
-                    placeholder="Paste or write your text here…"
-                ></textarea>
+<div class="lg:col-span-2 p-6 md:p-8 border-r border-slate-700/40 flex flex-col">
+    <textarea
+        class="w-full editor-min-h bg-transparent text-lg text-text-primary placeholder-slate-500 border-none focus:ring-0 outline-none resize-none font-medium leading-relaxed caret-accent selection:bg-indigo-950/60"
+        placeholder="Paste or write your text here…"
+    ></textarea>
 
-                <div class="mt-6 flex flex-col sm:flex-row justify-between items-center gap-4">
-                    <span class="text-sm text-slate-500">0 characters</span>
+    <div class="mt-6 flex flex-wrap items-center justify-between gap-3 sm:gap-4">
+        <!-- Character count -->
+        <span class="text-sm text-slate-500 font-medium order-1">
+            0 characters
+        </span>
 
-                    <button onclick="gtag('event', 'check_text_clicked', {event_category: 'engagement', event_label: 'hero_editor'})"
-                            class="bg-gradient-to-r from-accent to-indigo-500 text-white px-9 py-3.5 rounded-xl font-bold flex items-center gap-2.5 hover:brightness-110 hover:scale-[1.03] shadow-xl shadow-indigo-950/40 transition-all duration-300">
-                        <i data-lucide="sparkles" class="w-5 h-5"></i>
-                        Check now
-                    </button>
-                </div>
-            </div>
+        <!-- Action buttons group -->
+        <div class="flex items-center gap-2.5 sm:gap-3 order-3 sm:order-2 w-full sm:w-auto">
+            <!-- Paste button -->
+            <button 
+                type="button"
+                title="Paste from clipboard"
+                class="group flex items-center gap-2 px-4 py-2.5 bg-bg-secondary/70 hover:bg-bg-secondary border border-slate-600/70 hover:border-slate-500 rounded-xl text-text-secondary hover:text-text-primary font-medium text-sm transition-all duration-200 shadow-sm hover:shadow-md active:scale-[0.97]"
+            >
+                <i data-lucide="clipboard-paste" class="w-4.5 h-4.5 text-accent group-hover:scale-110 transition-transform"></i>
+                Paste
+            </button>
+
+            <!-- Copy button -->
+            <button 
+                type="button"
+                title="Copy to clipboard"
+                class="group flex items-center gap-2 px-4 py-2.5 bg-bg-secondary/70 hover:bg-bg-secondary border border-slate-600/70 hover:border-slate-500 rounded-xl text-text-secondary hover:text-text-primary font-medium text-sm transition-all duration-200 shadow-sm hover:shadow-md active:scale-[0.97]"
+            >
+                <i data-lucide="copy" class="w-4.5 h-4.5 text-accent group-hover:scale-110 transition-transform"></i>
+                Copy
+            </button>
+        </div>
+
+        <!-- Check now button (prominent) -->
+        <button 
+            onclick="gtag('event', 'check_text_clicked', {event_category: 'engagement', event_label: 'hero_editor'})"
+            class="group flex-1 sm:flex-none order-2 sm:order-3 min-w-[140px] bg-gradient-to-r from-accent to-indigo-500 hover:from-indigo-500 hover:to-indigo-600 text-white px-7 sm:px-9 py-3 rounded-xl font-semibold flex items-center justify-center gap-2.5 shadow-xl shadow-indigo-950/40 hover:shadow-indigo-900/50 hover:brightness-110 hover:scale-[1.02] active:scale-[0.98] transition-all duration-300"
+        >
+            <i data-lucide="sparkles" class="w-5 h-5 group-hover:rotate-12 transition-transform duration-300"></i>
+            Check now
+        </button>
+    </div>
+</div>
 
             <!-- Mentor Feedback -->
             <div class="bg-gradient-to-b from-indigo-950/30 to-transparent p-6 md:p-8 flex flex-col">
