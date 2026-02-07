@@ -1,384 +1,674 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en" class="dark">
-<head>
-    <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-PRESJVG5VB"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-      gtag('config', 'G-PRESJVG5VB', {
-        send_page_view: true,
-        debug_mode: true
-      });
-    </script>
-
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI Grammar Mentor | Precision without losing your voice</title>
-
-    <!-- Tailwind + dark mode -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-      tailwind.config = {
-        darkMode: 'class',
-        theme: {
-          extend: {
-            colors: {
-              'bg-primary': '#0f0f17',
-              'bg-secondary': '#171725',
-              'bg-editor': '#111827',
-              'text-primary': '#f1f5f9',
-              'text-secondary': '#cbd5e1',
-              'accent': '#6366f1',
-              'accent-dark': '#818cf8',
+    <head>
+        <!-- Google tag (gtag.js) -->
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-PRESJVG5VB"></script>
+        <script>
+            window.dataLayer = window.dataLayer || [];
+            function gtag() {
+                dataLayer.push(arguments);
             }
-          }
-        }
-      }
-    </script>
+            gtag("js", new Date());
+            gtag("config", "G-PRESJVG5VB", {
+                send_page_view: true,
+                debug_mode: true,
+            });
+        </script>
 
-    <!-- Lucide -->
-    <script src="https://unpkg.com/lucide@latest"></script>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <!-- Framer Motion (minimal, nur was wir brauchen) -->
-    <script src="https://cdn.jsdelivr.net/npm/framer-motion@11.11.9/dist/framer-motion.js"></script>
+        <!-- Primary Meta Tags -->
+        <title>AI Grammar Mentor | Precision without losing your voice</title>
+        <meta name="title" content="AI Grammar Mentor | Precision without losing your voice" />
+        <meta
+            name="description"
+            content="The only AI grammar mentor that corrects mistakes, provides explanations, and preserves your personal writing style. Try it now for free."
+        />
+        <meta
+            name="keywords"
+            content="Grammar check, AI writing assistant, grammar checker, German correction, English grammar, preserve writing style"
+        />
+        <meta name="author" content="Grammar Mentor" />
+        <meta name="robots" content="index, follow" />
 
-    <style>
-        .editor-min-h { min-height: 320px; }
-        .glow-indigo {
-            box-shadow: 0 0 25px -5px rgba(99, 102, 241, 0.35);
-        }
-        .glow-purple {
-            box-shadow: 0 0 30px -8px rgba(168, 85, 247, 0.3);
-        }
-    </style>
-</head>
+        <!-- Open Graph / Facebook -->
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://grammar-mentor.com" />
+        <meta property="og:title" content="AI Grammar Mentor | Precision meets personality" />
+        <meta
+            property="og:description"
+            content="Fix grammar. Keep your voice. The smart way to correct texts and learn at the same time."
+        />
+        <meta property="og:image" content="https://grammar-mentor.com/og-image.png" />
+        <!-- Empfohlen: 1200x630px -->
 
-<body class="bg-bg-primary text-text-primary font-sans antialiased">
+        <!-- Twitter -->
+        <meta property="twitter:card" content="summary_large_image" />
+        <meta property="twitter:url" content="https://grammar-mentor.com" />
+        <meta property="twitter:title" content="AI Grammar Mentor" />
+        <meta property="twitter:description" content="Correct mistakes, understand why, and keep your style." />
+        <meta property="twitter:image" content="https://grammar-mentor.com/og-image.png" />
 
-<!-- Navigation -->
-<nav class="flex items-center justify-between px-6 md:px-10 py-5 bg-bg-secondary/70 backdrop-blur-md border-b border-slate-800/60 sticky top-0 z-50">
-    <div class="flex items-center gap-2.5">
-        <i data-lucide="pen-tool" class="w-7 h-7 text-accent"></i>
-        <span class="text-xl md:text-2xl font-extrabold tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-accent to-indigo-400">
-            AI Grammar Mentor
-        </span>
-    </div>
+        <!-- Favicon -->
+        <link rel="icon" type="image/png" href="assets/logo.png" />
 
-    <div class="hidden md:flex gap-10 text-sm font-medium text-text-secondary">
-        <!-- Tracking event for Features link -->
-        <a href="#" onclick="gtag('event', 'nav_link_click', { link: 'features', page: 'home', action: 'navigate_to_features' })" class="hover:text-accent transition-colors">Features</a>
-        <!-- Tracking event for Privacy link -->
-        <a href="#" onclick="gtag('event', 'nav_link_click', { link: 'privacy', page: 'home', action: 'navigate_to_privacy' })" class="hover:text-accent transition-colors">Privacy (Datacloak)</a>
-        <!-- Tracking event for Pricing link -->
-        <a href="#" onclick="gtag('event', 'nav_link_click', { link: 'pricing', page: 'home', action: 'navigate_to_pricing' })" class="hover:text-accent transition-colors">Pricing</a>
-    </div>
+        <!-- Tailwind + dark mode -->
+        <script src="https://cdn.tailwindcss.com"></script>
+        <script>
+            tailwind.config = {
+                darkMode: "class",
+                theme: {
+                    extend: {
+                        colors: {
+                            "bg-primary": "#0f0f17",
+                            "bg-secondary": "#171725",
+                            "bg-editor": "#111827",
+                            "text-primary": "#f1f5f9",
+                            "text-secondary": "#cbd5e1",
+                            accent: "#6366f1",
+                            "accent-dark": "#818cf8",
+                        },
+                    },
+                },
+            };
+        </script>
 
-<!-- Users Online Indicator – Live Effekt -->
-<div class="hidden md:flex items-center gap-2.5 text-sm text-slate-400">
-    <span class="relative flex h-2.5 w-2.5">
-        <!-- Ping Ring -->
-        <span class="absolute inline-flex h-full w-full rounded-full bg-red-500 animate-ping"></span>
-        <!-- Pulsierende Aura -->
-        <span class="absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75 animate-pulse"></span>
-        <!-- Fester Kern -->
-        <span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-red-600"></span>
-    </span>
-    <span id="online-count">147</span> Users online
-</div>
+        <!-- Lucide -->
+        <script src="https://unpkg.com/lucide@latest"></script>
 
+        <!-- Framer Motion -->
+        <script src="https://cdn.jsdelivr.net/npm/framer-motion@11.11.9/dist/framer-motion.js"></script>
 
+        <style>
+            .editor-min-h {
+                min-height: 320px;
+            }
+            .glow-indigo {
+                box-shadow: 0 0 25px -5px rgba(99, 102, 241, 0.35);
+            }
+            .glow-purple {
+                box-shadow: 0 0 30px -8px rgba(168, 85, 247, 0.3);
+            }
+        </style>
+    </head>
 
-    <!-- Tracking event for Want more button -->
-    <button onclick="gtag('event', 'button_click', { button: 'want_more', page: 'home', action: 'want_more_clicked' })"
-            class="bg-gradient-to-r from-accent to-indigo-500 text-white px-6 py-2.5 rounded-full text-sm font-semibold hover:brightness-110 hover:scale-105 transition-all duration-300 shadow-lg shadow-indigo-900/30">
-        Want more?
-    </button>
-</nav>
-
-<!-- Hero -->
-<header class="max-w-6xl mx-auto px-5 sm:px-8 py-16 md:py-24 text-center">
-    <h1 class="text-4xl sm:text-5xl md:text-6xl font-extrabold mb-6 leading-tight bg-clip-text text-transparent bg-gradient-to-r from-indigo-400 via-purple-400 to-pink-400">
-        Fix grammar.<br class="sm:hidden"> Keep your voice.
-    </h1>
-
-    <p class="text-text-secondary text-lg md:text-xl mb-12 max-w-3xl mx-auto leading-relaxed">
-        The only AI grammar mentor that corrects real mistakes,<br class="hidden sm:inline">
-        explains <em>why</em> they happen, and preserves your personal writing style.
-    </p>
-
-    <!-- Editor -->
-    <div class="bg-bg-editor rounded-2xl shadow-2xl border border-slate-700/60 overflow-hidden glow-indigo transition-all duration-500">
-
-        <!-- Toolbar -->
-        <div class="bg-bg-secondary/80 border-b border-slate-700/60 p-4 flex flex-wrap items-center justify-between gap-4">
-            <div class="flex items-center gap-5">
-                <label class="text-sm font-semibold text-text-secondary flex items-center gap-2">
-                    <i data-lucide="sliders-horizontal" class="w-4 h-4 text-accent"></i>
-                    Correction mode
-                </label>
-                <!-- Tracking event for correction mode select change -->
-                <select onchange="gtag('event', 'select_change', { select: 'correction_mode', page: 'home', action: 'mode_selected', value: this.value })" class="bg-bg-secondary border border-slate-600 rounded-lg px-4 py-1.5 text-sm focus:ring-2 focus:ring-accent/50 focus:border-accent/50 outline-none text-text-primary">
-                    <option>Authentic (errors only)</option>
-                    <option>Academic writing</option>
-                    <option>Business professional</option>
-                </select>
-
-                <!-- Tracking event for language select change -->
-                <select onchange="gtag('event', 'select_change', { select: 'language', page: 'home', action: 'language_selected', value: this.value })" class="bg-bg-secondary border border-slate-600 rounded-lg px-4 py-1.5 text-sm text-text-secondary focus:ring-accent/40 outline-none">
-                    <option>Auto-detect language</option>
-                    <option>Dutch</option>
-                    <option>English</option>
-                    <option>German</option>
-                    <option>French</option>
-                    <option>Portuguese</option>
-                    <option>Spanish</option>
-                </select>
-            </div>
-
-            <div class="flex items-center gap-2.5 text-xs text-slate-400">
-                Data anonymized via <strong class="text-slate-300">Datacloak</strong>
-                <i data-lucide="shield-check" class="w-4 h-4 text-emerald-500"></i>
-            </div>
-        </div>
-
-        <div class="grid grid-cols-1 lg:grid-cols-3">
-
-            <!-- Input Area -->
-<div class="lg:col-span-2 p-6 md:p-8 border-r border-slate-700/40 flex flex-col">
-    <textarea id="input-textarea"
-        class="w-full editor-min-h bg-transparent text-lg text-text-primary placeholder-slate-500 border-none focus:ring-0 outline-none resize-none font-medium leading-relaxed caret-accent selection:bg-indigo-950/60"
-        placeholder="Paste or write your text here…"
-    ></textarea>
-
-    <div class="mt-6 flex flex-wrap items-center justify-between gap-3 sm:gap-4">
-        <!-- Character count -->
-        <span id="char-count" class="text-sm text-slate-500 font-medium order-1">
-            0 characters
-        </span>
-
-        <!-- Action buttons group -->
-        <div class="flex items-center gap-2.5 sm:gap-3 order-3 sm:order-2 w-full sm:w-auto">
-            <!-- Paste button with tracking -->
-            <button id="paste-button"
-                type="button"
-                title="Paste from clipboard"
-                onclick="gtag('event', 'button_click', { button: 'paste', page: 'home', action: 'paste_text' })"
-                class="group flex items-center gap-2 px-4 py-2.5 bg-bg-secondary/70 hover:bg-bg-secondary border border-slate-600/70 hover:border-slate-500 rounded-xl text-text-secondary hover:text-text-primary font-medium text-sm transition-all duration-200 shadow-sm hover:shadow-md active:scale-[0.97]"
-            >
-                <i data-lucide="clipboard-paste" class="w-4.5 h-4.5 text-accent group-hover:scale-110 transition-transform"></i>
-                Paste
-            </button>
-
-            <!-- Copy button with tracking -->
-            <button id="copy-button"
-                type="button"
-                title="Copy to clipboard"
-                onclick="gtag('event', 'button_click', { button: 'copy', page: 'home', action: 'copy_text' })"
-                class="group flex items-center gap-2 px-4 py-2.5 bg-bg-secondary/70 hover:bg-bg-secondary border border-slate-600/70 hover:border-slate-500 rounded-xl text-text-secondary hover:text-text-primary font-medium text-sm transition-all duration-200 shadow-sm hover:shadow-md active:scale-[0.97]"
-            >
-                <i data-lucide="copy" class="w-4.5 h-4.5 text-accent group-hover:scale-110 transition-transform"></i>
-                Copy
-            </button>
-        </div>
-
-        <!-- Check now button (prominent) with tracking -->
-        <button id="check-now-button"
-            class="group flex-1 sm:flex-none order-2 sm:order-3 min-w-[140px] bg-gradient-to-r from-accent to-indigo-500 hover:from-indigo-500 hover:to-indigo-600 text-white px-7 sm:px-9 py-3 rounded-xl font-semibold flex items-center justify-center gap-2.5 shadow-xl shadow-indigo-950/40 hover:shadow-indigo-900/50 hover:brightness-110 hover:scale-[1.02] active:scale-[0.98] transition-all duration-300"
+    <body class="bg-bg-primary text-text-primary font-sans antialiased">
+        <!-- Navigation -->
+        <nav
+            class="flex items-center justify-between px-6 md:px-10 py-4 bg-bg-secondary/70 backdrop-blur-md border-b border-slate-800/60 sticky top-0 z-50"
         >
-            <i data-lucide="sparkles" class="w-5 h-5 group-hover:rotate-12 transition-transform duration-300"></i>
-            Check now
-        </button>
-    </div>
+            <!-- Logo -->
+            <div class="flex items-center gap-3">
+                <img src="assets/logo.png" alt="Grammar Mentor Logo" class="w-8 h-8 md:w-9 md:h-9" />
 
-    <!-- High demand notification (hidden by default) -->
-    <div id="high-demand-notification" class="hidden mt-6 p-6 bg-orange-900/20 border border-orange-700/40 rounded-xl">
-        <p class="text-orange-300 text-base font-medium mb-4">
-            Due to high demand, our service is temporarily under heavy load. We appreciate your patience and are working to restore full availability shortly.
-        </p>
-        <div class="flex flex-col sm:flex-row gap-3">
-            <input id="email-input" type="email" placeholder="Enter your email to be notified" class="w-full bg-bg-secondary border border-slate-600 rounded-lg px-4 py-2.5 text-sm text-text-primary focus:ring-2 focus:ring-orange-500/50 focus:border-orange-500/50 outline-none">
-            <button id="notify-button" class="bg-orange-500 hover:bg-orange-600 text-white px-6 py-2.5 rounded-lg font-semibold transition-all duration-200">
-                Notify me
+                <span class="text-lg md:text-xl font-semibold tracking-tight text-slate-100">
+                    <span
+                        class="font-semibold bg-clip-text text-transparent bg-gradient-to-r from-indigo-400 via-violet-400 to-pink-400"
+                    >
+                        Grammar
+                    </span>
+                    <span class="font-medium text-slate-300 ml-1"> Mentor </span>
+                </span>
+            </div>
+
+            <!-- Navigation Links -->
+            <div class="hidden md:flex gap-10 text-sm font-medium text-text-secondary">
+                <a
+                    href="#"
+                    onclick="gtag('event', 'nav_link_click', { link: 'features', page: 'home', action: 'navigate_to_features' })"
+                    class="hover:text-accent transition-colors"
+                >
+                    Features
+                </a>
+                <a
+                    href="#"
+                    onclick="gtag('event', 'nav_link_click', { link: 'privacy', page: 'home', action: 'navigate_to_privacy' })"
+                    class="hover:text-accent transition-colors"
+                >
+                    Privacy
+                </a>
+                <a
+                    href="#"
+                    onclick="gtag('event', 'nav_link_click', { link: 'pricing', page: 'home', action: 'navigate_to_pricing' })"
+                    class="hover:text-accent transition-colors"
+                >
+                    Pricing
+                </a>
+            </div>
+
+            <!-- Users Online Indicator -->
+            <div class="hidden md:flex items-center gap-2.5 text-sm text-slate-400">
+                <span class="relative flex h-2.5 w-2.5">
+                    <span class="absolute inline-flex h-full w-full rounded-full bg-red-500/70 animate-ping"></span>
+                    <span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-red-500"></span>
+                </span>
+                <span id="online-count">147</span> users online
+            </div>
+
+            <!-- CTA -->
+            <button
+                onclick="gtag('event', 'button_click', { button: 'want_more', page: 'home', action: 'want_more_clicked' })"
+                class="bg-gradient-to-r from-accent to-indigo-500 text-white px-5 py-2.5 rounded-full text-sm font-semibold hover:brightness-110 transition-all shadow-md shadow-indigo-900/30"
+            >
+                Want more?
             </button>
-        </div>
-        <p id="thanks-message" class="hidden mt-3 text-emerald-300 text-sm">Thank you! We'll notify you when the service is available.</p>
-    </div>
-</div>
+        </nav>
 
-            <!-- Mentor Feedback -->
-            <div class="bg-gradient-to-b from-indigo-950/30 to-transparent p-6 md:p-8 flex flex-col">
-                <h3 class="font-bold text-lg text-indigo-300 mb-5 flex items-center gap-3">
-                    <i data-lucide="graduation-cap" class="w-5 h-5"></i>
-                    Mentor feedback
-                </h3>
-                <p class="text-sm text-indigo-200/80 leading-relaxed">
-                    Add a text to receive clear explanations and writing insights —<br>
-                    not just corrections.
+        <!-- Hero -->
+        <header class="max-w-6xl mx-auto px-5 sm:px-8 py-16 md:py-24 text-center">
+            <h1
+                class="text-4xl sm:text-5xl md:text-6xl font-extrabold mb-6 leading-tight bg-clip-text text-transparent bg-gradient-to-r from-indigo-400 via-purple-400 to-pink-400"
+            >
+                Fix grammar.<br class="sm:hidden" />
+                Keep your voice.
+            </h1>
+
+            <p class="text-text-secondary text-lg md:text-xl mb-12 max-w-3xl mx-auto leading-relaxed">
+                The only AI grammar mentor that corrects real mistakes,<br class="hidden sm:inline" />
+                explains <em>why</em> they happen, and preserves your personal writing style.
+            </p>
+
+            <!-- Editor -->
+            <div
+                class="bg-bg-editor rounded-2xl shadow-2xl border border-slate-700/60 overflow-hidden glow-indigo transition-all duration-500"
+            >
+                <!-- Toolbar -->
+                <div
+                    class="bg-bg-secondary/80 border-b border-slate-700/60 p-4 flex flex-wrap items-center justify-between gap-4"
+                >
+                    <div class="flex items-center gap-5">
+                        <label class="text-sm font-semibold text-text-secondary flex items-center gap-2">
+                            <i data-lucide="sliders-horizontal" class="w-4 h-4 text-accent"></i>
+                            Correction mode
+                        </label>
+                        <!-- Tracking event for correction mode select change -->
+                        <select
+                            onchange="gtag('event', 'select_change', { select: 'correction_mode', page: 'home', action: 'mode_selected', value: this.value })"
+                            class="bg-bg-secondary border border-slate-600 rounded-lg px-4 py-1.5 text-sm focus:ring-2 focus:ring-accent/50 focus:border-accent/50 outline-none text-text-primary"
+                        >
+                            <option>Authentic (errors only)</option>
+                            <option>Academic writing</option>
+                            <option>Business professional</option>
+                        </select>
+
+                        <!-- Tracking event for language select change -->
+                        <select
+                            onchange="gtag('event', 'select_change', { select: 'language', page: 'home', action: 'language_selected', value: this.value })"
+                            class="bg-bg-secondary border border-slate-600 rounded-lg px-4 py-1.5 text-sm text-text-secondary focus:ring-accent/40 outline-none"
+                        >
+                            <option>Auto-detect language</option>
+                            <option>Dutch</option>
+                            <option>English</option>
+                            <option>German</option>
+                            <option>French</option>
+                            <option>Portuguese</option>
+                            <option>Spanish</option>
+                        </select>
+                    </div>
+
+                    <div class="flex items-center gap-2.5 text-xs text-slate-400">
+                        Data anonymized via <strong class="text-slate-300">Datacloak</strong>
+                        <i data-lucide="shield-check" class="w-4 h-4 text-emerald-500"></i>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-3">
+                    <!-- Input Area -->
+                    <div class="lg:col-span-2 p-6 md:p-8 border-r border-slate-700/40 flex flex-col">
+                        <textarea
+                            id="input-textarea"
+                            class="w-full editor-min-h bg-transparent text-lg text-text-primary placeholder-slate-500 border-none focus:ring-0 outline-none resize-none font-medium leading-relaxed caret-accent selection:bg-indigo-950/60"
+                            placeholder="Paste or write your text here…"
+                        ></textarea>
+
+                        <div class="mt-6 flex flex-wrap items-center justify-between gap-3 sm:gap-4">
+                            <!-- Words count -->
+                            <span id="char-count" class="text-sm text-slate-500 font-medium order-1"> 0 words </span>
+
+                            <!-- Character count -->
+                            <span id="char-count" class="text-sm text-slate-500 font-medium order-1">
+                                0 characters
+                            </span>
+
+                            <!-- Action buttons group -->
+                            <div class="flex items-center gap-2.5 sm:gap-3 order-3 sm:order-2 w-full sm:w-auto">
+                                <!-- Paste button with tracking -->
+                                <button
+                                    id="paste-button"
+                                    type="button"
+                                    title="Paste from clipboard"
+                                    onclick="gtag('event', 'button_click', { button: 'paste', page: 'home', action: 'paste_text' })"
+                                    class="group flex items-center gap-2 px-4 py-2.5 bg-bg-secondary/70 hover:bg-bg-secondary border border-slate-600/70 hover:border-slate-500 rounded-xl text-text-secondary hover:text-text-primary font-medium text-sm transition-all duration-200 shadow-sm hover:shadow-md active:scale-[0.97]"
+                                >
+                                    <i
+                                        data-lucide="clipboard-paste"
+                                        class="w-4.5 h-4.5 text-accent group-hover:scale-110 transition-transform"
+                                    ></i>
+                                    Paste
+                                </button>
+
+                                <!-- Copy button with tracking -->
+                                <button
+                                    id="copy-button"
+                                    type="button"
+                                    title="Copy to clipboard"
+                                    onclick="gtag('event', 'button_click', { button: 'copy', page: 'home', action: 'copy_text' })"
+                                    class="group flex items-center gap-2 px-4 py-2.5 bg-bg-secondary/70 hover:bg-bg-secondary border border-slate-600/70 hover:border-slate-500 rounded-xl text-text-secondary hover:text-text-primary font-medium text-sm transition-all duration-200 shadow-sm hover:shadow-md active:scale-[0.97]"
+                                >
+                                    <i
+                                        data-lucide="copy"
+                                        class="w-4.5 h-4.5 text-accent group-hover:scale-110 transition-transform"
+                                    ></i>
+                                    Copy
+                                </button>
+
+                                <!-- Copy button with tracking -->
+                                <button
+                                    id="copy-button"
+                                    type="button"
+                                    title="Clear"
+                                    onclick="gtag('event', 'button_click', { button: 'clear', page: 'home', action: 'clear_text' })"
+                                    class="group flex items-center gap-2 px-4 py-2.5 bg-bg-secondary/70 hover:bg-bg-secondary border border-slate-600/70 hover:border-slate-500 rounded-xl text-text-secondary hover:text-text-primary font-medium text-sm transition-all duration-200 shadow-sm hover:shadow-md active:scale-[0.97]"
+                                >
+                                    <i
+                                        data-lucide="trash-2"
+                                        class="w-4.5 h-4.5 text-accent group-hover:scale-110 transition-transform"
+                                    ></i>
+                                    Clear
+                                </button>
+                            </div>
+
+                            <!-- Check now button (prominent) with tracking -->
+                            <button
+                                id="check-now-button"
+                                class="group flex-1 sm:flex-none order-2 sm:order-3 min-w-[140px] bg-gradient-to-r from-accent to-indigo-500 hover:from-indigo-500 hover:to-indigo-600 text-white px-7 sm:px-9 py-3 rounded-xl font-semibold flex items-center justify-center gap-2.5 shadow-xl shadow-indigo-950/40 hover:shadow-indigo-900/50 hover:brightness-110 hover:scale-[1.02] active:scale-[0.98] transition-all duration-300"
+                                onclick="gtag('event', 'check_now_clicked', {
+            event_category: 'engagement',
+            event_label: 'hero_editor',
+            page: 'home',
+            button: 'check_now',
+            action: 'attempt_text_check'
+        })"
+                            >
+                                <i
+                                    data-lucide="sparkles"
+                                    class="w-5 h-5 group-hover:rotate-12 transition-transform duration-300"
+                                ></i>
+                                Check now
+                            </button>
+                        </div>
+
+                        <!-- High demand notification (hidden by default) -->
+                        <div
+                            id="high-demand-notification"
+                            class="hidden mt-6 p-6 bg-orange-900/20 border border-orange-700/40 rounded-xl"
+                        >
+                            <p class="text-orange-300 text-base font-medium mb-4">
+                                Due to high demand, our service is temporarily under heavy load. We appreciate your
+                                patience and are working to restore full availability shortly.
+                            </p>
+                            <div class="flex flex-col sm:flex-row gap-3">
+                                <input
+                                    id="email-input"
+                                    type="email"
+                                    placeholder="Enter your email to be notified"
+                                    class="w-full bg-bg-secondary border border-slate-600 rounded-lg px-4 py-2.5 text-sm text-text-primary focus:ring-2 focus:ring-orange-500/50 focus:border-orange-500/50 outline-none"
+                                />
+                                <button
+                                    id="notify-button"
+                                    class="bg-orange-500 hover:bg-orange-600 text-white px-6 py-2.5 rounded-lg font-semibold transition-all duration-200"
+                                >
+                                    Notify me
+                                </button>
+                            </div>
+                            <p id="thanks-message" class="hidden mt-3 text-emerald-300 text-sm">
+                                Thank you! We'll notify you when the service is available.
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Mentor Feedback -->
+                    <div class="bg-gradient-to-b from-indigo-950/30 to-transparent p-6 md:p-8 flex flex-col">
+                        <h3 class="font-bold text-lg text-indigo-300 mb-5 flex items-center gap-3">
+                            <i data-lucide="graduation-cap" class="w-5 h-5"></i>
+                            Mentor feedback
+                        </h3>
+                        <p class="text-sm text-indigo-200/80 leading-relaxed">
+                            Add a text to receive clear explanations and writing insights —<br />
+                            not just corrections.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <div class="inline-flex items-center gap-2 px-3 py-2 rounded-xl border border-slate-300 bg-white shadow-sm">
+            <div class="flex items-center justify-center w-7 h-7 rounded-full bg-emerald-500/15 text-emerald-600">
+                <i data-lucide="shield-check" class="w-4 h-4"></i>
+            </div>
+            <div class="leading-tight">
+                <div class="text-xs font-semibold text-slate-800">SSL Secure</div>
+                <div class="text-[10px] text-slate-500">256-bit encryption</div>
+            </div>
+        </div>
+
+        <div class="inline-flex items-center gap-2 px-3 py-2 rounded-xl border border-slate-300 bg-white shadow-sm">
+            <div class="flex items-center justify-center w-7 h-7 rounded-full bg-sky-500/15 text-sky-600">
+                <i data-lucide="eye-off" class="w-4 h-4"></i>
+            </div>
+            <div class="leading-tight">
+                <div class="text-xs font-semibold text-slate-800">Private by Design</div>
+                <div class="text-[10px] text-slate-500">No data stored</div>
+            </div>
+        </div>
+
+        <div class="inline-flex items-center gap-2 px-3 py-2 rounded-xl border border-slate-300 bg-white shadow-sm">
+            <div class="flex items-center justify-center w-7 h-7 rounded-full bg-violet-500/15 text-violet-600">
+                <i data-lucide="brain" class="w-4 h-4"></i>
+            </div>
+            <div class="leading-tight">
+                <div class="text-xs font-semibold text-slate-800">AI Transparency</div>
+                <div class="text-[10px] text-slate-500">No training on your text</div>
+            </div>
+        </div>
+
+        <div class="inline-flex items-center gap-2 px-3 py-2 rounded-xl border border-slate-300 bg-white shadow-sm">
+            <div class="flex items-center justify-center w-7 h-7 rounded-full bg-indigo-500/15 text-indigo-600">
+                <i data-lucide="file-lock" class="w-4 h-4"></i>
+            </div>
+            <div class="leading-tight">
+                <div class="text-xs font-semibold text-slate-800">Data Ownership</div>
+                <div class="text-[10px] text-slate-500">Your text stays yours</div>
+            </div>
+        </div>
+
+        <div class="inline-flex items-center gap-2 px-3 py-2 rounded-xl border border-slate-300 bg-white shadow-sm">
+            <div class="flex items-center justify-center w-7 h-7 rounded-full bg-slate-500/15 text-slate-600">
+                <i data-lucide="scale" class="w-4 h-4"></i>
+            </div>
+            <div class="leading-tight">
+                <div class="text-xs font-semibold text-slate-800">GDPR Compliant</div>
+                <div class="text-[10px] text-slate-500">EU data protection</div>
+            </div>
+        </div>
+
+        <div class="inline-flex items-center gap-2 px-3 py-2 rounded-xl border border-slate-300 bg-white shadow-sm">
+            <div class="flex items-center justify-center w-7 h-7 rounded-full bg-amber-500/15 text-amber-600">
+                <i data-lucide="shield-check" class="w-4 h-4"></i>
+            </div>
+            <div class="leading-tight">
+                <div class="text-xs font-semibold text-slate-800">Responsible AI</div>
+                <div class="text-[10px] text-slate-500">Built with care</div>
+            </div>
+        </div>
+
+        <!-- Features -->
+        <section class="max-w-6xl mx-auto px-6 py-20 md:py-28 grid md:grid-cols-3 gap-10 md:gap-14">
+            <div class="text-center group">
+                <div
+                    class="w-16 h-16 bg-indigo-950/40 text-accent rounded-2xl flex items-center justify-center mx-auto mb-6 group-hover:scale-110 group-hover:rotate-3 transition-all duration-400 glow-indigo/50"
+                >
+                    <i data-lucide="zap" class="w-8 h-8"></i>
+                </div>
+                <h4 class="font-bold text-xl mb-3">Instant corrections</h4>
+                <p class="text-text-secondary text-sm leading-relaxed">
+                    Apply all fixes at once — no tedious clicking through suggestions.
                 </p>
             </div>
-        </div>
-    </div>
-</header>
 
-<!-- Features -->
-<section class="max-w-6xl mx-auto px-6 py-20 md:py-28 grid md:grid-cols-3 gap-10 md:gap-14">
+            <div class="text-center group">
+                <div
+                    class="w-16 h-16 bg-purple-950/40 text-purple-400 rounded-2xl flex items-center justify-center mx-auto mb-6 group-hover:scale-110 group-hover:-rotate-3 transition-all duration-400 glow-purple/50"
+                >
+                    <i data-lucide="user-check" class="w-8 h-8"></i>
+                </div>
+                <h4 class="font-bold text-xl mb-3">Your style stays yours</h4>
+                <p class="text-text-secondary text-sm leading-relaxed">
+                    We only correct what’s actually wrong.<br />Tone, intensity, personality — untouched.
+                </p>
+            </div>
 
-    <div class="text-center group">
-        <div class="w-16 h-16 bg-indigo-950/40 text-accent rounded-2xl flex items-center justify-center mx-auto mb-6 group-hover:scale-110 group-hover:rotate-3 transition-all duration-400 glow-indigo/50">
-            <i data-lucide="zap" class="w-8 h-8"></i>
-        </div>
-        <h4 class="font-bold text-xl mb-3">Instant corrections</h4>
-        <p class="text-text-secondary text-sm leading-relaxed">
-            Apply all fixes at once — no tedious clicking through suggestions.
-        </p>
-    </div>
+            <div class="text-center group">
+                <div
+                    class="w-16 h-16 bg-emerald-950/40 text-emerald-400 rounded-2xl flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-all duration-400"
+                >
+                    <i data-lucide="book-open" class="w-8 h-8"></i>
+                </div>
+                <h4 class="font-bold text-xl mb-3">Learn while writing</h4>
+                <p class="text-text-secondary text-sm leading-relaxed">
+                    Every correction comes with a clear explanation — long-term improvement.
+                </p>
+            </div>
+        </section>
 
-    <div class="text-center group">
-        <div class="w-16 h-16 bg-purple-950/40 text-purple-400 rounded-2xl flex items-center justify-center mx-auto mb-6 group-hover:scale-110 group-hover:-rotate-3 transition-all duration-400 glow-purple/50">
-            <i data-lucide="user-check" class="w-8 h-8"></i>
-        </div>
-        <h4 class="font-bold text-xl mb-3">Your style stays yours</h4>
-        <p class="text-text-secondary text-sm leading-relaxed">
-            We only correct what’s actually wrong.<br>Tone, intensity, personality — untouched.
-        </p>
-    </div>
+        <!-- Footer -->
+        <footer class="bg-bg-secondary/50 border-t border-slate-800/60 pt-16 pb-8 mt-20">
+            <div class="max-w-6xl mx-auto px-6 md:px-10">
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-12 mb-12">
+                    <!-- Brand Column -->
+                    <div class="col-span-1 md:col-span-1">
+                        <div class="flex items-center gap-3 mb-6">
+                            <img src="assets/logo.png" alt="Grammar Mentor Logo" class="w-8 h-8" />
+                            <span class="text-lg font-semibold tracking-tight text-slate-100">
+                                <span
+                                    class="bg-clip-text text-transparent bg-gradient-to-r from-indigo-400 to-violet-400"
+                                    >Grammar</span
+                                >
+                                <span class="text-slate-300 ml-1">Mentor</span>
+                            </span>
+                        </div>
+                        <p class="text-slate-400 text-sm leading-relaxed">
+                            Your intelligent companion for precise language without losing your personal style.
+                        </p>
+                    </div>
 
-    <div class="text-center group">
-        <div class="w-16 h-16 bg-emerald-950/40 text-emerald-400 rounded-2xl flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-all duration-400">
-            <i data-lucide="book-open" class="w-8 h-8"></i>
-        </div>
-        <h4 class="font-bold text-xl mb-3">Learn while writing</h4>
-        <p class="text-text-secondary text-sm leading-relaxed">
-            Every correction comes with a clear explanation — long-term improvement.
-        </p>
-    </div>
-</section>
+                    <!-- Quick Links -->
+                    <div>
+                        <h4 class="text-white font-semibold mb-6 text-sm uppercase tracking-wider">Product</h4>
+                        <ul class="space-y-4 text-sm text-slate-400">
+                            <li><a href="#" class="hover:text-accent transition-colors">Features</a></li>
+                            <li><a href="#" class="hover:text-accent transition-colors">Pricing</a></li>
+                            <li><a href="#" class="hover:text-accent transition-colors">Changelog</a></li>
+                        </ul>
+                    </div>
 
-<script>
-    lucide.createIcons();
+                    <!-- Legal -->
+                    <div>
+                        <h4 class="text-white font-semibold mb-6 text-sm uppercase tracking-wider">
+                            Legal information
+                        </h4>
+                        <ul class="space-y-4 text-sm text-slate-400">
+                            <li><a href="#" class="hover:text-accent transition-colors">Privacy Policy</a></li>
+                            <li><a href="#" class="hover:text-accent transition-colors">Terms of Service</a></li>
+                            <li><a href="#" class="hover:text-accent transition-colors">Impressum</a></li>
+                        </ul>
+                    </div>
 
-    // Kleiner Framer-Motion Effekt nur für die Features-Icons (optional)
-    // Kann komplett entfernt werden, wenn du keine externen Libs willst
-    document.addEventListener('DOMContentLoaded', () => {
-        const icons = document.querySelectorAll('.group');
-        icons.forEach(el => {
-            el.addEventListener('mouseenter', () => {
-                el.style.transform = 'translateY(-6px)';
+                    <!-- Contact -->
+                    <div>
+                        <h4 class="text-white font-semibold mb-6 text-sm uppercase tracking-wider">Contact</h4>
+                        <a
+                            href="mailto:hello@grammar-mentor.ch"
+                            class="inline-flex items-center gap-2 text-slate-400 hover:text-accent transition-all group"
+                        >
+                            <div class="p-2 rounded-lg bg-slate-800 group-hover:bg-accent/10 transition-colors">
+                                <i data-lucide="mail" class="w-4 h-4 text-accent"></i>
+                            </div>
+                            <span class="text-sm">hello@grammar-mentor.ch</span>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Bottom Bar -->
+                <div
+                    class="pt-8 border-t border-slate-800/60 flex flex-col md:flex-row justify-between items-center gap-4"
+                >
+                    <p class="text-xs text-slate-500">
+                        ©
+                        <script>
+                            document.write(new Date().getFullYear());
+                        </script>
+                        Grammar Mentor. Made with precision in Switzerland.
+                    </p>
+                    <div class="flex gap-6">
+                        <a href="#" class="text-slate-500 hover:text-white transition-colors"
+                            ><i data-lucide="twitter" class="w-4 h-4"></i
+                        ></a>
+                        <a href="#" class="text-slate-500 hover:text-white transition-colors"
+                            ><i data-lucide="linkedin" class="w-4 h-4"></i
+                        ></a>
+                        <a href="#" class="text-slate-500 hover:text-white transition-colors"
+                            ><i data-lucide="github" class="w-4 h-4"></i
+                        ></a>
+                    </div>
+                </div>
+            </div>
+        </footer>
+
+        <!-- Nicht vergessen am Ende des Body-Tags Lucide Icons zu initialisieren -->
+        <script>
+            lucide.createIcons();
+        </script>
+
+        <script>
+            lucide.createIcons();
+
+            // Kleiner Framer-Motion Effekt nur für die Features-Icons (optional)
+            // Kann komplett entfernt werden, wenn du keine externen Libs willst
+            document.addEventListener("DOMContentLoaded", () => {
+                const icons = document.querySelectorAll(".group");
+                icons.forEach((el) => {
+                    el.addEventListener("mouseenter", () => {
+                        el.style.transform = "translateY(-6px)";
+                    });
+                    el.addEventListener("mouseleave", () => {
+                        el.style.transform = "translateY(0)";
+                    });
+                });
             });
-            el.addEventListener('mouseleave', () => {
-                el.style.transform = 'translateY(0)';
-            });
-        });
-    });
-</script>
+        </script>
 
-<script>
-    // Realistische Simulation: 80–320 User online (für eine neue AI-Tool-Landingpage plausibel)
-    function getRandomOnlineUsers() {
-        // Basiswert + etwas Rauschen + leichte Tageszeit-Simulation
-        const base = 140;
-        const variation = Math.floor(Math.random() * 80) - 40; // ±40
-        const timeFactor = Math.sin(Date.now() / 1000 / 60 / 15) * 30; // sanfte Welle ~alle 15 Min
-        return Math.max(80, Math.round(base + variation + timeFactor));
-    }
-
-    function updateOnlineCount() {
-        const countEl = document.getElementById('online-count');
-        if (countEl) {
-            countEl.textContent = getRandomOnlineUsers().toLocaleString();
-        }
-    }
-
-    // Sofort setzen + alle 8–14 Sekunden aktualisieren (natürlich wirkend)
-    updateOnlineCount();
-    setInterval(updateOnlineCount, 8000 + Math.random() * 6000);
-</script>
-
-<script>
-    // Character count update
-    const textarea = document.getElementById('input-textarea');
-    const charCount = document.getElementById('char-count');
-    textarea.addEventListener('input', () => {
-        charCount.textContent = `${textarea.value.length} characters`;
-    });
-
-    // Paste functionality
-    document.getElementById('paste-button').addEventListener('click', async () => {
-        try {
-            const text = await navigator.clipboard.readText();
-            textarea.value = text;
-            charCount.textContent = `${text.length} characters`;
-        } catch (err) {
-            console.error('Failed to paste:', err);
-        }
-    });
-
-    // Copy functionality
-    document.getElementById('copy-button').addEventListener('click', async () => {
-        try {
-            await navigator.clipboard.writeText(textarea.value);
-        } catch (err) {
-            console.error('Failed to copy:', err);
-        }
-    });
-
-    // Check now button handling with tracking and notification display
-    document.getElementById('check-now-button').addEventListener('click', () => {
-        // Tracking event for Check now button
-        gtag('event', 'button_click', { button: 'check_now', page: 'home', action: 'check_text_clicked', label: 'hero_editor' });
-        document.getElementById('high-demand-notification').classList.remove('hidden');
-    });
-
-    // Notify button handling with email submission to backend
-    document.getElementById('notify-button').addEventListener('click', async () => {
-        const email = document.getElementById('email-input').value;
-        if (!email) return;
-
-        try {
-            const response = await fetch('/subscribe', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ email })
-            });
-            if (response.ok) {
-                document.getElementById('thanks-message').classList.remove('hidden');
-                document.getElementById('email-input').classList.add('hidden');
-                document.getElementById('notify-button').classList.add('hidden');
-                // Tracking event for Notify me button
-                gtag('event', 'button_click', { button: 'notify_me', page: 'home', action: 'email_submitted' });
+        <script>
+            // Realistische Simulation: 80–320 User online (für eine neue AI-Tool-Landingpage plausibel)
+            function getRandomOnlineUsers() {
+                // Basiswert + etwas Rauschen + leichte Tageszeit-Simulation
+                const base = 140;
+                const variation = Math.floor(Math.random() * 80) - 40; // ±40
+                const timeFactor = Math.sin(Date.now() / 1000 / 60 / 15) * 30; // sanfte Welle ~alle 15 Min
+                return Math.max(80, Math.round(base + variation + timeFactor));
             }
-        } catch (err) {
-            console.error('Failed to submit email:', err);
-        }
-    });
-</script>
 
-<script>
-    // Scroll behavior tracking
-    // Tracks scroll depth at 25%, 50%, 75%, 100% and sends gtag events
-    const scrollThresholds = [25, 50, 75, 100];
-    let scrolledThresholds = [];
-
-    function trackScroll() {
-        const scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
-        const scrollHeight = document.documentElement.scrollHeight || document.body.scrollHeight;
-        const clientHeight = document.documentElement.clientHeight || window.innerHeight;
-        const scrollPercent = Math.floor((scrollTop + clientHeight) / scrollHeight * 100);
-
-        for (let threshold of scrollThresholds) {
-            if (scrollPercent >= threshold && !scrolledThresholds.includes(threshold)) {
-                gtag('event', 'scroll_depth', { depth: `${threshold}%`, page: 'home', action: 'scrolled_to_depth' });
-                scrolledThresholds.push(threshold);
+            function updateOnlineCount() {
+                const countEl = document.getElementById("online-count");
+                if (countEl) {
+                    countEl.textContent = getRandomOnlineUsers().toLocaleString();
+                }
             }
-        }
-    }
 
-    window.addEventListener('scroll', trackScroll);
-    // Initial check in case page is already scrolled
-    trackScroll();
-</script>
+            // Sofort setzen + alle 8–14 Sekunden aktualisieren (natürlich wirkend)
+            updateOnlineCount();
+            setInterval(updateOnlineCount, 8000 + Math.random() * 6000);
+        </script>
 
-</body>
+        <script>
+            // Character count update
+            const textarea = document.getElementById("input-textarea");
+            const charCount = document.getElementById("char-count");
+            textarea.addEventListener("input", () => {
+                charCount.textContent = `${textarea.value.length} characters`;
+            });
+
+            // Paste functionality
+            document.getElementById("paste-button").addEventListener("click", async () => {
+                try {
+                    const text = await navigator.clipboard.readText();
+                    textarea.value = text;
+                    charCount.textContent = `${text.length} characters`;
+                } catch (err) {
+                    console.error("Failed to paste:", err);
+                }
+            });
+
+            // Copy functionality
+            document.getElementById("copy-button").addEventListener("click", async () => {
+                try {
+                    await navigator.clipboard.writeText(textarea.value);
+                } catch (err) {
+                    console.error("Failed to copy:", err);
+                }
+            });
+
+            // Check now button handling with tracking and notification display
+            document.getElementById("check-now-button").addEventListener("click", () => {
+                // Tracking event for Check now button
+                gtag("event", "button_click", {
+                    button: "check_now",
+                    page: "home",
+                    action: "check_text_clicked",
+                    label: "hero_editor",
+                });
+                document.getElementById("high-demand-notification").classList.remove("hidden");
+            });
+
+            // Notify button handling with email submission to backend
+            document.getElementById("notify-button").addEventListener("click", async () => {
+                const email = document.getElementById("email-input").value;
+                if (!email) return;
+
+                try {
+                    const response = await fetch("https://grammar-mentor.com/subscribe.php", {
+                        method: "POST",
+                        headers: { "Content-Type": "application/json" },
+                        body: JSON.stringify({ email }),
+                    });
+
+                    if (response.ok) {
+                        document.getElementById("thanks-message").classList.remove("hidden");
+                        document.getElementById("email-input").classList.add("hidden");
+                        document.getElementById("notify-button").classList.add("hidden");
+
+                        gtag("event", "button_click", {
+                            button: "notify_me",
+                            page: "home",
+                            action: "email_submitted",
+                        });
+                    } else {
+                        console.error("Server error:", await response.text());
+                    }
+                } catch (err) {
+                    console.error("Failed to submit email:", err);
+                }
+            });
+        </script>
+
+        <script>
+            // Scroll behavior tracking
+            // Tracks scroll depth at 25%, 50%, 75%, 100% and sends gtag events
+            const scrollThresholds = [25, 50, 75, 100];
+            let scrolledThresholds = [];
+
+            function trackScroll() {
+                const scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+                const scrollHeight = document.documentElement.scrollHeight || document.body.scrollHeight;
+                const clientHeight = document.documentElement.clientHeight || window.innerHeight;
+                const scrollPercent = Math.floor(((scrollTop + clientHeight) / scrollHeight) * 100);
+
+                for (let threshold of scrollThresholds) {
+                    if (scrollPercent >= threshold && !scrolledThresholds.includes(threshold)) {
+                        gtag("event", "scroll_depth", {
+                            depth: `${threshold}%`,
+                            page: "home",
+                            action: "scrolled_to_depth",
+                        });
+                        scrolledThresholds.push(threshold);
+                    }
+                }
+            }
+
+            window.addEventListener("scroll", trackScroll);
+            // Initial check in case page is already scrolled
+            trackScroll();
+        </script>
+    </body>
 </html>

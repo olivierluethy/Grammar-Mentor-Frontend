@@ -1,0 +1,64 @@
+# robots.txt for https://www.grammarmentor.ai
+# Last updated: February 2026
+
+User-agent: *
+Allow: /
+Disallow: /private/
+Disallow: /admin/
+Disallow: /dashboard/
+Disallow: /account/
+Disallow: /login*
+Disallow: /signup*
+Disallow: /reset-password*
+Disallow: /api/
+Disallow: /cdn-cgi/
+Disallow: /*?*sort=*
+Disallow: /*?*filter=*
+Disallow: /*?*page=*
+Disallow: /*?*utm_source=*
+Disallow: /*?*utm_medium=*
+Disallow: /*?*utm_campaign=*
+
+# Sitemap
+Sitemap: https://www.grammar-mentor.com/sitemap.xml
+
+# Crawl-delay (optional – nur wenn du sehr viele Anfragen bemerkst)
+# Crawl-delay: 10
+
+# === Spezielle Crawler-Regeln ===
+
+# AI-Training-Crawler (häufig aggressiv) – 2025/2026 sehr empfohlen
+User-agent: GPTBot
+Disallow: /
+
+User-agent: ChatGPT-User
+Disallow: /
+
+User-agent: Google-Extended
+Disallow: /
+
+User-agent: anthropic-ai
+Disallow: /
+
+User-agent: ClaudeBot
+Disallow: /
+
+User-agent: PerplexityBot
+Disallow: /
+
+User-agent: Bytespider
+Disallow: /
+
+User-agent: Amazonbot
+Disallow: /
+
+# Google AdsBot & Co. erlauben (wichtig für Ads & Shopping)
+User-agent: AdsBot-Google
+Allow: /
+
+User-agent: Googlebot-Image
+Allow: /assets/
+Allow: /images/
+Allow: /logo*
+
+# === Ende ===
