@@ -6,10 +6,15 @@
 <script>
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
+
   gtag('js', new Date());
 
-  gtag('config', 'G-PRESJVG5VB');
+  gtag('config', 'G-PRESJVG5VB', {
+    send_page_view: true,
+    debug_mode: true
+  });
 </script>
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AI Grammar Mentor | Precision without losing your voice</title>
@@ -33,7 +38,10 @@
         <a href="#" class="hover:text-indigo-600">Privacy (Datacloak)</a>
         <a href="#" class="hover:text-indigo-600">Pricing</a>
     </div>
-    <button class="bg-indigo-600 text-white px-5 py-2 rounded-full text-sm font-semibold hover:bg-indigo-700 transition">
+    <button onclick="gtag('event', 'check_text_clicked', {
+    event_category: 'engagement',
+    event_label: 'hero_editor'
+  })" class="bg-indigo-600 text-white px-5 py-2 rounded-full text-sm font-semibold hover:bg-indigo-700 transition">
         Start for free
     </button>
 </nav>
@@ -91,7 +99,10 @@
 
                 <div class="mt-4 flex justify-between items-center">
                     <span class="text-sm text-gray-400">0 characters</span>
-                    <button class="bg-indigo-600 text-white px-8 py-3 rounded-xl font-bold flex items-center gap-2 hover:bg-indigo-700 shadow-lg shadow-indigo-200 transition">
+                    <button onclick="gtag('event', 'check_text_clicked', {
+    event_category: 'engagement',
+    event_label: 'hero_editor'
+  })" class="bg-indigo-600 text-white px-8 py-3 rounded-xl font-bold flex items-center gap-2 hover:bg-indigo-700 shadow-lg shadow-indigo-200 transition">
                         <i data-lucide="sparkles" class="w-5 h-5"></i>
                         Check now
                     </button>
