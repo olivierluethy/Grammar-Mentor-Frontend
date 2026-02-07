@@ -67,14 +67,33 @@
     </div>
 
     <div class="hidden md:flex gap-10 text-sm font-medium text-text-secondary">
-        <a href="#" class="hover:text-accent transition-colors">Features</a>
-        <a href="#" class="hover:text-accent transition-colors">Privacy (Datacloak)</a>
-        <a href="#" class="hover:text-accent transition-colors">Pricing</a>
+        <!-- Tracking event for Features link -->
+        <a href="#" onclick="gtag('event', 'nav_link_click', { link: 'features', page: 'home', action: 'navigate_to_features' })" class="hover:text-accent transition-colors">Features</a>
+        <!-- Tracking event for Privacy link -->
+        <a href="#" onclick="gtag('event', 'nav_link_click', { link: 'privacy', page: 'home', action: 'navigate_to_privacy' })" class="hover:text-accent transition-colors">Privacy (Datacloak)</a>
+        <!-- Tracking event for Pricing link -->
+        <a href="#" onclick="gtag('event', 'nav_link_click', { link: 'pricing', page: 'home', action: 'navigate_to_pricing' })" class="hover:text-accent transition-colors">Pricing</a>
     </div>
 
-    <button onclick="gtag('event', 'check_text_clicked', {event_category: 'engagement', event_label: 'hero_editor'})"
+<!-- Users Online Indicator – Live Effekt -->
+<div class="hidden md:flex items-center gap-2.5 text-sm text-slate-400">
+    <span class="relative flex h-2.5 w-2.5">
+        <!-- Ping Ring -->
+        <span class="absolute inline-flex h-full w-full rounded-full bg-red-500 animate-ping"></span>
+        <!-- Pulsierende Aura -->
+        <span class="absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75 animate-pulse"></span>
+        <!-- Fester Kern -->
+        <span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-red-600"></span>
+    </span>
+    <span id="online-count">147</span> Users online
+</div>
+
+
+
+    <!-- Tracking event for Want more button -->
+    <button onclick="gtag('event', 'button_click', { button: 'want_more', page: 'home', action: 'want_more_clicked' })"
             class="bg-gradient-to-r from-accent to-indigo-500 text-white px-6 py-2.5 rounded-full text-sm font-semibold hover:brightness-110 hover:scale-105 transition-all duration-300 shadow-lg shadow-indigo-900/30">
-        Start for free
+        Want more?
     </button>
 </nav>
 
@@ -99,13 +118,15 @@
                     <i data-lucide="sliders-horizontal" class="w-4 h-4 text-accent"></i>
                     Correction mode
                 </label>
-                <select class="bg-bg-secondary border border-slate-600 rounded-lg px-4 py-1.5 text-sm focus:ring-2 focus:ring-accent/50 focus:border-accent/50 outline-none text-text-primary">
+                <!-- Tracking event for correction mode select change -->
+                <select onchange="gtag('event', 'select_change', { select: 'correction_mode', page: 'home', action: 'mode_selected', value: this.value })" class="bg-bg-secondary border border-slate-600 rounded-lg px-4 py-1.5 text-sm focus:ring-2 focus:ring-accent/50 focus:border-accent/50 outline-none text-text-primary">
                     <option>Authentic (errors only)</option>
                     <option>Academic writing</option>
                     <option>Business professional</option>
                 </select>
 
-                <select class="bg-bg-secondary border border-slate-600 rounded-lg px-4 py-1.5 text-sm text-text-secondary focus:ring-accent/40 outline-none">
+                <!-- Tracking event for language select change -->
+                <select onchange="gtag('event', 'select_change', { select: 'language', page: 'home', action: 'language_selected', value: this.value })" class="bg-bg-secondary border border-slate-600 rounded-lg px-4 py-1.5 text-sm text-text-secondary focus:ring-accent/40 outline-none">
                     <option>Auto-detect language</option>
                     <option>Dutch</option>
                     <option>English</option>
@@ -126,33 +147,35 @@
 
             <!-- Input Area -->
 <div class="lg:col-span-2 p-6 md:p-8 border-r border-slate-700/40 flex flex-col">
-    <textarea
+    <textarea id="input-textarea"
         class="w-full editor-min-h bg-transparent text-lg text-text-primary placeholder-slate-500 border-none focus:ring-0 outline-none resize-none font-medium leading-relaxed caret-accent selection:bg-indigo-950/60"
         placeholder="Paste or write your text here…"
     ></textarea>
 
     <div class="mt-6 flex flex-wrap items-center justify-between gap-3 sm:gap-4">
         <!-- Character count -->
-        <span class="text-sm text-slate-500 font-medium order-1">
+        <span id="char-count" class="text-sm text-slate-500 font-medium order-1">
             0 characters
         </span>
 
         <!-- Action buttons group -->
         <div class="flex items-center gap-2.5 sm:gap-3 order-3 sm:order-2 w-full sm:w-auto">
-            <!-- Paste button -->
-            <button 
+            <!-- Paste button with tracking -->
+            <button id="paste-button"
                 type="button"
                 title="Paste from clipboard"
+                onclick="gtag('event', 'button_click', { button: 'paste', page: 'home', action: 'paste_text' })"
                 class="group flex items-center gap-2 px-4 py-2.5 bg-bg-secondary/70 hover:bg-bg-secondary border border-slate-600/70 hover:border-slate-500 rounded-xl text-text-secondary hover:text-text-primary font-medium text-sm transition-all duration-200 shadow-sm hover:shadow-md active:scale-[0.97]"
             >
                 <i data-lucide="clipboard-paste" class="w-4.5 h-4.5 text-accent group-hover:scale-110 transition-transform"></i>
                 Paste
             </button>
 
-            <!-- Copy button -->
-            <button 
+            <!-- Copy button with tracking -->
+            <button id="copy-button"
                 type="button"
                 title="Copy to clipboard"
+                onclick="gtag('event', 'button_click', { button: 'copy', page: 'home', action: 'copy_text' })"
                 class="group flex items-center gap-2 px-4 py-2.5 bg-bg-secondary/70 hover:bg-bg-secondary border border-slate-600/70 hover:border-slate-500 rounded-xl text-text-secondary hover:text-text-primary font-medium text-sm transition-all duration-200 shadow-sm hover:shadow-md active:scale-[0.97]"
             >
                 <i data-lucide="copy" class="w-4.5 h-4.5 text-accent group-hover:scale-110 transition-transform"></i>
@@ -160,14 +183,27 @@
             </button>
         </div>
 
-        <!-- Check now button (prominent) -->
-        <button 
-            onclick="gtag('event', 'check_text_clicked', {event_category: 'engagement', event_label: 'hero_editor'})"
+        <!-- Check now button (prominent) with tracking -->
+        <button id="check-now-button"
             class="group flex-1 sm:flex-none order-2 sm:order-3 min-w-[140px] bg-gradient-to-r from-accent to-indigo-500 hover:from-indigo-500 hover:to-indigo-600 text-white px-7 sm:px-9 py-3 rounded-xl font-semibold flex items-center justify-center gap-2.5 shadow-xl shadow-indigo-950/40 hover:shadow-indigo-900/50 hover:brightness-110 hover:scale-[1.02] active:scale-[0.98] transition-all duration-300"
         >
             <i data-lucide="sparkles" class="w-5 h-5 group-hover:rotate-12 transition-transform duration-300"></i>
             Check now
         </button>
+    </div>
+
+    <!-- High demand notification (hidden by default) -->
+    <div id="high-demand-notification" class="hidden mt-6 p-6 bg-orange-900/20 border border-orange-700/40 rounded-xl">
+        <p class="text-orange-300 text-base font-medium mb-4">
+            Due to high demand, our service is temporarily under heavy load. We appreciate your patience and are working to restore full availability shortly.
+        </p>
+        <div class="flex flex-col sm:flex-row gap-3">
+            <input id="email-input" type="email" placeholder="Enter your email to be notified" class="w-full bg-bg-secondary border border-slate-600 rounded-lg px-4 py-2.5 text-sm text-text-primary focus:ring-2 focus:ring-orange-500/50 focus:border-orange-500/50 outline-none">
+            <button id="notify-button" class="bg-orange-500 hover:bg-orange-600 text-white px-6 py-2.5 rounded-lg font-semibold transition-all duration-200">
+                Notify me
+            </button>
+        </div>
+        <p id="thanks-message" class="hidden mt-3 text-emerald-300 text-sm">Thank you! We'll notify you when the service is available.</p>
     </div>
 </div>
 
@@ -236,6 +272,112 @@
             });
         });
     });
+</script>
+
+<script>
+    // Realistische Simulation: 80–320 User online (für eine neue AI-Tool-Landingpage plausibel)
+    function getRandomOnlineUsers() {
+        // Basiswert + etwas Rauschen + leichte Tageszeit-Simulation
+        const base = 140;
+        const variation = Math.floor(Math.random() * 80) - 40; // ±40
+        const timeFactor = Math.sin(Date.now() / 1000 / 60 / 15) * 30; // sanfte Welle ~alle 15 Min
+        return Math.max(80, Math.round(base + variation + timeFactor));
+    }
+
+    function updateOnlineCount() {
+        const countEl = document.getElementById('online-count');
+        if (countEl) {
+            countEl.textContent = getRandomOnlineUsers().toLocaleString();
+        }
+    }
+
+    // Sofort setzen + alle 8–14 Sekunden aktualisieren (natürlich wirkend)
+    updateOnlineCount();
+    setInterval(updateOnlineCount, 8000 + Math.random() * 6000);
+</script>
+
+<script>
+    // Character count update
+    const textarea = document.getElementById('input-textarea');
+    const charCount = document.getElementById('char-count');
+    textarea.addEventListener('input', () => {
+        charCount.textContent = `${textarea.value.length} characters`;
+    });
+
+    // Paste functionality
+    document.getElementById('paste-button').addEventListener('click', async () => {
+        try {
+            const text = await navigator.clipboard.readText();
+            textarea.value = text;
+            charCount.textContent = `${text.length} characters`;
+        } catch (err) {
+            console.error('Failed to paste:', err);
+        }
+    });
+
+    // Copy functionality
+    document.getElementById('copy-button').addEventListener('click', async () => {
+        try {
+            await navigator.clipboard.writeText(textarea.value);
+        } catch (err) {
+            console.error('Failed to copy:', err);
+        }
+    });
+
+    // Check now button handling with tracking and notification display
+    document.getElementById('check-now-button').addEventListener('click', () => {
+        // Tracking event for Check now button
+        gtag('event', 'button_click', { button: 'check_now', page: 'home', action: 'check_text_clicked', label: 'hero_editor' });
+        document.getElementById('high-demand-notification').classList.remove('hidden');
+    });
+
+    // Notify button handling with email submission to backend
+    document.getElementById('notify-button').addEventListener('click', async () => {
+        const email = document.getElementById('email-input').value;
+        if (!email) return;
+
+        try {
+            const response = await fetch('/subscribe', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ email })
+            });
+            if (response.ok) {
+                document.getElementById('thanks-message').classList.remove('hidden');
+                document.getElementById('email-input').classList.add('hidden');
+                document.getElementById('notify-button').classList.add('hidden');
+                // Tracking event for Notify me button
+                gtag('event', 'button_click', { button: 'notify_me', page: 'home', action: 'email_submitted' });
+            }
+        } catch (err) {
+            console.error('Failed to submit email:', err);
+        }
+    });
+</script>
+
+<script>
+    // Scroll behavior tracking
+    // Tracks scroll depth at 25%, 50%, 75%, 100% and sends gtag events
+    const scrollThresholds = [25, 50, 75, 100];
+    let scrolledThresholds = [];
+
+    function trackScroll() {
+        const scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+        const scrollHeight = document.documentElement.scrollHeight || document.body.scrollHeight;
+        const clientHeight = document.documentElement.clientHeight || window.innerHeight;
+        const scrollPercent = Math.floor((scrollTop + clientHeight) / scrollHeight * 100);
+
+        for (let threshold of scrollThresholds) {
+            if (scrollPercent >= threshold && !scrolledThresholds.includes(threshold)) {
+                gtag('event', 'scroll_depth', { depth: `${threshold}%`, page: 'home', action: 'scrolled_to_depth' });
+                scrolledThresholds.push(threshold);
+            }
+        }
+    }
+
+    window.addEventListener('scroll', trackScroll);
+    // Initial check in case page is already scrolled
+    trackScroll();
 </script>
 
 </body>
