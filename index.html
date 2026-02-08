@@ -90,6 +90,75 @@
             .glow-purple {
                 box-shadow: 0 0 30px -8px rgba(168, 85, 247, 0.3);
             }
+            /* ────────────────────────────────────────────────
+   Button Feedback Animationen
+───────────────────────────────────────────────── */
+
+            /* Button Feedback Animationen */
+            @keyframes successPulse {
+                0% {
+                    box-shadow: 0 0 0 0 rgba(99, 102, 241, 0.6);
+                }
+                70% {
+                    box-shadow: 0 0 0 10px rgba(99, 102, 241, 0);
+                }
+                100% {
+                    box-shadow: 0 0 0 0 rgba(99, 102, 241, 0);
+                }
+            }
+
+            @keyframes iconPop {
+                0% {
+                    transform: scale(1) rotate(0deg);
+                }
+                50% {
+                    transform: scale(1.55) rotate(18deg);
+                }
+                100% {
+                    transform: scale(1) rotate(0deg);
+                }
+            }
+
+            @keyframes iconSuccessCheck {
+                0% {
+                    transform: scale(1);
+                }
+                40% {
+                    transform: scale(1.35);
+                }
+                70% {
+                    transform: scale(1.1);
+                }
+                100% {
+                    transform: scale(1);
+                }
+            }
+
+            /* Gemeinsame Feedback-Klasse */
+            .btn-feedback {
+                animation: successPulse 0.7s ease-out;
+            }
+
+            .btn-feedback .lucide-icon {
+                /* wir zielen auf das <i data-lucide=...> */
+                animation: iconPop 0.6s ease-out;
+            }
+
+            /* Spezielle Variante für Clear (roter Touch) */
+            .btn-feedback-clear {
+                animation: successPulse 0.7s ease-out;
+            }
+
+            /* Clear: etwas roter Akzent */
+            .btn-feedback-clear .lucide-icon {
+                animation: iconPop 0.6s ease-out;
+                color: #f87171 !important; /* rot für "löschen" */
+            }
+
+            /* Extra Variante für Copy – kleiner Checkmark-Ersatz */
+            .btn-feedback-copy .lucide-icon {
+                animation: iconSuccessCheck 0.75s ease-out;
+            }
         </style>
     </head>
 
@@ -604,37 +673,79 @@
                 charCount.textContent = `${textarea.value.length} characters`;
             });
 
+            // ────────────────────────────────────────────────
+            // Hilfsfunktion für temporäre Feedback-Klasse
+            // ────────────────────────────────────────────────
+            function addFeedback(btnId, feedbackClasses = ["btn-feedback"], duration = 800) {
+                const btn = document.getElementById(btnId);
+                if (!btn) return;
+
+                btn.classList.add(...feedbackClasses);
+                setTimeout(() => {
+                    btn.classList.remove(...feedbackClasses);
+                }, duration);
+            }
+
+            // ────────────────────────────────────────────────
             // Paste functionality
+            // ────────────────────────────────────────────────
             document.getElementById("paste-button").addEventListener("click", async () => {
                 try {
                     const text = await navigator.clipboard.readText();
                     textarea.value = text;
+
                     const words = text
                         .trim()
                         .split(/\s+/)
                         .filter((w) => w.length > 0).length;
                     wordCount.textContent = `${words} words`;
                     charCount.textContent = `${text.length} characters`;
+
+                    // Feedback
+                    addFeedback("paste-button");
                 } catch (err) {
                     console.error("Failed to paste:", err);
                 }
             });
 
+            // ────────────────────────────────────────────────
             // Clear functionality
-            document.getElementById("clear-button").addEventListener("click", async () => {
+            // ────────────────────────────────────────────────
+            document.getElementById("clear-button").addEventListener("click", () => {
                 try {
                     textarea.value = "";
                     wordCount.textContent = "0 words";
                     charCount.textContent = "0 characters";
+
+                    // Feedback mit rotem Touch
+                    addFeedback("clear-button", ["btn-feedback", "btn-feedback-clear"]);
                 } catch (err) {
                     console.error("Failed to clear:", err);
                 }
             });
 
+            // ────────────────────────────────────────────────
             // Copy functionality
+            // ────────────────────────────────────────────────
             document.getElementById("copy-button").addEventListener("click", async () => {
                 try {
-                    await navigator.clipboard.writeText(textarea.value);
+                    const text = textarea.value;
+                    if (!text) return; // nichts zu kopieren → früh raus
+
+                    await navigator.clipboard.writeText(text);
+
+                    // Feedback (besonderer Check-Style)
+                    addFeedback("copy-button", ["btn-feedback", "btn-feedback-copy"], 900);
+
+                    // Optional: beliebte "Copied!" Variante (1400 ms sichtbar)
+                    const btn = document.getElementById("copy-button");
+                    const originalHTML = btn.innerHTML;
+                    btn.innerHTML = '<i data-lucide="check" class="w-4.5 h-4.5"></i> Copied!';
+                    lucide.createIcons();
+                    setTimeout(() => {
+                        btn.innerHTML = originalHTML;
+                        lucide.createIcons();
+                    }, 1400);
                 } catch (err) {
                     console.error("Failed to copy:", err);
                 }
