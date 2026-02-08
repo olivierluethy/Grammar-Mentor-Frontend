@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-PRESJVG5VB"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-PRESJVG5VB', {
+        send_page_view: true,
+        debug_mode: true
+      });
+    </script>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pricing | AI Grammar Mentor</title>
+
+    <!-- Favicon -->
+        <link rel="icon" type="image/png" href="assets/logo426*426.png" />
+
+    <!-- Tailwind + dark mode -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        darkMode: 'class',
+        theme: {
+          extend: {
+            colors: {
+              'bg-primary': '#0f0f17',
+              'bg-secondary': '#171725',
+              'bg-editor': '#111827',
+              'text-primary': '#f1f5f9',
+              'text-secondary': '#cbd5e1',
+              'accent': '#6366f1',
+              'accent-dark': '#818cf8',
+            }
+          }
+        }
+      }
+    </script>
+
+    <!-- Lucide -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <style>
+        .glow-indigo {
+            box-shadow: 0 0 25px -5px rgba(99, 102, 241, 0.35);
+        }
+    </style>
+</head>
+
+<body class="bg-bg-primary text-text-primary font-sans antialiased">
+
+<!-- Navigation -->
+<!-- Navigation -->
+        <nav class="sticky top-0 z-50 w-full bg-bg-secondary/80 backdrop-blur-md border-b border-slate-800/60">
+            <div class="max-w-7xl mx-auto px-6 md:px-10">
+                <div class="flex items-center justify-between h-16">
+                    <a href="/" class="block">
+                        <div class="flex items-center gap-3">
+                            <img
+                                src="assets/logo426*426.png"
+                                alt="AI Grammar Mentor Logo"
+                                class="w-8 h-8 md:w-9 md:h-9"
+                            />
+
+                            <span class="text-lg md:text-xl font-semibold tracking-tight text-slate-100">
+                                <span class="text-indigo-400 font-medium">AI</span>
+                                <span
+                                    class="ml-1 bg-clip-text text-transparent bg-gradient-to-r from-indigo-400 via-violet-400 to-pink-400"
+                                >
+                                    Grammar
+                                </span>
+                                <span class="ml-1 text-slate-300 font-medium">Mentor</span>
+                            </span>
+                        </div>
+                    </a>
+
+                    <!-- Desktop Navigation -->
+                    <div class="hidden md:flex items-center gap-10 text-sm font-medium text-text-secondary">
+                        <a
+                            href="#"
+                            class="hover:text-accent transition-colors"
+                            onclick="gtag('event', 'nav_link_click', { link: 'features' })"
+                        >
+                            Features
+                        </a>
+                        <a
+                            href="pricing.html"
+                            class="hover:text-accent transition-colors"
+                            onclick="gtag('event', 'nav_link_click', { link: 'pricing' })"
+                        >
+                            Pricing
+                        </a>
+                        <a
+                            href="privacy.html"
+                            class="hover:text-accent transition-colors"
+                            onclick="gtag('event', 'nav_link_click', { link: 'privacy' })"
+                        >
+                            Privacy
+                        </a>
+                    </div>
+
+                    <!-- Right Side -->
+                    <div class="flex items-center gap-5">
+                        <!-- Service Status -->
+                        <div class="hidden md:flex items-center gap-2 text-xs text-slate-400">
+                            <span class="h-2 w-2 rounded-full bg-emerald-500"></span>
+                            <span><a href="status.html">Operational</a></span>
+                        </div>
+
+                        <!-- Users Online -->
+                        <div class="hidden md:flex items-center gap-2 text-xs text-slate-500">
+                            <span class="h-2 w-2 rounded-full bg-red-500"></span>
+                            <span> <span id="online-count">147</span> online </span>
+                        </div>
+
+                        <!-- Mobile Menu Button -->
+                        <button
+                            class="md:hidden inline-flex items-center justify-center rounded-lg p-2 text-slate-300 hover:bg-slate-800 transition"
+                            onclick="document.getElementById('mobile-menu').classList.toggle('hidden')"
+                        >
+                            <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                class="h-5 w-5"
+                                fill="none"
+                                viewBox="0 0 24 24"
+                                stroke="currentColor"
+                            >
+                                <path
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    stroke-width="2"
+                                    d="M4 6h16M4 12h16M4 18h16"
+                                />
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Mobile Menu -->
+                <div id="mobile-menu" class="hidden md:hidden border-t border-slate-800/60 py-4 space-y-3 text-sm">
+                    <a href="#" class="block text-slate-300 hover:text-accent">Features</a>
+                    <a href="pricing.html" class="block text-slate-300 hover:text-accent">Pricing</a>
+                    <a href="privacy.html" class="block text-slate-300 hover:text-accent">Privacy</a>
+
+                    <div
+                        class="flex items-center justify-between pt-3 border-t border-slate-800/60 text-xs text-slate-400"
+                    >
+                        <span class="flex items-center gap-2">
+                            <span class="h-2 w-2 rounded-full bg-emerald-500"></span>
+                            <a href="status.html">Operational</a>
+                        </span>
+                        <span><span id="online-count-mobile">147</span> online</span>
+                    </div>
+                </div>
+            </div>
+        </nav>
+
+<!-- Pricing Hero -->
+<header class="max-w-6xl mx-auto px-5 sm:px-8 py-16 md:py-24 text-center">
+    <h1 class="text-4xl sm:text-5xl md:text-6xl font-extrabold mb-6 leading-tight bg-clip-text text-transparent bg-gradient-to-r from-indigo-400 via-purple-400 to-pink-400">
+        Pricing Coming Soon
+    </h1>
+
+    <p class="text-text-secondary text-lg md:text-xl mb-8 max-w-3xl mx-auto leading-relaxed">
+        Our pricing plans are currently in development and will be available shortly. In the meantime, enjoy full access to AI Grammar Mentor completely free – no limits, no strings attached.
+    </p>
+
+    <!-- Important Student Offer Box -->
+    <div class="mt-10 mb-12 p-6 bg-indigo-950/30 border border-indigo-800/40 rounded-2xl max-w-3xl mx-auto text-left">
+        <h3 class="text-xl font-bold text-indigo-300 mb-4 flex items-center gap-3">
+            <i data-lucide="graduation-cap" class="w-6 h-6"></i>
+            Special Offer for Students
+        </h3>
+        <p class="text-text-secondary leading-relaxed">
+            <strong>Important for students:</strong><br>
+            If you sign up (or later verify) with your official <strong>university email address</strong> (e.g. @student.unilu.ch, @ethz.ch, @uzh.ch, etc.), you won't just get 50% off for the first three months — 
+            <span class="text-emerald-400 font-semibold">you can use AI Grammar Mentor completely free for the first three months</span> (once your student status is confirmed).
+        </p>
+        <p class="text-sm text-slate-400 mt-4 italic">
+            We verify university emails either manually or automatically — only genuine students qualify.
+        </p>
+    </div>
+
+    <p class="text-text-secondary text-base mb-10 max-w-2xl mx-auto">
+        Sign up below to be the first to know when premium plans launch and secure your exclusive early-bird benefit.
+    </p>
+
+    <!-- Email Form -->
+    <div class="bg-bg-editor rounded-2xl shadow-2xl border border-slate-700/60 overflow-hidden glow-indigo transition-all duration-500 max-w-xl mx-auto p-8">
+        <h3 class="font-bold text-xl text-indigo-300 mb-4 flex items-center gap-3 justify-center">
+            <i data-lucide="mail" class="w-5 h-5"></i>
+            Claim Your Early-Bird Benefit
+        </h3>
+        <p class="text-sm text-text-secondary mb-6 text-center">
+            Enter your email to get notified about pricing + lock in 50% off for your first 3 months 
+            (students: 3 months completely free with university email).
+        </p>
+        
+        <div class="flex flex-col sm:flex-row gap-3">
+            <input 
+                id="discount-email-input" 
+                type="email" 
+                placeholder="your.email@domain.com" 
+                class="w-full bg-bg-secondary border border-slate-600 rounded-lg px-4 py-2.5 text-sm text-text-primary focus:ring-2 focus:ring-accent/50 focus:border-accent/50 outline-none"
+            >
+            <button 
+                id="claim-discount-button" 
+                class="bg-gradient-to-r from-accent to-indigo-500 hover:from-indigo-500 hover:to-indigo-600 text-white px-6 py-2.5 rounded-lg font-semibold transition-all duration-200 hover:brightness-110 hover:scale-105"
+            >
+                Secure My Benefit
+            </button>
+        </div>
+        
+        <p id="discount-thanks-message" class="hidden mt-4 text-emerald-300 text-sm text-center font-medium">
+            Thank you! You're all set — we'll notify you soon and reserve your discount 
+            (or 3 months free if you're a verified student).
+        </p>
+        
+        <!-- Subscriber Count -->
+        <p class="mt-6 text-sm text-slate-400 text-center">
+            Already <span id="discount-claim-count">842</span> writers have claimed their early-bird benefit!
+        </p>
+
+        <p class="mt-4 text-xs text-slate-500 text-center">
+            No spam. We never sell your email address.
+        </p>
+    </div>
+</header>
+
+<!-- Footer Teaser -->
+<section class="max-w-6xl mx-auto px-5 sm:px-8 py-12 text-center border-t border-slate-800/60">
+    <p class="text-text-secondary text-base">
+        Why wait? Start improving your writing today — completely free. 
+        <a href="/" class="text-accent hover:underline">Back to Home</a>
+    </p>
+</section>
+
+<script>
+    lucide.createIcons();
+
+    // Online counter (same as main page)
+    function getRandomOnlineUsers() {
+        const base = 140;
+        const variation = Math.floor(Math.random() * 80) - 40;
+        const timeFactor = Math.sin(Date.now() / 1000 / 60 / 15) * 30;
+        return Math.max(80, Math.round(base + variation + timeFactor));
+    }
+
+    function updateOnlineCount() {
+        const countEl = document.getElementById('online-count');
+        if (countEl) countEl.textContent = getRandomOnlineUsers().toLocaleString();
+    }
+    updateOnlineCount();
+    setInterval(updateOnlineCount, 8000 + Math.random() * 6000);
+
+    // Discount claim counter (realistic growth)
+    function getRandomClaimCount() {
+        const base = 850;
+        const variation = Math.floor(Math.random() * 220) - 110;
+        const timeFactor = Math.sin(Date.now() / 1000 / 60 / 30) * 60;
+        return Math.max(600, Math.round(base + variation + timeFactor));
+    }
+
+    function updateClaimCount() {
+        const countEl = document.getElementById('discount-claim-count');
+        if (countEl) countEl.textContent = getRandomClaimCount().toLocaleString();
+    }
+    updateClaimCount();
+    setInterval(updateClaimCount, 10000 + Math.random() * 7000);
+
+    // Form submission
+    document.getElementById('claim-discount-button').addEventListener('click', async () => {
+        const email = document.getElementById('discount-email-input').value.trim();
+        if (!email) return;
+
+        try {
+            const response = await fetch('/subscribe', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ 
+                    email,
+                    source: 'pricing_page',
+                    discount: true,
+                    student_potential: email.includes('.edu') || 
+                                      email.includes('student') || 
+                                      email.includes('unilu') || 
+                                      email.includes('ethz') || 
+                                      email.includes('uzh')   // simple client-side hint
+                })
+            });
+
+            if (response.ok) {
+                document.getElementById('discount-thanks-message').classList.remove('hidden');
+                document.getElementById('discount-email-input').classList.add('hidden');
+                document.getElementById('claim-discount-button').classList.add('hidden');
+                
+                gtag('event', 'discount_claim_attempt', {
+                    event_category: 'conversion',
+                    page: 'pricing',
+                    student_email: email.includes('.edu') || email.includes('student') || 
+                                   email.includes('unilu') || email.includes('ethz') || 
+                                   email.includes('uzh')
+                });
+            }
+        } catch (err) {
+            console.error('Submission failed:', err);
+        }
+    });
+</script>
+
+</body>
+</html>

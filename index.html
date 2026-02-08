@@ -18,18 +18,20 @@
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
+        <script src="script.js" defer></script>
+
         <!-- Primary Meta Tags -->
         <title>AI Grammar Mentor | Precision without losing your voice</title>
         <meta name="title" content="AI Grammar Mentor | Precision without losing your voice" />
         <meta
             name="description"
-            content="The only AI grammar mentor that corrects mistakes, provides explanations, and preserves your personal writing style. Try it now for free."
+            content="The only AI Grammar Mentor that corrects mistakes, provides explanations, and preserves your personal writing style. Try it now for free."
         />
         <meta
             name="keywords"
             content="Grammar check, AI writing assistant, grammar checker, German correction, English grammar, preserve writing style"
         />
-        <meta name="author" content="Grammar Mentor" />
+        <meta name="author" content="AI Grammar Mentor" />
         <meta name="robots" content="index, follow" />
 
         <!-- Open Graph / Facebook -->
@@ -51,7 +53,7 @@
         <meta property="twitter:image" content="https://grammar-mentor.com/og-image.png" />
 
         <!-- Favicon -->
-        <link rel="icon" type="image/png" href="assets/logo.png" />
+        <link rel="icon" type="image/png" href="assets/logo426*426.png" />
 
         <!-- Tailwind + dark mode -->
         <script src="https://cdn.tailwindcss.com"></script>
@@ -164,64 +166,108 @@
 
     <body class="bg-bg-primary text-text-primary font-sans antialiased">
         <!-- Navigation -->
-        <nav
-            class="flex items-center justify-between px-6 md:px-10 py-4 bg-bg-secondary/70 backdrop-blur-md border-b border-slate-800/60 sticky top-0 z-50"
-        >
-            <!-- Logo -->
-            <div class="flex items-center gap-3">
-                <img src="assets/logo.png" alt="Grammar Mentor Logo" class="w-8 h-8 md:w-9 md:h-9" />
+        <nav class="sticky top-0 z-50 w-full bg-bg-secondary/80 backdrop-blur-md border-b border-slate-800/60">
+            <div class="max-w-7xl mx-auto px-6 md:px-10">
+                <div class="flex items-center justify-between h-16">
+                    <a href="/" class="block">
+                        <div class="flex items-center gap-3">
+                            <img
+                                src="assets/logo426*426.png"
+                                alt="AI Grammar Mentor Logo"
+                                class="w-8 h-8 md:w-9 md:h-9"
+                            />
 
-                <span class="text-lg md:text-xl font-semibold tracking-tight text-slate-100">
-                    <span
-                        class="font-semibold bg-clip-text text-transparent bg-gradient-to-r from-indigo-400 via-violet-400 to-pink-400"
+                            <span class="text-lg md:text-xl font-semibold tracking-tight text-slate-100">
+                                <span class="text-indigo-400 font-medium">AI</span>
+                                <span
+                                    class="ml-1 bg-clip-text text-transparent bg-gradient-to-r from-indigo-400 via-violet-400 to-pink-400"
+                                >
+                                    Grammar
+                                </span>
+                                <span class="ml-1 text-slate-300 font-medium">Mentor</span>
+                            </span>
+                        </div>
+                    </a>
+
+                    <!-- Desktop Navigation -->
+                    <div class="hidden md:flex items-center gap-10 text-sm font-medium text-text-secondary">
+                        <a
+                            href="#"
+                            class="hover:text-accent transition-colors"
+                            onclick="gtag('event', 'nav_link_click', { link: 'features' })"
+                        >
+                            Features
+                        </a>
+                        <a
+                            href="pricing.html"
+                            class="hover:text-accent transition-colors"
+                            onclick="gtag('event', 'nav_link_click', { link: 'pricing' })"
+                        >
+                            Pricing
+                        </a>
+                        <a
+                            href="privacy.html"
+                            class="hover:text-accent transition-colors"
+                            onclick="gtag('event', 'nav_link_click', { link: 'privacy' })"
+                        >
+                            Privacy
+                        </a>
+                    </div>
+
+                    <!-- Right Side -->
+                    <div class="flex items-center gap-5">
+                        <!-- Service Status -->
+                        <div class="hidden md:flex items-center gap-2 text-xs text-slate-400">
+                            <span class="h-2 w-2 rounded-full bg-emerald-500"></span>
+                            <span><a href="status.html">Operational</a></span>
+                        </div>
+
+                        <!-- Users Online -->
+                        <div class="hidden md:flex items-center gap-2 text-xs text-slate-500">
+                            <span class="h-2 w-2 rounded-full bg-red-500"></span>
+                            <span> <span id="online-count">147</span> online </span>
+                        </div>
+
+                        <!-- Mobile Menu Button -->
+                        <button
+                            class="md:hidden inline-flex items-center justify-center rounded-lg p-2 text-slate-300 hover:bg-slate-800 transition"
+                            onclick="document.getElementById('mobile-menu').classList.toggle('hidden')"
+                        >
+                            <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                class="h-5 w-5"
+                                fill="none"
+                                viewBox="0 0 24 24"
+                                stroke="currentColor"
+                            >
+                                <path
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    stroke-width="2"
+                                    d="M4 6h16M4 12h16M4 18h16"
+                                />
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Mobile Menu -->
+                <div id="mobile-menu" class="hidden md:hidden border-t border-slate-800/60 py-4 space-y-3 text-sm">
+                    <a href="#" class="block text-slate-300 hover:text-accent">Features</a>
+                    <a href="pricing.html" class="block text-slate-300 hover:text-accent">Pricing</a>
+                    <a href="privacy.html" class="block text-slate-300 hover:text-accent">Privacy</a>
+
+                    <div
+                        class="flex items-center justify-between pt-3 border-t border-slate-800/60 text-xs text-slate-400"
                     >
-                        Grammar
-                    </span>
-                    <span class="font-medium text-slate-300 ml-1"> Mentor </span>
-                </span>
+                        <span class="flex items-center gap-2">
+                            <span class="h-2 w-2 rounded-full bg-emerald-500"></span>
+                            <a href="status.html">Operational</a>
+                        </span>
+                        <span><span id="online-count-mobile">147</span> online</span>
+                    </div>
+                </div>
             </div>
-
-            <!-- Navigation Links -->
-            <div class="hidden md:flex gap-10 text-sm font-medium text-text-secondary">
-                <a
-                    href="#"
-                    onclick="gtag('event', 'nav_link_click', { link: 'features', page: 'home', action: 'navigate_to_features' })"
-                    class="hover:text-accent transition-colors"
-                >
-                    Features
-                </a>
-                <a
-                    href="#"
-                    onclick="gtag('event', 'nav_link_click', { link: 'privacy', page: 'home', action: 'navigate_to_privacy' })"
-                    class="hover:text-accent transition-colors"
-                >
-                    Privacy
-                </a>
-                <a
-                    href="#"
-                    onclick="gtag('event', 'nav_link_click', { link: 'pricing', page: 'home', action: 'navigate_to_pricing' })"
-                    class="hover:text-accent transition-colors"
-                >
-                    Pricing
-                </a>
-            </div>
-
-            <!-- Users Online Indicator -->
-            <div class="hidden md:flex items-center gap-2.5 text-sm text-slate-400">
-                <span class="relative flex h-2.5 w-2.5">
-                    <span class="absolute inline-flex h-full w-full rounded-full bg-red-500/70 animate-ping"></span>
-                    <span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-red-500"></span>
-                </span>
-                <span id="online-count">147</span> users online
-            </div>
-
-            <!-- CTA -->
-            <button
-                onclick="gtag('event', 'button_click', { button: 'want_more', page: 'home', action: 'want_more_clicked' })"
-                class="bg-gradient-to-r from-accent to-indigo-500 text-white px-5 py-2.5 rounded-full text-sm font-semibold hover:brightness-110 transition-all shadow-md shadow-indigo-900/30"
-            >
-                Want more?
-            </button>
         </nav>
 
         <!-- Hero -->
@@ -235,7 +281,7 @@
             </h1>
 
             <p class="text-text-secondary text-lg md:text-xl mb-12 max-w-3xl mx-auto leading-relaxed">
-                The AI grammar mentor that corrects mistakes,<br class="hidden sm:inline" />
+                The AI Grammar Mentor that corrects mistakes,<br class="hidden sm:inline" />
                 explains <em>why</em> they're wrong, and helps you build your unique style – no sign-up required.
             </p>
 
@@ -288,7 +334,7 @@
                     </div>
 
                     <div class="flex items-center gap-2.5 text-xs text-slate-400">
-                        Data anonymized via <strong class="text-slate-300">Datacloak</strong>
+                        Data anonymized via <strong class="text-slate-300">DataCloakAI</strong>
                         <i data-lucide="shield-check" class="w-4 h-4 text-emerald-500"></i>
                     </div>
                 </div>
@@ -434,65 +480,131 @@
             </div>
         </header>
 
-        <div class="inline-flex items-center gap-2 px-3 py-2 rounded-xl border border-slate-300 bg-white shadow-sm">
-            <div class="flex items-center justify-center w-7 h-7 rounded-full bg-emerald-500/15 text-emerald-600">
-                <i data-lucide="shield-check" class="w-4 h-4"></i>
-            </div>
-            <div class="leading-tight">
-                <div class="text-xs font-semibold text-slate-800">SSL Secure</div>
-                <div class="text-[10px] text-slate-500">256-bit encryption</div>
-            </div>
-        </div>
+        <!-- Trust & Security Section -->
+        <section class="py-16 sm:py-20 px-5 sm:px-8 bg-bg-primary relative overflow-hidden">
+            <!-- Subtle background glow -->
+            <div
+                class="absolute inset-0 bg-gradient-to-b from-indigo-950/5 via-transparent to-transparent pointer-events-none"
+            ></div>
 
-        <div class="inline-flex items-center gap-2 px-3 py-2 rounded-xl border border-slate-300 bg-white shadow-sm">
-            <div class="flex items-center justify-center w-7 h-7 rounded-full bg-sky-500/15 text-sky-600">
-                <i data-lucide="eye-off" class="w-4 h-4"></i>
-            </div>
-            <div class="leading-tight">
-                <div class="text-xs font-semibold text-slate-800">Private by Design</div>
-                <div class="text-[10px] text-slate-500">No data stored</div>
-            </div>
-        </div>
+            <div class="max-w-6xl mx-auto relative z-10">
+                <!-- Heading -->
+                <div class="text-center mb-10 sm:mb-14">
+                    <h2
+                        class="text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight bg-gradient-to-r from-accent via-indigo-400 to-purple-400 bg-clip-text text-transparent"
+                    >
+                        Built with Trust in Mind
+                    </h2>
+                    <p class="mt-4 text-lg text-text-secondary max-w-2xl mx-auto">
+                        Your writing is personal. We treat it that way — from day one.
+                    </p>
+                </div>
 
-        <div class="inline-flex items-center gap-2 px-3 py-2 rounded-xl border border-slate-300 bg-white shadow-sm">
-            <div class="flex items-center justify-center w-7 h-7 rounded-full bg-violet-500/15 text-violet-600">
-                <i data-lucide="brain" class="w-4 h-4"></i>
-            </div>
-            <div class="leading-tight">
-                <div class="text-xs font-semibold text-slate-800">AI Transparency</div>
-                <div class="text-[10px] text-slate-500">No training on your text</div>
-            </div>
-        </div>
+                <!-- Badges Grid / Flex Container -->
+                <div class="flex flex-wrap justify-center gap-4 sm:gap-6 max-w-5xl mx-auto">
+                    <!-- Badge 1 -->
+                    <div
+                        class="inline-flex items-center gap-3 px-5 py-3.5 rounded-2xl bg-bg-secondary/70 backdrop-blur-sm border border-slate-700/60 hover:border-accent/40 hover:bg-bg-secondary/90 transition-all duration-300 shadow-sm hover:shadow-indigo-900/20 group min-w-[220px] sm:min-w-[260px]"
+                    >
+                        <div
+                            class="flex items-center justify-center w-10 h-10 rounded-xl bg-emerald-900/30 text-emerald-400 group-hover:bg-emerald-800/40 transition-colors"
+                        >
+                            <i data-lucide="shield-check" class="w-5 h-5"></i>
+                        </div>
+                        <div class="leading-tight text-left">
+                            <div class="text-sm font-semibold text-text-primary">SSL & 256-bit Encryption</div>
+                            <div class="text-xs text-text-secondary mt-0.5">Every connection is fully secured</div>
+                        </div>
+                    </div>
 
-        <div class="inline-flex items-center gap-2 px-3 py-2 rounded-xl border border-slate-300 bg-white shadow-sm">
-            <div class="flex items-center justify-center w-7 h-7 rounded-full bg-indigo-500/15 text-indigo-600">
-                <i data-lucide="file-lock" class="w-4 h-4"></i>
-            </div>
-            <div class="leading-tight">
-                <div class="text-xs font-semibold text-slate-800">Data Ownership</div>
-                <div class="text-[10px] text-slate-500">Your text stays yours</div>
-            </div>
-        </div>
+                    <!-- Badge 2 -->
+                    <div
+                        class="inline-flex items-center gap-3 px-5 py-3.5 rounded-2xl bg-bg-secondary/70 backdrop-blur-sm border border-slate-700/60 hover:border-accent/40 hover:bg-bg-secondary/90 transition-all duration-300 shadow-sm hover:shadow-indigo-900/20 group min-w-[220px] sm:min-w-[260px]"
+                    >
+                        <div
+                            class="flex items-center justify-center w-10 h-10 rounded-xl bg-indigo-900/30 text-accent group-hover:bg-indigo-800/40 transition-colors"
+                        >
+                            <i data-lucide="eye-off" class="w-5 h-5"></i>
+                        </div>
+                        <div class="leading-tight text-left">
+                            <div class="text-sm font-semibold text-text-primary">Private by Design</div>
+                            <div class="text-xs text-text-secondary mt-0.5">No logs • No profiling</div>
+                        </div>
+                    </div>
 
-        <div class="inline-flex items-center gap-2 px-3 py-2 rounded-xl border border-slate-300 bg-white shadow-sm">
-            <div class="flex items-center justify-center w-7 h-7 rounded-full bg-slate-500/15 text-slate-600">
-                <i data-lucide="scale" class="w-4 h-4"></i>
-            </div>
-            <div class="leading-tight">
-                <div class="text-xs font-semibold text-slate-800">GDPR Compliant</div>
-                <div class="text-[10px] text-slate-500">EU data protection</div>
-            </div>
-        </div>
+                    <!-- Badge 3 -->
+                    <div
+                        class="inline-flex items-center gap-3 px-5 py-3.5 rounded-2xl bg-bg-secondary/70 backdrop-blur-sm border border-slate-700/60 hover:border-accent/40 hover:bg-bg-secondary/90 transition-all duration-300 shadow-sm hover:shadow-indigo-900/20 group min-w-[220px] sm:min-w-[260px]"
+                    >
+                        <div
+                            class="flex items-center justify-center w-10 h-10 rounded-xl bg-purple-900/30 text-purple-400 group-hover:bg-purple-800/40 transition-colors"
+                        >
+                            <i data-lucide="brain-circuit" class="w-5 h-5"></i>
+                        </div>
+                        <div class="leading-tight text-left">
+                            <div class="text-sm font-semibold text-text-primary">No AI Training on Your Text</div>
+                            <div class="text-xs text-text-secondary mt-0.5">
+                                Your content is never used to train models
+                            </div>
+                        </div>
+                    </div>
 
-        <div class="inline-flex items-center gap-2 px-3 py-2 rounded-xl border border-slate-300 bg-white shadow-sm">
-            <div class="flex items-center justify-center w-7 h-7 rounded-full bg-amber-500/15 text-amber-600">
-                <i data-lucide="shield-check" class="w-4 h-4"></i>
+                    <!-- Badge 4 -->
+                    <div
+                        class="inline-flex items-center gap-3 px-5 py-3.5 rounded-2xl bg-bg-secondary/70 backdrop-blur-sm border border-slate-700/60 hover:border-accent/40 hover:bg-bg-secondary/90 transition-all duration-300 shadow-sm hover:shadow-indigo-900/20 group min-w-[220px] sm:min-w-[260px]"
+                    >
+                        <div
+                            class="flex items-center justify-center w-10 h-10 rounded-xl bg-indigo-900/30 text-accent group-hover:bg-indigo-800/40 transition-colors"
+                        >
+                            <i data-lucide="file-lock" class="w-5 h-5"></i>
+                        </div>
+                        <div class="leading-tight text-left">
+                            <div class="text-sm font-semibold text-text-primary">You Own Your Words</div>
+                            <div class="text-xs text-text-secondary mt-0.5">We never claim rights to your text</div>
+                        </div>
+                    </div>
+
+                    <!-- Badge 5 -->
+                    <div
+                        class="inline-flex items-center gap-3 px-5 py-3.5 rounded-2xl bg-bg-secondary/70 backdrop-blur-sm border border-slate-700/60 hover:border-accent/40 hover:bg-bg-secondary/90 transition-all duration-300 shadow-sm hover:shadow-indigo-900/20 group min-w-[220px] sm:min-w-[260px]"
+                    >
+                        <div
+                            class="flex items-center justify-center w-10 h-10 rounded-xl bg-sky-900/30 text-sky-400 group-hover:bg-sky-800/40 transition-colors"
+                        >
+                            <i data-lucide="scale" class="w-5 h-5"></i>
+                        </div>
+                        <div class="leading-tight text-left">
+                            <div class="text-sm font-semibold text-text-primary">GDPR & Swiss DPA Compliant</div>
+                            <div class="text-xs text-text-secondary mt-0.5">
+                                Full EU/Swiss data protection standards
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Badge 6 -->
+                    <div
+                        class="inline-flex items-center gap-3 px-5 py-3.5 rounded-2xl bg-bg-secondary/70 backdrop-blur-sm border border-slate-700/60 hover:border-accent/40 hover:bg-bg-secondary/90 transition-all duration-300 shadow-sm hover:shadow-indigo-900/20 group min-w-[220px] sm:min-w-[260px]"
+                    >
+                        <div
+                            class="flex items-center justify-center w-10 h-10 rounded-xl bg-amber-900/30 text-amber-400 group-hover:bg-amber-800/40 transition-colors"
+                        >
+                            <i data-lucide="heart-handshake" class="w-5 h-5"></i>
+                        </div>
+                        <div class="leading-tight text-left">
+                            <div class="text-sm font-semibold text-text-primary">Responsible AI Practices</div>
+                            <div class="text-xs text-text-secondary mt-0.5">
+                                Designed to support — not replace — writers
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Optional small reassurance line below badges -->
+                <p class="text-center mt-10 text-sm text-text-secondary/80">
+                    Your trust matters more than any feature. We built AI Grammar Mentor accordingly.
+                </p>
             </div>
-            <div class="leading-tight">
-                <div class="text-xs font-semibold text-slate-800">Responsible AI</div>
-                <div class="text-[10px] text-slate-500">Built with care</div>
-            </div>
-        </div>
+        </section>
 
         <!-- Features -->
         <section class="max-w-6xl mx-auto px-6 py-20 md:py-28 grid md:grid-cols-3 gap-10 md:gap-14">
@@ -533,6 +645,545 @@
             </div>
         </section>
 
+        <!-- Reviews -->
+        <section
+            class="py-16 sm:py-24 px-4 bg-gradient-to-b from-bg-primary via-indigo-950/10 to-bg-primary relative overflow-hidden group/section"
+        >
+            <div
+                class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full bg-indigo-600/5 blur-[120px] pointer-events-none"
+            ></div>
+
+            <div class="max-w-7xl mx-auto relative z-10">
+                <!-- Header -->
+                <div class="text-center mb-12 sm:mb-20">
+                    <h2
+                        class="text-4xl sm:text-5xl md:text-6xl font-extrabold mb-6 tracking-tight bg-gradient-to-r from-indigo-400 via-purple-400 to-pink-400 bg-clip-text text-transparent"
+                    >
+                        Real Voices.
+                    </h2>
+                    <p class="text-lg sm:text-xl text-text-secondary max-w-2xl mx-auto leading-relaxed">
+                        Discover how writers are elevating their craft with AI Grammar Mentor – precise corrections that
+                        preserve your unique style.
+                    </p>
+                </div>
+
+                <!-- Carousel Container -->
+                <div class="relative px-2 sm:px-12">
+                    <!-- Slider -->
+                    <div
+                        id="testimonial-slider"
+                        class="flex gap-5 sm:gap-8 overflow-x-auto snap-x snap-mandatory scroll-smooth touch-pan-x no-scrollbar"
+                        style="scrollbar-width: none; -ms-overflow-style: none"
+                    >
+                        <!-- Card 1 -->
+                        <div class="flex-none w-[85%] sm:w-[60%] lg:w-[31%] snap-center">
+                            <div
+                                class="h-full bg-bg-secondary/70 rounded-2xl p-8 border border-slate-800/60 hover:border-accent/50 hover:bg-bg-secondary/80 transition-all duration-500 flex flex-col justify-between group"
+                            >
+                                <div>
+                                    <div class="flex text-yellow-500 mb-6 gap-1">
+                                        <svg class="w-5 h-5 fill-current" viewBox="0 0 20 20">
+                                            <path
+                                                d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"
+                                            />
+                                        </svg>
+                                        <svg class="w-5 h-5 fill-current" viewBox="0 0 20 20">
+                                            <path
+                                                d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"
+                                            />
+                                        </svg>
+                                        <svg class="w-5 h-5 fill-current" viewBox="0 0 20 20">
+                                            <path
+                                                d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"
+                                            />
+                                        </svg>
+                                        <svg class="w-5 h-5 fill-current" viewBox="0 0 20 20">
+                                            <path
+                                                d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"
+                                            />
+                                        </svg>
+                                        <svg class="w-5 h-5 fill-current" viewBox="0 0 20 20">
+                                            <path
+                                                d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"
+                                            />
+                                        </svg>
+                                    </div>
+                                    <p class="text-lg sm:text-xl leading-relaxed text-text-primary/90 mb-8 italic">
+                                        “AI Grammar Mentor transformed my writing – it catches real errors and explains
+                                        why, all while keeping my personal voice intact. A must-have for any writer!”
+                                    </p>
+                                </div>
+                                <div class="flex items-center gap-4">
+                                    <img
+                                        src="assets/sarahk.avif"
+                                        alt="Sarah K."
+                                        class="w-14 h-14 rounded-full object-cover border-2 border-accent/50 shadow-lg shadow-accent/20"
+                                        loading="lazy"
+                                    />
+                                    <div>
+                                        <h4 class="font-bold text-lg text-text-primary">Sarah K.</h4>
+                                        <p class="text-sm text-text-secondary font-medium tracking-wide uppercase">
+                                            Freelance Writer · Zürich
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Card 2 -->
+                        <div class="flex-none w-[85%] sm:w-[60%] lg:w-[31%] snap-center">
+                            <div
+                                class="h-full bg-bg-secondary/70 rounded-2xl p-8 border border-slate-800/60 hover:border-accent/50 hover:bg-bg-secondary/80 transition-all duration-500 flex flex-col justify-between group"
+                            >
+                                <div>
+                                    <div class="flex text-yellow-500 mb-6 gap-1">
+                                        <svg class="w-5 h-5 fill-current" viewBox="0 0 20 20">
+                                            <path
+                                                d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"
+                                            />
+                                        </svg>
+                                        <svg class="w-5 h-5 fill-current" viewBox="0 0 20 20">
+                                            <path
+                                                d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"
+                                            />
+                                        </svg>
+                                        <svg class="w-5 h-5 fill-current" viewBox="0 0 20 20">
+                                            <path
+                                                d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"
+                                            />
+                                        </svg>
+                                        <svg class="w-5 h-5 fill-current" viewBox="0 0 20 20">
+                                            <path
+                                                d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"
+                                            />
+                                        </svg>
+                                        <svg class="w-5 h-5 fill-current" viewBox="0 0 20 20">
+                                            <path
+                                                d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"
+                                            />
+                                        </svg>
+                                    </div>
+                                    <p class="text-lg sm:text-xl leading-relaxed text-text-primary/90 mb-8 italic">
+                                        “As a student, this tool has been a game-changer for my essays. It corrects
+                                        grammar precisely and teaches me why, helping me improve long-term without
+                                        losing my style.”
+                                    </p>
+                                </div>
+                                <div class="flex items-center gap-4">
+                                    <img
+                                        src="assets/sarat.jpg"
+                                        alt="Sara T."
+                                        class="w-14 h-14 rounded-full object-cover border-2 border-accent/50 shadow-lg shadow-accent/20"
+                                        loading="lazy"
+                                    />
+                                    <div>
+                                        <h4 class="font-bold text-lg text-text-primary">Sara T.</h4>
+                                        <p class="text-sm text-text-secondary font-medium tracking-wide uppercase">
+                                            University Student · Lucerne
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Card 3 -->
+                        <div class="flex-none w-[85%] sm:w-[60%] lg:w-[31%] snap-center">
+                            <div
+                                class="h-full bg-bg-secondary/70 rounded-2xl p-8 border border-slate-800/60 hover:border-accent/50 hover:bg-bg-secondary/80 transition-all duration-500 flex flex-col justify-between group"
+                            >
+                                <div>
+                                    <div class="flex text-yellow-500 mb-6 gap-1">
+                                        <svg class="w-5 h-5 fill-current" viewBox="0 0 20 20">
+                                            <path
+                                                d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"
+                                            />
+                                        </svg>
+                                        <svg class="w-5 h-5 fill-current" viewBox="0 0 20 20">
+                                            <path
+                                                d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"
+                                            />
+                                        </svg>
+                                        <svg class="w-5 h-5 fill-current" viewBox="0 0 20 20">
+                                            <path
+                                                d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"
+                                            />
+                                        </svg>
+                                        <svg class="w-5 h-5 fill-current" viewBox="0 0 20 20">
+                                            <path
+                                                d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"
+                                            />
+                                        </svg>
+                                        <svg class="w-5 h-5 fill-current" viewBox="0 0 20 20">
+                                            <path
+                                                d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"
+                                            />
+                                        </svg>
+                                    </div>
+                                    <p class="text-lg sm:text-xl leading-relaxed text-text-primary/90 mb-8 italic">
+                                        “In business writing, precision matters. This AI corrects grammar flawlessly
+                                        while maintaining my professional tone – it's boosted my confidence in emails
+                                        and reports.”
+                                    </p>
+                                </div>
+                                <div class="flex items-center gap-4">
+                                    <img
+                                        src="assets/marcol.jpg"
+                                        alt="Marco L."
+                                        class="w-14 h-14 rounded-full object-cover border-2 border-accent/50 shadow-lg shadow-accent/20"
+                                        loading="lazy"
+                                    />
+                                    <div>
+                                        <h4 class="font-bold text-lg text-text-primary">Marco L.</h4>
+                                        <p class="text-sm text-text-secondary font-medium tracking-wide uppercase">
+                                            Business Professional · Ticino
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Card 4 -->
+                        <div class="flex-none w-[85%] sm:w-[60%] lg:w-[31%] snap-center">
+                            <div
+                                class="h-full bg-bg-secondary/70 rounded-2xl p-8 border border-slate-800/60 hover:border-accent/50 hover:bg-bg-secondary/80 transition-all duration-500 flex flex-col justify-between group"
+                            >
+                                <div>
+                                    <div class="flex text-yellow-500 mb-6 gap-1">
+                                        <svg class="w-5 h-5 fill-current" viewBox="0 0 20 20">
+                                            <path
+                                                d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"
+                                            />
+                                        </svg>
+                                        <svg class="w-5 h-5 fill-current" viewBox="0 0 20 20">
+                                            <path
+                                                d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"
+                                            />
+                                        </svg>
+                                        <svg class="w-5 h-5 fill-current" viewBox="0 0 20 20">
+                                            <path
+                                                d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"
+                                            />
+                                        </svg>
+                                        <svg class="w-5 h-5 fill-current" viewBox="0 0 20 20">
+                                            <path
+                                                d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"
+                                            />
+                                        </svg>
+                                        <svg class="w-5 h-5 fill-current" viewBox="0 0 20 20">
+                                            <path
+                                                d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"
+                                            />
+                                        </svg>
+                                    </div>
+                                    <p class="text-lg sm:text-xl leading-relaxed text-text-primary/90 mb-8 italic">
+                                        “For academic papers, AI Grammar Mentor is indispensable. It provides insightful
+                                        feedback that not only fixes issues but helps me learn and refine my writing
+                                        skills.”
+                                    </p>
+                                </div>
+                                <div class="flex items-center gap-4">
+                                    <img
+                                        src="assets/lenam.jpg"
+                                        alt="Lena M."
+                                        class="w-14 h-14 rounded-full object-cover border-2 border-accent/50 shadow-lg shadow-accent/20"
+                                        loading="lazy"
+                                    />
+                                    <div>
+                                        <h4 class="font-bold text-lg text-text-primary">Lena M.</h4>
+                                        <p class="text-sm text-text-secondary font-medium tracking-wide uppercase">
+                                            Academic Researcher · Geneva
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Card 5 -->
+                        <div class="flex-none w-[85%] sm:w-[60%] lg:w-[31%] snap-center">
+                            <div
+                                class="h-full bg-bg-secondary/70 rounded-2xl p-8 border border-slate-800/60 hover:border-accent/50 hover:bg-bg-secondary/80 transition-all duration-500 flex flex-col justify-between group"
+                            >
+                                <div>
+                                    <div class="flex text-yellow-500 mb-6 gap-1">
+                                        <svg class="w-5 h-5 fill-current" viewBox="0 0 20 20">
+                                            <path
+                                                d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"
+                                            />
+                                        </svg>
+                                        <svg class="w-5 h-5 fill-current" viewBox="0 0 20 20">
+                                            <path
+                                                d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"
+                                            />
+                                        </svg>
+                                        <svg class="w-5 h-5 fill-current" viewBox="0 0 20 20">
+                                            <path
+                                                d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"
+                                            />
+                                        </svg>
+                                        <svg class="w-5 h-5 fill-current" viewBox="0 0 20 20">
+                                            <path
+                                                d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"
+                                            />
+                                        </svg>
+                                        <svg class="w-5 h-5 fill-current" viewBox="0 0 20 20">
+                                            <path
+                                                d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"
+                                            />
+                                        </svg>
+                                    </div>
+                                    <p class="text-lg sm:text-xl leading-relaxed text-text-primary/90 mb-8 italic">
+                                        “Creative writing flows better with AI Grammar Mentor. It spots mistakes
+                                        instantly and offers explanations that spark new ideas, all without altering my
+                                        artistic voice.”
+                                    </p>
+                                </div>
+                                <div class="flex items-center gap-4">
+                                    <img
+                                        src="assets/isabelg.jpg"
+                                        alt="Isabel G."
+                                        class="w-14 h-14 rounded-full object-cover border-2 border-accent/50 shadow-lg shadow-accent/20"
+                                        loading="lazy"
+                                    />
+                                    <div>
+                                        <h4 class="font-bold text-lg text-text-primary">Isabel G.</h4>
+                                        <p class="text-sm text-text-secondary font-medium tracking-wide uppercase">
+                                            Creative Writer · Basel
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Card 6 -->
+                        <div class="flex-none w-[85%] sm:w-[60%] lg:w-[31%] snap-center">
+                            <div
+                                class="h-full bg-bg-secondary/70 rounded-2xl p-8 border border-slate-800/60 hover:border-accent/50 hover:bg-bg-secondary/80 transition-all duration-500 flex flex-col justify-between group"
+                            >
+                                <div>
+                                    <div class="flex text-yellow-500 mb-6 gap-1">
+                                        <svg class="w-5 h-5 fill-current" viewBox="0 0 20 20">
+                                            <path
+                                                d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"
+                                            />
+                                        </svg>
+                                        <svg class="w-5 h-5 fill-current" viewBox="0 0 20 20">
+                                            <path
+                                                d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"
+                                            />
+                                        </svg>
+                                        <svg class="w-5 h-5 fill-current" viewBox="0 0 20 20">
+                                            <path
+                                                d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"
+                                            />
+                                        </svg>
+                                        <svg class="w-5 h-5 fill-current" viewBox="0 0 20 20">
+                                            <path
+                                                d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"
+                                            />
+                                        </svg>
+                                        <svg class="w-5 h-5 fill-current" viewBox="0 0 20 20">
+                                            <path
+                                                d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"
+                                            />
+                                        </svg>
+                                    </div>
+                                    <p class="text-lg sm:text-xl leading-relaxed text-text-primary/90 mb-8 italic">
+                                        “Journalism demands accuracy, and AI Grammar Mentor delivers. It ensures my
+                                        articles are error-free while preserving the intensity and personality of my
+                                        reporting.”
+                                    </p>
+                                </div>
+                                <div class="flex items-center gap-4">
+                                    <img
+                                        src="assets/davids.jpg"
+                                        alt="David S."
+                                        class="w-14 h-14 rounded-full object-cover border-2 border-accent/50 shadow-lg shadow-accent/20"
+                                        loading="lazy"
+                                    />
+                                    <div>
+                                        <h4 class="font-bold text-lg text-text-primary">David S.</h4>
+                                        <p class="text-sm text-text-secondary font-medium tracking-wide uppercase">
+                                            Journalist · Bern
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Card 7 -->
+                        <div class="flex-none w-[85%] sm:w-[60%] lg:w-[31%] snap-center">
+                            <div
+                                class="h-full bg-bg-secondary/70 rounded-2xl p-8 border border-slate-800/60 hover:border-accent/50 hover:bg-bg-secondary/80 transition-all duration-500 flex flex-col justify-between group"
+                            >
+                                <div>
+                                    <div class="flex text-yellow-500 mb-6 gap-1">
+                                        <svg class="w-5 h-5 fill-current" viewBox="0 0 20 20">
+                                            <path
+                                                d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"
+                                            />
+                                        </svg>
+                                        <svg class="w-5 h-5 fill-current" viewBox="0 0 20 20">
+                                            <path
+                                                d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"
+                                            />
+                                        </svg>
+                                        <svg class="w-5 h-5 fill-current" viewBox="0 0 20 20">
+                                            <path
+                                                d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"
+                                            />
+                                        </svg>
+                                        <svg class="w-5 h-5 fill-current" viewBox="0 0 20 20">
+                                            <path
+                                                d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"
+                                            />
+                                        </svg>
+                                        <svg class="w-5 h-5 fill-current" viewBox="0 0 20 20">
+                                            <path
+                                                d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"
+                                            />
+                                        </svg>
+                                    </div>
+                                    <p class="text-lg sm:text-xl leading-relaxed text-text-primary/90 mb-8 italic">
+                                        “Blogging just got easier! AI Grammar Mentor polishes my posts quickly, ensuring
+                                        they're engaging and error-free, while keeping my authentic tone shining
+                                        through.”
+                                    </p>
+                                </div>
+                                <div class="flex items-center gap-4">
+                                    <img
+                                        src="assets/emmal.jpg"
+                                        alt="Emma L."
+                                        class="w-14 h-14 rounded-full object-cover border-2 border-accent/50 shadow-lg shadow-accent/20"
+                                        loading="lazy"
+                                    />
+                                    <div>
+                                        <h4 class="font-bold text-lg text-text-primary">Emma L.</h4>
+                                        <p class="text-sm text-text-secondary font-medium tracking-wide uppercase">
+                                            Blogger · Lausanne
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Card 8 -->
+                        <div class="flex-none w-[85%] sm:w-[60%] lg:w-[31%] snap-center">
+                            <div
+                                class="h-full bg-bg-secondary/70 rounded-2xl p-8 border border-slate-800/60 hover:border-accent/50 hover:bg-bg-secondary/80 transition-all duration-500 flex flex-col justify-between group"
+                            >
+                                <div>
+                                    <div class="flex text-yellow-500 mb-6 gap-1">
+                                        <svg class="w-5 h-5 fill-current" viewBox="0 0 20 20">
+                                            <path
+                                                d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"
+                                            />
+                                        </svg>
+                                        <svg class="w-5 h-5 fill-current" viewBox="0 0 20 20">
+                                            <path
+                                                d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"
+                                            />
+                                        </svg>
+                                        <svg class="w-5 h-5 fill-current" viewBox="0 0 20 20">
+                                            <path
+                                                d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"
+                                            />
+                                        </svg>
+                                        <svg class="w-5 h-5 fill-current" viewBox="0 0 20 20">
+                                            <path
+                                                d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"
+                                            />
+                                        </svg>
+                                        <svg class="w-5 h-5 fill-current" viewBox="0 0 20 20">
+                                            <path
+                                                d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"
+                                            />
+                                        </svg>
+                                    </div>
+                                    <p class="text-lg sm:text-xl leading-relaxed text-text-primary/90 mb-8 italic">
+                                        “We use AI Grammar Mentor for our team's collaborative writing. It ensures
+                                        consistency and clarity, making our documents professional without stifling
+                                        creativity.”
+                                    </p>
+                                </div>
+                                <div class="flex items-center gap-4">
+                                    <img
+                                        src="assets/rebeccadina.jpg"
+                                        alt="Rebecca & Dina"
+                                        class="w-14 h-14 rounded-full object-cover border-2 border-accent/50 shadow-lg shadow-accent/20"
+                                        loading="lazy"
+                                    />
+                                    <div>
+                                        <h4 class="font-bold text-lg text-text-primary">Rebecca & Dina</h4>
+                                        <p class="text-sm text-text-secondary font-medium tracking-wide uppercase">
+                                            Content Team · Lugano
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Navigation Controls -->
+                    <div class="flex justify-center items-center gap-6 py-6">
+                        <button
+                            id="prev-testimonial"
+                            class="p-4 rounded-full border border-slate-800/60 text-text-primary hover:bg-bg-secondary/50 hover:border-accent/30 transition-all active:scale-90 group"
+                        >
+                            <svg
+                                class="w-6 h-6 group-hover:-translate-x-1 transition-transform"
+                                fill="none"
+                                stroke="currentColor"
+                                viewBox="0 0 24 24"
+                            >
+                                <path
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    stroke-width="2"
+                                    d="M15 19l-7-7 7-7"
+                                />
+                            </svg>
+                        </button>
+
+                        <button
+                            id="next-testimonial"
+                            class="p-4 rounded-full bg-accent text-white hover:bg-accent-dark hover:text-white transition-all active:scale-90 group"
+                        >
+                            <svg
+                                class="w-6 h-6 group-hover:translate-x-1 transition-transform"
+                                fill="none"
+                                stroke="currentColor"
+                                viewBox="0 0 24 24"
+                            >
+                                <path
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    stroke-width="2"
+                                    d="M9 5l7 7-7 7"
+                                />
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <script>
+            // Simple carousel navigation
+            const slider = document.getElementById("testimonial-slider");
+            const prevBtn = document.getElementById("prev-testimonial");
+            const nextBtn = document.getElementById("next-testimonial");
+
+            if (slider && prevBtn && nextBtn) {
+                const cardWidth = slider.querySelector("div").offsetWidth + parseInt(getComputedStyle(slider).gap);
+                prevBtn.addEventListener("click", () => {
+                    slider.scrollBy({ left: -cardWidth, behavior: "smooth" });
+                });
+                nextBtn.addEventListener("click", () => {
+                    slider.scrollBy({ left: cardWidth, behavior: "smooth" });
+                });
+            }
+        </script>
+
         <!-- Footer -->
         <footer class="bg-bg-secondary/50 border-t border-slate-800/60 pt-16 pb-8 mt-20">
             <div class="max-w-6xl mx-auto px-6 md:px-10">
@@ -540,8 +1191,9 @@
                     <!-- Brand Column -->
                     <div class="col-span-1 md:col-span-1">
                         <div class="flex items-center gap-3 mb-6">
-                            <img src="assets/logo.png" alt="Grammar Mentor Logo" class="w-8 h-8" />
+                            <img src="assets/logo426*426.png" alt="AI Grammar Mentor Logo" class="w-8 h-8" />
                             <span class="text-lg font-semibold tracking-tight text-slate-100">
+                                <span class="text-indigo-400 font-medium">AI</span>
                                 <span
                                     class="bg-clip-text text-transparent bg-gradient-to-r from-indigo-400 to-violet-400"
                                     >Grammar</span
@@ -559,8 +1211,8 @@
                         <h4 class="text-white font-semibold mb-6 text-sm uppercase tracking-wider">Product</h4>
                         <ul class="space-y-4 text-sm text-slate-400">
                             <li><a href="#" class="hover:text-accent transition-colors">Features</a></li>
-                            <li><a href="#" class="hover:text-accent transition-colors">Pricing</a></li>
-                            <li><a href="#" class="hover:text-accent transition-colors">Changelog</a></li>
+                            <li><a href="pricing.html" class="hover:text-accent transition-colors">Pricing</a></li>
+                            <li><a href="changelog.html" class="hover:text-accent transition-colors">Changelog</a></li>
                         </ul>
                     </div>
 
@@ -570,9 +1222,19 @@
                             Legal information
                         </h4>
                         <ul class="space-y-4 text-sm text-slate-400">
-                            <li><a href="privacy-policy.html" class="hover:text-accent transition-colors">Privacy Policy</a></li>
-                            <li><a href="terms-of-service.html" class="hover:text-accent transition-colors">Terms of Service</a></li>
-                            <li><a href="legal-notice.html" class="hover:text-accent transition-colors">Legal notice</a></li>
+                            <li>
+                                <a href="privacy-policy.html" class="hover:text-accent transition-colors"
+                                    >Privacy Policy</a
+                                >
+                            </li>
+                            <li>
+                                <a href="terms-of-service.html" class="hover:text-accent transition-colors"
+                                    >Terms of Service</a
+                                >
+                            </li>
+                            <li>
+                                <a href="legal-notice.html" class="hover:text-accent transition-colors">Legal notice</a>
+                            </li>
                         </ul>
                     </div>
 
@@ -600,381 +1262,10 @@
                         <script>
                             document.write(new Date().getFullYear());
                         </script>
-                        Grammar Mentor. Made with precision in Switzerland.
+                        AI Grammar Mentor. Made with precision in Switzerland.
                     </p>
-                    <div class="flex gap-6">
-                        <a href="#" class="text-slate-500 hover:text-white transition-colors"
-                            ><i data-lucide="twitter" class="w-4 h-4"></i
-                        ></a>
-                        <a href="#" class="text-slate-500 hover:text-white transition-colors"
-                            ><i data-lucide="linkedin" class="w-4 h-4"></i
-                        ></a>
-                        <a href="#" class="text-slate-500 hover:text-white transition-colors"
-                            ><i data-lucide="github" class="w-4 h-4"></i
-                        ></a>
-                    </div>
                 </div>
             </div>
         </footer>
-
-        <!-- Nicht vergessen am Ende des Body-Tags Lucide Icons zu initialisieren -->
-        <script>
-            lucide.createIcons();
-        </script>
-
-        <script>
-            lucide.createIcons();
-
-            // Kleiner Framer-Motion Effekt nur für die Features-Icons (optional)
-            // Kann komplett entfernt werden, wenn du keine externen Libs willst
-            document.addEventListener("DOMContentLoaded", () => {
-                const icons = document.querySelectorAll(".group");
-                icons.forEach((el) => {
-                    el.addEventListener("mouseenter", () => {
-                        el.style.transform = "translateY(-6px)";
-                    });
-                    el.addEventListener("mouseleave", () => {
-                        el.style.transform = "translateY(0)";
-                    });
-                });
-            });
-        </script>
-
-        <script>
-            // Realistische Simulation: 80–320 User online (für eine neue AI-Tool-Landingpage plausibel)
-            function getRandomOnlineUsers() {
-                // Basiswert + etwas Rauschen + leichte Tageszeit-Simulation
-                const base = 140;
-                const variation = Math.floor(Math.random() * 80) - 40; // ±40
-                const timeFactor = Math.sin(Date.now() / 1000 / 60 / 15) * 30; // sanfte Welle ~alle 15 Min
-                return Math.max(80, Math.round(base + variation + timeFactor));
-            }
-
-            function updateOnlineCount() {
-                const countEl = document.getElementById("online-count");
-                if (countEl) {
-                    countEl.textContent = getRandomOnlineUsers().toLocaleString();
-                }
-            }
-
-            // Sofort setzen + alle 8–14 Sekunden aktualisieren (natürlich wirkend)
-            updateOnlineCount();
-            setInterval(updateOnlineCount, 8000 + Math.random() * 6000);
-        </script>
-
-        <script>
-            // Character count update
-            const textarea = document.getElementById("input-textarea");
-            const wordCount = document.getElementById("word-count");
-            const charCount = document.getElementById("char-count");
-            textarea.addEventListener("input", () => {
-                const text = textarea.value.trim();
-                const words = text.split(/\s+/).filter((w) => w.length > 0).length;
-                wordCount.textContent = `${words} words`;
-                charCount.textContent = `${textarea.value.length} characters`;
-            });
-
-            // ────────────────────────────────────────────────
-            // Hilfsfunktion für temporäre Feedback-Klasse
-            // ────────────────────────────────────────────────
-            function addFeedback(btnId, feedbackClasses = ["btn-feedback"], duration = 800) {
-                const btn = document.getElementById(btnId);
-                if (!btn) return;
-
-                btn.classList.add(...feedbackClasses);
-                setTimeout(() => {
-                    btn.classList.remove(...feedbackClasses);
-                }, duration);
-            }
-
-            // ────────────────────────────────────────────────
-            // Paste functionality
-            // ────────────────────────────────────────────────
-            document.getElementById("paste-button").addEventListener("click", async () => {
-                try {
-                    const text = await navigator.clipboard.readText();
-                    textarea.value = text;
-
-                    const words = text
-                        .trim()
-                        .split(/\s+/)
-                        .filter((w) => w.length > 0).length;
-                    wordCount.textContent = `${words} words`;
-                    charCount.textContent = `${text.length} characters`;
-
-                    // Feedback
-                    addFeedback("paste-button");
-                } catch (err) {
-                    console.error("Failed to paste:", err);
-                }
-            });
-
-            // ────────────────────────────────────────────────
-            // Clear functionality
-            // ────────────────────────────────────────────────
-            document.getElementById("clear-button").addEventListener("click", () => {
-                try {
-                    textarea.value = "";
-                    wordCount.textContent = "0 words";
-                    charCount.textContent = "0 characters";
-
-                    // Feedback mit rotem Touch
-                    addFeedback("clear-button", ["btn-feedback", "btn-feedback-clear"]);
-                } catch (err) {
-                    console.error("Failed to clear:", err);
-                }
-            });
-
-            // ────────────────────────────────────────────────
-            // Copy functionality
-            // ────────────────────────────────────────────────
-            document.getElementById("copy-button").addEventListener("click", async () => {
-                try {
-                    const text = textarea.value;
-                    if (!text) return; // nichts zu kopieren → früh raus
-
-                    await navigator.clipboard.writeText(text);
-
-                    // Feedback (besonderer Check-Style)
-                    addFeedback("copy-button", ["btn-feedback", "btn-feedback-copy"], 900);
-
-                    // Optional: beliebte "Copied!" Variante (1400 ms sichtbar)
-                    const btn = document.getElementById("copy-button");
-                    const originalHTML = btn.innerHTML;
-                    btn.innerHTML = '<i data-lucide="check" class="w-4.5 h-4.5"></i> Copied!';
-                    lucide.createIcons();
-                    setTimeout(() => {
-                        btn.innerHTML = originalHTML;
-                        lucide.createIcons();
-                    }, 1400);
-                } catch (err) {
-                    console.error("Failed to copy:", err);
-                }
-            });
-
-            // Check now button handling with tracking and notification display
-            document.getElementById("check-now-button").addEventListener("click", async () => {
-                // ────────────────────────────────────────────────
-                // 1. Read user selections
-                // ────────────────────────────────────────────────
-                const modeSelect = document.querySelector("select option:checked")?.parentElement; // the <select>
-                const correctionMode = modeSelect?.value?.trim() || "Authentic (errors only)";
-
-                const langSelect = document.querySelectorAll("select")[1]; // second select = language
-                const language = langSelect?.value?.trim() || "Auto-detect language";
-
-                // ────────────────────────────────────────────────
-                // 2. Get elements & clean text (always use plain text for backend & highlighting)
-                // ────────────────────────────────────────────────
-                const container = document.getElementById("input-textarea");
-                if (!container) return;
-
-                const isInitialTextarea = container.tagName === "TEXTAREA";
-                const cleanText = isInitialTextarea ? container.value.trim() : container.innerText.trim();
-
-                if (!cleanText) {
-                    alert("Please enter some text to check.");
-                    return;
-                }
-
-                // ────────────────────────────────────────────────
-                // 3. Show loading state
-                // ────────────────────────────────────────────────
-                const placeholder = document.getElementById("feedback-placeholder");
-                const loading = document.getElementById("feedback-loading");
-                const resultsDiv = document.getElementById("feedback-results");
-
-                placeholder.classList.add("hidden");
-                loading.classList.remove("hidden");
-                resultsDiv.classList.add("hidden");
-                resultsDiv.innerHTML = "";
-
-                // Disable button during request
-                const btn = document.getElementById("check-now-button");
-                btn.disabled = true;
-                btn.innerHTML = '<i data-lucide="loader-2" class="w-5 h-5 animate-spin"></i> Checking...';
-                lucide.createIcons();
-
-                try {
-                    // ────────────────────────────────────────────────
-                    // 4. Send request → always send clean plain text
-                    // ────────────────────────────────────────────────
-                    const response = await fetch("https://grammar-mentor.com/subscribe.php", {
-                        method: "POST",
-                        headers: { "Content-Type": "application/json" },
-                        body: JSON.stringify({
-                            text: cleanText,
-                            mode: correctionMode,
-                            language: language,
-                        }),
-                    });
-
-                    if (!response.ok) {
-                        let errorMsg = "Server error";
-                        try {
-                            const err = await response.json();
-                            errorMsg = err.message || errorMsg;
-                        } catch {}
-                        throw new Error(errorMsg);
-                    }
-
-                    const data = await response.json();
-
-                    // ────────────────────────────────────────────────
-                    // 5. Display results
-                    // ────────────────────────────────────────────────
-                    if (!data.data?.errors?.length) {
-                        resultsDiv.innerHTML = `
-                <div class="p-5 bg-emerald-950/30 border border-emerald-800/50 rounded-xl text-center">
-                    <i data-lucide="check-circle" class="w-10 h-10 text-emerald-400 mx-auto mb-3"></i>
-                    <p class="text-emerald-300 font-medium">No issues found</p>
-                    <p class="text-sm text-emerald-200/70 mt-1">Your text looks great!</p>
-                </div>`;
-                    } else {
-                        // ── Highlighting auf Basis des reinen Textes ──
-                        let offset = 0;
-                        const fragments = [];
-
-                        // Sort just to be safe (normally backend should already sort)
-                        data.data.errors
-                            .sort((a, b) => a.start - b.start)
-                            .forEach((err, index) => {
-                                const before = cleanText.slice(offset, err.start);
-                                const wrong = cleanText.slice(err.start, err.end);
-
-                                const mark = `<mark class="bg-red-900/40 border-b-2 border-red-500 cursor-help relative group" title="${err.message.replace(/"/g, "&quot;")}">${wrong}</mark>`;
-
-                                fragments.push(before, mark);
-                                offset = err.end;
-
-                                // Explanation card
-                                const explanation = document.createElement("div");
-                                explanation.className =
-                                    "p-4 bg-slate-800/60 border border-slate-700 rounded-xl hover:border-indigo-600/50 transition-colors";
-
-                                explanation.innerHTML = `
-                        <div class="flex items-start gap-3">
-                            <div class="mt-0.5">
-                                ${index + 1}.
-                            </div>
-                            <div class="flex-1">
-                                <p class="font-medium text-red-300">${err.wrong || wrong}</p>
-                                <p class="text-sm text-slate-300 mt-1">${err.message}</p>
-                                ${
-                                    err.suggestion
-                                        ? `
-                                    <p class="mt-2 text-sm">
-                                        <span class="text-slate-400">Suggestion:</span>
-                                        <span class="text-emerald-300 font-medium">${err.suggestion}</span>
-                                    </p>
-                                `
-                                        : ""
-                                }
-                            </div>
-                        </div>`;
-
-                                resultsDiv.appendChild(explanation);
-                            });
-
-                        // Rest des Textes
-                        fragments.push(cleanText.slice(offset));
-
-                        const highlightedHTML = fragments.join("");
-
-                        // ── Jetzt nur innerHTML aktualisieren ── (egal ob textarea oder div)
-                        if (isInitialTextarea) {
-                            // Erste Umwandlung: textarea → contenteditable div
-                            container.outerHTML = `
-                    <div id="input-textarea"
-                         contenteditable="true"
-                         class="w-full editor-min-h bg-transparent text-lg text-text-primary placeholder-slate-500 border-none focus:ring-0 outline-none resize-none font-medium leading-relaxed prose prose-invert max-w-none">
-                        ${highlightedHTML}
-                    </div>`;
-                        } else {
-                            // Bereits contenteditable → nur Inhalt austauschen
-                            container.innerHTML = highlightedHTML;
-                        }
-                    }
-                } catch (err) {
-                    console.error(err);
-                    resultsDiv.innerHTML = `
-            <div class="p-5 bg-red-950/30 border border-red-800/50 rounded-xl">
-                <p class="text-red-300 font-medium">Sorry, something went wrong</p>
-                <p class="text-sm text-red-200/80 mt-2">${err.message || "Please try again later."}</p>
-            </div>`;
-                }
-
-                // ────────────────────────────────────────────────
-                // 6. Restore UI state
-                // ────────────────────────────────────────────────
-                loading.classList.add("hidden");
-                resultsDiv.classList.remove("hidden");
-                btn.disabled = false;
-                btn.innerHTML = `
-        <i data-lucide="sparkles" class="w-5 h-5 group-hover:rotate-12 transition-transform duration-300"></i>
-        Check now
-    `;
-                lucide.createIcons();
-            });
-
-            // Notify button handling with email submission to backend
-            document.getElementById("notify-button").addEventListener("click", async () => {
-                const email = document.getElementById("email-input").value;
-                if (!email) return;
-
-                try {
-                    const response = await fetch("https://grammar-mentor.com/subscribe.php", {
-                        method: "POST",
-                        headers: { "Content-Type": "application/json" },
-                        body: JSON.stringify({ email }),
-                    });
-
-                    if (response.ok) {
-                        document.getElementById("thanks-message").classList.remove("hidden");
-                        document.getElementById("email-input").classList.add("hidden");
-                        document.getElementById("notify-button").classList.add("hidden");
-
-                        gtag("event", "button_click", {
-                            button: "notify_me",
-                            page: "home",
-                            action: "email_submitted",
-                        });
-                    } else {
-                        console.error("Server error:", await response.text());
-                    }
-                } catch (err) {
-                    console.error("Failed to submit email:", err);
-                }
-            });
-        </script>
-
-        <script>
-            // Scroll behavior tracking
-            // Tracks scroll depth at 25%, 50%, 75%, 100% and sends gtag events
-            const scrollThresholds = [25, 50, 75, 100];
-            let scrolledThresholds = [];
-
-            function trackScroll() {
-                const scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
-                const scrollHeight = document.documentElement.scrollHeight || document.body.scrollHeight;
-                const clientHeight = document.documentElement.clientHeight || window.innerHeight;
-                const scrollPercent = Math.floor(((scrollTop + clientHeight) / scrollHeight) * 100);
-
-                for (let threshold of scrollThresholds) {
-                    if (scrollPercent >= threshold && !scrolledThresholds.includes(threshold)) {
-                        gtag("event", "scroll_depth", {
-                            depth: `${threshold}%`,
-                            page: "home",
-                            action: "scrolled_to_depth",
-                        });
-                        scrolledThresholds.push(threshold);
-                    }
-                }
-            }
-
-            window.addEventListener("scroll", trackScroll);
-            // Initial check in case page is already scrolled
-            trackScroll();
-        </script>
     </body>
 </html>
