@@ -190,6 +190,12 @@
                             <option>Authentic (errors only)</option>
                             <option>Academic writing</option>
                             <option>Business professional</option>
+                            <option>Creative Preservation</option>
+                            <option>Simple & Clear</option>
+                            <option>Scientific Precision</option>
+                            <option>Persuasive & Influential</option>
+                            <option>Friendly & Conversational</option>
+                            <option>SEO-Optimized</option>
                         </select>
 
                         <!-- Tracking event for language select change -->
@@ -204,6 +210,10 @@
                             <option>French</option>
                             <option>Portuguese</option>
                             <option>Spanish</option>
+                            <option>Italian</option>
+                            <option>Polish</option>
+                            <option>Mandarin</option>
+                            <option>Japanese</option>
                         </select>
                     </div>
 
@@ -224,12 +234,12 @@
 
                         <div class="mt-6 flex flex-wrap items-center justify-between gap-3 sm:gap-4">
                             <!-- Words count -->
-<span id="word-count" class="text-sm text-slate-500 font-medium order-1"> 0 words </span>
+                            <span id="word-count" class="text-sm text-slate-500 font-medium order-1"> 0 words </span>
 
-<!-- Character count -->
-<span id="char-count" class="text-sm text-slate-500 font-medium order-1">
-    0 characters
-</span>
+                            <!-- Character count -->
+                            <span id="char-count" class="text-sm text-slate-500 font-medium order-1">
+                                0 characters
+                            </span>
 
                             <!-- Action buttons group -->
                             <div class="flex items-center gap-2.5 sm:gap-3 order-3 sm:order-2 w-full sm:w-auto">
@@ -265,7 +275,7 @@
 
                                 <!-- Copy button with tracking -->
                                 <button
-                                    id="copy-button"
+                                    id="clear-button"
                                     type="button"
                                     title="Clear"
                                     onclick="gtag('event', 'button_click', { button: 'clear', page: 'home', action: 'clear_text' })"
@@ -583,138 +593,152 @@
         </script>
 
         <script>
-    // Character count update
-    const textarea = document.getElementById("input-textarea");
-    const wordCount = document.getElementById("word-count");
-    const charCount = document.getElementById("char-count");
-    textarea.addEventListener("input", () => {
-        const text = textarea.value.trim();
-        const words = text.split(/\s+/).filter(w => w.length > 0).length;
-        wordCount.textContent = `${words} words`;
-        charCount.textContent = `${textarea.value.length} characters`;
-    });
-
-    // Paste functionality
-    document.getElementById("paste-button").addEventListener("click", async () => {
-        try {
-            const text = await navigator.clipboard.readText();
-            textarea.value = text;
-            const words = text.trim().split(/\s+/).filter(w => w.length > 0).length;
-            wordCount.textContent = `${words} words`;
-            charCount.textContent = `${text.length} characters`;
-        } catch (err) {
-            console.error("Failed to paste:", err);
-        }
-    });
-
-    // Copy functionality
-    document.getElementById("copy-button").addEventListener("click", async () => {
-        try {
-            await navigator.clipboard.writeText(textarea.value);
-        } catch (err) {
-            console.error("Failed to copy:", err);
-        }
-    });
-
-    // Check now button handling with tracking and notification display
-    document.getElementById("check-now-button").addEventListener("click", async () => {
-        // ────────────────────────────────────────────────
-        // 1. Read user selections
-        // ────────────────────────────────────────────────
-        const modeSelect = document.querySelector("select option:checked")?.parentElement; // the <select>
-        const correctionMode = modeSelect?.value?.trim() || "Authentic (errors only)";
-
-        const langSelect = document.querySelectorAll("select")[1]; // second select = language
-        const language = langSelect?.value?.trim() || "Auto-detect language";
-
-        // ────────────────────────────────────────────────
-        // 2. Get text
-        // ────────────────────────────────────────────────
-        const textarea = document.getElementById("input-textarea");
-        const text = textarea.value.trim();
-
-        if (!text) {
-            alert("Please enter some text to check.");
-            return;
-        }
-
-        // ────────────────────────────────────────────────
-        // 3. Show loading state
-        // ────────────────────────────────────────────────
-        const placeholder = document.getElementById("feedback-placeholder");
-        const loading = document.getElementById("feedback-loading");
-        const resultsDiv = document.getElementById("feedback-results");
-
-        placeholder.classList.add("hidden");
-        loading.classList.remove("hidden");
-        resultsDiv.classList.add("hidden");
-        resultsDiv.innerHTML = "";
-
-        // Optional: disable button during request
-        const btn = document.getElementById("check-now-button");
-        btn.disabled = true;
-        btn.innerHTML = '<i data-lucide="loader-2" class="w-5 h-5 animate-spin"></i> Checking...';
-
-        lucide.createIcons(); // refresh icon
-
-        try {
-            // ────────────────────────────────────────────────
-            // 4. Send request to real backend
-            // ────────────────────────────────────────────────
-            const response = await fetch("https://grammar-mentor.com/subscribe.php", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({
-                    text: textarea.value.trim(),
-                    mode: correctionMode,
-                    language: language,
-                }),
+            // Character count update
+            const textarea = document.getElementById("input-textarea");
+            const wordCount = document.getElementById("word-count");
+            const charCount = document.getElementById("char-count");
+            textarea.addEventListener("input", () => {
+                const text = textarea.value.trim();
+                const words = text.split(/\s+/).filter((w) => w.length > 0).length;
+                wordCount.textContent = `${words} words`;
+                charCount.textContent = `${textarea.value.length} characters`;
             });
 
-            if (!response.ok) {
-                let errorMsg = "Server error";
+            // Paste functionality
+            document.getElementById("paste-button").addEventListener("click", async () => {
                 try {
-                    const err = await response.json();
-                    errorMsg = err.message || errorMsg;
-                } catch {}
-                throw new Error(errorMsg);
-            }
+                    const text = await navigator.clipboard.readText();
+                    textarea.value = text;
+                    const words = text
+                        .trim()
+                        .split(/\s+/)
+                        .filter((w) => w.length > 0).length;
+                    wordCount.textContent = `${words} words`;
+                    charCount.textContent = `${text.length} characters`;
+                } catch (err) {
+                    console.error("Failed to paste:", err);
+                }
+            });
 
-            const data = await response.json();
+            // Clear functionality
+            document.getElementById("clear-button").addEventListener("click", async () => {
+                try {
+                    textarea.value = "";
+                    wordCount.textContent = "0 words";
+                    charCount.textContent = "0 characters";
+                } catch (err) {
+                    console.error("Failed to clear:", err);
+                }
+            });
 
-            // ────────────────────────────────────────────────
-            // 5. Display results
-            // ────────────────────────────────────────────────
-            if (!data.data?.errors?.length) {
-                resultsDiv.innerHTML = `
+            // Copy functionality
+            document.getElementById("copy-button").addEventListener("click", async () => {
+                try {
+                    await navigator.clipboard.writeText(textarea.value);
+                } catch (err) {
+                    console.error("Failed to copy:", err);
+                }
+            });
+
+            // Check now button handling with tracking and notification display
+            document.getElementById("check-now-button").addEventListener("click", async () => {
+                // ────────────────────────────────────────────────
+                // 1. Read user selections
+                // ────────────────────────────────────────────────
+                const modeSelect = document.querySelector("select option:checked")?.parentElement; // the <select>
+                const correctionMode = modeSelect?.value?.trim() || "Authentic (errors only)";
+
+                const langSelect = document.querySelectorAll("select")[1]; // second select = language
+                const language = langSelect?.value?.trim() || "Auto-detect language";
+
+                // ────────────────────────────────────────────────
+                // 2. Get text
+                // ────────────────────────────────────────────────
+                const textarea = document.getElementById("input-textarea");
+                const text = textarea.value.trim();
+
+                if (!text) {
+                    alert("Please enter some text to check.");
+                    return;
+                }
+
+                // ────────────────────────────────────────────────
+                // 3. Show loading state
+                // ────────────────────────────────────────────────
+                const placeholder = document.getElementById("feedback-placeholder");
+                const loading = document.getElementById("feedback-loading");
+                const resultsDiv = document.getElementById("feedback-results");
+
+                placeholder.classList.add("hidden");
+                loading.classList.remove("hidden");
+                resultsDiv.classList.add("hidden");
+                resultsDiv.innerHTML = "";
+
+                // Optional: disable button during request
+                const btn = document.getElementById("check-now-button");
+                btn.disabled = true;
+                btn.innerHTML = '<i data-lucide="loader-2" class="w-5 h-5 animate-spin"></i> Checking...';
+
+                lucide.createIcons(); // refresh icon
+
+                try {
+                    // ────────────────────────────────────────────────
+                    // 4. Send request to real backend
+                    // ────────────────────────────────────────────────
+                    const response = await fetch("https://grammar-mentor.com/subscribe.php", {
+                        method: "POST",
+                        headers: { "Content-Type": "application/json" },
+                        body: JSON.stringify({
+                            text: textarea.value.trim(),
+                            mode: correctionMode,
+                            language: language,
+                        }),
+                    });
+
+                    if (!response.ok) {
+                        let errorMsg = "Server error";
+                        try {
+                            const err = await response.json();
+                            errorMsg = err.message || errorMsg;
+                        } catch {}
+                        throw new Error(errorMsg);
+                    }
+
+                    const data = await response.json();
+
+                    // ────────────────────────────────────────────────
+                    // 5. Display results
+                    // ────────────────────────────────────────────────
+                    if (!data.data?.errors?.length) {
+                        resultsDiv.innerHTML = `
                     <div class="p-5 bg-emerald-950/30 border border-emerald-800/50 rounded-xl text-center">
                         <i data-lucide="check-circle" class="w-10 h-10 text-emerald-400 mx-auto mb-3"></i>
                         <p class="text-emerald-300 font-medium">No issues found</p>
                         <p class="text-sm text-emerald-200/70 mt-1">Your text looks great!</p>
                     </div>`;
-            } else {
-                // Build highlighted text (if backend didn't send pre-highlighted HTML)
-                let highlighted = text;
-                let offset = 0;
+                    } else {
+                        // Build highlighted text (if backend didn't send pre-highlighted HTML)
+                        let highlighted = text;
+                        let offset = 0;
 
-                const fragments = [];
+                        const fragments = [];
 
-                data.data.errors
-                    .sort((a, b) => a.start - b.start)
-                    .forEach((err, index) => {
-                        const before = highlighted.slice(offset, err.start);
-                        const wrong = highlighted.slice(err.start, err.end);
-                        const mark = `<mark class="bg-red-900/40 border-b-2 border-red-500 cursor-help relative group" title="${err.message.replace(/"/g, "&quot;")}">${wrong}</mark>`;
+                        data.data.errors
+                            .sort((a, b) => a.start - b.start)
+                            .forEach((err, index) => {
+                                const before = highlighted.slice(offset, err.start);
+                                const wrong = highlighted.slice(err.start, err.end);
+                                const mark = `<mark class="bg-red-900/40 border-b-2 border-red-500 cursor-help relative group" title="${err.message.replace(/"/g, "&quot;")}">${wrong}</mark>`;
 
-                        fragments.push(before, mark);
-                        offset = err.end;
+                                fragments.push(before, mark);
+                                offset = err.end;
 
-                        // Add explanation card
-                        const explanation = document.createElement("div");
-                        explanation.className =
-                            "p-4 bg-slate-800/60 border border-slate-700 rounded-xl hover:border-indigo-600/50 transition-colors";
+                                // Add explanation card
+                                const explanation = document.createElement("div");
+                                explanation.className =
+                                    "p-4 bg-slate-800/60 border border-slate-700 rounded-xl hover:border-indigo-600/50 transition-colors";
 
-                        explanation.innerHTML = `
+                                explanation.innerHTML = `
                             <div class="flex items-start gap-3">
                                 <div class="mt-0.5">
                                     ${index + 1}.
@@ -735,72 +759,72 @@
                                 </div>
                             </div>`;
 
-                        resultsDiv.appendChild(explanation);
-                    });
+                                resultsDiv.appendChild(explanation);
+                            });
 
-                // remaining text
-                fragments.push(highlighted.slice(offset));
+                        // remaining text
+                        fragments.push(highlighted.slice(offset));
 
-                const highlightedHTML = fragments.join("");
+                        const highlightedHTML = fragments.join("");
 
-                // Show highlighted input + explanations
-                textarea.outerHTML = `
+                        // Show highlighted input + explanations
+                        textarea.outerHTML = `
                     <div class="w-full editor-min-h bg-transparent text-lg text-text-primary placeholder-slate-500 border-none focus:ring-0 outline-none resize-none font-medium leading-relaxed prose prose-invert max-w-none">
                         ${highlightedHTML}
                     </div>`;
-            }
-        } catch (err) {
-            console.error(err);
-            resultsDiv.innerHTML = `
+                    }
+                } catch (err) {
+                    console.error(err);
+                    resultsDiv.innerHTML = `
                 <div class="p-5 bg-red-950/30 border border-red-800/50 rounded-xl">
                     <p class="text-red-300 font-medium">Sorry, something went wrong</p>
                     <p class="text-sm text-red-200/80 mt-2">${err.message || "Please try again later."}</p>
                 </div>`;
-        }
+                }
 
-        // ────────────────────────────────────────────────
-        // 6. Restore UI state
-        // ────────────────────────────────────────────────
-        loading.classList.add("hidden");
-        resultsDiv.classList.remove("hidden");
-        btn.disabled = false;
-        btn.innerHTML = `
+                // ────────────────────────────────────────────────
+                // 6. Restore UI state
+                // ────────────────────────────────────────────────
+                loading.classList.add("hidden");
+                resultsDiv.classList.remove("hidden");
+                btn.disabled = false;
+                btn.innerHTML = `
             <i data-lucide="sparkles" class="w-5 h-5 group-hover:rotate-12 transition-transform duration-300"></i>
             Check now
         `;
-        lucide.createIcons();
-    });
-
-    // Notify button handling with email submission to backend
-    document.getElementById("notify-button").addEventListener("click", async () => {
-        const email = document.getElementById("email-input").value;
-        if (!email) return;
-
-        try {
-            const response = await fetch("https://grammar-mentor.com/subscribe.php", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ email }),
+                lucide.createIcons();
             });
 
-            if (response.ok) {
-                document.getElementById("thanks-message").classList.remove("hidden");
-                document.getElementById("email-input").classList.add("hidden");
-                document.getElementById("notify-button").classList.add("hidden");
+            // Notify button handling with email submission to backend
+            document.getElementById("notify-button").addEventListener("click", async () => {
+                const email = document.getElementById("email-input").value;
+                if (!email) return;
 
-                gtag("event", "button_click", {
-                    button: "notify_me",
-                    page: "home",
-                    action: "email_submitted",
-                });
-            } else {
-                console.error("Server error:", await response.text());
-            }
-        } catch (err) {
-            console.error("Failed to submit email:", err);
-        }
-    });
-</script>
+                try {
+                    const response = await fetch("https://grammar-mentor.com/subscribe.php", {
+                        method: "POST",
+                        headers: { "Content-Type": "application/json" },
+                        body: JSON.stringify({ email }),
+                    });
+
+                    if (response.ok) {
+                        document.getElementById("thanks-message").classList.remove("hidden");
+                        document.getElementById("email-input").classList.add("hidden");
+                        document.getElementById("notify-button").classList.add("hidden");
+
+                        gtag("event", "button_click", {
+                            button: "notify_me",
+                            page: "home",
+                            action: "email_submitted",
+                        });
+                    } else {
+                        console.error("Server error:", await response.text());
+                    }
+                } catch (err) {
+                    console.error("Failed to submit email:", err);
+                }
+            });
+        </script>
 
         <script>
             // Scroll behavior tracking
