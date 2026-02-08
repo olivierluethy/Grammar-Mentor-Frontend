@@ -329,15 +329,26 @@
                     </div>
 
                     <!-- Mentor Feedback -->
-                    <div class="bg-gradient-to-b from-indigo-950/30 to-transparent p-6 md:p-8 flex flex-col">
+                    <div
+                        class="bg-gradient-to-b from-indigo-950/30 to-transparent p-6 md:p-8 flex flex-col"
+                        id="feedback-panel"
+                    >
                         <h3 class="font-bold text-lg text-indigo-300 mb-5 flex items-center gap-3">
                             <i data-lucide="graduation-cap" class="w-5 h-5"></i>
                             Mentor feedback
                         </h3>
-                        <p class="text-sm text-indigo-200/80 leading-relaxed">
+
+                        <div id="feedback-placeholder" class="text-sm text-indigo-200/80 leading-relaxed">
                             Add a text to receive clear explanations and writing insights —<br />
                             not just corrections.
-                        </p>
+                        </div>
+
+                        <div id="feedback-loading" class="hidden flex flex-col items-center justify-center py-12">
+                            <div class="animate-spin rounded-full h-10 w-10 border-b-2 border-indigo-400 mb-4"></div>
+                            <p class="text-indigo-300/90">Analyzing your text...</p>
+                        </div>
+
+                        <div id="feedback-results" class="hidden space-y-5"></div>
                     </div>
                 </div>
             </div>
@@ -608,7 +619,183 @@
                     action: "check_text_clicked",
                     label: "hero_editor",
                 });
-                document.getElementById("high-demand-notification").classList.remove("hidden");
+
+                document.getElementById("check-now-button").addEventListener("click", async () => {
+                    // ────────────────────────────────────────────────
+                    // 1. Read user selections
+                    // ────────────────────────────────────────────────
+                    const modeSelect = document.querySelector("select option:checked")?.parentElement; // the <select>
+                    const correctionMode = modeSelect?.value?.trim() || "Authentic (errors only)";
+
+                    const langSelect = document.querySelectorAll("select")[1]; // second select = language
+                    const language = langSelect?.value?.trim() || "Auto-detect language";
+
+                    // ────────────────────────────────────────────────
+                    // 2. Get text
+                    // ────────────────────────────────────────────────
+                    const textarea = document.getElementById("input-textarea");
+                    const text = textarea.value.trim();
+
+                    if (!text) {
+                        alert("Please enter some text to check.");
+                        return;
+                    }
+
+                    // ────────────────────────────────────────────────
+                    // 3. Show loading state
+                    // ────────────────────────────────────────────────
+                    const placeholder = document.getElementById("feedback-placeholder");
+                    const loading = document.getElementById("feedback-loading");
+                    const resultsDiv = document.getElementById("feedback-results");
+
+                    placeholder.classList.add("hidden");
+                    loading.classList.remove("hidden");
+                    resultsDiv.classList.add("hidden");
+                    resultsDiv.innerHTML = "";
+
+                    // Optional: disable button during request
+                    const btn = document.getElementById("check-now-button");
+                    btn.disabled = true;
+                    btn.innerHTML = '<i data-lucide="loader-2" class="w-5 h-5 animate-spin"></i> Checking...';
+
+                    lucide.createIcons(); // refresh icon
+
+                    try {
+                        // ────────────────────────────────────────────────
+                        // 4. Send request to real backend
+                        // ────────────────────────────────────────────────
+                        const response = // Temporary fix – use the real file you uploaded
+                            await fetch("https://grammar-mentor.com/subscribe.php", {
+                                method: "POST",
+                                headers: { "Content-Type": "application/json" },
+                                body: JSON.stringify({
+                                    text: textarea.value.trim(),
+                                    mode: correctionMode,
+                                    language: language,
+                                }),
+                            });
+
+                        if (!response.ok) {
+                            let errorMsg = "Server error";
+                            try {
+                                const err = await response.json();
+                                errorMsg = err.message || errorMsg;
+                            } catch {}
+                            throw new Error(errorMsg);
+                        }
+
+                        const data = await response.json();
+
+                        // Expected shape (example):
+                        //
+                        // {
+                        //   "originalText": "...",
+                        //   "highlightedHtml": "...",           // optional – already marked up
+                        //   "errors": [
+                        //     {
+                        //       "start": 38,
+                        //       "end": 44,
+                        //       "wrong": "recieve",
+                        //       "suggestion": "receive",
+                        //       "message": "Spelling mistake: 'receive' has 'ei', not 'ie'",
+                        //       "category": "spelling",
+                        //       "severity": "error"
+                        //     },
+                        //     ...
+                        //   ]
+                        // }
+
+                        // ────────────────────────────────────────────────
+                        // 5. Display results
+                        // ────────────────────────────────────────────────
+                        if (!data.errors?.length) {
+                            resultsDiv.innerHTML = `
+                <div class="p-5 bg-emerald-950/30 border border-emerald-800/50 rounded-xl text-center">
+                    <i data-lucide="check-circle" class="w-10 h-10 text-emerald-400 mx-auto mb-3"></i>
+                    <p class="text-emerald-300 font-medium">No issues found</p>
+                    <p class="text-sm text-emerald-200/70 mt-1">Your text looks great!</p>
+                </div>`;
+                        } else {
+                            // Build highlighted text (if backend didn't send pre-highlighted HTML)
+                            let highlighted = text;
+                            let offset = 0;
+
+                            const fragments = [];
+
+                            data.errors
+                                .sort((a, b) => a.start - b.start)
+                                .forEach((err, index) => {
+                                    const before = highlighted.slice(offset, err.start);
+                                    const wrong = highlighted.slice(err.start, err.end);
+                                    const mark = `<mark class="bg-red-900/40 border-b-2 border-red-500 cursor-help relative group" title="${err.message.replace(/"/g, "&quot;")}">${wrong}</mark>`;
+
+                                    fragments.push(before, mark);
+                                    offset = err.end;
+
+                                    // Add explanation card
+                                    const explanation = document.createElement("div");
+                                    explanation.className =
+                                        "p-4 bg-slate-800/60 border border-slate-700 rounded-xl hover:border-indigo-600/50 transition-colors";
+
+                                    explanation.innerHTML = `
+                        <div class="flex items-start gap-3">
+                            <div class="mt-0.5">
+                                ${index + 1}.
+                            </div>
+                            <div class="flex-1">
+                                <p class="font-medium text-red-300">${err.wrong || wrong}</p>
+                                <p class="text-sm text-slate-300 mt-1">${err.message}</p>
+                                ${
+                                    err.suggestion
+                                        ? `
+                                    <p class="mt-2 text-sm">
+                                        <span class="text-slate-400">Suggestion:</span>
+                                        <span class="text-emerald-300 font-medium">${err.suggestion}</span>
+                                    </p>
+                                `
+                                        : ""
+                                }
+                            </div>
+                        </div>`;
+
+                                    resultsDiv.appendChild(explanation);
+                                });
+
+                            // remaining text
+                            fragments.push(highlighted.slice(offset));
+
+                            const highlightedHTML = fragments.join("");
+
+                            // Show highlighted input + explanations
+                            textarea.outerHTML = `
+                <div class="w-full editor-min-h bg-transparent text-lg text-text-primary placeholder-slate-500 border-none focus:ring-0 outline-none resize-none font-medium leading-relaxed prose prose-invert max-w-none">
+                    ${highlightedHTML}
+                </div>`;
+
+                            // Or keep textarea and add a second box for highlighted version
+                            // (many users prefer to keep editing → then you would need more complex logic)
+                        }
+                    } catch (err) {
+                        console.error(err);
+                        resultsDiv.innerHTML = `
+            <div class="p-5 bg-red-950/30 border border-red-800/50 rounded-xl">
+                <p class="text-red-300 font-medium">Sorry, something went wrong</p>
+                <p class="text-sm text-red-200/80 mt-2">${err.message || "Please try again later."}</p>
+            </div>`;
+                    }
+
+                    // ────────────────────────────────────────────────
+                    // 6. Restore UI state
+                    // ────────────────────────────────────────────────
+                    loading.classList.add("hidden");
+                    resultsDiv.classList.remove("hidden");
+                    btn.disabled = false;
+                    btn.innerHTML = `
+        <i data-lucide="sparkles" class="w-5 h-5 group-hover:rotate-12 transition-transform duration-300"></i>
+        Check now
+    `;
+                    lucide.createIcons();
+                });
             });
 
             // Notify button handling with email submission to backend
