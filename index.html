@@ -1,1271 +1,514 @@
-<!doctype html>
-<html lang="en" class="dark">
-    <head>
-        <!-- Google tag (gtag.js) -->
-        <script async src="https://www.googletagmanager.com/gtag/js?id=G-PRESJVG5VB"></script>
-        <script>
-            window.dataLayer = window.dataLayer || [];
-            function gtag() {
-                dataLayer.push(arguments);
-            }
-            gtag("js", new Date());
-            gtag("config", "G-PRESJVG5VB", {
-                send_page_view: true,
-                debug_mode: true,
-            });
-        </script>
-
-        <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
-        <script src="script.js" defer></script>
-
-        <!-- Primary Meta Tags -->
-        <title>AI Grammar Mentor | Precision without losing your voice</title>
-        <meta name="title" content="AI Grammar Mentor | Precision without losing your voice" />
-        <meta
-            name="description"
-            content="The only AI Grammar Mentor that corrects mistakes, provides explanations, and preserves your personal writing style. Try it now for free."
-        />
-        <meta
-            name="keywords"
-            content="Grammar check, AI writing assistant, grammar checker, German correction, English grammar, preserve writing style"
-        />
-        <meta name="author" content="AI Grammar Mentor" />
-        <meta name="robots" content="index, follow" />
-
-        <!-- Open Graph / Facebook -->
-        <meta property="og:type" content="website" />
-        <meta property="og:url" content="https://grammar-mentor.com" />
-        <meta property="og:title" content="AI Grammar Mentor | Precision meets personality" />
-        <meta
-            property="og:description"
-            content="Fix grammar. Keep your voice. The smart way to correct texts and learn at the same time."
-        />
-        <meta property="og:image" content="https://grammar-mentor.com/og-image.png" />
-        <!-- Empfohlen: 1200x630px -->
-
-        <!-- Twitter -->
-        <meta property="twitter:card" content="summary_large_image" />
-        <meta property="twitter:url" content="https://grammar-mentor.com" />
-        <meta property="twitter:title" content="AI Grammar Mentor" />
-        <meta property="twitter:description" content="Correct mistakes, understand why, and keep your style." />
-        <meta property="twitter:image" content="https://grammar-mentor.com/og-image.png" />
-
-        <!-- Favicon -->
-        <link rel="icon" type="image/png" href="assets/logo426*426.png" />
-
-        <!-- Tailwind + dark mode -->
-        <script src="https://cdn.tailwindcss.com"></script>
-        <script>
-            tailwind.config = {
-                darkMode: "class",
-                theme: {
-                    extend: {
-                        colors: {
-                            "bg-primary": "#0f0f17",
-                            "bg-secondary": "#171725",
-                            "bg-editor": "#111827",
-                            "text-primary": "#f1f5f9",
-                            "text-secondary": "#cbd5e1",
-                            accent: "#6366f1",
-                            "accent-dark": "#818cf8",
-                        },
-                    },
-                },
-            };
-        </script>
-
-        <!-- Lucide -->
-        <script src="https://unpkg.com/lucide@latest"></script>
-
-        <!-- Framer Motion -->
-        <script src="https://cdn.jsdelivr.net/npm/framer-motion@11.11.9/dist/framer-motion.js"></script>
-
-        <style>
-            .editor-min-h {
-                min-height: 320px;
-            }
-            .glow-indigo {
-                box-shadow: 0 0 25px -5px rgba(99, 102, 241, 0.35);
-            }
-            .glow-purple {
-                box-shadow: 0 0 30px -8px rgba(168, 85, 247, 0.3);
-            }
-            /* ────────────────────────────────────────────────
-   Button Feedback Animationen
-───────────────────────────────────────────────── */
-
-            /* Button Feedback Animationen */
-            @keyframes successPulse {
-                0% {
-                    box-shadow: 0 0 0 0 rgba(99, 102, 241, 0.6);
-                }
-                70% {
-                    box-shadow: 0 0 0 10px rgba(99, 102, 241, 0);
-                }
-                100% {
-                    box-shadow: 0 0 0 0 rgba(99, 102, 241, 0);
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="AI Grammar Mentor is a writing improvement tool that teaches you grammar rules, not just fixes errors. Free grammar checker with explanations, multilingual support, and transparent pricing from a Swiss startup.">
+    <meta name="keywords" content="grammar checker, AI grammar tool, writing improvement tool, English grammar checker, multilingual grammar checker, AI writing assistant, grammar learning tool">
+    <title>AI Grammar Mentor - Learn Grammar, Don't Just Fix It | Swiss Writing Tool</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Crimson+Pro:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .serif {
+            font-family: 'Crimson Pro', serif;
+        }
+    </style>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        dark: {
+                            900: '#0a0a0a',
+                            800: '#1a1a1a',
+                            700: '#2a2a2a',
+                            600: '#3a3a3a',
+                        }
+                    }
                 }
             }
+        }
+    </script>
+</head>
+<body class="bg-dark-900 text-gray-100 antialiased">
+    
+    <!-- Header -->
+    <header class="border-b border-gray-800 sticky top-0 bg-dark-900/95 backdrop-blur-sm z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center gap-4">
+    <!-- Logo Space -->
+    <a href="index.html" class="flex items-center gap-4">
+        <div class="w-12 h-12 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-lg flex items-center justify-center">
+            <img src="assets/logo426*426.png" alt="">
+        </div>
+        <div>
+            <h2 class="text-xl font-semibold text-white">AI Grammar Mentor</h2>
+            <p class="text-xs text-gray-400">Built in Switzerland</p>
+        </div>
+    </a>
+</div>
 
-            @keyframes iconPop {
-                0% {
-                    transform: scale(1) rotate(0deg);
-                }
-                50% {
-                    transform: scale(1.55) rotate(18deg);
-                }
-                100% {
-                    transform: scale(1) rotate(0deg);
-                }
-            }
-
-            @keyframes iconSuccessCheck {
-                0% {
-                    transform: scale(1);
-                }
-                40% {
-                    transform: scale(1.35);
-                }
-                70% {
-                    transform: scale(1.1);
-                }
-                100% {
-                    transform: scale(1);
-                }
-            }
-
-            /* Gemeinsame Feedback-Klasse */
-            .btn-feedback {
-                animation: successPulse 0.7s ease-out;
-            }
-
-            .btn-feedback .lucide-icon {
-                /* wir zielen auf das <i data-lucide=...> */
-                animation: iconPop 0.6s ease-out;
-            }
-
-            /* Spezielle Variante für Clear (roter Touch) */
-            .btn-feedback-clear {
-                animation: successPulse 0.7s ease-out;
-            }
-
-            /* Clear: etwas roter Akzent */
-            .btn-feedback-clear .lucide-icon {
-                animation: iconPop 0.6s ease-out;
-                color: #f87171 !important; /* rot für "löschen" */
-            }
-
-            /* Extra Variante für Copy – kleiner Checkmark-Ersatz */
-            .btn-feedback-copy .lucide-icon {
-                animation: iconSuccessCheck 0.75s ease-out;
-            }
-        </style>
-    </head>
-
-    <body class="bg-bg-primary text-text-primary font-sans antialiased">
-        <!-- Navigation -->
-        <nav class="sticky top-0 z-50 w-full bg-bg-secondary/80 backdrop-blur-md border-b border-slate-800/60">
-            <div class="max-w-7xl mx-auto px-6 md:px-10">
-                <div class="flex items-center justify-between h-16">
-                    <a href="/" class="block">
-                        <div class="flex items-center gap-3">
-                            <img
-                                src="assets/logo426*426.png"
-                                alt="AI Grammar Mentor Logo"
-                                class="w-8 h-8 md:w-9 md:h-9"
-                            />
-
-                            <span class="text-lg md:text-xl font-semibold tracking-tight text-slate-100">
-                                <span class="text-indigo-400 font-medium">AI</span>
-                                <span
-                                    class="ml-1 bg-clip-text text-transparent bg-gradient-to-r from-indigo-400 via-violet-400 to-pink-400"
-                                >
-                                    Grammar
-                                </span>
-                                <span class="ml-1 text-slate-300 font-medium">Mentor</span>
-                            </span>
-                        </div>
-                    </a>
-
-                    <!-- Desktop Navigation -->
-                    <div class="hidden md:flex items-center gap-10 text-sm font-medium text-text-secondary">
-                        <a
-                            href="#"
-                            class="hover:text-accent transition-colors"
-                            onclick="gtag('event', 'nav_link_click', { link: 'features' })"
-                        >
-                            Features
-                        </a>
-                        <a
-                            href="pricing.html"
-                            class="hover:text-accent transition-colors"
-                            onclick="gtag('event', 'nav_link_click', { link: 'pricing' })"
-                        >
-                            Pricing
-                        </a>
-                        <a
-                            href="privacy.html"
-                            class="hover:text-accent transition-colors"
-                            onclick="gtag('event', 'nav_link_click', { link: 'privacy' })"
-                        >
-                            Privacy
-                        </a>
-                    </div>
-
-                    <!-- Right Side -->
-                    <div class="flex items-center gap-5">
-                        <!-- Service Status -->
-                        <div class="hidden md:flex items-center gap-2 text-xs text-slate-400">
-                            <span class="h-2 w-2 rounded-full bg-emerald-500"></span>
-                            <span><a href="status.html">Operational</a></span>
-                        </div>
-
-                        <!-- Users Online -->
-                        <div class="hidden md:flex items-center gap-2 text-xs text-slate-500">
-                            <span class="h-2 w-2 rounded-full bg-red-500"></span>
-                            <span> <span id="online-count">147</span> online </span>
-                        </div>
-
-                        <!-- Mobile Menu Button -->
-                        <button
-                            class="md:hidden inline-flex items-center justify-center rounded-lg p-2 text-slate-300 hover:bg-slate-800 transition"
-                            onclick="document.getElementById('mobile-menu').classList.toggle('hidden')"
-                        >
-                            <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                class="h-5 w-5"
-                                fill="none"
-                                viewBox="0 0 24 24"
-                                stroke="currentColor"
-                            >
-                                <path
-                                    stroke-linecap="round"
-                                    stroke-linejoin="round"
-                                    stroke-width="2"
-                                    d="M4 6h16M4 12h16M4 18h16"
-                                />
-                            </svg>
-                        </button>
-                    </div>
-                </div>
-
-                <!-- Mobile Menu -->
-                <div id="mobile-menu" class="hidden md:hidden border-t border-slate-800/60 py-4 space-y-3 text-sm">
-                    <a href="#" class="block text-slate-300 hover:text-accent">Features</a>
-                    <a href="pricing.html" class="block text-slate-300 hover:text-accent">Pricing</a>
-                    <a href="privacy.html" class="block text-slate-300 hover:text-accent">Privacy</a>
-
-                    <div
-                        class="flex items-center justify-between pt-3 border-t border-slate-800/60 text-xs text-slate-400"
-                    >
-                        <span class="flex items-center gap-2">
-                            <span class="h-2 w-2 rounded-full bg-emerald-500"></span>
-                            <a href="status.html">Operational</a>
-                        </span>
-                        <span><span id="online-count-mobile">147</span> online</span>
-                    </div>
-                </div>
+                <a href="#cta" class="hidden sm:inline-flex px-6 py-2.5 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg font-medium transition-colors">
+                    Try It Free
+                </a>
             </div>
-        </nav>
+        </div>
+    </header>
 
-        <!-- Hero -->
-        <header class="max-w-6xl mx-auto px-5 sm:px-8 py-16 md:py-24 text-center">
-            <h1
-                class="text-4xl sm:text-5xl md:text-6xl font-extrabold mb-6 leading-tight bg-clip-text text-transparent bg-gradient-to-r from-indigo-400 via-purple-400 to-pink-400"
-            >
-                Fix grammar.<br class="sm:hidden" />
-                Keep your voice.<br class="sm:hidden" />
-                Learn how.
-            </h1>
-
-            <p class="text-text-secondary text-lg md:text-xl mb-12 max-w-3xl mx-auto leading-relaxed">
-                The AI Grammar Mentor that corrects mistakes,<br class="hidden sm:inline" />
-                explains <em>why</em> they're wrong, and helps you build your unique style – no sign-up required.
-            </p>
-
-            <!-- Editor -->
-            <div
-                class="bg-bg-editor rounded-2xl shadow-2xl border border-slate-700/60 overflow-hidden glow-indigo transition-all duration-500"
-            >
-                <!-- Toolbar -->
-                <div
-                    class="bg-bg-secondary/80 border-b border-slate-700/60 p-4 flex flex-wrap items-center justify-between gap-4"
-                >
-                    <div class="flex items-center gap-5">
-                        <label class="text-sm font-semibold text-text-secondary flex items-center gap-2">
-                            <i data-lucide="sliders-horizontal" class="w-4 h-4 text-accent"></i>
-                            Correction mode
-                        </label>
-                        <!-- Tracking event for correction mode select change -->
-                        <select
-                            onchange="gtag('event', 'select_change', { select: 'correction_mode', page: 'home', action: 'mode_selected', value: this.value })"
-                            class="bg-bg-secondary border border-slate-600 rounded-lg px-4 py-1.5 text-sm focus:ring-2 focus:ring-accent/50 focus:border-accent/50 outline-none text-text-primary"
-                        >
-                            <option>Authentic (errors only)</option>
-                            <option>Academic writing</option>
-                            <option>Business professional</option>
-                            <option>Creative Preservation</option>
-                            <option>Simple & Clear</option>
-                            <option>Scientific Precision</option>
-                            <option>Persuasive & Influential</option>
-                            <option>Friendly & Conversational</option>
-                            <option>SEO-Optimized</option>
-                        </select>
-
-                        <!-- Tracking event for language select change -->
-                        <select
-                            onchange="gtag('event', 'select_change', { select: 'language', page: 'home', action: 'language_selected', value: this.value })"
-                            class="bg-bg-secondary border border-slate-600 rounded-lg px-4 py-1.5 text-sm text-text-secondary focus:ring-accent/40 outline-none"
-                        >
-                            <option>Auto-detect language</option>
-                            <option>Dutch</option>
-                            <option>English</option>
-                            <option>German</option>
-                            <option>French</option>
-                            <option>Portuguese</option>
-                            <option>Spanish</option>
-                            <option>Italian</option>
-                            <option>Polish</option>
-                            <option>Mandarin</option>
-                            <option>Japanese</option>
-                        </select>
-                    </div>
-
-                    <div class="flex items-center gap-2.5 text-xs text-slate-400">
-                        Data anonymized via <strong class="text-slate-300">DataCloakAI</strong>
-                        <i data-lucide="shield-check" class="w-4 h-4 text-emerald-500"></i>
-                    </div>
-                </div>
-
-                <div class="grid grid-cols-1 lg:grid-cols-3">
-                    <!-- Input Area -->
-                    <div class="lg:col-span-2 p-6 md:p-8 border-r border-slate-700/40 flex flex-col">
-                        <textarea
-                            id="input-textarea"
-                            class="w-full editor-min-h bg-transparent text-lg text-text-primary placeholder-slate-500 border-none focus:ring-0 outline-none resize-none font-medium leading-relaxed caret-accent selection:bg-indigo-950/60"
-                            placeholder="Paste or write your text here…"
-                        ></textarea>
-
-                        <div class="mt-6 flex flex-wrap items-center justify-between gap-3 sm:gap-4">
-                            <!-- Words count -->
-                            <span id="word-count" class="text-sm text-slate-500 font-medium order-1"> 0 words </span>
-
-                            <!-- Character count -->
-                            <span id="char-count" class="text-sm text-slate-500 font-medium order-1">
-                                0 characters
-                            </span>
-
-                            <!-- Action buttons group -->
-                            <div class="flex items-center gap-2.5 sm:gap-3 order-3 sm:order-2 w-full sm:w-auto">
-                                <!-- Paste button with tracking -->
-                                <button
-                                    id="paste-button"
-                                    type="button"
-                                    title="Paste from clipboard"
-                                    onclick="gtag('event', 'button_click', { button: 'paste', page: 'home', action: 'paste_text' })"
-                                    class="group flex items-center gap-2 px-4 py-2.5 bg-bg-secondary/70 hover:bg-bg-secondary border border-slate-600/70 hover:border-slate-500 rounded-xl text-text-secondary hover:text-text-primary font-medium text-sm transition-all duration-200 shadow-sm hover:shadow-md active:scale-[0.97]"
-                                >
-                                    <i
-                                        data-lucide="clipboard-paste"
-                                        class="w-4.5 h-4.5 text-accent group-hover:scale-110 transition-transform"
-                                    ></i>
-                                    Paste
-                                </button>
-
-                                <!-- Copy button with tracking -->
-                                <button
-                                    id="copy-button"
-                                    type="button"
-                                    title="Copy to clipboard"
-                                    onclick="gtag('event', 'button_click', { button: 'copy', page: 'home', action: 'copy_text' })"
-                                    class="group flex items-center gap-2 px-4 py-2.5 bg-bg-secondary/70 hover:bg-bg-secondary border border-slate-600/70 hover:border-slate-500 rounded-xl text-text-secondary hover:text-text-primary font-medium text-sm transition-all duration-200 shadow-sm hover:shadow-md active:scale-[0.97]"
-                                >
-                                    <i
-                                        data-lucide="copy"
-                                        class="w-4.5 h-4.5 text-accent group-hover:scale-110 transition-transform"
-                                    ></i>
-                                    Copy
-                                </button>
-
-                                <!-- Copy button with tracking -->
-                                <button
-                                    id="clear-button"
-                                    type="button"
-                                    title="Clear"
-                                    onclick="gtag('event', 'button_click', { button: 'clear', page: 'home', action: 'clear_text' })"
-                                    class="group flex items-center gap-2 px-4 py-2.5 bg-bg-secondary/70 hover:bg-bg-secondary border border-slate-600/70 hover:border-slate-500 rounded-xl text-text-secondary hover:text-text-primary font-medium text-sm transition-all duration-200 shadow-sm hover:shadow-md active:scale-[0.97]"
-                                >
-                                    <i
-                                        data-lucide="trash-2"
-                                        class="w-4.5 h-4.5 text-accent group-hover:scale-110 transition-transform"
-                                    ></i>
-                                    Clear
-                                </button>
-                            </div>
-
-                            <!-- Check now button (prominent) with tracking -->
-                            <button
-                                id="check-now-button"
-                                class="group flex-1 sm:flex-none order-2 sm:order-3 min-w-[140px] bg-gradient-to-r from-accent to-indigo-500 hover:from-indigo-500 hover:to-indigo-600 text-white px-7 sm:px-9 py-3 rounded-xl font-semibold flex items-center justify-center gap-2.5 shadow-xl shadow-indigo-950/40 hover:shadow-indigo-900/50 hover:brightness-110 hover:scale-[1.02] active:scale-[0.98] transition-all duration-300"
-                                onclick="gtag('event', 'check_now_clicked', {
-            event_category: 'engagement',
-            event_label: 'hero_editor',
-            page: 'home',
-            button: 'check_now',
-            action: 'attempt_text_check'
-        })"
-                            >
-                                <i
-                                    data-lucide="sparkles"
-                                    class="w-5 h-5 group-hover:rotate-12 transition-transform duration-300"
-                                ></i>
-                                Check now
-                            </button>
-                        </div>
-
-                        <!-- High demand notification (hidden by default) -->
-                        <div
-                            id="high-demand-notification"
-                            class="hidden mt-6 p-6 bg-orange-900/20 border border-orange-700/40 rounded-xl"
-                        >
-                            <p class="text-orange-300 text-base font-medium mb-4">
-                                Due to high demand, our service is temporarily under heavy load. We appreciate your
-                                patience and are working to restore full availability shortly.
-                            </p>
-                            <div class="flex flex-col sm:flex-row gap-3">
-                                <input
-                                    id="email-input"
-                                    type="email"
-                                    placeholder="Enter your email to be notified"
-                                    class="w-full bg-bg-secondary border border-slate-600 rounded-lg px-4 py-2.5 text-sm text-text-primary focus:ring-2 focus:ring-orange-500/50 focus:border-orange-500/50 outline-none"
-                                />
-                                <button
-                                    id="notify-button"
-                                    class="bg-orange-500 hover:bg-orange-600 text-white px-6 py-2.5 rounded-lg font-semibold transition-all duration-200"
-                                >
-                                    Notify me
-                                </button>
-                            </div>
-                            <p id="thanks-message" class="hidden mt-3 text-emerald-300 text-sm">
-                                Thank you! We'll notify you when the service is available.
-                            </p>
-                        </div>
-                    </div>
-
-                    <!-- Mentor Feedback -->
-                    <div
-                        class="bg-gradient-to-b from-indigo-950/30 to-transparent p-6 md:p-8 flex flex-col"
-                        id="feedback-panel"
-                    >
-                        <h3 class="font-bold text-lg text-indigo-300 mb-5 flex items-center gap-3">
-                            <i data-lucide="graduation-cap" class="w-5 h-5"></i>
-                            Mentor feedback
-                        </h3>
-
-                        <div id="feedback-placeholder" class="text-sm text-indigo-200/80 leading-relaxed">
-                            Add a text to receive clear explanations and writing insights —<br />
-                            not just corrections.
-                        </div>
-
-                        <div id="feedback-loading" class="hidden flex flex-col items-center justify-center py-12">
-                            <div class="animate-spin rounded-full h-10 w-10 border-b-2 border-indigo-400 mb-4"></div>
-                            <p class="text-indigo-300/90">Analyzing your text...</p>
-                        </div>
-
-                        <div id="feedback-results" class="hidden space-y-5 overflow-y-auto max-h-[50vh] pr-2"></div>
-                    </div>
-                </div>
+    <!-- Hero Section -->
+    <section class="relative overflow-hidden">
+        <div class="absolute inset-0 bg-gradient-to-br from-indigo-900/20 via-purple-900/10 to-dark-900"></div>
+        <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 sm:py-32">
+            <div class="max-w-4xl mx-auto text-center">
+                <h1 class="text-4xl sm:text-5xl lg:text-6xl font-bold text-white leading-tight mb-6 serif">
+                    You Don't Need Another Tool That Rewrites Your Voice
+                </h1>
+                <p class="text-xl sm:text-2xl text-gray-300 mb-8 leading-relaxed">
+                    You need to understand <em>why</em> something's wrong, keep control of your own words, and actually get better at writing.
+                </p>
+                <p class="text-lg text-gray-400 max-w-2xl mx-auto mb-12">
+                    Most grammar checkers treat you like you can't think. They auto-correct without asking, rewrite your sentences into robotic corporate-speak, and leave you more confused than before. We built something different.
+                </p>
+                <a href="#cta" class="inline-flex items-center gap-2 px-8 py-4 bg-indigo-600 hover:bg-indigo-700 text-white text-lg font-semibold rounded-lg transition-all hover:scale-105 shadow-lg shadow-indigo-900/50">
+                    Start Writing Better
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path>
+                    </svg>
+                </a>
             </div>
-        </header>
+        </div>
+    </section>
 
-        <!-- Trust & Security Section -->
-        <section class="py-16 sm:py-20 px-5 sm:px-8 bg-bg-primary relative overflow-hidden">
-            <!-- Subtle background glow -->
-            <div
-                class="absolute inset-0 bg-gradient-to-b from-indigo-950/5 via-transparent to-transparent pointer-events-none"
-            ></div>
-
-            <div class="max-w-6xl mx-auto relative z-10">
-                <!-- Heading -->
-                <div class="text-center mb-10 sm:mb-14">
-                    <h2
-                        class="text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight bg-gradient-to-r from-accent via-indigo-400 to-purple-400 bg-clip-text text-transparent"
-                    >
-                        Built with Trust in Mind
-                    </h2>
-                    <p class="mt-4 text-lg text-text-secondary max-w-2xl mx-auto">
-                        Your writing is personal. We treat it that way — from day one.
+    <!-- The Problem Section -->
+    <section class="py-20 bg-dark-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="max-w-3xl mx-auto mb-16 text-center">
+                <h2 class="text-3xl sm:text-4xl font-bold text-white mb-4 serif">The Real Problem With Grammar Checkers</h2>
+                <p class="text-xl text-gray-400">It's not that they don't work. It's that they work <em>too well</em> in all the wrong ways.</p>
+            </div>
+            
+            <div class="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto">
+                <div class="bg-dark-700 p-8 rounded-xl border border-gray-700 hover:border-indigo-500/50 transition-colors">
+                    <div class="text-4xl mb-4">😤</div>
+                    <h3 class="text-xl font-semibold text-white mb-3">They interrupt your flow</h3>
+                    <p class="text-gray-400 leading-relaxed">
+                        You're deep in thought, crafting a sentence, and suddenly a suggestion pops up demanding your attention. Breaking concentration over and over just to dismiss things you already know are fine.
                     </p>
                 </div>
-
-                <!-- Badges Grid / Flex Container -->
-                <div class="flex flex-wrap justify-center gap-4 sm:gap-6 max-w-5xl mx-auto">
-                    <!-- Badge 1 -->
-                    <div
-                        class="inline-flex items-center gap-3 px-5 py-3.5 rounded-2xl bg-bg-secondary/70 backdrop-blur-sm border border-slate-700/60 hover:border-accent/40 hover:bg-bg-secondary/90 transition-all duration-300 shadow-sm hover:shadow-indigo-900/20 group min-w-[220px] sm:min-w-[260px]"
-                    >
-                        <div
-                            class="flex items-center justify-center w-10 h-10 rounded-xl bg-emerald-900/30 text-emerald-400 group-hover:bg-emerald-800/40 transition-colors"
-                        >
-                            <i data-lucide="shield-check" class="w-5 h-5"></i>
-                        </div>
-                        <div class="leading-tight text-left">
-                            <div class="text-sm font-semibold text-text-primary">SSL & 256-bit Encryption</div>
-                            <div class="text-xs text-text-secondary mt-0.5">Every connection is fully secured</div>
-                        </div>
-                    </div>
-
-                    <!-- Badge 2 -->
-                    <div
-                        class="inline-flex items-center gap-3 px-5 py-3.5 rounded-2xl bg-bg-secondary/70 backdrop-blur-sm border border-slate-700/60 hover:border-accent/40 hover:bg-bg-secondary/90 transition-all duration-300 shadow-sm hover:shadow-indigo-900/20 group min-w-[220px] sm:min-w-[260px]"
-                    >
-                        <div
-                            class="flex items-center justify-center w-10 h-10 rounded-xl bg-indigo-900/30 text-accent group-hover:bg-indigo-800/40 transition-colors"
-                        >
-                            <i data-lucide="eye-off" class="w-5 h-5"></i>
-                        </div>
-                        <div class="leading-tight text-left">
-                            <div class="text-sm font-semibold text-text-primary">Private by Design</div>
-                            <div class="text-xs text-text-secondary mt-0.5">No logs • No profiling</div>
-                        </div>
-                    </div>
-
-                    <!-- Badge 3 -->
-                    <div
-                        class="inline-flex items-center gap-3 px-5 py-3.5 rounded-2xl bg-bg-secondary/70 backdrop-blur-sm border border-slate-700/60 hover:border-accent/40 hover:bg-bg-secondary/90 transition-all duration-300 shadow-sm hover:shadow-indigo-900/20 group min-w-[220px] sm:min-w-[260px]"
-                    >
-                        <div
-                            class="flex items-center justify-center w-10 h-10 rounded-xl bg-purple-900/30 text-purple-400 group-hover:bg-purple-800/40 transition-colors"
-                        >
-                            <i data-lucide="brain-circuit" class="w-5 h-5"></i>
-                        </div>
-                        <div class="leading-tight text-left">
-                            <div class="text-sm font-semibold text-text-primary">No AI Training on Your Text</div>
-                            <div class="text-xs text-text-secondary mt-0.5">
-                                Your content is never used to train models
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Badge 4 -->
-                    <div
-                        class="inline-flex items-center gap-3 px-5 py-3.5 rounded-2xl bg-bg-secondary/70 backdrop-blur-sm border border-slate-700/60 hover:border-accent/40 hover:bg-bg-secondary/90 transition-all duration-300 shadow-sm hover:shadow-indigo-900/20 group min-w-[220px] sm:min-w-[260px]"
-                    >
-                        <div
-                            class="flex items-center justify-center w-10 h-10 rounded-xl bg-indigo-900/30 text-accent group-hover:bg-indigo-800/40 transition-colors"
-                        >
-                            <i data-lucide="file-lock" class="w-5 h-5"></i>
-                        </div>
-                        <div class="leading-tight text-left">
-                            <div class="text-sm font-semibold text-text-primary">You Own Your Words</div>
-                            <div class="text-xs text-text-secondary mt-0.5">We never claim rights to your text</div>
-                        </div>
-                    </div>
-
-                    <!-- Badge 5 -->
-                    <div
-                        class="inline-flex items-center gap-3 px-5 py-3.5 rounded-2xl bg-bg-secondary/70 backdrop-blur-sm border border-slate-700/60 hover:border-accent/40 hover:bg-bg-secondary/90 transition-all duration-300 shadow-sm hover:shadow-indigo-900/20 group min-w-[220px] sm:min-w-[260px]"
-                    >
-                        <div
-                            class="flex items-center justify-center w-10 h-10 rounded-xl bg-sky-900/30 text-sky-400 group-hover:bg-sky-800/40 transition-colors"
-                        >
-                            <i data-lucide="scale" class="w-5 h-5"></i>
-                        </div>
-                        <div class="leading-tight text-left">
-                            <div class="text-sm font-semibold text-text-primary">GDPR & Swiss DPA Compliant</div>
-                            <div class="text-xs text-text-secondary mt-0.5">
-                                Full EU/Swiss data protection standards
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Badge 6 -->
-                    <div
-                        class="inline-flex items-center gap-3 px-5 py-3.5 rounded-2xl bg-bg-secondary/70 backdrop-blur-sm border border-slate-700/60 hover:border-accent/40 hover:bg-bg-secondary/90 transition-all duration-300 shadow-sm hover:shadow-indigo-900/20 group min-w-[220px] sm:min-w-[260px]"
-                    >
-                        <div
-                            class="flex items-center justify-center w-10 h-10 rounded-xl bg-amber-900/30 text-amber-400 group-hover:bg-amber-800/40 transition-colors"
-                        >
-                            <i data-lucide="heart-handshake" class="w-5 h-5"></i>
-                        </div>
-                        <div class="leading-tight text-left">
-                            <div class="text-sm font-semibold text-text-primary">Responsible AI Practices</div>
-                            <div class="text-xs text-text-secondary mt-0.5">
-                                Designed to support — not replace — writers
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Optional small reassurance line below badges -->
-                <p class="text-center mt-10 text-sm text-text-secondary/80">
-                    Your trust matters more than any feature. We built AI Grammar Mentor accordingly.
-                </p>
-            </div>
-        </section>
-
-        <!-- Features -->
-        <section class="max-w-6xl mx-auto px-6 py-20 md:py-28 grid md:grid-cols-3 gap-10 md:gap-14">
-            <div class="text-center group">
-                <div
-                    class="w-16 h-16 bg-indigo-950/40 text-accent rounded-2xl flex items-center justify-center mx-auto mb-6 group-hover:scale-110 group-hover:rotate-3 transition-all duration-400 glow-indigo/50"
-                >
-                    <i data-lucide="zap" class="w-8 h-8"></i>
-                </div>
-                <h4 class="font-bold text-xl mb-3">Instant corrections</h4>
-                <p class="text-text-secondary text-sm leading-relaxed">
-                    Apply all fixes at once — no tedious clicking through suggestions.
-                </p>
-            </div>
-
-            <div class="text-center group">
-                <div
-                    class="w-16 h-16 bg-purple-950/40 text-purple-400 rounded-2xl flex items-center justify-center mx-auto mb-6 group-hover:scale-110 group-hover:-rotate-3 transition-all duration-400 glow-purple/50"
-                >
-                    <i data-lucide="user-check" class="w-8 h-8"></i>
-                </div>
-                <h4 class="font-bold text-xl mb-3">Your style stays yours</h4>
-                <p class="text-text-secondary text-sm leading-relaxed">
-                    We only correct what’s actually wrong.<br />Tone, intensity, personality — untouched.
-                </p>
-            </div>
-
-            <div class="text-center group">
-                <div
-                    class="w-16 h-16 bg-emerald-950/40 text-emerald-400 rounded-2xl flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-all duration-400"
-                >
-                    <i data-lucide="book-open" class="w-8 h-8"></i>
-                </div>
-                <h4 class="font-bold text-xl mb-3">Learn while writing</h4>
-                <p class="text-text-secondary text-sm leading-relaxed">
-                    Every correction comes with a clear explanation — long-term improvement.
-                </p>
-            </div>
-        </section>
-
-        <!-- Reviews -->
-        <section
-            class="py-16 sm:py-24 px-4 bg-gradient-to-b from-bg-primary via-indigo-950/10 to-bg-primary relative overflow-hidden group/section"
-        >
-            <div
-                class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full bg-indigo-600/5 blur-[120px] pointer-events-none"
-            ></div>
-
-            <div class="max-w-7xl mx-auto relative z-10">
-                <!-- Header -->
-                <div class="text-center mb-12 sm:mb-20">
-                    <h2
-                        class="text-4xl sm:text-5xl md:text-6xl font-extrabold mb-6 tracking-tight bg-gradient-to-r from-indigo-400 via-purple-400 to-pink-400 bg-clip-text text-transparent"
-                    >
-                        Real Voices.
-                    </h2>
-                    <p class="text-lg sm:text-xl text-text-secondary max-w-2xl mx-auto leading-relaxed">
-                        Discover how writers are elevating their craft with AI Grammar Mentor – precise corrections that
-                        preserve your unique style.
+                
+                <div class="bg-dark-700 p-8 rounded-xl border border-gray-700 hover:border-indigo-500/50 transition-colors">
+                    <div class="text-4xl mb-4">🤖</div>
+                    <h3 class="text-xl font-semibold text-white mb-3">They flatten your voice</h3>
+                    <p class="text-gray-400 leading-relaxed">
+                        AI rewrites turn your conversational blog post into a corporate press release. Your novel's dialogue sounds like a business memo. Romance becomes technical documentation. Your personality gets erased.
                     </p>
                 </div>
-
-                <!-- Carousel Container -->
-                <div class="relative px-2 sm:px-12">
-                    <!-- Slider -->
-                    <div
-                        id="testimonial-slider"
-                        class="flex gap-5 sm:gap-8 overflow-x-auto snap-x snap-mandatory scroll-smooth touch-pan-x no-scrollbar"
-                        style="scrollbar-width: none; -ms-overflow-style: none"
-                    >
-                        <!-- Card 1 -->
-                        <div class="flex-none w-[85%] sm:w-[60%] lg:w-[31%] snap-center">
-                            <div
-                                class="h-full bg-bg-secondary/70 rounded-2xl p-8 border border-slate-800/60 hover:border-accent/50 hover:bg-bg-secondary/80 transition-all duration-500 flex flex-col justify-between group"
-                            >
-                                <div>
-                                    <div class="flex text-yellow-500 mb-6 gap-1">
-                                        <svg class="w-5 h-5 fill-current" viewBox="0 0 20 20">
-                                            <path
-                                                d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"
-                                            />
-                                        </svg>
-                                        <svg class="w-5 h-5 fill-current" viewBox="0 0 20 20">
-                                            <path
-                                                d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"
-                                            />
-                                        </svg>
-                                        <svg class="w-5 h-5 fill-current" viewBox="0 0 20 20">
-                                            <path
-                                                d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"
-                                            />
-                                        </svg>
-                                        <svg class="w-5 h-5 fill-current" viewBox="0 0 20 20">
-                                            <path
-                                                d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"
-                                            />
-                                        </svg>
-                                        <svg class="w-5 h-5 fill-current" viewBox="0 0 20 20">
-                                            <path
-                                                d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"
-                                            />
-                                        </svg>
-                                    </div>
-                                    <p class="text-lg sm:text-xl leading-relaxed text-text-primary/90 mb-8 italic">
-                                        “AI Grammar Mentor transformed my writing – it catches real errors and explains
-                                        why, all while keeping my personal voice intact. A must-have for any writer!”
-                                    </p>
-                                </div>
-                                <div class="flex items-center gap-4">
-                                    <img
-                                        src="assets/sarahk.avif"
-                                        alt="Sarah K."
-                                        class="w-14 h-14 rounded-full object-cover border-2 border-accent/50 shadow-lg shadow-accent/20"
-                                        loading="lazy"
-                                    />
-                                    <div>
-                                        <h4 class="font-bold text-lg text-text-primary">Sarah K.</h4>
-                                        <p class="text-sm text-text-secondary font-medium tracking-wide uppercase">
-                                            Freelance Writer · Zürich
-                                        </p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Card 2 -->
-                        <div class="flex-none w-[85%] sm:w-[60%] lg:w-[31%] snap-center">
-                            <div
-                                class="h-full bg-bg-secondary/70 rounded-2xl p-8 border border-slate-800/60 hover:border-accent/50 hover:bg-bg-secondary/80 transition-all duration-500 flex flex-col justify-between group"
-                            >
-                                <div>
-                                    <div class="flex text-yellow-500 mb-6 gap-1">
-                                        <svg class="w-5 h-5 fill-current" viewBox="0 0 20 20">
-                                            <path
-                                                d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"
-                                            />
-                                        </svg>
-                                        <svg class="w-5 h-5 fill-current" viewBox="0 0 20 20">
-                                            <path
-                                                d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"
-                                            />
-                                        </svg>
-                                        <svg class="w-5 h-5 fill-current" viewBox="0 0 20 20">
-                                            <path
-                                                d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"
-                                            />
-                                        </svg>
-                                        <svg class="w-5 h-5 fill-current" viewBox="0 0 20 20">
-                                            <path
-                                                d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"
-                                            />
-                                        </svg>
-                                        <svg class="w-5 h-5 fill-current" viewBox="0 0 20 20">
-                                            <path
-                                                d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"
-                                            />
-                                        </svg>
-                                    </div>
-                                    <p class="text-lg sm:text-xl leading-relaxed text-text-primary/90 mb-8 italic">
-                                        “As a student, this tool has been a game-changer for my essays. It corrects
-                                        grammar precisely and teaches me why, helping me improve long-term without
-                                        losing my style.”
-                                    </p>
-                                </div>
-                                <div class="flex items-center gap-4">
-                                    <img
-                                        src="assets/sarat.jpg"
-                                        alt="Sara T."
-                                        class="w-14 h-14 rounded-full object-cover border-2 border-accent/50 shadow-lg shadow-accent/20"
-                                        loading="lazy"
-                                    />
-                                    <div>
-                                        <h4 class="font-bold text-lg text-text-primary">Sara T.</h4>
-                                        <p class="text-sm text-text-secondary font-medium tracking-wide uppercase">
-                                            University Student · Lucerne
-                                        </p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Card 3 -->
-                        <div class="flex-none w-[85%] sm:w-[60%] lg:w-[31%] snap-center">
-                            <div
-                                class="h-full bg-bg-secondary/70 rounded-2xl p-8 border border-slate-800/60 hover:border-accent/50 hover:bg-bg-secondary/80 transition-all duration-500 flex flex-col justify-between group"
-                            >
-                                <div>
-                                    <div class="flex text-yellow-500 mb-6 gap-1">
-                                        <svg class="w-5 h-5 fill-current" viewBox="0 0 20 20">
-                                            <path
-                                                d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"
-                                            />
-                                        </svg>
-                                        <svg class="w-5 h-5 fill-current" viewBox="0 0 20 20">
-                                            <path
-                                                d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"
-                                            />
-                                        </svg>
-                                        <svg class="w-5 h-5 fill-current" viewBox="0 0 20 20">
-                                            <path
-                                                d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"
-                                            />
-                                        </svg>
-                                        <svg class="w-5 h-5 fill-current" viewBox="0 0 20 20">
-                                            <path
-                                                d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"
-                                            />
-                                        </svg>
-                                        <svg class="w-5 h-5 fill-current" viewBox="0 0 20 20">
-                                            <path
-                                                d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"
-                                            />
-                                        </svg>
-                                    </div>
-                                    <p class="text-lg sm:text-xl leading-relaxed text-text-primary/90 mb-8 italic">
-                                        “In business writing, precision matters. This AI corrects grammar flawlessly
-                                        while maintaining my professional tone – it's boosted my confidence in emails
-                                        and reports.”
-                                    </p>
-                                </div>
-                                <div class="flex items-center gap-4">
-                                    <img
-                                        src="assets/marcol.jpg"
-                                        alt="Marco L."
-                                        class="w-14 h-14 rounded-full object-cover border-2 border-accent/50 shadow-lg shadow-accent/20"
-                                        loading="lazy"
-                                    />
-                                    <div>
-                                        <h4 class="font-bold text-lg text-text-primary">Marco L.</h4>
-                                        <p class="text-sm text-text-secondary font-medium tracking-wide uppercase">
-                                            Business Professional · Ticino
-                                        </p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Card 4 -->
-                        <div class="flex-none w-[85%] sm:w-[60%] lg:w-[31%] snap-center">
-                            <div
-                                class="h-full bg-bg-secondary/70 rounded-2xl p-8 border border-slate-800/60 hover:border-accent/50 hover:bg-bg-secondary/80 transition-all duration-500 flex flex-col justify-between group"
-                            >
-                                <div>
-                                    <div class="flex text-yellow-500 mb-6 gap-1">
-                                        <svg class="w-5 h-5 fill-current" viewBox="0 0 20 20">
-                                            <path
-                                                d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"
-                                            />
-                                        </svg>
-                                        <svg class="w-5 h-5 fill-current" viewBox="0 0 20 20">
-                                            <path
-                                                d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"
-                                            />
-                                        </svg>
-                                        <svg class="w-5 h-5 fill-current" viewBox="0 0 20 20">
-                                            <path
-                                                d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"
-                                            />
-                                        </svg>
-                                        <svg class="w-5 h-5 fill-current" viewBox="0 0 20 20">
-                                            <path
-                                                d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"
-                                            />
-                                        </svg>
-                                        <svg class="w-5 h-5 fill-current" viewBox="0 0 20 20">
-                                            <path
-                                                d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"
-                                            />
-                                        </svg>
-                                    </div>
-                                    <p class="text-lg sm:text-xl leading-relaxed text-text-primary/90 mb-8 italic">
-                                        “For academic papers, AI Grammar Mentor is indispensable. It provides insightful
-                                        feedback that not only fixes issues but helps me learn and refine my writing
-                                        skills.”
-                                    </p>
-                                </div>
-                                <div class="flex items-center gap-4">
-                                    <img
-                                        src="assets/lenam.jpg"
-                                        alt="Lena M."
-                                        class="w-14 h-14 rounded-full object-cover border-2 border-accent/50 shadow-lg shadow-accent/20"
-                                        loading="lazy"
-                                    />
-                                    <div>
-                                        <h4 class="font-bold text-lg text-text-primary">Lena M.</h4>
-                                        <p class="text-sm text-text-secondary font-medium tracking-wide uppercase">
-                                            Academic Researcher · Geneva
-                                        </p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Card 5 -->
-                        <div class="flex-none w-[85%] sm:w-[60%] lg:w-[31%] snap-center">
-                            <div
-                                class="h-full bg-bg-secondary/70 rounded-2xl p-8 border border-slate-800/60 hover:border-accent/50 hover:bg-bg-secondary/80 transition-all duration-500 flex flex-col justify-between group"
-                            >
-                                <div>
-                                    <div class="flex text-yellow-500 mb-6 gap-1">
-                                        <svg class="w-5 h-5 fill-current" viewBox="0 0 20 20">
-                                            <path
-                                                d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"
-                                            />
-                                        </svg>
-                                        <svg class="w-5 h-5 fill-current" viewBox="0 0 20 20">
-                                            <path
-                                                d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"
-                                            />
-                                        </svg>
-                                        <svg class="w-5 h-5 fill-current" viewBox="0 0 20 20">
-                                            <path
-                                                d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"
-                                            />
-                                        </svg>
-                                        <svg class="w-5 h-5 fill-current" viewBox="0 0 20 20">
-                                            <path
-                                                d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"
-                                            />
-                                        </svg>
-                                        <svg class="w-5 h-5 fill-current" viewBox="0 0 20 20">
-                                            <path
-                                                d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"
-                                            />
-                                        </svg>
-                                    </div>
-                                    <p class="text-lg sm:text-xl leading-relaxed text-text-primary/90 mb-8 italic">
-                                        “Creative writing flows better with AI Grammar Mentor. It spots mistakes
-                                        instantly and offers explanations that spark new ideas, all without altering my
-                                        artistic voice.”
-                                    </p>
-                                </div>
-                                <div class="flex items-center gap-4">
-                                    <img
-                                        src="assets/isabelg.jpg"
-                                        alt="Isabel G."
-                                        class="w-14 h-14 rounded-full object-cover border-2 border-accent/50 shadow-lg shadow-accent/20"
-                                        loading="lazy"
-                                    />
-                                    <div>
-                                        <h4 class="font-bold text-lg text-text-primary">Isabel G.</h4>
-                                        <p class="text-sm text-text-secondary font-medium tracking-wide uppercase">
-                                            Creative Writer · Basel
-                                        </p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Card 6 -->
-                        <div class="flex-none w-[85%] sm:w-[60%] lg:w-[31%] snap-center">
-                            <div
-                                class="h-full bg-bg-secondary/70 rounded-2xl p-8 border border-slate-800/60 hover:border-accent/50 hover:bg-bg-secondary/80 transition-all duration-500 flex flex-col justify-between group"
-                            >
-                                <div>
-                                    <div class="flex text-yellow-500 mb-6 gap-1">
-                                        <svg class="w-5 h-5 fill-current" viewBox="0 0 20 20">
-                                            <path
-                                                d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"
-                                            />
-                                        </svg>
-                                        <svg class="w-5 h-5 fill-current" viewBox="0 0 20 20">
-                                            <path
-                                                d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"
-                                            />
-                                        </svg>
-                                        <svg class="w-5 h-5 fill-current" viewBox="0 0 20 20">
-                                            <path
-                                                d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"
-                                            />
-                                        </svg>
-                                        <svg class="w-5 h-5 fill-current" viewBox="0 0 20 20">
-                                            <path
-                                                d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"
-                                            />
-                                        </svg>
-                                        <svg class="w-5 h-5 fill-current" viewBox="0 0 20 20">
-                                            <path
-                                                d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"
-                                            />
-                                        </svg>
-                                    </div>
-                                    <p class="text-lg sm:text-xl leading-relaxed text-text-primary/90 mb-8 italic">
-                                        “Journalism demands accuracy, and AI Grammar Mentor delivers. It ensures my
-                                        articles are error-free while preserving the intensity and personality of my
-                                        reporting.”
-                                    </p>
-                                </div>
-                                <div class="flex items-center gap-4">
-                                    <img
-                                        src="assets/davids.jpg"
-                                        alt="David S."
-                                        class="w-14 h-14 rounded-full object-cover border-2 border-accent/50 shadow-lg shadow-accent/20"
-                                        loading="lazy"
-                                    />
-                                    <div>
-                                        <h4 class="font-bold text-lg text-text-primary">David S.</h4>
-                                        <p class="text-sm text-text-secondary font-medium tracking-wide uppercase">
-                                            Journalist · Bern
-                                        </p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Card 7 -->
-                        <div class="flex-none w-[85%] sm:w-[60%] lg:w-[31%] snap-center">
-                            <div
-                                class="h-full bg-bg-secondary/70 rounded-2xl p-8 border border-slate-800/60 hover:border-accent/50 hover:bg-bg-secondary/80 transition-all duration-500 flex flex-col justify-between group"
-                            >
-                                <div>
-                                    <div class="flex text-yellow-500 mb-6 gap-1">
-                                        <svg class="w-5 h-5 fill-current" viewBox="0 0 20 20">
-                                            <path
-                                                d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"
-                                            />
-                                        </svg>
-                                        <svg class="w-5 h-5 fill-current" viewBox="0 0 20 20">
-                                            <path
-                                                d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"
-                                            />
-                                        </svg>
-                                        <svg class="w-5 h-5 fill-current" viewBox="0 0 20 20">
-                                            <path
-                                                d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"
-                                            />
-                                        </svg>
-                                        <svg class="w-5 h-5 fill-current" viewBox="0 0 20 20">
-                                            <path
-                                                d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"
-                                            />
-                                        </svg>
-                                        <svg class="w-5 h-5 fill-current" viewBox="0 0 20 20">
-                                            <path
-                                                d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"
-                                            />
-                                        </svg>
-                                    </div>
-                                    <p class="text-lg sm:text-xl leading-relaxed text-text-primary/90 mb-8 italic">
-                                        “Blogging just got easier! AI Grammar Mentor polishes my posts quickly, ensuring
-                                        they're engaging and error-free, while keeping my authentic tone shining
-                                        through.”
-                                    </p>
-                                </div>
-                                <div class="flex items-center gap-4">
-                                    <img
-                                        src="assets/emmal.jpg"
-                                        alt="Emma L."
-                                        class="w-14 h-14 rounded-full object-cover border-2 border-accent/50 shadow-lg shadow-accent/20"
-                                        loading="lazy"
-                                    />
-                                    <div>
-                                        <h4 class="font-bold text-lg text-text-primary">Emma L.</h4>
-                                        <p class="text-sm text-text-secondary font-medium tracking-wide uppercase">
-                                            Blogger · Lausanne
-                                        </p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Card 8 -->
-                        <div class="flex-none w-[85%] sm:w-[60%] lg:w-[31%] snap-center">
-                            <div
-                                class="h-full bg-bg-secondary/70 rounded-2xl p-8 border border-slate-800/60 hover:border-accent/50 hover:bg-bg-secondary/80 transition-all duration-500 flex flex-col justify-between group"
-                            >
-                                <div>
-                                    <div class="flex text-yellow-500 mb-6 gap-1">
-                                        <svg class="w-5 h-5 fill-current" viewBox="0 0 20 20">
-                                            <path
-                                                d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"
-                                            />
-                                        </svg>
-                                        <svg class="w-5 h-5 fill-current" viewBox="0 0 20 20">
-                                            <path
-                                                d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"
-                                            />
-                                        </svg>
-                                        <svg class="w-5 h-5 fill-current" viewBox="0 0 20 20">
-                                            <path
-                                                d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"
-                                            />
-                                        </svg>
-                                        <svg class="w-5 h-5 fill-current" viewBox="0 0 20 20">
-                                            <path
-                                                d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"
-                                            />
-                                        </svg>
-                                        <svg class="w-5 h-5 fill-current" viewBox="0 0 20 20">
-                                            <path
-                                                d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"
-                                            />
-                                        </svg>
-                                    </div>
-                                    <p class="text-lg sm:text-xl leading-relaxed text-text-primary/90 mb-8 italic">
-                                        “We use AI Grammar Mentor for our team's collaborative writing. It ensures
-                                        consistency and clarity, making our documents professional without stifling
-                                        creativity.”
-                                    </p>
-                                </div>
-                                <div class="flex items-center gap-4">
-                                    <img
-                                        src="assets/rebeccadina.jpg"
-                                        alt="Rebecca & Dina"
-                                        class="w-14 h-14 rounded-full object-cover border-2 border-accent/50 shadow-lg shadow-accent/20"
-                                        loading="lazy"
-                                    />
-                                    <div>
-                                        <h4 class="font-bold text-lg text-text-primary">Rebecca & Dina</h4>
-                                        <p class="text-sm text-text-secondary font-medium tracking-wide uppercase">
-                                            Content Team · Lugano
-                                        </p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Navigation Controls -->
-                    <div class="flex justify-center items-center gap-6 py-6">
-                        <button
-                            id="prev-testimonial"
-                            class="p-4 rounded-full border border-slate-800/60 text-text-primary hover:bg-bg-secondary/50 hover:border-accent/30 transition-all active:scale-90 group"
-                        >
-                            <svg
-                                class="w-6 h-6 group-hover:-translate-x-1 transition-transform"
-                                fill="none"
-                                stroke="currentColor"
-                                viewBox="0 0 24 24"
-                            >
-                                <path
-                                    stroke-linecap="round"
-                                    stroke-linejoin="round"
-                                    stroke-width="2"
-                                    d="M15 19l-7-7 7-7"
-                                />
-                            </svg>
-                        </button>
-
-                        <button
-                            id="next-testimonial"
-                            class="p-4 rounded-full bg-accent text-white hover:bg-accent-dark hover:text-white transition-all active:scale-90 group"
-                        >
-                            <svg
-                                class="w-6 h-6 group-hover:translate-x-1 transition-transform"
-                                fill="none"
-                                stroke="currentColor"
-                                viewBox="0 0 24 24"
-                            >
-                                <path
-                                    stroke-linecap="round"
-                                    stroke-linejoin="round"
-                                    stroke-width="2"
-                                    d="M9 5l7 7-7 7"
-                                />
-                            </svg>
-                        </button>
-                    </div>
+                
+                <div class="bg-dark-700 p-8 rounded-xl border border-gray-700 hover:border-indigo-500/50 transition-colors">
+                    <div class="text-4xl mb-4">🤷</div>
+                    <h3 class="text-xl font-semibold text-white mb-3">They never explain anything</h3>
+                    <p class="text-gray-400 leading-relaxed">
+                        Red underline. "Fix this." But why? What rule did you break? How do you avoid it next time? You're left clicking "accept" on corrections you don't understand, learning nothing.
+                    </p>
+                </div>
+                
+                <div class="bg-dark-700 p-8 rounded-xl border border-gray-700 hover:border-indigo-500/50 transition-colors">
+                    <div class="text-4xl mb-4">💸</div>
+                    <h3 class="text-xl font-semibold text-white mb-3">They trap you with unclear pricing</h3>
+                    <p class="text-gray-400 leading-relaxed">
+                        "Free trial" that auto-renews. Hidden limits. Aggressive upsells blocking features you need. You just want to check your writing, not decode a billing scheme designed to maximize confusion.
+                    </p>
                 </div>
             </div>
-        </section>
+        </div>
+    </section>
 
-        <script>
-            // Simple carousel navigation
-            const slider = document.getElementById("testimonial-slider");
-            const prevBtn = document.getElementById("prev-testimonial");
-            const nextBtn = document.getElementById("next-testimonial");
-
-            if (slider && prevBtn && nextBtn) {
-                const cardWidth = slider.querySelector("div").offsetWidth + parseInt(getComputedStyle(slider).gap);
-                prevBtn.addEventListener("click", () => {
-                    slider.scrollBy({ left: -cardWidth, behavior: "smooth" });
-                });
-                nextBtn.addEventListener("click", () => {
-                    slider.scrollBy({ left: cardWidth, behavior: "smooth" });
-                });
-            }
-        </script>
-
-        <!-- Footer -->
-        <footer class="bg-bg-secondary/50 border-t border-slate-800/60 pt-16 pb-8 mt-20">
-            <div class="max-w-6xl mx-auto px-6 md:px-10">
-                <div class="grid grid-cols-1 md:grid-cols-4 gap-12 mb-12">
-                    <!-- Brand Column -->
-                    <div class="col-span-1 md:col-span-1">
-                        <div class="flex items-center gap-3 mb-6">
-                            <img src="assets/logo426*426.png" alt="AI Grammar Mentor Logo" class="w-8 h-8" />
-                            <span class="text-lg font-semibold tracking-tight text-slate-100">
-                                <span class="text-indigo-400 font-medium">AI</span>
-                                <span
-                                    class="bg-clip-text text-transparent bg-gradient-to-r from-indigo-400 to-violet-400"
-                                    >Grammar</span
-                                >
-                                <span class="text-slate-300 ml-1">Mentor</span>
-                            </span>
-                        </div>
-                        <p class="text-slate-400 text-sm leading-relaxed">
-                            Your intelligent companion for precise language without losing your personal style.
+    <!-- What You Actually Need Section -->
+    <section class="py-20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="max-w-3xl mx-auto mb-16 text-center">
+                <h2 class="text-3xl sm:text-4xl font-bold text-white mb-4 serif">What You Actually Need</h2>
+                <p class="text-xl text-gray-400">A writing improvement tool that respects your intelligence and helps you learn.</p>
+            </div>
+            
+            <div class="space-y-16 max-w-4xl mx-auto">
+                <!-- Control -->
+                <div class="flex flex-col md:flex-row gap-8 items-start">
+                    <div class="flex-shrink-0 w-16 h-16 bg-indigo-600/20 rounded-full flex items-center justify-center border border-indigo-500/50">
+                        <span class="text-3xl">✋</span>
+                    </div>
+                    <div>
+                        <h3 class="text-2xl font-semibold text-white mb-3">The freedom to ignore suggestions without friction</h3>
+                        <p class="text-gray-400 leading-relaxed mb-4">
+                            Sometimes you break the rules on purpose. Your dialogue is supposed to be informal. That sentence fragment is stylistic. You need a grammar checker that highlights issues but lets you dismiss them with one click and move on. No arguing. No re-suggesting the same thing. Just quiet, respectful acknowledgment that you're the writer here.
                         </p>
-                    </div>
-
-                    <!-- Quick Links -->
-                    <div>
-                        <h4 class="text-white font-semibold mb-6 text-sm uppercase tracking-wider">Product</h4>
-                        <ul class="space-y-4 text-sm text-slate-400">
-                            <li><a href="#" class="hover:text-accent transition-colors">Features</a></li>
-                            <li><a href="pricing.html" class="hover:text-accent transition-colors">Pricing</a></li>
-                            <li><a href="changelog.html" class="hover:text-accent transition-colors">Changelog</a></li>
-                        </ul>
-                    </div>
-
-                    <!-- Legal -->
-                    <div>
-                        <h4 class="text-white font-semibold mb-6 text-sm uppercase tracking-wider">
-                            Legal information
-                        </h4>
-                        <ul class="space-y-4 text-sm text-slate-400">
-                            <li>
-                                <a href="privacy-policy.html" class="hover:text-accent transition-colors"
-                                    >Privacy Policy</a
-                                >
-                            </li>
-                            <li>
-                                <a href="terms-of-service.html" class="hover:text-accent transition-colors"
-                                    >Terms of Service</a
-                                >
-                            </li>
-                            <li>
-                                <a href="legal-notice.html" class="hover:text-accent transition-colors">Legal notice</a>
-                            </li>
-                        </ul>
-                    </div>
-
-                    <!-- Contact -->
-                    <div>
-                        <h4 class="text-white font-semibold mb-6 text-sm uppercase tracking-wider">Contact</h4>
-                        <a
-                            href="mailto:hello@grammar-mentor.ch"
-                            class="inline-flex items-center gap-2 text-slate-400 hover:text-accent transition-all group"
-                        >
-                            <div class="p-2 rounded-lg bg-slate-800 group-hover:bg-accent/10 transition-colors">
-                                <i data-lucide="mail" class="w-4 h-4 text-accent"></i>
-                            </div>
-                            <span class="text-sm">hello@grammar-mentor.ch</span>
-                        </a>
+                        <p class="text-sm text-gray-500 italic">For freelance writers, novelists, and anyone who knows their own voice.</p>
                     </div>
                 </div>
 
-                <!-- Bottom Bar -->
-                <div
-                    class="pt-8 border-t border-slate-800/60 flex flex-col md:flex-row justify-between items-center gap-4"
-                >
-                    <p class="text-xs text-slate-500">
-                        ©
-                        <script>
-                            document.write(new Date().getFullYear());
-                        </script>
-                        AI Grammar Mentor. Made with precision in Switzerland.
+                <!-- Learning -->
+                <div class="flex flex-col md:flex-row gap-8 items-start">
+                    <div class="flex-shrink-0 w-16 h-16 bg-purple-600/20 rounded-full flex items-center justify-center border border-purple-500/50">
+                        <span class="text-3xl">📚</span>
+                    </div>
+                    <div>
+                        <h3 class="text-2xl font-semibold text-white mb-3">Real explanations that teach you grammar rules</h3>
+                        <p class="text-gray-400 leading-relaxed mb-4">
+                            You're not looking for a magic button that fixes everything. You want to understand <em>why</em> the comma goes there, what passive voice actually means, and how to spot these issues yourself next time. An English grammar checker should be a mentor, not a servant. It should explain the rule, show examples, and help you internalize it.
+                        </p>
+                        <p class="text-sm text-gray-500 italic">For students, non-native speakers, and lifelong learners.</p>
+                    </div>
+                </div>
+
+                <!-- Style Preservation -->
+                <div class="flex flex-col md:flex-row gap-8 items-start">
+                    <div class="flex-shrink-0 w-16 h-16 bg-pink-600/20 rounded-full flex items-center justify-center border border-pink-500/50">
+                        <span class="text-3xl">🎨</span>
+                    </div>
+                    <div>
+                        <h3 class="text-2xl font-semibold text-white mb-3">Your writing style, untouched</h3>
+                        <p class="text-gray-400 leading-relaxed mb-4">
+                            Professional editors don't rewrite your entire manuscript. They suggest fixes for actual errors and let you make the call. This AI writing assistant works the same way: it highlights grammar mistakes, offers alternatives, but never forces a rewrite. Your romance novel still sounds romantic. Your blog still sounds like you. Your dialogue still sounds human.
+                        </p>
+                        <p class="text-sm text-gray-500 italic">For creative writers, bloggers, and content creators.</p>
+                    </div>
+                </div>
+
+                <!-- Multilingual -->
+                <div class="flex flex-col md:flex-row gap-8 items-start">
+                    <div class="flex-shrink-0 w-16 h-16 bg-emerald-600/20 rounded-full flex items-center justify-center border border-emerald-500/50">
+                        <span class="text-3xl">🌍</span>
+                    </div>
+                    <div>
+                        <h3 class="text-2xl font-semibold text-white mb-3">Support for how you actually write</h3>
+                        <p class="text-gray-400 leading-relaxed mb-4">
+                            Maybe you're writing in your second language and need more context. Maybe you're switching between British and American English. Maybe your document is huge and other tools crash or refuse to load it. A multilingual grammar checker should handle real-world writing scenarios without making assumptions about how or why you're writing.
+                        </p>
+                        <p class="text-sm text-gray-500 italic">For multilingual users, students, and anyone working with large documents.</p>
+                    </div>
+                </div>
+
+                <!-- Transparency -->
+                <div class="flex flex-col md:flex-row gap-8 items-start">
+                    <div class="flex-shrink-0 w-16 h-16 bg-amber-600/20 rounded-full flex items-center justify-center border border-amber-500/50">
+                        <span class="text-3xl">💡</span>
+                    </div>
+                    <div>
+                        <h3 class="text-2xl font-semibold text-white mb-3">Honest pricing with no trap doors</h3>
+                        <p class="text-gray-400 leading-relaxed mb-4">
+                            You should know exactly what you're paying for, what's free, and what's premium. No surprise charges. No aggressive upsells blocking basic features. No auto-renewals you didn't clearly agree to. Just clear pricing from a company that values trust more than growth hacks.
+                        </p>
+                        <p class="text-sm text-gray-500 italic">For budget-conscious writers, students, and anyone tired of subscription traps.</p>
+                    </div>
+                </div>
+
+                <!-- Classic Mode -->
+                <div class="flex flex-col md:flex-row gap-8 items-start">
+                    <div class="flex-shrink-0 w-16 h-16 bg-slate-600/20 rounded-full flex items-center justify-center border border-slate-500/50">
+                        <span class="text-3xl">⚙️</span>
+                    </div>
+                    <div>
+                        <h3 class="text-2xl font-semibold text-white mb-3">AI when you want it, classic grammar when you don't</h3>
+                        <p class="text-gray-400 leading-relaxed mb-4">
+                            Not everyone trusts AI rewrites. Sometimes you just want traditional grammar checking—the kind that catches typos and basic errors without trying to rephrase your entire paragraph. You should be able to toggle AI suggestions off and get straightforward, rule-based grammar checking whenever you prefer it.
+                        </p>
+                        <p class="text-sm text-gray-500 italic">For AI skeptics, traditional writers, and anyone who values simplicity.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Why We Exist Section -->
+    <section class="py-20 bg-dark-800">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl sm:text-4xl font-bold text-white mb-4 serif">Why We Built This</h2>
+            </div>
+            
+            <div class="prose prose-invert prose-lg max-w-none">
+                <p class="text-gray-300 leading-relaxed mb-6">
+                    We're a small Swiss startup that got tired of watching writing tools treat users like they don't matter. Every major grammar checker seemed designed to either take over your writing completely or nickel-and-dime you with confusing pricing.
+                </p>
+                
+                <p class="text-gray-300 leading-relaxed mb-6">
+                    We talked to writers. Lots of them. Freelancers who kept dismissing the same incorrect suggestions. Students who wanted to learn grammar, not just pass it off to AI. Novelists whose tools crashed on large manuscripts. Non-native speakers who needed cultural context, not just corrections. People who felt trapped by subscriptions they didn't fully understand.
+                </p>
+                
+                <p class="text-gray-300 leading-relaxed mb-6">
+                    The pattern was clear: people don't need more automation. They need more <em>understanding</em>. More <em>control</em>. More <em>respect</em>.
+                </p>
+                
+                <p class="text-gray-300 leading-relaxed">
+                    So we built AI Grammar Mentor as a writing improvement tool that explains grammar rules, preserves your voice, and charges honestly. We're based in Switzerland because we believe in quality, transparency, and treating users with dignity. This isn't a growth-at-all-costs company. It's a tool built by people who care about writing.
+                </p>
+            </div>
+            
+            <div class="mt-12 p-6 bg-dark-900 border border-gray-700 rounded-xl">
+                <p class="text-sm text-gray-400 text-center">
+                    🇨🇭 Proudly built in Switzerland • Privacy-focused • No data selling • Honest pricing
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Reviews Section -->
+    <section class="py-20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl sm:text-4xl font-bold text-white mb-4 serif">What People Are Saying</h2>
+                <p class="text-xl text-gray-400">From writers who actually use it</p>
+            </div>
+            
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="bg-dark-800 p-8 rounded-xl border border-gray-700">
+                    <div class="flex items-center gap-1 mb-4">
+                        <span class="text-yellow-400">★★★★★</span>
+                    </div>
+                    <p class="text-gray-300 mb-6 leading-relaxed">
+                        "Finally, a grammar checker that doesn't try to rewrite my entire article. I can ignore suggestions I disagree with without it nagging me. Just what I needed."
+                    </p>
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 bg-gradient-to-br from-indigo-500 to-purple-500 rounded-full"></div>
+                        <div>
+                            <p class="font-medium text-white">Sarah M.</p>
+                            <p class="text-sm text-gray-500">Freelance Writer</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="bg-dark-800 p-8 rounded-xl border border-gray-700">
+                    <div class="flex items-center gap-1 mb-4">
+                        <span class="text-yellow-400">★★★★★</span>
+                    </div>
+                    <p class="text-gray-300 mb-6 leading-relaxed">
+                        "The explanations are actually helpful. I'm not a native English speaker and I've learned more from this tool in a month than I did from two years of other grammar checkers."
+                    </p>
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 bg-gradient-to-br from-emerald-500 to-teal-500 rounded-full"></div>
+                        <div>
+                            <p class="font-medium text-white">Carlos R.</p>
+                            <p class="text-sm text-gray-500">Graduate Student</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="bg-dark-800 p-8 rounded-xl border border-gray-700">
+                    <div class="flex items-center gap-1 mb-4">
+                        <span class="text-yellow-400">★★★★★</span>
+                    </div>
+                    <p class="text-gray-300 mb-6 leading-relaxed">
+                        "No aggressive upsells, no surprise charges, and it actually handles my 80,000-word manuscript without crashing. Refreshingly straightforward."
+                    </p>
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 bg-gradient-to-br from-pink-500 to-rose-500 rounded-full"></div>
+                        <div>
+                            <p class="font-medium text-white">Jennifer K.</p>
+                            <p class="text-sm text-gray-500">Novelist</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="bg-dark-800 p-8 rounded-xl border border-gray-700">
+                    <div class="flex items-center gap-1 mb-4">
+                        <span class="text-yellow-400">★★★★☆</span>
+                    </div>
+                    <p class="text-gray-300 mb-6 leading-relaxed">
+                        "I was skeptical of AI tools, but being able to switch to classic mode when I want just basic checks is perfect. Best of both worlds."
+                    </p>
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 bg-gradient-to-br from-amber-500 to-orange-500 rounded-full"></div>
+                        <div>
+                            <p class="font-medium text-white">David L.</p>
+                            <p class="text-sm text-gray-500">Technical Writer</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="bg-dark-800 p-8 rounded-xl border border-gray-700">
+                    <div class="flex items-center gap-1 mb-4">
+                        <span class="text-yellow-400">★★★★★</span>
+                    </div>
+                    <p class="text-gray-300 mb-6 leading-relaxed">
+                        "My dialogue stays natural. My characters sound like people, not corporate robots. This is the first tool that doesn't kill my voice."
+                    </p>
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 bg-gradient-to-br from-violet-500 to-purple-500 rounded-full"></div>
+                        <div>
+                            <p class="font-medium text-white">Rachel T.</p>
+                            <p class="text-sm text-gray-500">Romance Author</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="bg-dark-800 p-8 rounded-xl border border-gray-700">
+                    <div class="flex items-center gap-1 mb-4">
+                        <span class="text-yellow-400">★★★★★</span>
+                    </div>
+                    <p class="text-gray-300 mb-6 leading-relaxed">
+                        "The snippet storage feature saves me so much time with repeated phrases and templates. Simple but incredibly useful."
+                    </p>
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 bg-gradient-to-br from-cyan-500 to-blue-500 rounded-full"></div>
+                        <div>
+                            <p class="font-medium text-white">Michael P.</p>
+                            <p class="text-sm text-gray-500">Content Marketer</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works Section -->
+    <section class="py-20 bg-dark-800">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl sm:text-4xl font-bold text-white mb-4 serif">How It Actually Works</h2>
+                <p class="text-xl text-gray-400">Simple, respectful, educational</p>
+            </div>
+            
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="text-center">
+                    <div class="w-20 h-20 bg-indigo-600/20 rounded-full flex items-center justify-center border border-indigo-500/50 mx-auto mb-6">
+                        <span class="text-4xl">1️⃣</span>
+                    </div>
+                    <h3 class="text-xl font-semibold text-white mb-3">Write naturally</h3>
+                    <p class="text-gray-400 leading-relaxed">
+                        Type in your own voice. No pressure. The tool quietly highlights potential issues as you go, but never interrupts your flow or forces changes.
+                    </p>
+                </div>
+                
+                <div class="text-center">
+                    <div class="w-20 h-20 bg-purple-600/20 rounded-full flex items-center justify-center border border-purple-500/50 mx-auto mb-6">
+                        <span class="text-4xl">2️⃣</span>
+                    </div>
+                    <h3 class="text-xl font-semibold text-white mb-3">Review on your terms</h3>
+                    <p class="text-gray-400 leading-relaxed">
+                        See suggestions in a side panel. Click for detailed grammar rule explanations with examples. Accept what helps, ignore what doesn't. One click, no friction.
+                    </p>
+                </div>
+                
+                <div class="text-center">
+                    <div class="w-20 h-20 bg-pink-600/20 rounded-full flex items-center justify-center border border-pink-500/50 mx-auto mb-6">
+                        <span class="text-4xl">3️⃣</span>
+                    </div>
+                    <h3 class="text-xl font-semibold text-white mb-3">Actually learn</h3>
+                    <p class="text-gray-400 leading-relaxed">
+                        Each correction comes with the "why" behind it. Over time, you internalize the rules and make fewer mistakes naturally. That's the goal.
                     </p>
                 </div>
             </div>
-        </footer>
-    </body>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section id="cta" class="py-20">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h2 class="text-3xl sm:text-5xl font-bold text-white mb-6 serif">
+                Ready to Write With Confidence?
+            </h2>
+            <p class="text-xl text-gray-400 mb-4">
+                No credit card required. No aggressive upsells. Just a grammar checker that respects you.
+            </p>
+            <p class="text-lg text-gray-500 mb-10">
+                Start free and upgrade only when you need more. Clear pricing, clear value.
+            </p>
+            
+            <div class="flex flex-col sm:flex-row gap-4 justify-center items-center mb-8">
+                <a href="grammar-mentor.html" class="inline-flex items-center gap-2 px-8 py-4 bg-indigo-600 hover:bg-indigo-700 text-white text-lg font-semibold rounded-lg transition-all hover:scale-105 shadow-lg shadow-indigo-900/50">
+                    Start Using AI Grammar Mentor
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path>
+                    </svg>
+                </a>
+                <a href="pricing.html" class="inline-flex items-center gap-2 px-8 py-4 bg-dark-700 hover:bg-dark-600 text-white text-lg font-medium rounded-lg transition-colors border border-gray-600">
+                    See Pricing
+                </a>
+            </div>
+            
+            <div class="grid sm:grid-cols-3 gap-6 max-w-2xl mx-auto text-sm text-gray-400">
+                <div class="flex items-center justify-center gap-2">
+                    <svg class="w-5 h-5 text-emerald-500" fill="currentColor" viewBox="0 0 20 20">
+                        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
+                    </svg>
+                    Free tier available
+                </div>
+                <div class="flex items-center justify-center gap-2">
+                    <svg class="w-5 h-5 text-emerald-500" fill="currentColor" viewBox="0 0 20 20">
+                        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
+                    </svg>
+                    No credit card needed
+                </div>
+                <div class="flex items-center justify-center gap-2">
+                    <svg class="w-5 h-5 text-emerald-500" fill="currentColor" viewBox="0 0 20 20">
+                        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
+                    </svg>
+                    Cancel anytime
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="border-t border-gray-800 py-12 bg-dark-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid md:grid-cols-4 gap-8 mb-8">
+                <div>
+                    <div class="flex items-center gap-3 mb-4">
+                        <div class="w-10 h-10 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-lg flex items-center justify-center">
+                            <img src="assets/logo426*426.png" alt="">
+                        </div>
+                        <span class="font-semibold text-white">AI Grammar Mentor</span>
+                    </div>
+                    <p class="text-sm text-gray-400 leading-relaxed">
+                        A Swiss startup building writing tools that respect your intelligence and help you learn.
+                    </p>
+                </div>
+                
+                <div>
+                    <h4 class="font-semibold text-white mb-4">Product</h4>
+                    <ul class="space-y-2 text-sm text-gray-400">
+                        <li><a href="pricing.html#features" class="hover:text-white transition-colors">Features</a></li>
+                        <li><a href="pricing.html#faq" class="hover:text-white transition-colors">Pricing</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">FAQ</a></li>
+                        <li><a href="changelog.html" class="hover:text-white transition-colors">Changelog</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="font-semibold text-white mb-4">Company</h4>
+                    <ul class="space-y-2 text-sm text-gray-400">
+                        <li><a href="about.html" class="hover:text-white transition-colors">About</a></li>
+                        <li><a href="blogs.html" class="hover:text-white transition-colors">Blog</a></li>
+                        <li><a href="privacy-policy.html" class="hover:text-white transition-colors">Privacy</a></li>
+                        <li><a href="terms-of-service.html" class="hover:text-white transition-colors">Terms</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="font-semibold text-white mb-4">Support</h4>
+                    <ul class="space-y-2 text-sm text-gray-400">
+                        <li><a href="#" class="hover:text-white transition-colors">Help Center</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">Contact</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">Feedback</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-700 pt-8 flex flex-col sm:flex-row justify-between items-center gap-4 text-sm text-gray-500">
+                <p>© 2026 AI Grammar Mentor. Built with care in Switzerland.</p>
+                <p>🇨🇭 Privacy-focused • No tracking • No data selling</p>
+            </div>
+        </div>
+    </footer>
+
+</body>
 </html>

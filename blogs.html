@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Blog – Insights on language learning, writing improvement, grammar mastery and AI-assisted education from the AI Grammar Mentor research group in Zurich.">
+    <title>Blog – AI Grammar Mentor | Zurich Research Group</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Crimson+Pro:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .serif {
+            font-family: 'Crimson Pro', serif;
+        }
+        /* Modal fade-in */
+        .modal {
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        .modal.show {
+            opacity: 1;
+        }
+    </style>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        dark: {
+                            900: '#0a0a0a',
+                            800: '#1a1a1a',
+                            700: '#2a2a2a',
+                            600: '#3a3a3a',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-dark-900 text-gray-100 antialiased min-h-screen">
+
+    <!-- Header (consistent with other pages) -->
+    <header class="border-b border-gray-800 sticky top-0 bg-dark-900/95 backdrop-blur-sm z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center gap-4">
+                    <div class="w-12 h-12 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-lg flex items-center justify-center">
+                        <img src="assets/logo426*426.png" alt="">
+                    </div>
+                    <div>
+                        <h2 class="text-xl font-semibold text-white">AI Grammar Mentor</h2>
+                        <p class="text-xs text-gray-400">Built in Switzerland</p>
+                    </div>
+                </div>
+                <div class="flex items-center gap-6">
+                    <a href="index.html" class="text-gray-300 hover:text-white transition-colors">Home</a>
+                    <a href="about.html" class="text-gray-300 hover:text-white transition-colors">About</a>
+                    <a href="#cta" class="inline-flex px-6 py-2.5 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg font-medium transition-colors">
+                        Try It Free
+                    </a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Page Hero -->
+    <section class="py-16 sm:py-24 border-b border-gray-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h1 class="text-4xl sm:text-5xl lg:text-6xl font-bold text-white leading-tight serif mb-6">
+                Blog & Insights
+            </h1>
+            <p class="text-xl text-gray-300 max-w-3xl mx-auto">
+                Thoughts on real language progress, writing with personality, grammar that actually sticks, and how AI can help — without taking over.
+            </p>
+        </div>
+    </section>
+
+    <!-- Blog Grid -->
+    <section class="py-20">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid md:grid-cols-3 gap-8">
+
+                <!-- Article 1 -->
+                <div class="group bg-dark-800 rounded-xl overflow-hidden border border-gray-700 hover:border-indigo-500/60 transition-all duration-300 cursor-pointer"
+                     onclick="openModal('modal1')">
+                    <div class="h-48 bg-gradient-to-br from-indigo-900/40 to-purple-900/30 flex items-center justify-center">
+                        <span class="text-6xl opacity-40">✍️</span>
+                    </div>
+                    <div class="p-6">
+                        <div class="text-xs text-indigo-400 mb-2">February 2, 2026</div>
+                        <h3 class="text-xl font-semibold text-white mb-3 group-hover:text-indigo-400 transition-colors">
+                            Why Most Grammar Tools Make You a Worse Writer (And What to Do Instead)
+                        </h3>
+                        <p class="text-gray-400 line-clamp-3">
+                            Auto-corrections feel helpful — until they quietly train you to stop thinking about grammar yourself. Here's how dependency happens and how real learning tools fight back.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Article 2 -->
+                <div class="group bg-dark-800 rounded-xl overflow-hidden border border-gray-700 hover:border-indigo-500/60 transition-all duration-300 cursor-pointer"
+                     onclick="openModal('modal2')">
+                    <div class="h-48 bg-gradient-to-br from-purple-900/40 to-pink-900/30 flex items-center justify-center">
+                        <span class="text-6xl opacity-40">🧠</span>
+                    </div>
+                    <div class="p-6">
+                        <div class="text-xs text-purple-400 mb-2">January 18, 2026</div>
+                        <h3 class="text-xl font-semibold text-white mb-3 group-hover:text-indigo-400 transition-colors">
+                            The Science of Forgetting Grammar Rules — And How to Make Them Stick
+                        </h3>
+                        <p class="text-gray-400 line-clamp-3">
+                            Spaced repetition, contextual examples and active recall beat passive red-underlines every time. What cognitive science tells us about long-term grammar mastery.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Article 3 -->
+                <div class="group bg-dark-800 rounded-xl overflow-hidden border border-gray-700 hover:border-indigo-500/60 transition-all duration-300 cursor-pointer"
+                     onclick="openModal('modal3')">
+                    <div class="h-48 bg-gradient-to-br from-pink-900/40 to-indigo-900/30 flex items-center justify-center">
+                        <span class="text-6xl opacity-40">🌍</span>
+                    </div>
+                    <div class="p-6">
+                        <div class="text-xs text-pink-400 mb-2">December 12, 2025</div>
+                        <h3 class="text-xl font-semibold text-white mb-3 group-hover:text-indigo-400 transition-colors">
+                            Writing in a Second Language: Keeping Your Voice While Getting the Rules Right
+                        </h3>
+                        <p class="text-gray-400 line-clamp-3">
+                            Non-native writers often feel caught between sounding natural and sounding correct. How to protect personality while building grammatical confidence.
+                        </p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Modals -->
+    <!-- Modal 1 -->
+    <div id="modal1" class="modal fixed inset-0 bg-black/70 flex items-center justify-center z-50 opacity-0 pointer-events-none transition-opacity duration-300">
+        <div class="bg-dark-800 rounded-xl max-w-3xl w-full mx-4 max-h-[90vh] overflow-y-auto border border-gray-700 relative">
+            <button class="absolute top-5 right-5 text-gray-400 hover:text-white text-2xl" onclick="closeModal('modal1')">&times;</button>
+            <div class="p-8 sm:p-12">
+                <div class="text-sm text-indigo-400 mb-3">February 2, 2026 • 8 min read</div>
+                <h2 class="text-3xl sm:text-4xl font-bold text-white serif mb-6">
+                    Why Most Grammar Tools Make You a Worse Writer (And What to Do Instead)
+                </h2>
+                <div class="prose prose-invert prose-lg max-w-none text-gray-300">
+                    <p>Most grammar checkers promise to make you better — but many quietly do the opposite.</p>
+                    <p>They train dependence: you stop thinking about commas, passive voice or agreement because something else always fixes it for you. Over time your internal grammar sense weakens rather than strengthens.</p>
+                    <p>Real improvement requires <strong>understanding why</strong> something is wrong and actively deciding whether to follow the rule or break it intentionally. Tools that hide explanations or force rewrites sabotage that process.</p>
+                    <h3 class="text-2xl font-semibold text-white mt-10 mb-4">Three signs you're using a dependency-creating tool</h3>
+                    <ul class="list-disc pl-6 space-y-3">
+                        <li>You accept suggestions without reading the explanation (because there isn't one)</li>
+                        <li>Your writing feels flatter and less "you" after using the tool for weeks</li>
+                        <li>You panic when the checker is turned off</li>
+                    </ul>
+                    <p class="mt-8">The antidote is a mentor-style tool: one that explains rules clearly, shows examples, respects your stylistic choices, and fades into the background as you improve.</p>
+                    <p>That's exactly what we set out to build.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal 2 -->
+    <div id="modal2" class="modal fixed inset-0 bg-black/70 flex items-center justify-center z-50 opacity-0 pointer-events-none transition-opacity duration-300">
+        <div class="bg-dark-800 rounded-xl max-w-3xl w-full mx-4 max-h-[90vh] overflow-y-auto border border-gray-700 relative">
+            <button class="absolute top-5 right-5 text-gray-400 hover:text-white text-2xl" onclick="closeModal('modal2')">&times;</button>
+            <div class="p-8 sm:p-12">
+                <div class="text-sm text-purple-400 mb-3">January 18, 2026 • 7 min read</div>
+                <h2 class="text-3xl sm:text-4xl font-bold text-white serif mb-6">
+                    The Science of Forgetting Grammar Rules — And How to Make Them Stick
+                </h2>
+                <div class="prose prose-invert prose-lg max-w-none text-gray-300">
+                    <p>We forget grammar rules for the same reason we forget names or dates: lack of spaced, meaningful repetition.</p>
+                    <p>Passive exposure (reading red underlines) creates almost no long-term retention. Active recall + spaced repetition + rich context does.</p>
+                    <h3 class="text-2xl font-semibold text-white mt-10 mb-4">What actually works (supported by research)</h3>
+                    <ul class="list-disc pl-6 space-y-3">
+                        <li>Seeing the rule in many different sentences, not just one correction</li>
+                        <li>Explaining it back in your own words</li>
+                        <li>Reviewing mistakes after increasing time intervals (1 day → 3 days → 1 week → 1 month)</li>
+                        <li>Applying the rule in your real writing, not drills</li>
+                    </ul>
+                    <p class="mt-8">AI Grammar Mentor shows concise explanations + multiple natural examples every time you hover a suggestion — turning corrections into mini learning moments instead of interruptions.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal 3 -->
+    <div id="modal3" class="modal fixed inset-0 bg-black/70 flex items-center justify-center z-50 opacity-0 pointer-events-none transition-opacity duration-300">
+        <div class="bg-dark-800 rounded-xl max-w-3xl w-full mx-4 max-h-[90vh] overflow-y-auto border border-gray-700 relative">
+            <button class="absolute top-5 right-5 text-gray-400 hover:text-white text-2xl" onclick="closeModal('modal3')">&times;</button>
+            <div class="p-8 sm:p-12">
+                <div class="text-sm text-pink-400 mb-3">December 12, 2025 • 9 min read</div>
+                <h2 class="text-3xl sm:text-4xl font-bold text-white serif mb-6">
+                    Writing in a Second Language: Keeping Your Voice While Getting the Rules Right
+                </h2>
+                <div class="prose prose-invert prose-lg max-w-none text-gray-300">
+                    <p>Many second-language writers face an impossible choice: sound natural and make mistakes, or sound correct and robotic.</p>
+                    <p>It doesn't have to be either/or.</p>
+                    <p>A good tool helps you fix real grammatical errors while leaving your tone, rhythm and personality untouched. It explains cultural or stylistic nuances (British vs American English, formal vs conversational register) without forcing you into bland "safe" language.</p>
+                    <h3 class="text-2xl font-semibold text-white mt-10 mb-4">Practical strategies we recommend</h3>
+                    <ul class="list-disc pl-6 space-y-3">
+                        <li>Focus corrections on high-impact rules first (verb tenses, prepositions, articles)</li>
+                        <li>Ignore suggestions that change voice or intent unless you ask for style help</li>
+                        <li>Build confidence with small, consistent improvements rather than perfection</li>
+                    </ul>
+                    <p class="mt-8">We built multilingual explanations and voice-preserving suggestions because we know how painful it is to lose your personality in the name of correctness.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- CTA -->
+    <section class="py-20 bg-dark-800 border-t border-gray-800">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h2 class="text-3xl sm:text-5xl font-bold text-white mb-6 serif">
+                Ready to Turn Corrections Into Real Progress?
+            </h2>
+            <p class="text-xl text-gray-300 mb-10">
+                Start writing — and actually improving — today.
+            </p>
+            <a href="grammar-mentor.html" class="inline-flex items-center gap-3 px-10 py-5 bg-indigo-600 hover:bg-indigo-700 text-white text-xl font-semibold rounded-lg transition-all hover:scale-105 shadow-xl shadow-indigo-900/40">
+                Try AI Grammar Mentor Free
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path>
+                </svg>
+            </a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="border-t border-gray-800 py-12 bg-dark-900">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid md:grid-cols-4 gap-8 mb-8">
+                <div>
+                    <div class="flex items-center gap-3 mb-4">
+                        <div class="w-10 h-10 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-lg flex items-center justify-center">
+                            <img src="assets/logo426*426.png" alt="">
+                        </div>
+                        <span class="font-semibold text-white">AI Grammar Mentor</span>
+                    </div>
+                    <p class="text-sm text-gray-400 leading-relaxed">
+                        Research-driven writing tool helping people master languages through understanding.
+                    </p>
+                </div>
+
+                <div>
+                    <h4 class="font-semibold text-white mb-4">Product</h4>
+                    <ul class="space-y-2 text-sm text-gray-400">
+                        <li><a href="#" class="hover:text-white transition-colors">Features</a></li>
+                        <li><a href="pricing.html" class="hover:text-white transition-colors">Pricing</a></li>
+                        <li><a href="blog.html" class="hover:text-white transition-colors">Blog</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 class="font-semibold text-white mb-4">Company</h4>
+                    <ul class="space-y-2 text-sm text-gray-400">
+                        <li><a href="about.html" class="hover:text-white transition-colors">About</a></li>
+                        <li><a href="privacy-policy.html" class="hover:text-white transition-colors">Privacy</a></li>
+                        <li><a href="terms-of-service.html" class="hover:text-white transition-colors">Terms</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 class="font-semibold text-white mb-4">Support</h4>
+                    <ul class="space-y-2 text-sm text-gray-400">
+                        <li><a href="#" class="hover:text-white transition-colors">Help Center</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">Contact</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="border-t border-gray-700 pt-8 flex flex-col sm:flex-row justify-between items-center gap-4 text-sm text-gray-500">
+                <p>© 2026 AI Grammar Mentor Research Group. Zurich, Switzerland.</p>
+                <p>🇨🇭 Research-based • Privacy-focused • Built for learners</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript for modal control -->
+    <script>
+        function openModal(modalId) {
+            const modal = document.getElementById(modalId);
+            modal.classList.remove('pointer-events-none');
+            modal.classList.add('show');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal(modalId) {
+            const modal = document.getElementById(modalId);
+            modal.classList.remove('show');
+            setTimeout(() => {
+                modal.classList.add('pointer-events-none');
+            }, 300);
+            document.body.style.overflow = '';
+        }
+
+        // Close modal when clicking outside content
+        document.querySelectorAll('.modal').forEach(modal => {
+            modal.addEventListener('click', function(e) {
+                if (e.target === modal) {
+                    closeModal(modal.id);
+                }
+            });
+        });
+
+        // Close with Escape key
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                document.querySelectorAll('.modal.show').forEach(modal => {
+                    closeModal(modal.id);
+                });
+            }
+        });
+    </script>
+
+</body>
+</html>

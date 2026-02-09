@@ -54,111 +54,109 @@
 <body class="bg-bg-primary text-text-primary font-sans antialiased">
 
 <!-- Navigation -->
-<nav class="sticky top-0 z-50 w-full bg-bg-secondary/80 backdrop-blur-md border-b border-slate-800/60">
-    <div class="max-w-7xl mx-auto px-6 md:px-10">
-        <div class="flex items-center justify-between h-16">
-            <!-- Logo -->
-            <div class="flex items-center gap-3">
-                <img
-                    src="assets/logo426*426.png"
-                    alt="AI Grammar Mentor Logo"
-                    class="w-8 h-8 md:w-9 md:h-9"
-                />
+        <nav class="sticky top-0 z-50 w-full bg-bg-secondary/80 backdrop-blur-md border-b border-slate-800/60">
+            <div class="max-w-7xl mx-auto px-6 md:px-10">
+                <div class="flex items-center justify-between h-16">
+                    <a href="/" class="block">
+                        <div class="flex items-center gap-3">
+                            <img
+                                src="assets/logo426*426.png"
+                                alt="AI Grammar Mentor Logo"
+                                class="w-8 h-8 md:w-9 md:h-9"
+                            />
 
-                <span class="text-lg md:text-xl font-semibold tracking-tight text-slate-100">
-                    <span
-                        class="bg-clip-text text-transparent bg-gradient-to-r from-indigo-400 via-violet-400 to-pink-400"
-                    >
-                        Grammar
-                    </span>
-                    <span class="ml-1 text-slate-300 font-medium">Mentor</span>
-                </span>
-            </div>
+                            <span class="text-lg md:text-xl font-semibold tracking-tight text-slate-100">
+                                <span class="text-indigo-400 font-medium">AI</span>
+                                <span
+                                    class="ml-1 bg-clip-text text-transparent bg-gradient-to-r from-indigo-400 via-violet-400 to-pink-400"
+                                >
+                                    Grammar
+                                </span>
+                                <span class="ml-1 text-slate-300 font-medium">Mentor</span>
+                            </span>
+                        </div>
+                    </a>
 
-            <!-- Desktop Navigation -->
-            <div class="hidden md:flex items-center gap-10 text-sm font-medium text-text-secondary">
-                <a
-                    href="#"
-                    class="hover:text-accent transition-colors"
-                    onclick="gtag('event', 'nav_link_click', { link: 'features' })"
-                >
-                    Features
-                </a>
-                <a
-                    href="pricing.html"
-                    class="hover:text-accent transition-colors"
-                    onclick="gtag('event', 'nav_link_click', { link: 'pricing' })"
-                >
-                    Pricing
-                </a>
-                <a
-                    href="privacy.html"
-                    class="hover:text-accent transition-colors"
-                    onclick="gtag('event', 'nav_link_click', { link: 'privacy' })"
-                >
-                    Privacy
-                </a>
-            </div>
+                    <!-- Desktop Navigation -->
+                    <div class="hidden md:flex items-center gap-10 text-sm font-medium text-text-secondary">
+                        <a
+                            href="#"
+                            class="hover:text-accent transition-colors"
+                            onclick="gtag('event', 'nav_link_click', { link: 'features' })"
+                        >
+                            Features
+                        </a>
+                        <a
+                            href="pricing.html"
+                            class="hover:text-accent transition-colors"
+                            onclick="gtag('event', 'nav_link_click', { link: 'pricing' })"
+                        >
+                            Pricing
+                        </a>
+                        <a
+                            href="privacy.html"
+                            class="hover:text-accent transition-colors"
+                            onclick="gtag('event', 'nav_link_click', { link: 'privacy' })"
+                        >
+                            Privacy
+                        </a>
+                    </div>
 
-            <!-- Right Side -->
-            <div class="flex items-center gap-5">
-                <!-- Service Status -->
-                <div class="hidden md:flex items-center gap-2 text-xs text-slate-400">
-                    <span class="h-2 w-2 rounded-full bg-emerald-500"></span>
-                    <span><a href="status.html">Operational</a></span>
+                    <!-- Right Side -->
+                    <div class="flex items-center gap-5">
+                        <!-- Service Status -->
+                        <div class="hidden md:flex items-center gap-2 text-xs text-slate-400">
+                            <span class="h-2 w-2 rounded-full bg-emerald-500"></span>
+                            <span><a href="status.html">Operational</a></span>
+                        </div>
+
+                        <!-- Users Online -->
+                        <div class="hidden md:flex items-center gap-2 text-xs text-slate-500">
+                            <span class="h-2 w-2 rounded-full bg-red-500"></span>
+                            <span> <span id="online-count">147</span> online </span>
+                        </div>
+
+                        <!-- Mobile Menu Button -->
+                        <button
+                            class="md:hidden inline-flex items-center justify-center rounded-lg p-2 text-slate-300 hover:bg-slate-800 transition"
+                            onclick="document.getElementById('mobile-menu').classList.toggle('hidden')"
+                        >
+                            <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                class="h-5 w-5"
+                                fill="none"
+                                viewBox="0 0 24 24"
+                                stroke="currentColor"
+                            >
+                                <path
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    stroke-width="2"
+                                    d="M4 6h16M4 12h16M4 18h16"
+                                />
+                            </svg>
+                        </button>
+                    </div>
                 </div>
 
-                <!-- Users Online -->
-                <div class="hidden md:flex items-center gap-2 text-xs text-slate-500">
-                    <span class="h-2 w-2 rounded-full bg-red-500"></span>
-                    <span>
-                        <span id="online-count">147</span> online
-                    </span>
-                </div>
+                <!-- Mobile Menu -->
+                <div id="mobile-menu" class="hidden md:hidden border-t border-slate-800/60 py-4 space-y-3 text-sm">
+                    <a href="#" class="block text-slate-300 hover:text-accent">Features</a>
+                    <a href="pricing.html" class="block text-slate-300 hover:text-accent">Pricing</a>
+                    <a href="privacy.html" class="block text-slate-300 hover:text-accent">Privacy</a>
 
-                <!-- CTA -->
-                <button
-                    onclick="gtag('event', 'button_click', { button: 'want_more' })"
-                    class="hidden sm:inline-flex bg-gradient-to-r from-accent to-indigo-500 text-white px-5 py-2 rounded-full text-sm font-semibold hover:brightness-110 transition shadow-md shadow-indigo-900/30"
-                >
-                    Want more?
-                </button>
-
-                <!-- Mobile Menu Button -->
-                <button
-                    class="md:hidden inline-flex items-center justify-center rounded-lg p-2 text-slate-300 hover:bg-slate-800 transition"
-                    onclick="document.getElementById('mobile-menu').classList.toggle('hidden')"
-                >
-                    <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        class="h-5 w-5"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        stroke="currentColor"
+                    <div
+                        class="flex items-center justify-between pt-3 border-t border-slate-800/60 text-xs text-slate-400"
                     >
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M4 6h16M4 12h16M4 18h16" />
-                    </svg>
-                </button>
+                        <span class="flex items-center gap-2">
+                            <span class="h-2 w-2 rounded-full bg-emerald-500"></span>
+                            <a href="status.html">Operational</a>
+                        </span>
+                        <span><span id="online-count-mobile">147</span> online</span>
+                    </div>
+                </div>
             </div>
-        </div>
-
-        <!-- Mobile Menu -->
-        <div id="mobile-menu" class="hidden md:hidden border-t border-slate-800/60 py-4 space-y-3 text-sm">
-            <a href="#" class="block text-slate-300 hover:text-accent">Features</a>
-            <a href="pricing.html" class="block text-slate-300 hover:text-accent">Pricing</a>
-            <a href="privacy.html" class="block text-slate-300 hover:text-accent">Privacy</a>
-
-            <div class="flex items-center justify-between pt-3 border-t border-slate-800/60 text-xs text-slate-400">
-                <span class="flex items-center gap-2">
-                    <span class="h-2 w-2 rounded-full bg-emerald-500"></span>
-                    <a href="status.html">Operational</a>
-                </span>
-                <span><span id="online-count-mobile">147</span> online</span>
-            </div>
-        </div>
-    </div>
-</nav>
+        </nav>
 
 <!-- Status Hero -->
 <header class="max-w-6xl mx-auto px-5 sm:px-8 py-16 md:py-24 text-center">

@@ -344,3 +344,18 @@ function trackScroll() {
 window.addEventListener("scroll", trackScroll);
 // Initial check in case page is already scrolled
 trackScroll();
+
+// Simple carousel navigation
+const slider = document.getElementById("testimonial-slider");
+const prevBtn = document.getElementById("prev-testimonial");
+const nextBtn = document.getElementById("next-testimonial");
+
+if (slider && prevBtn && nextBtn) {
+    const cardWidth = slider.querySelector("div").offsetWidth + parseInt(getComputedStyle(slider).gap);
+    prevBtn.addEventListener("click", () => {
+        slider.scrollBy({ left: -cardWidth, behavior: "smooth" });
+    });
+    nextBtn.addEventListener("click", () => {
+        slider.scrollBy({ left: cardWidth, behavior: "smooth" });
+    });
+}
