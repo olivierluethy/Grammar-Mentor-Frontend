@@ -1,514 +1,1037 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en" class="scroll-smooth">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="AI Grammar Mentor is a writing improvement tool that teaches you grammar rules, not just fixes errors. Free grammar checker with explanations, multilingual support, and transparent pricing from a Swiss startup.">
-    <meta name="keywords" content="grammar checker, AI grammar tool, writing improvement tool, English grammar checker, multilingual grammar checker, AI writing assistant, grammar learning tool">
-    <title>AI Grammar Mentor - Learn Grammar, Don't Just Fix It | Swiss Writing Tool</title>
+  <head>
+    <!-- Google tag (gtag.js) -->
+    <script
+      async
+      src="https://www.googletagmanager.com/gtag/js?id=G-PRESJVG5VB"
+    ></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag("js", new Date());
+      gtag("config", "G-PRESJVG5VB", {
+        send_page_view: true,
+        debug_mode: true,
+      });
+    </script>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="AI Grammar Mentor is a writing improvement tool that teaches you grammar rules, not just fixes errors. Free grammar checker with explanations, multilingual support, and transparent pricing from a Swiss startup."
+    />
+    <meta
+      name="keywords"
+      content="grammar checker, AI grammar tool, writing improvement tool, English grammar checker, multilingual grammar checker, AI writing assistant, grammar learning tool"
+    />
+    <meta name="author" content="AI Grammar Mentor" />
+    <meta name="robots" content="index, follow" />
+    <meta
+      name="title"
+      content="AI Grammar Mentor | Precision without losing your voice"
+    />
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://grammar-mentor.com" />
+    <meta
+      property="og:title"
+      content="AI Grammar Mentor | Precision meets personality"
+    />
+    <meta
+      property="og:description"
+      content="Fix grammar. Keep your voice. The smart way to correct texts and learn at the same time."
+    />
+    <meta
+      property="og:image"
+      content="https://grammar-mentor.com/og-image.png"
+    />
+    <!-- Empfohlen: 1200x630px -->
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:url" content="https://grammar-mentor.com" />
+    <meta property="twitter:title" content="AI Grammar Mentor" />
+    <meta
+      property="twitter:description"
+      content="Correct mistakes, understand why, and keep your style."
+    />
+    <meta
+      property="twitter:image"
+      content="https://grammar-mentor.com/og-image.png"
+    />
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="assets/logo426x426.png" />
+    <title>
+      AI Grammar Mentor - Learn Grammar, Don't Just Fix It | Swiss Writing Tool
+    </title>
+    <script src="numbers.js" defer></script>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Crimson+Pro:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Crimson+Pro:wght@400;600;700&display=swap"
+      rel="stylesheet"
+    />
     <style>
-        body {
-            font-family: 'Inter', sans-serif;
-        }
-        .serif {
-            font-family: 'Crimson Pro', serif;
-        }
+      body {
+        font-family: "Inter", sans-serif;
+      }
+      .serif {
+        font-family: "Crimson Pro", serif;
+      }
     </style>
     <script>
-        tailwind.config = {
-            darkMode: 'class',
-            theme: {
-                extend: {
-                    colors: {
-                        dark: {
-                            900: '#0a0a0a',
-                            800: '#1a1a1a',
-                            700: '#2a2a2a',
-                            600: '#3a3a3a',
-                        }
-                    }
-                }
-            }
-        }
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              dark: {
+                900: "#0a0a0a",
+                800: "#1a1a1a",
+                700: "#2a2a2a",
+                600: "#3a3a3a",
+              },
+            },
+          },
+        },
+      };
     </script>
-</head>
-<body class="bg-dark-900 text-gray-100 antialiased">
-    
+  </head>
+  <body class="bg-dark-900 text-gray-100 antialiased">
     <!-- Header -->
-    <header class="border-b border-gray-800 sticky top-0 bg-dark-900/95 backdrop-blur-sm z-50">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
-            <div class="flex items-center justify-between">
-                <div class="flex items-center gap-4">
-    <!-- Logo Space -->
-    <a href="index.html" class="flex items-center gap-4">
-        <div class="w-12 h-12 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-lg flex items-center justify-center">
-            <img src="assets/logo426*426.png" alt="">
-        </div>
-        <div>
-            <h2 class="text-xl font-semibold text-white">AI Grammar Mentor</h2>
-            <p class="text-xs text-gray-400">Built in Switzerland</p>
-        </div>
-    </a>
-</div>
+    <!-- Header -->
+    <header
+      class="sticky top-0 z-50 border-b border-gray-800 bg-dark-900/95 backdrop-blur-sm"
+    >
+      <!-- Toggle State -->
+      <input id="mobile-menu-toggle" type="checkbox" class="peer hidden" />
 
-                <a href="#cta" class="hidden sm:inline-flex px-6 py-2.5 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg font-medium transition-colors">
-                    Try It Free
-                </a>
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex h-16 items-center justify-between">
+          <!-- Logo -->
+          <a href="index.html" class="flex items-center gap-3 shrink-0">
+            <div
+              class="w-10 h-10 sm:w-12 sm:h-12 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-lg flex items-center justify-center"
+            >
+              <img
+                src="assets/logo426x426.png"
+                alt="AI Grammar Mentor Logo"
+                class="w-full h-full object-contain"
+              />
             </div>
+            <div class="leading-tight">
+              <h2
+                class="text-lg sm:text-xl font-semibold text-white truncate max-w-[140px] sm:max-w-none"
+              >
+                AI Grammar Mentor
+              </h2>
+              <p class="text-[10px] sm:text-xs text-gray-400">
+                Built in Switzerland
+              </p>
+            </div>
+          </a>
+
+          <!-- Desktop Navigation -->
+          <nav
+            class="hidden md:flex items-center gap-8 text-sm font-medium text-gray-300"
+          >
+            <a href="pricing.html#features" class="hover:text-white"
+              >Features</a
+            >
+            <a href="pricing.html#pricing" class="hover:text-white">Pricing</a>
+            <a href="privacy.html" class="hover:text-white">Privacy</a>
+          </nav>
+
+          <!-- Right Side -->
+          <div class="flex items-center gap-3 sm:gap-6">
+            <!-- Desktop Stats -->
+            <div
+              class="hidden lg:flex items-center gap-4 border-r border-gray-800 pr-4 text-xs"
+            >
+              <a
+                href="status.html"
+                class="flex items-center gap-1.5 text-slate-400 hover:text-white"
+              >
+                <span
+                  class="h-2 w-2 rounded-full bg-emerald-500 animate-pulse"
+                ></span>
+                Operational
+              </a>
+              <div class="flex items-center gap-1.5 text-slate-500">
+                <span class="h-2 w-2 rounded-full bg-red-500"></span>
+                <span><span id="online-count">147</span> online</span>
+              </div>
+            </div>
+
+            <!-- CTA -->
+            <a
+              href="#cta"
+              class="inline-flex items-center px-4 py-2 sm:px-6 bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-medium rounded-lg active:scale-95 transition"
+            >
+              Try <span class="hidden xs:inline ml-1">It Free</span>
+            </a>
+
+            <!-- Mobile Toggle -->
+            <label
+              for="mobile-menu-toggle"
+              class="md:hidden cursor-pointer p-2 text-gray-400 hover:text-white"
+              aria-label="Toggle menu"
+            >
+              <!-- Hamburger -->
+              <svg
+                class="w-6 h-6 peer-checked:hidden"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M4 6h16M4 12h16m-7 6h7"
+                />
+              </svg>
+
+              <!-- Close -->
+              <svg
+                class="w-6 h-6 hidden peer-checked:block"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M6 18L18 6M6 6l12 12"
+                />
+              </svg>
+            </label>
+          </div>
         </div>
+      </div>
+
+      <!-- Mobile Menu -->
+      <div
+        class="md:hidden max-h-0 overflow-hidden transition-all duration-300 peer-checked:max-h-[500px] border-t border-gray-800 bg-dark-900"
+      >
+        <nav class="px-4 py-4 space-y-4 text-sm font-medium text-gray-300">
+          <a href="#features" class="block hover:text-white">Features</a>
+          <a href="#pricing" class="block hover:text-white">Pricing</a>
+          <a href="#privacy" class="block hover:text-white">Privacy</a>
+
+          <div class="pt-4 border-t border-gray-800 space-y-2 text-xs">
+            <a
+              href="status.html"
+              class="flex items-center gap-2 text-slate-400 hover:text-white"
+            >
+              <span
+                class="h-2 w-2 rounded-full bg-emerald-500 animate-pulse"
+              ></span>
+              Operational
+            </a>
+            <div class="flex items-center gap-2 text-slate-500">
+              <span class="h-2 w-2 rounded-full bg-red-500"></span>
+              <span><span id="online-count">147</span> online</span>
+            </div>
+          </div>
+        </nav>
+      </div>
     </header>
 
     <!-- Hero Section -->
     <section class="relative overflow-hidden">
-        <div class="absolute inset-0 bg-gradient-to-br from-indigo-900/20 via-purple-900/10 to-dark-900"></div>
-        <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 sm:py-32">
-            <div class="max-w-4xl mx-auto text-center">
-                <h1 class="text-4xl sm:text-5xl lg:text-6xl font-bold text-white leading-tight mb-6 serif">
-                    You Don't Need Another Tool That Rewrites Your Voice
-                </h1>
-                <p class="text-xl sm:text-2xl text-gray-300 mb-8 leading-relaxed">
-                    You need to understand <em>why</em> something's wrong, keep control of your own words, and actually get better at writing.
-                </p>
-                <p class="text-lg text-gray-400 max-w-2xl mx-auto mb-12">
-                    Most grammar checkers treat you like you can't think. They auto-correct without asking, rewrite your sentences into robotic corporate-speak, and leave you more confused than before. We built something different.
-                </p>
-                <a href="#cta" class="inline-flex items-center gap-2 px-8 py-4 bg-indigo-600 hover:bg-indigo-700 text-white text-lg font-semibold rounded-lg transition-all hover:scale-105 shadow-lg shadow-indigo-900/50">
-                    Start Writing Better
-                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path>
-                    </svg>
-                </a>
-            </div>
+      <div
+        class="absolute inset-0 bg-gradient-to-br from-indigo-900/20 via-purple-900/10 to-dark-900"
+      ></div>
+      <div
+        class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 sm:py-32"
+      >
+        <div class="max-w-4xl mx-auto text-center">
+          <h1
+            class="text-4xl sm:text-5xl lg:text-6xl font-bold text-white leading-tight mb-6 serif"
+          >
+            You Don't Need Another Tool That Rewrites Your Voice
+          </h1>
+          <p class="text-xl sm:text-2xl text-gray-300 mb-8 leading-relaxed">
+            You need to understand <em>why</em> something's wrong, keep control
+            of your own words, and actually get better at writing.
+          </p>
+          <p class="text-lg text-gray-400 max-w-2xl mx-auto mb-12">
+            Most grammar checkers treat you like you can't think. They
+            auto-correct without asking, rewrite your sentences into robotic
+            corporate-speak, and leave you more confused than before. We built
+            something different.
+          </p>
+          <a
+            href="#cta"
+            class="inline-flex items-center gap-2 px-8 py-4 bg-indigo-600 hover:bg-indigo-700 text-white text-lg font-semibold rounded-lg transition-all hover:scale-105 shadow-lg shadow-indigo-900/50"
+          >
+            Start Writing Better
+            <svg
+              class="w-5 h-5"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M13 7l5 5m0 0l-5 5m5-5H6"
+              ></path>
+            </svg>
+          </a>
         </div>
+      </div>
     </section>
 
     <!-- The Problem Section -->
     <section class="py-20 bg-dark-800">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="max-w-3xl mx-auto mb-16 text-center">
-                <h2 class="text-3xl sm:text-4xl font-bold text-white mb-4 serif">The Real Problem With Grammar Checkers</h2>
-                <p class="text-xl text-gray-400">It's not that they don't work. It's that they work <em>too well</em> in all the wrong ways.</p>
-            </div>
-            
-            <div class="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto">
-                <div class="bg-dark-700 p-8 rounded-xl border border-gray-700 hover:border-indigo-500/50 transition-colors">
-                    <div class="text-4xl mb-4">😤</div>
-                    <h3 class="text-xl font-semibold text-white mb-3">They interrupt your flow</h3>
-                    <p class="text-gray-400 leading-relaxed">
-                        You're deep in thought, crafting a sentence, and suddenly a suggestion pops up demanding your attention. Breaking concentration over and over just to dismiss things you already know are fine.
-                    </p>
-                </div>
-                
-                <div class="bg-dark-700 p-8 rounded-xl border border-gray-700 hover:border-indigo-500/50 transition-colors">
-                    <div class="text-4xl mb-4">🤖</div>
-                    <h3 class="text-xl font-semibold text-white mb-3">They flatten your voice</h3>
-                    <p class="text-gray-400 leading-relaxed">
-                        AI rewrites turn your conversational blog post into a corporate press release. Your novel's dialogue sounds like a business memo. Romance becomes technical documentation. Your personality gets erased.
-                    </p>
-                </div>
-                
-                <div class="bg-dark-700 p-8 rounded-xl border border-gray-700 hover:border-indigo-500/50 transition-colors">
-                    <div class="text-4xl mb-4">🤷</div>
-                    <h3 class="text-xl font-semibold text-white mb-3">They never explain anything</h3>
-                    <p class="text-gray-400 leading-relaxed">
-                        Red underline. "Fix this." But why? What rule did you break? How do you avoid it next time? You're left clicking "accept" on corrections you don't understand, learning nothing.
-                    </p>
-                </div>
-                
-                <div class="bg-dark-700 p-8 rounded-xl border border-gray-700 hover:border-indigo-500/50 transition-colors">
-                    <div class="text-4xl mb-4">💸</div>
-                    <h3 class="text-xl font-semibold text-white mb-3">They trap you with unclear pricing</h3>
-                    <p class="text-gray-400 leading-relaxed">
-                        "Free trial" that auto-renews. Hidden limits. Aggressive upsells blocking features you need. You just want to check your writing, not decode a billing scheme designed to maximize confusion.
-                    </p>
-                </div>
-            </div>
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="max-w-3xl mx-auto mb-16 text-center">
+          <h2 class="text-3xl sm:text-4xl font-bold text-white mb-4 serif">
+            The Real Problem With Grammar Checkers
+          </h2>
+          <p class="text-xl text-gray-400">
+            It's not that they don't work. It's that they work
+            <em>too well</em> in all the wrong ways.
+          </p>
         </div>
+
+        <div class="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto">
+          <div
+            class="bg-dark-700 p-8 rounded-xl border border-gray-700 hover:border-indigo-500/50 transition-colors"
+          >
+            <div class="text-4xl mb-4">😤</div>
+            <h3 class="text-xl font-semibold text-white mb-3">
+              They interrupt your flow
+            </h3>
+            <p class="text-gray-400 leading-relaxed">
+              You're deep in thought, crafting a sentence, and suddenly a
+              suggestion pops up demanding your attention. Breaking
+              concentration over and over just to dismiss things you already
+              know are fine.
+            </p>
+          </div>
+
+          <div
+            class="bg-dark-700 p-8 rounded-xl border border-gray-700 hover:border-indigo-500/50 transition-colors"
+          >
+            <div class="text-4xl mb-4">🤖</div>
+            <h3 class="text-xl font-semibold text-white mb-3">
+              They flatten your voice
+            </h3>
+            <p class="text-gray-400 leading-relaxed">
+              AI rewrites turn your conversational blog post into a corporate
+              press release. Your novel's dialogue sounds like a business memo.
+              Romance becomes technical documentation. Your personality gets
+              erased.
+            </p>
+          </div>
+
+          <div
+            class="bg-dark-700 p-8 rounded-xl border border-gray-700 hover:border-indigo-500/50 transition-colors"
+          >
+            <div class="text-4xl mb-4">🤷</div>
+            <h3 class="text-xl font-semibold text-white mb-3">
+              They never explain anything
+            </h3>
+            <p class="text-gray-400 leading-relaxed">
+              Red underline. "Fix this." But why? What rule did you break? How
+              do you avoid it next time? You're left clicking "accept" on
+              corrections you don't understand, learning nothing.
+            </p>
+          </div>
+
+          <div
+            class="bg-dark-700 p-8 rounded-xl border border-gray-700 hover:border-indigo-500/50 transition-colors"
+          >
+            <div class="text-4xl mb-4">💸</div>
+            <h3 class="text-xl font-semibold text-white mb-3">
+              They trap you with unclear pricing
+            </h3>
+            <p class="text-gray-400 leading-relaxed">
+              "Free trial" that auto-renews. Hidden limits. Aggressive upsells
+              blocking features you need. You just want to check your writing,
+              not decode a billing scheme designed to maximize confusion.
+            </p>
+          </div>
+        </div>
+      </div>
     </section>
 
     <!-- What You Actually Need Section -->
     <section class="py-20">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="max-w-3xl mx-auto mb-16 text-center">
-                <h2 class="text-3xl sm:text-4xl font-bold text-white mb-4 serif">What You Actually Need</h2>
-                <p class="text-xl text-gray-400">A writing improvement tool that respects your intelligence and helps you learn.</p>
-            </div>
-            
-            <div class="space-y-16 max-w-4xl mx-auto">
-                <!-- Control -->
-                <div class="flex flex-col md:flex-row gap-8 items-start">
-                    <div class="flex-shrink-0 w-16 h-16 bg-indigo-600/20 rounded-full flex items-center justify-center border border-indigo-500/50">
-                        <span class="text-3xl">✋</span>
-                    </div>
-                    <div>
-                        <h3 class="text-2xl font-semibold text-white mb-3">The freedom to ignore suggestions without friction</h3>
-                        <p class="text-gray-400 leading-relaxed mb-4">
-                            Sometimes you break the rules on purpose. Your dialogue is supposed to be informal. That sentence fragment is stylistic. You need a grammar checker that highlights issues but lets you dismiss them with one click and move on. No arguing. No re-suggesting the same thing. Just quiet, respectful acknowledgment that you're the writer here.
-                        </p>
-                        <p class="text-sm text-gray-500 italic">For freelance writers, novelists, and anyone who knows their own voice.</p>
-                    </div>
-                </div>
-
-                <!-- Learning -->
-                <div class="flex flex-col md:flex-row gap-8 items-start">
-                    <div class="flex-shrink-0 w-16 h-16 bg-purple-600/20 rounded-full flex items-center justify-center border border-purple-500/50">
-                        <span class="text-3xl">📚</span>
-                    </div>
-                    <div>
-                        <h3 class="text-2xl font-semibold text-white mb-3">Real explanations that teach you grammar rules</h3>
-                        <p class="text-gray-400 leading-relaxed mb-4">
-                            You're not looking for a magic button that fixes everything. You want to understand <em>why</em> the comma goes there, what passive voice actually means, and how to spot these issues yourself next time. An English grammar checker should be a mentor, not a servant. It should explain the rule, show examples, and help you internalize it.
-                        </p>
-                        <p class="text-sm text-gray-500 italic">For students, non-native speakers, and lifelong learners.</p>
-                    </div>
-                </div>
-
-                <!-- Style Preservation -->
-                <div class="flex flex-col md:flex-row gap-8 items-start">
-                    <div class="flex-shrink-0 w-16 h-16 bg-pink-600/20 rounded-full flex items-center justify-center border border-pink-500/50">
-                        <span class="text-3xl">🎨</span>
-                    </div>
-                    <div>
-                        <h3 class="text-2xl font-semibold text-white mb-3">Your writing style, untouched</h3>
-                        <p class="text-gray-400 leading-relaxed mb-4">
-                            Professional editors don't rewrite your entire manuscript. They suggest fixes for actual errors and let you make the call. This AI writing assistant works the same way: it highlights grammar mistakes, offers alternatives, but never forces a rewrite. Your romance novel still sounds romantic. Your blog still sounds like you. Your dialogue still sounds human.
-                        </p>
-                        <p class="text-sm text-gray-500 italic">For creative writers, bloggers, and content creators.</p>
-                    </div>
-                </div>
-
-                <!-- Multilingual -->
-                <div class="flex flex-col md:flex-row gap-8 items-start">
-                    <div class="flex-shrink-0 w-16 h-16 bg-emerald-600/20 rounded-full flex items-center justify-center border border-emerald-500/50">
-                        <span class="text-3xl">🌍</span>
-                    </div>
-                    <div>
-                        <h3 class="text-2xl font-semibold text-white mb-3">Support for how you actually write</h3>
-                        <p class="text-gray-400 leading-relaxed mb-4">
-                            Maybe you're writing in your second language and need more context. Maybe you're switching between British and American English. Maybe your document is huge and other tools crash or refuse to load it. A multilingual grammar checker should handle real-world writing scenarios without making assumptions about how or why you're writing.
-                        </p>
-                        <p class="text-sm text-gray-500 italic">For multilingual users, students, and anyone working with large documents.</p>
-                    </div>
-                </div>
-
-                <!-- Transparency -->
-                <div class="flex flex-col md:flex-row gap-8 items-start">
-                    <div class="flex-shrink-0 w-16 h-16 bg-amber-600/20 rounded-full flex items-center justify-center border border-amber-500/50">
-                        <span class="text-3xl">💡</span>
-                    </div>
-                    <div>
-                        <h3 class="text-2xl font-semibold text-white mb-3">Honest pricing with no trap doors</h3>
-                        <p class="text-gray-400 leading-relaxed mb-4">
-                            You should know exactly what you're paying for, what's free, and what's premium. No surprise charges. No aggressive upsells blocking basic features. No auto-renewals you didn't clearly agree to. Just clear pricing from a company that values trust more than growth hacks.
-                        </p>
-                        <p class="text-sm text-gray-500 italic">For budget-conscious writers, students, and anyone tired of subscription traps.</p>
-                    </div>
-                </div>
-
-                <!-- Classic Mode -->
-                <div class="flex flex-col md:flex-row gap-8 items-start">
-                    <div class="flex-shrink-0 w-16 h-16 bg-slate-600/20 rounded-full flex items-center justify-center border border-slate-500/50">
-                        <span class="text-3xl">⚙️</span>
-                    </div>
-                    <div>
-                        <h3 class="text-2xl font-semibold text-white mb-3">AI when you want it, classic grammar when you don't</h3>
-                        <p class="text-gray-400 leading-relaxed mb-4">
-                            Not everyone trusts AI rewrites. Sometimes you just want traditional grammar checking—the kind that catches typos and basic errors without trying to rephrase your entire paragraph. You should be able to toggle AI suggestions off and get straightforward, rule-based grammar checking whenever you prefer it.
-                        </p>
-                        <p class="text-sm text-gray-500 italic">For AI skeptics, traditional writers, and anyone who values simplicity.</p>
-                    </div>
-                </div>
-            </div>
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="max-w-3xl mx-auto mb-16 text-center">
+          <h2 class="text-3xl sm:text-4xl font-bold text-white mb-4 serif">
+            What You Actually Need
+          </h2>
+          <p class="text-xl text-gray-400">
+            A writing improvement tool that respects your intelligence and helps
+            you learn.
+          </p>
         </div>
+
+        <div class="space-y-16 max-w-4xl mx-auto">
+          <!-- Control -->
+          <div class="flex flex-col md:flex-row gap-8 items-start">
+            <div
+              class="flex-shrink-0 w-16 h-16 bg-indigo-600/20 rounded-full flex items-center justify-center border border-indigo-500/50"
+            >
+              <span class="text-3xl">✋</span>
+            </div>
+            <div>
+              <h3 class="text-2xl font-semibold text-white mb-3">
+                The freedom to ignore suggestions without friction
+              </h3>
+              <p class="text-gray-400 leading-relaxed mb-4">
+                Sometimes you break the rules on purpose. Your dialogue is
+                supposed to be informal. That sentence fragment is stylistic.
+                You need a grammar checker that highlights issues but lets you
+                dismiss them with one click and move on. No arguing. No
+                re-suggesting the same thing. Just quiet, respectful
+                acknowledgment that you're the writer here.
+              </p>
+              <p class="text-sm text-gray-500 italic">
+                For freelance writers, novelists, and anyone who knows their own
+                voice.
+              </p>
+            </div>
+          </div>
+
+          <!-- Learning -->
+          <div class="flex flex-col md:flex-row gap-8 items-start">
+            <div
+              class="flex-shrink-0 w-16 h-16 bg-purple-600/20 rounded-full flex items-center justify-center border border-purple-500/50"
+            >
+              <span class="text-3xl">📚</span>
+            </div>
+            <div>
+              <h3 class="text-2xl font-semibold text-white mb-3">
+                Real explanations that teach you grammar rules
+              </h3>
+              <p class="text-gray-400 leading-relaxed mb-4">
+                You're not looking for a magic button that fixes everything. You
+                want to understand <em>why</em> the comma goes there, what
+                passive voice actually means, and how to spot these issues
+                yourself next time. An English grammar checker should be a
+                mentor, not a servant. It should explain the rule, show
+                examples, and help you internalize it.
+              </p>
+              <p class="text-sm text-gray-500 italic">
+                For students, non-native speakers, and lifelong learners.
+              </p>
+            </div>
+          </div>
+
+          <!-- Style Preservation -->
+          <div class="flex flex-col md:flex-row gap-8 items-start">
+            <div
+              class="flex-shrink-0 w-16 h-16 bg-pink-600/20 rounded-full flex items-center justify-center border border-pink-500/50"
+            >
+              <span class="text-3xl">🎨</span>
+            </div>
+            <div>
+              <h3 class="text-2xl font-semibold text-white mb-3">
+                Your writing style, untouched
+              </h3>
+              <p class="text-gray-400 leading-relaxed mb-4">
+                Professional editors don't rewrite your entire manuscript. They
+                suggest fixes for actual errors and let you make the call. This
+                AI writing assistant works the same way: it highlights grammar
+                mistakes, offers alternatives, but never forces a rewrite. Your
+                romance novel still sounds romantic. Your blog still sounds like
+                you. Your dialogue still sounds human.
+              </p>
+              <p class="text-sm text-gray-500 italic">
+                For creative writers, bloggers, and content creators.
+              </p>
+            </div>
+          </div>
+
+          <!-- Multilingual -->
+          <div class="flex flex-col md:flex-row gap-8 items-start">
+            <div
+              class="flex-shrink-0 w-16 h-16 bg-emerald-600/20 rounded-full flex items-center justify-center border border-emerald-500/50"
+            >
+              <span class="text-3xl">🌍</span>
+            </div>
+            <div>
+              <h3 class="text-2xl font-semibold text-white mb-3">
+                Support for how you actually write
+              </h3>
+              <p class="text-gray-400 leading-relaxed mb-4">
+                Maybe you're writing in your second language and need more
+                context. Maybe you're switching between British and American
+                English. Maybe your document is huge and other tools crash or
+                refuse to load it. A multilingual grammar checker should handle
+                real-world writing scenarios without making assumptions about
+                how or why you're writing.
+              </p>
+              <p class="text-sm text-gray-500 italic">
+                For multilingual users, students, and anyone working with large
+                documents.
+              </p>
+            </div>
+          </div>
+
+          <!-- Transparency -->
+          <div class="flex flex-col md:flex-row gap-8 items-start">
+            <div
+              class="flex-shrink-0 w-16 h-16 bg-amber-600/20 rounded-full flex items-center justify-center border border-amber-500/50"
+            >
+              <span class="text-3xl">💡</span>
+            </div>
+            <div>
+              <h3 class="text-2xl font-semibold text-white mb-3">
+                Honest pricing with no trap doors
+              </h3>
+              <p class="text-gray-400 leading-relaxed mb-4">
+                You should know exactly what you're paying for, what's free, and
+                what's premium. No surprise charges. No aggressive upsells
+                blocking basic features. No auto-renewals you didn't clearly
+                agree to. Just clear pricing from a company that values trust
+                more than growth hacks.
+              </p>
+              <p class="text-sm text-gray-500 italic">
+                For budget-conscious writers, students, and anyone tired of
+                subscription traps.
+              </p>
+            </div>
+          </div>
+
+          <!-- Classic Mode -->
+          <div class="flex flex-col md:flex-row gap-8 items-start">
+            <div
+              class="flex-shrink-0 w-16 h-16 bg-slate-600/20 rounded-full flex items-center justify-center border border-slate-500/50"
+            >
+              <span class="text-3xl">⚙️</span>
+            </div>
+            <div>
+              <h3 class="text-2xl font-semibold text-white mb-3">
+                AI when you want it, classic grammar when you don't
+              </h3>
+              <p class="text-gray-400 leading-relaxed mb-4">
+                Not everyone trusts AI rewrites. Sometimes you just want
+                traditional grammar checking—the kind that catches typos and
+                basic errors without trying to rephrase your entire paragraph.
+                You should be able to toggle AI suggestions off and get
+                straightforward, rule-based grammar checking whenever you prefer
+                it.
+              </p>
+              <p class="text-sm text-gray-500 italic">
+                For AI skeptics, traditional writers, and anyone who values
+                simplicity.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
     </section>
 
     <!-- Why We Exist Section -->
     <section class="py-20 bg-dark-800">
-        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center mb-12">
-                <h2 class="text-3xl sm:text-4xl font-bold text-white mb-4 serif">Why We Built This</h2>
-            </div>
-            
-            <div class="prose prose-invert prose-lg max-w-none">
-                <p class="text-gray-300 leading-relaxed mb-6">
-                    We're a small Swiss startup that got tired of watching writing tools treat users like they don't matter. Every major grammar checker seemed designed to either take over your writing completely or nickel-and-dime you with confusing pricing.
-                </p>
-                
-                <p class="text-gray-300 leading-relaxed mb-6">
-                    We talked to writers. Lots of them. Freelancers who kept dismissing the same incorrect suggestions. Students who wanted to learn grammar, not just pass it off to AI. Novelists whose tools crashed on large manuscripts. Non-native speakers who needed cultural context, not just corrections. People who felt trapped by subscriptions they didn't fully understand.
-                </p>
-                
-                <p class="text-gray-300 leading-relaxed mb-6">
-                    The pattern was clear: people don't need more automation. They need more <em>understanding</em>. More <em>control</em>. More <em>respect</em>.
-                </p>
-                
-                <p class="text-gray-300 leading-relaxed">
-                    So we built AI Grammar Mentor as a writing improvement tool that explains grammar rules, preserves your voice, and charges honestly. We're based in Switzerland because we believe in quality, transparency, and treating users with dignity. This isn't a growth-at-all-costs company. It's a tool built by people who care about writing.
-                </p>
-            </div>
-            
-            <div class="mt-12 p-6 bg-dark-900 border border-gray-700 rounded-xl">
-                <p class="text-sm text-gray-400 text-center">
-                    🇨🇭 Proudly built in Switzerland • Privacy-focused • No data selling • Honest pricing
-                </p>
-            </div>
+      <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-12">
+          <h2 class="text-3xl sm:text-4xl font-bold text-white mb-4 serif">
+            Why We Built This
+          </h2>
         </div>
+
+        <div class="prose prose-invert prose-lg max-w-none">
+          <p class="text-gray-300 leading-relaxed mb-6">
+            We're a small Swiss startup that got tired of watching writing tools
+            treat users like they don't matter. Every major grammar checker
+            seemed designed to either take over your writing completely or
+            nickel-and-dime you with confusing pricing.
+          </p>
+
+          <p class="text-gray-300 leading-relaxed mb-6">
+            We talked to writers. Lots of them. Freelancers who kept dismissing
+            the same incorrect suggestions. Students who wanted to learn
+            grammar, not just pass it off to AI. Novelists whose tools crashed
+            on large manuscripts. Non-native speakers who needed cultural
+            context, not just corrections. People who felt trapped by
+            subscriptions they didn't fully understand.
+          </p>
+
+          <p class="text-gray-300 leading-relaxed mb-6">
+            The pattern was clear: people don't need more automation. They need
+            more <em>understanding</em>. More <em>control</em>. More
+            <em>respect</em>.
+          </p>
+
+          <p class="text-gray-300 leading-relaxed">
+            So we built AI Grammar Mentor as a writing improvement tool that
+            explains grammar rules, preserves your voice, and charges honestly.
+            We're based in Switzerland because we believe in quality,
+            transparency, and treating users with dignity. This isn't a
+            growth-at-all-costs company. It's a tool built by people who care
+            about writing.
+          </p>
+        </div>
+
+        <div class="mt-12 p-6 bg-dark-900 border border-gray-700 rounded-xl">
+          <p class="text-sm text-gray-400 text-center">
+            🇨🇭 Proudly built in Switzerland • Privacy-focused • No data selling
+            • Honest pricing
+          </p>
+        </div>
+      </div>
     </section>
 
     <!-- Reviews Section -->
     <section class="py-20">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center mb-16">
-                <h2 class="text-3xl sm:text-4xl font-bold text-white mb-4 serif">What People Are Saying</h2>
-                <p class="text-xl text-gray-400">From writers who actually use it</p>
-            </div>
-            
-            <div class="grid md:grid-cols-3 gap-8">
-                <div class="bg-dark-800 p-8 rounded-xl border border-gray-700">
-                    <div class="flex items-center gap-1 mb-4">
-                        <span class="text-yellow-400">★★★★★</span>
-                    </div>
-                    <p class="text-gray-300 mb-6 leading-relaxed">
-                        "Finally, a grammar checker that doesn't try to rewrite my entire article. I can ignore suggestions I disagree with without it nagging me. Just what I needed."
-                    </p>
-                    <div class="flex items-center gap-3">
-                        <div class="w-10 h-10 bg-gradient-to-br from-indigo-500 to-purple-500 rounded-full"></div>
-                        <div>
-                            <p class="font-medium text-white">Sarah M.</p>
-                            <p class="text-sm text-gray-500">Freelance Writer</p>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="bg-dark-800 p-8 rounded-xl border border-gray-700">
-                    <div class="flex items-center gap-1 mb-4">
-                        <span class="text-yellow-400">★★★★★</span>
-                    </div>
-                    <p class="text-gray-300 mb-6 leading-relaxed">
-                        "The explanations are actually helpful. I'm not a native English speaker and I've learned more from this tool in a month than I did from two years of other grammar checkers."
-                    </p>
-                    <div class="flex items-center gap-3">
-                        <div class="w-10 h-10 bg-gradient-to-br from-emerald-500 to-teal-500 rounded-full"></div>
-                        <div>
-                            <p class="font-medium text-white">Carlos R.</p>
-                            <p class="text-sm text-gray-500">Graduate Student</p>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="bg-dark-800 p-8 rounded-xl border border-gray-700">
-                    <div class="flex items-center gap-1 mb-4">
-                        <span class="text-yellow-400">★★★★★</span>
-                    </div>
-                    <p class="text-gray-300 mb-6 leading-relaxed">
-                        "No aggressive upsells, no surprise charges, and it actually handles my 80,000-word manuscript without crashing. Refreshingly straightforward."
-                    </p>
-                    <div class="flex items-center gap-3">
-                        <div class="w-10 h-10 bg-gradient-to-br from-pink-500 to-rose-500 rounded-full"></div>
-                        <div>
-                            <p class="font-medium text-white">Jennifer K.</p>
-                            <p class="text-sm text-gray-500">Novelist</p>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="bg-dark-800 p-8 rounded-xl border border-gray-700">
-                    <div class="flex items-center gap-1 mb-4">
-                        <span class="text-yellow-400">★★★★☆</span>
-                    </div>
-                    <p class="text-gray-300 mb-6 leading-relaxed">
-                        "I was skeptical of AI tools, but being able to switch to classic mode when I want just basic checks is perfect. Best of both worlds."
-                    </p>
-                    <div class="flex items-center gap-3">
-                        <div class="w-10 h-10 bg-gradient-to-br from-amber-500 to-orange-500 rounded-full"></div>
-                        <div>
-                            <p class="font-medium text-white">David L.</p>
-                            <p class="text-sm text-gray-500">Technical Writer</p>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="bg-dark-800 p-8 rounded-xl border border-gray-700">
-                    <div class="flex items-center gap-1 mb-4">
-                        <span class="text-yellow-400">★★★★★</span>
-                    </div>
-                    <p class="text-gray-300 mb-6 leading-relaxed">
-                        "My dialogue stays natural. My characters sound like people, not corporate robots. This is the first tool that doesn't kill my voice."
-                    </p>
-                    <div class="flex items-center gap-3">
-                        <div class="w-10 h-10 bg-gradient-to-br from-violet-500 to-purple-500 rounded-full"></div>
-                        <div>
-                            <p class="font-medium text-white">Rachel T.</p>
-                            <p class="text-sm text-gray-500">Romance Author</p>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="bg-dark-800 p-8 rounded-xl border border-gray-700">
-                    <div class="flex items-center gap-1 mb-4">
-                        <span class="text-yellow-400">★★★★★</span>
-                    </div>
-                    <p class="text-gray-300 mb-6 leading-relaxed">
-                        "The snippet storage feature saves me so much time with repeated phrases and templates. Simple but incredibly useful."
-                    </p>
-                    <div class="flex items-center gap-3">
-                        <div class="w-10 h-10 bg-gradient-to-br from-cyan-500 to-blue-500 rounded-full"></div>
-                        <div>
-                            <p class="font-medium text-white">Michael P.</p>
-                            <p class="text-sm text-gray-500">Content Marketer</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-16">
+          <h2 class="text-3xl sm:text-4xl font-bold text-white mb-4 serif">
+            What People Are Saying
+          </h2>
+          <p class="text-xl text-gray-400">From writers who actually use it</p>
         </div>
+
+        <div class="grid md:grid-cols-3 gap-8">
+          <div class="bg-dark-800 p-8 rounded-xl border border-gray-700">
+            <div class="flex items-center gap-1 mb-4">
+              <span class="text-yellow-400">★★★★★</span>
+            </div>
+            <p class="text-gray-300 mb-6 leading-relaxed">
+              "Finally, a grammar checker that doesn't try to rewrite my entire
+              article. I can ignore suggestions I disagree with without it
+              nagging me. Just what I needed."
+            </p>
+            <div class="flex items-center gap-3">
+              <div
+                class="w-10 h-10 rounded-full overflow-hidden ring-2 ring-gray-600"
+              >
+                <img
+                  src="assets/sarat.jpg"
+                  alt="Sarah M., Freelance Writer"
+                  class="w-full h-full object-cover"
+                />
+              </div>
+
+              <div>
+                <p class="font-medium text-white">Sarah M.</p>
+                <p class="text-sm text-gray-500">Freelance Writer</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="bg-dark-800 p-8 rounded-xl border border-gray-700">
+            <div class="flex items-center gap-1 mb-4">
+              <span class="text-yellow-400">★★★★★</span>
+            </div>
+            <p class="text-gray-300 mb-6 leading-relaxed">
+              "The explanations are actually helpful. I'm not a native English
+              speaker and I've learned more from this tool in a month than I did
+              from two years of other grammar checkers."
+            </p>
+            <div class="flex items-center gap-3">
+              <div
+                class="w-10 h-10 rounded-full overflow-hidden ring-2 ring-gray-600"
+              >
+                <img
+                  src="assets/davids.jpg"
+                  alt="Sarah M., Freelance Writer"
+                  class="w-full h-full object-cover"
+                />
+              </div>
+              <div>
+                <p class="font-medium text-white">Carlos R.</p>
+                <p class="text-sm text-gray-500">Graduate Student</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="bg-dark-800 p-8 rounded-xl border border-gray-700">
+            <div class="flex items-center gap-1 mb-4">
+              <span class="text-yellow-400">★★★★★</span>
+            </div>
+            <p class="text-gray-300 mb-6 leading-relaxed">
+              "No aggressive upsells, no surprise charges, and it actually
+              handles my 80,000-word manuscript without crashing. Refreshingly
+              straightforward."
+            </p>
+            <div class="flex items-center gap-3">
+              <div
+                class="w-10 h-10 rounded-full overflow-hidden ring-2 ring-gray-600"
+              >
+                <img
+                  src="assets/sarahk.avif"
+                  alt="Sarah M., Freelance Writer"
+                  class="w-full h-full object-cover"
+                />
+              </div>
+              <div>
+                <p class="font-medium text-white">Jennifer K.</p>
+                <p class="text-sm text-gray-500">Novelist</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="bg-dark-800 p-8 rounded-xl border border-gray-700">
+            <div class="flex items-center gap-1 mb-4">
+              <span class="text-yellow-400">★★★★☆</span>
+            </div>
+            <p class="text-gray-300 mb-6 leading-relaxed">
+              "I was skeptical of AI tools, but being able to switch to classic
+              mode when I want just basic checks is perfect. Best of both
+              worlds."
+            </p>
+            <div class="flex items-center gap-3">
+              <div
+                class="w-10 h-10 rounded-full overflow-hidden ring-2 ring-gray-600"
+              >
+                <img
+                  src="assets/marcol.jpg"
+                  alt="Sarah M., Freelance Writer"
+                  class="w-full h-full object-cover"
+                />
+              </div>
+              <div>
+                <p class="font-medium text-white">David L.</p>
+                <p class="text-sm text-gray-500">Technical Writer</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="bg-dark-800 p-8 rounded-xl border border-gray-700">
+            <div class="flex items-center gap-1 mb-4">
+              <span class="text-yellow-400">★★★★★</span>
+            </div>
+            <p class="text-gray-300 mb-6 leading-relaxed">
+              "My dialogue stays natural. My characters sound like people, not
+              corporate robots. This is the first tool that doesn't kill my
+              voice."
+            </p>
+            <div class="flex items-center gap-3">
+              <div
+                class="w-10 h-10 rounded-full overflow-hidden ring-2 ring-gray-600"
+              >
+                <img
+                  src="assets/isabelg.jpg"
+                  alt="Sarah M., Freelance Writer"
+                  class="w-full h-full object-cover"
+                />
+              </div>
+              <div>
+                <p class="font-medium text-white">Rachel T.</p>
+                <p class="text-sm text-gray-500">Romance Author</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="bg-dark-800 p-8 rounded-xl border border-gray-700">
+            <div class="flex items-center gap-1 mb-4">
+              <span class="text-yellow-400">★★★★★</span>
+            </div>
+            <p class="text-gray-300 mb-6 leading-relaxed">
+              "The snippet storage feature saves me so much time with repeated
+              phrases and templates. Simple but incredibly useful."
+            </p>
+            <div class="flex items-center gap-3">
+              <div
+                class="w-10 h-10 rounded-full overflow-hidden ring-2 ring-gray-600"
+              >
+                <img
+                  src="assets/lenam.jpg"
+                  alt="Sarah M., Freelance Writer"
+                  class="w-full h-full object-cover"
+                />
+              </div>
+              <div>
+                <p class="font-medium text-white">Lena M.</p>
+                <p class="text-sm text-gray-500">Content Marketer</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </section>
 
     <!-- How It Works Section -->
     <section class="py-20 bg-dark-800">
-        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center mb-16">
-                <h2 class="text-3xl sm:text-4xl font-bold text-white mb-4 serif">How It Actually Works</h2>
-                <p class="text-xl text-gray-400">Simple, respectful, educational</p>
-            </div>
-            
-            <div class="grid md:grid-cols-3 gap-8">
-                <div class="text-center">
-                    <div class="w-20 h-20 bg-indigo-600/20 rounded-full flex items-center justify-center border border-indigo-500/50 mx-auto mb-6">
-                        <span class="text-4xl">1️⃣</span>
-                    </div>
-                    <h3 class="text-xl font-semibold text-white mb-3">Write naturally</h3>
-                    <p class="text-gray-400 leading-relaxed">
-                        Type in your own voice. No pressure. The tool quietly highlights potential issues as you go, but never interrupts your flow or forces changes.
-                    </p>
-                </div>
-                
-                <div class="text-center">
-                    <div class="w-20 h-20 bg-purple-600/20 rounded-full flex items-center justify-center border border-purple-500/50 mx-auto mb-6">
-                        <span class="text-4xl">2️⃣</span>
-                    </div>
-                    <h3 class="text-xl font-semibold text-white mb-3">Review on your terms</h3>
-                    <p class="text-gray-400 leading-relaxed">
-                        See suggestions in a side panel. Click for detailed grammar rule explanations with examples. Accept what helps, ignore what doesn't. One click, no friction.
-                    </p>
-                </div>
-                
-                <div class="text-center">
-                    <div class="w-20 h-20 bg-pink-600/20 rounded-full flex items-center justify-center border border-pink-500/50 mx-auto mb-6">
-                        <span class="text-4xl">3️⃣</span>
-                    </div>
-                    <h3 class="text-xl font-semibold text-white mb-3">Actually learn</h3>
-                    <p class="text-gray-400 leading-relaxed">
-                        Each correction comes with the "why" behind it. Over time, you internalize the rules and make fewer mistakes naturally. That's the goal.
-                    </p>
-                </div>
-            </div>
+      <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-16">
+          <h2 class="text-3xl sm:text-4xl font-bold text-white mb-4 serif">
+            How It Actually Works
+          </h2>
+          <p class="text-xl text-gray-400">Simple, respectful, educational</p>
         </div>
+
+        <div class="grid md:grid-cols-3 gap-8">
+          <div class="text-center">
+            <div
+              class="w-20 h-20 bg-indigo-600/20 rounded-full flex items-center justify-center border border-indigo-500/50 mx-auto mb-6"
+            >
+              <span class="text-4xl">1️⃣</span>
+            </div>
+            <h3 class="text-xl font-semibold text-white mb-3">
+              Write naturally
+            </h3>
+            <p class="text-gray-400 leading-relaxed">
+              Type in your own voice. No pressure. The tool quietly highlights
+              potential issues as you go, but never interrupts your flow or
+              forces changes.
+            </p>
+          </div>
+
+          <div class="text-center">
+            <div
+              class="w-20 h-20 bg-purple-600/20 rounded-full flex items-center justify-center border border-purple-500/50 mx-auto mb-6"
+            >
+              <span class="text-4xl">2️⃣</span>
+            </div>
+            <h3 class="text-xl font-semibold text-white mb-3">
+              Review on your terms
+            </h3>
+            <p class="text-gray-400 leading-relaxed">
+              See suggestions in a side panel. Click for detailed grammar rule
+              explanations with examples. Accept what helps, ignore what
+              doesn't. One click, no friction.
+            </p>
+          </div>
+
+          <div class="text-center">
+            <div
+              class="w-20 h-20 bg-pink-600/20 rounded-full flex items-center justify-center border border-pink-500/50 mx-auto mb-6"
+            >
+              <span class="text-4xl">3️⃣</span>
+            </div>
+            <h3 class="text-xl font-semibold text-white mb-3">
+              Actually learn
+            </h3>
+            <p class="text-gray-400 leading-relaxed">
+              Each correction comes with the "why" behind it. Over time, you
+              internalize the rules and make fewer mistakes naturally. That's
+              the goal.
+            </p>
+          </div>
+        </div>
+      </div>
     </section>
 
     <!-- CTA Section -->
     <section id="cta" class="py-20">
-        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <h2 class="text-3xl sm:text-5xl font-bold text-white mb-6 serif">
-                Ready to Write With Confidence?
-            </h2>
-            <p class="text-xl text-gray-400 mb-4">
-                No credit card required. No aggressive upsells. Just a grammar checker that respects you.
-            </p>
-            <p class="text-lg text-gray-500 mb-10">
-                Start free and upgrade only when you need more. Clear pricing, clear value.
-            </p>
-            
-            <div class="flex flex-col sm:flex-row gap-4 justify-center items-center mb-8">
-                <a href="grammar-mentor.html" class="inline-flex items-center gap-2 px-8 py-4 bg-indigo-600 hover:bg-indigo-700 text-white text-lg font-semibold rounded-lg transition-all hover:scale-105 shadow-lg shadow-indigo-900/50">
-                    Start Using AI Grammar Mentor
-                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path>
-                    </svg>
-                </a>
-                <a href="pricing.html" class="inline-flex items-center gap-2 px-8 py-4 bg-dark-700 hover:bg-dark-600 text-white text-lg font-medium rounded-lg transition-colors border border-gray-600">
-                    See Pricing
-                </a>
-            </div>
-            
-            <div class="grid sm:grid-cols-3 gap-6 max-w-2xl mx-auto text-sm text-gray-400">
-                <div class="flex items-center justify-center gap-2">
-                    <svg class="w-5 h-5 text-emerald-500" fill="currentColor" viewBox="0 0 20 20">
-                        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
-                    </svg>
-                    Free tier available
-                </div>
-                <div class="flex items-center justify-center gap-2">
-                    <svg class="w-5 h-5 text-emerald-500" fill="currentColor" viewBox="0 0 20 20">
-                        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
-                    </svg>
-                    No credit card needed
-                </div>
-                <div class="flex items-center justify-center gap-2">
-                    <svg class="w-5 h-5 text-emerald-500" fill="currentColor" viewBox="0 0 20 20">
-                        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
-                    </svg>
-                    Cancel anytime
-                </div>
-            </div>
+      <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        <h2 class="text-3xl sm:text-5xl font-bold text-white mb-6 serif">
+          Ready to Write With Confidence?
+        </h2>
+        <p class="text-xl text-gray-400 mb-4">
+          No credit card required. No aggressive upsells. Just a grammar checker
+          that respects you.
+        </p>
+        <p class="text-lg text-gray-500 mb-10">
+          Start free and upgrade only when you need more. Clear pricing, clear
+          value.
+        </p>
+
+        <div
+          class="flex flex-col sm:flex-row gap-4 justify-center items-center mb-8"
+        >
+          <a
+            href="grammar-mentor.html"
+            class="inline-flex items-center gap-2 px-8 py-4 bg-indigo-600 hover:bg-indigo-700 text-white text-lg font-semibold rounded-lg transition-all hover:scale-105 shadow-lg shadow-indigo-900/50"
+          >
+            Start Using AI Grammar Mentor
+            <svg
+              class="w-5 h-5"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M13 7l5 5m0 0l-5 5m5-5H6"
+              ></path>
+            </svg>
+          </a>
+          <a
+            href="pricing.html#pricing"
+            class="inline-flex items-center gap-2 px-8 py-4 bg-dark-700 hover:bg-dark-600 text-white text-lg font-medium rounded-lg transition-colors border border-gray-600"
+          >
+            See Pricing
+          </a>
         </div>
+
+        <div
+          class="grid sm:grid-cols-3 gap-6 max-w-2xl mx-auto text-sm text-gray-400"
+        >
+          <div class="flex items-center justify-center gap-2">
+            <svg
+              class="w-5 h-5 text-emerald-500"
+              fill="currentColor"
+              viewBox="0 0 20 20"
+            >
+              <path
+                fill-rule="evenodd"
+                d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                clip-rule="evenodd"
+              ></path>
+            </svg>
+            Free tier available
+          </div>
+          <div class="flex items-center justify-center gap-2">
+            <svg
+              class="w-5 h-5 text-emerald-500"
+              fill="currentColor"
+              viewBox="0 0 20 20"
+            >
+              <path
+                fill-rule="evenodd"
+                d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                clip-rule="evenodd"
+              ></path>
+            </svg>
+            No credit card needed
+          </div>
+          <div class="flex items-center justify-center gap-2">
+            <svg
+              class="w-5 h-5 text-emerald-500"
+              fill="currentColor"
+              viewBox="0 0 20 20"
+            >
+              <path
+                fill-rule="evenodd"
+                d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                clip-rule="evenodd"
+              ></path>
+            </svg>
+            Cancel anytime
+          </div>
+        </div>
+      </div>
     </section>
 
     <!-- Footer -->
     <footer class="border-t border-gray-800 py-12 bg-dark-800">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="grid md:grid-cols-4 gap-8 mb-8">
-                <div>
-                    <div class="flex items-center gap-3 mb-4">
-                        <div class="w-10 h-10 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-lg flex items-center justify-center">
-                            <img src="assets/logo426*426.png" alt="">
-                        </div>
-                        <span class="font-semibold text-white">AI Grammar Mentor</span>
-                    </div>
-                    <p class="text-sm text-gray-400 leading-relaxed">
-                        A Swiss startup building writing tools that respect your intelligence and help you learn.
-                    </p>
-                </div>
-                
-                <div>
-                    <h4 class="font-semibold text-white mb-4">Product</h4>
-                    <ul class="space-y-2 text-sm text-gray-400">
-                        <li><a href="pricing.html#features" class="hover:text-white transition-colors">Features</a></li>
-                        <li><a href="pricing.html#faq" class="hover:text-white transition-colors">Pricing</a></li>
-                        <li><a href="#" class="hover:text-white transition-colors">FAQ</a></li>
-                        <li><a href="changelog.html" class="hover:text-white transition-colors">Changelog</a></li>
-                    </ul>
-                </div>
-                
-                <div>
-                    <h4 class="font-semibold text-white mb-4">Company</h4>
-                    <ul class="space-y-2 text-sm text-gray-400">
-                        <li><a href="about.html" class="hover:text-white transition-colors">About</a></li>
-                        <li><a href="blogs.html" class="hover:text-white transition-colors">Blog</a></li>
-                        <li><a href="privacy-policy.html" class="hover:text-white transition-colors">Privacy</a></li>
-                        <li><a href="terms-of-service.html" class="hover:text-white transition-colors">Terms</a></li>
-                    </ul>
-                </div>
-                
-                <div>
-                    <h4 class="font-semibold text-white mb-4">Support</h4>
-                    <ul class="space-y-2 text-sm text-gray-400">
-                        <li><a href="#" class="hover:text-white transition-colors">Help Center</a></li>
-                        <li><a href="#" class="hover:text-white transition-colors">Contact</a></li>
-                        <li><a href="#" class="hover:text-white transition-colors">Feedback</a></li>
-                    </ul>
-                </div>
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="grid md:grid-cols-4 gap-8 mb-8">
+          <div>
+            <div class="flex items-center gap-3 mb-4">
+              <div
+                class="w-10 h-10 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-lg flex items-center justify-center"
+              >
+                <img src="assets/logo426x426.png" alt="" />
+              </div>
+              <span class="font-semibold text-white">AI Grammar Mentor</span>
             </div>
-            
-            <div class="border-t border-gray-700 pt-8 flex flex-col sm:flex-row justify-between items-center gap-4 text-sm text-gray-500">
-                <p>© 2026 AI Grammar Mentor. Built with care in Switzerland.</p>
-                <p>🇨🇭 Privacy-focused • No tracking • No data selling</p>
-            </div>
-        </div>
-    </footer>
+            <p class="text-sm text-gray-400 leading-relaxed">
+              A Swiss startup building writing tools that respect your
+              intelligence and help you learn.
+            </p>
+          </div>
 
-</body>
+          <div>
+            <h4 class="font-semibold text-white mb-4">Product</h4>
+            <ul class="space-y-2 text-sm text-gray-400">
+              <li>
+                <a
+                  href="pricing.html#features"
+                  class="hover:text-white transition-colors"
+                  >Features</a
+                >
+              </li>
+              <li>
+                <a
+                  href="pricing.html#pricing"
+                  class="hover:text-white transition-colors"
+                  >Pricing</a
+                >
+              </li>
+              <li>
+                <a
+                  href="pricing.html#faq"
+                  class="hover:text-white transition-colors"
+                  >FAQ</a
+                >
+              </li>
+              <li>
+                <a
+                  href="changelog.html"
+                  class="hover:text-white transition-colors"
+                  >Changelog</a
+                >
+              </li>
+            </ul>
+          </div>
+
+          <div>
+            <h4 class="font-semibold text-white mb-4">Company</h4>
+            <ul class="space-y-2 text-sm text-gray-400">
+              <li>
+                <a href="about.html" class="hover:text-white transition-colors"
+                  >About</a
+                >
+              </li>
+              <li>
+                <a href="blogs.html" class="hover:text-white transition-colors"
+                  >Blog</a
+                >
+              </li>
+              <li>
+                <a
+                  href="privacy-policy.html"
+                  class="hover:text-white transition-colors"
+                  >Privacy</a
+                >
+              </li>
+              <li>
+                <a
+                  href="terms-of-service.html"
+                  class="hover:text-white transition-colors"
+                  >Terms</a
+                >
+              </li>
+            </ul>
+          </div>
+
+          <div>
+            <h4 class="font-semibold text-white mb-4">Support</h4>
+            <ul class="space-y-2 text-sm text-gray-400">
+              <li>
+                <a
+                  href="helpcenter.html"
+                  class="hover:text-white transition-colors"
+                  >Help Center</a
+                >
+              </li>
+              <!--
+               <li>
+                <a href="#" class="hover:text-white transition-colors"
+                  >Contact</a
+                >
+              </li>
+              -->
+              <li>
+                <a
+                  href="https://forms.gle/rg3X65zdG9KG1UVz6"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="hover:text-white transition-colors"
+                >
+                  Feedback
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <div
+          class="border-t border-gray-700 pt-8 flex flex-col sm:flex-row justify-between items-center gap-4 text-sm text-gray-500"
+        >
+          <p>© 2026 AI Grammar Mentor. Built with care in Switzerland.</p>
+          <p>🇨🇭 Privacy-focused • No tracking • No data selling</p>
+        </div>
+      </div>
+    </footer>
+  </body>
 </html>

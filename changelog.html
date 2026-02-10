@@ -1,349 +1,483 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en" class="dark">
-<head>
+  <head>
     <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-PRESJVG5VB"></script>
+    <script
+      async
+      src="https://www.googletagmanager.com/gtag/js?id=G-PRESJVG5VB"
+    ></script>
     <script>
       window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-      gtag('config', 'G-PRESJVG5VB', { send_page_view: true, debug_mode: true });
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag("js", new Date());
+      gtag("config", "G-PRESJVG5VB", {
+        send_page_view: true,
+        debug_mode: true,
+      });
     </script>
 
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Changelog | AI Grammar Mentor</title>
 
     <!-- Favicon -->
-        <link rel="icon" type="image/png" href="assets/logo426*426.png" />
+    <link rel="icon" type="image/png" href="assets/logo426x426.png" />
 
     <!-- Tailwind + dark mode -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
       tailwind.config = {
-        darkMode: 'class',
+        darkMode: "class",
         theme: {
           extend: {
             colors: {
-              'bg-primary': '#0f0f17',
-              'bg-secondary': '#171725',
-              'bg-editor': '#111827',
-              'text-primary': '#f1f5f9',
-              'text-secondary': '#cbd5e1',
-              'accent': '#6366f1',
-              'accent-dark': '#818cf8',
-            }
-          }
-        }
-      }
+              "bg-primary": "#0f0f17",
+              "bg-secondary": "#171725",
+              "bg-editor": "#111827",
+              "text-primary": "#f1f5f9",
+              "text-secondary": "#cbd5e1",
+              accent: "#6366f1",
+              "accent-dark": "#818cf8",
+            },
+          },
+        },
+      };
     </script>
 
     <!-- Lucide -->
     <script src="https://unpkg.com/lucide@latest"></script>
 
     <style>
-        .glow-indigo { box-shadow: 0 0 25px -5px rgba(99, 102, 241, 0.35); }
+      .glow-indigo {
+        box-shadow: 0 0 25px -5px rgba(99, 102, 241, 0.35);
+      }
     </style>
-</head>
+  </head>
 
-<body class="bg-bg-primary text-text-primary font-sans antialiased">
+  <body class="bg-bg-primary text-text-primary font-sans antialiased">
+    <!-- Navigation -->
+    <!-- Navigation -->
+    <nav
+      class="sticky top-0 z-50 w-full bg-bg-secondary/80 backdrop-blur-md border-b border-slate-800/60"
+    >
+      <div class="max-w-7xl mx-auto px-6 md:px-10">
+        <div class="flex items-center justify-between h-16">
+          <a href="/" class="block">
+            <div class="flex items-center gap-3">
+              <img
+                src="assets/logo426x426.png"
+                alt="AI Grammar Mentor Logo"
+                class="w-8 h-8 md:w-9 md:h-9"
+              />
 
-<!-- Navigation -->
-<!-- Navigation -->
-        <nav class="sticky top-0 z-50 w-full bg-bg-secondary/80 backdrop-blur-md border-b border-slate-800/60">
-            <div class="max-w-7xl mx-auto px-6 md:px-10">
-                <div class="flex items-center justify-between h-16">
-                    <a href="/" class="block">
-                        <div class="flex items-center gap-3">
-                            <img
-                                src="assets/logo426*426.png"
-                                alt="AI Grammar Mentor Logo"
-                                class="w-8 h-8 md:w-9 md:h-9"
-                            />
-
-                            <span class="text-lg md:text-xl font-semibold tracking-tight text-slate-100">
-                                <span class="text-indigo-400 font-medium">AI</span>
-                                <span
-                                    class="ml-1 bg-clip-text text-transparent bg-gradient-to-r from-indigo-400 via-violet-400 to-pink-400"
-                                >
-                                    Grammar
-                                </span>
-                                <span class="ml-1 text-slate-300 font-medium">Mentor</span>
-                            </span>
-                        </div>
-                    </a>
-
-                    <!-- Desktop Navigation -->
-                    <div class="hidden md:flex items-center gap-10 text-sm font-medium text-text-secondary">
-                        <a
-                            href="#"
-                            class="hover:text-accent transition-colors"
-                            onclick="gtag('event', 'nav_link_click', { link: 'features' })"
-                        >
-                            Features
-                        </a>
-                        <a
-                            href="pricing.html"
-                            class="hover:text-accent transition-colors"
-                            onclick="gtag('event', 'nav_link_click', { link: 'pricing' })"
-                        >
-                            Pricing
-                        </a>
-                        <a
-                            href="privacy.html"
-                            class="hover:text-accent transition-colors"
-                            onclick="gtag('event', 'nav_link_click', { link: 'privacy' })"
-                        >
-                            Privacy
-                        </a>
-                    </div>
-
-                    <!-- Right Side -->
-                    <div class="flex items-center gap-5">
-                        <!-- Service Status -->
-                        <div class="hidden md:flex items-center gap-2 text-xs text-slate-400">
-                            <span class="h-2 w-2 rounded-full bg-emerald-500"></span>
-                            <span><a href="status.html">Operational</a></span>
-                        </div>
-
-                        <!-- Users Online -->
-                        <div class="hidden md:flex items-center gap-2 text-xs text-slate-500">
-                            <span class="h-2 w-2 rounded-full bg-red-500"></span>
-                            <span> <span id="online-count">147</span> online </span>
-                        </div>
-
-                        <!-- Mobile Menu Button -->
-                        <button
-                            class="md:hidden inline-flex items-center justify-center rounded-lg p-2 text-slate-300 hover:bg-slate-800 transition"
-                            onclick="document.getElementById('mobile-menu').classList.toggle('hidden')"
-                        >
-                            <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                class="h-5 w-5"
-                                fill="none"
-                                viewBox="0 0 24 24"
-                                stroke="currentColor"
-                            >
-                                <path
-                                    stroke-linecap="round"
-                                    stroke-linejoin="round"
-                                    stroke-width="2"
-                                    d="M4 6h16M4 12h16M4 18h16"
-                                />
-                            </svg>
-                        </button>
-                    </div>
-                </div>
-
-                <!-- Mobile Menu -->
-                <div id="mobile-menu" class="hidden md:hidden border-t border-slate-800/60 py-4 space-y-3 text-sm">
-                    <a href="#" class="block text-slate-300 hover:text-accent">Features</a>
-                    <a href="pricing.html" class="block text-slate-300 hover:text-accent">Pricing</a>
-                    <a href="privacy.html" class="block text-slate-300 hover:text-accent">Privacy</a>
-
-                    <div
-                        class="flex items-center justify-between pt-3 border-t border-slate-800/60 text-xs text-slate-400"
-                    >
-                        <span class="flex items-center gap-2">
-                            <span class="h-2 w-2 rounded-full bg-emerald-500"></span>
-                            <a href="status.html">Operational</a>
-                        </span>
-                        <span><span id="online-count-mobile">147</span> online</span>
-                    </div>
-                </div>
+              <span
+                class="text-lg md:text-xl font-semibold tracking-tight text-slate-100"
+              >
+                <span class="text-indigo-400 font-medium">AI</span>
+                <span
+                  class="ml-1 bg-clip-text text-transparent bg-gradient-to-r from-indigo-400 via-violet-400 to-pink-400"
+                >
+                  Grammar
+                </span>
+                <span class="ml-1 text-slate-300 font-medium">Mentor</span>
+              </span>
             </div>
-        </nav>
+          </a>
 
-<!-- Changelog Header -->
-<header class="max-w-5xl mx-auto px-5 sm:px-8 py-16 md:py-24 text-center">
-    <h1 class="text-4xl sm:text-5xl md:text-6xl font-extrabold mb-6 leading-tight bg-clip-text text-transparent bg-gradient-to-r from-indigo-400 via-purple-400 to-pink-400">
+          <!-- Desktop Navigation -->
+          <div
+            class="hidden md:flex items-center gap-10 text-sm font-medium text-text-secondary"
+          >
+            <a
+              href="#"
+              class="hover:text-accent transition-colors"
+              onclick="gtag('event', 'nav_link_click', { link: 'features' })"
+            >
+              Features
+            </a>
+            <a
+              href="pricing.html"
+              class="hover:text-accent transition-colors"
+              onclick="gtag('event', 'nav_link_click', { link: 'pricing' })"
+            >
+              Pricing
+            </a>
+            <a
+              href="privacy.html"
+              class="hover:text-accent transition-colors"
+              onclick="gtag('event', 'nav_link_click', { link: 'privacy' })"
+            >
+              Privacy
+            </a>
+          </div>
+
+          <!-- Right Side -->
+          <div class="flex items-center gap-5">
+            <!-- Service Status -->
+            <div
+              class="hidden md:flex items-center gap-2 text-xs text-slate-400"
+            >
+              <span class="h-2 w-2 rounded-full bg-emerald-500"></span>
+              <span><a href="status.html">Operational</a></span>
+            </div>
+
+            <!-- Users Online -->
+            <div
+              class="hidden md:flex items-center gap-2 text-xs text-slate-500"
+            >
+              <span class="h-2 w-2 rounded-full bg-red-500"></span>
+              <span> <span id="online-count">147</span> online </span>
+            </div>
+
+            <!-- Mobile Menu Button -->
+            <button
+              class="md:hidden inline-flex items-center justify-center rounded-lg p-2 text-slate-300 hover:bg-slate-800 transition"
+              onclick="
+                document
+                  .getElementById('mobile-menu')
+                  .classList.toggle('hidden')
+              "
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                class="h-5 w-5"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M4 6h16M4 12h16M4 18h16"
+                />
+              </svg>
+            </button>
+          </div>
+        </div>
+
+        <!-- Mobile Menu -->
+        <div
+          id="mobile-menu"
+          class="hidden md:hidden border-t border-slate-800/60 py-4 space-y-3 text-sm"
+        >
+          <a href="#" class="block text-slate-300 hover:text-accent"
+            >Features</a
+          >
+          <a href="pricing.html" class="block text-slate-300 hover:text-accent"
+            >Pricing</a
+          >
+          <a href="privacy.html" class="block text-slate-300 hover:text-accent"
+            >Privacy</a
+          >
+
+          <div
+            class="flex items-center justify-between pt-3 border-t border-slate-800/60 text-xs text-slate-400"
+          >
+            <span class="flex items-center gap-2">
+              <span class="h-2 w-2 rounded-full bg-emerald-500"></span>
+              <a href="status.html">Operational</a>
+            </span>
+            <span><span id="online-count-mobile">147</span> online</span>
+          </div>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Changelog Header -->
+    <header class="max-w-5xl mx-auto px-5 sm:px-8 py-16 md:py-24 text-center">
+      <h1
+        class="text-4xl sm:text-5xl md:text-6xl font-extrabold mb-6 leading-tight bg-clip-text text-transparent bg-gradient-to-r from-indigo-400 via-purple-400 to-pink-400"
+      >
         Changelog
-    </h1>
-    <p class="text-text-secondary text-lg md:text-xl max-w-3xl mx-auto leading-relaxed">
-        Track every improvement, feature, and fix we're making to help writers like you express themselves better — while keeping your unique voice intact.
-    </p>
-</header>
+      </h1>
+      <p
+        class="text-text-secondary text-lg md:text-xl max-w-3xl mx-auto leading-relaxed"
+      >
+        Track every improvement, feature, and fix we're making to help writers
+        like you express themselves better — while keeping your unique voice
+        intact.
+      </p>
+    </header>
 
-<!-- Changelog Entries -->
-<section class="max-w-4xl mx-auto px-5 sm:px-8 pb-24">
-    <div class="space-y-16">
-
+    <!-- Changelog Entries -->
+    <section class="max-w-4xl mx-auto px-5 sm:px-8 pb-24">
+      <div class="space-y-16">
         <!-- Version 1.2.0 -->
-        <div class="bg-bg-editor rounded-2xl border border-slate-700/60 overflow-hidden shadow-xl">
-            <div class="bg-gradient-to-r from-indigo-950/50 to-purple-950/30 px-6 py-5 border-b border-slate-700/60">
-                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-                    <div>
-                        <h2 class="text-2xl font-bold text-text-primary">v1.2.0</h2>
-                        <p class="text-sm text-text-secondary mt-1">February 10, 2026</p>
-                    </div>
-                    <div class="flex items-center gap-3">
-                        <span class="px-3 py-1 bg-emerald-900/40 text-emerald-400 text-xs font-medium rounded-full">New</span>
-                        <span class="px-3 py-1 bg-indigo-900/40 text-indigo-300 text-xs font-medium rounded-full">Improvement</span>
-                    </div>
-                </div>
+        <div
+          class="bg-bg-editor rounded-2xl border border-slate-700/60 overflow-hidden shadow-xl"
+        >
+          <div
+            class="bg-gradient-to-r from-indigo-950/50 to-purple-950/30 px-6 py-5 border-b border-slate-700/60"
+          >
+            <div
+              class="flex flex-col sm:flex-row sm:items-center justify-between gap-4"
+            >
+              <div>
+                <h2 class="text-2xl font-bold text-text-primary">v1.2.0</h2>
+                <p class="text-sm text-text-secondary mt-1">
+                  February 10, 2026
+                </p>
+              </div>
+              <div class="flex items-center gap-3">
+                <span
+                  class="px-3 py-1 bg-emerald-900/40 text-emerald-400 text-xs font-medium rounded-full"
+                  >New</span
+                >
+                <span
+                  class="px-3 py-1 bg-indigo-900/40 text-indigo-300 text-xs font-medium rounded-full"
+                  >Improvement</span
+                >
+              </div>
             </div>
-            <div class="p-6 md:p-8 space-y-6">
-                <div class="flex items-start gap-4">
-                    <div class="mt-1.5 w-8 h-8 rounded-lg bg-emerald-900/30 flex items-center justify-center flex-shrink-0">
-                        <i data-lucide="plus" class="w-5 h-5 text-emerald-400"></i>
-                    </div>
-                    <div>
-                        <h3 class="font-semibold text-lg text-emerald-300">Student Discount & Free Trial</h3>
-                        <p class="text-text-secondary mt-1">
-                            Verified university email addresses now unlock 3 months completely free (instead of just 50% off). Huge thanks to everyone who joined early!
-                        </p>
-                    </div>
-                </div>
-                <div class="flex items-start gap-4">
-                    <div class="mt-1.5 w-8 h-8 rounded-lg bg-indigo-900/30 flex items-center justify-center flex-shrink-0">
-                        <i data-lucide="sparkles" class="w-5 h-5 text-indigo-400"></i>
-                    </div>
-                    <div>
-                        <h3 class="font-semibold text-lg text-indigo-300">Improved Correction Modes</h3>
-                        <p class="text-text-secondary mt-1">
-                            Added "Creative Preservation", "SEO-Optimized" and "Persuasive & Influential" modes — better style retention and more nuanced suggestions.
-                        </p>
-                    </div>
-                </div>
-                <div class="flex items-start gap-4">
-                    <div class="mt-1.5 w-8 h-8 rounded-lg bg-purple-900/30 flex items-center justify-center flex-shrink-0">
-                        <i data-lucide="languages" class="w-5 h-5 text-purple-400"></i>
-                    </div>
-                    <div>
-                        <h3 class="font-semibold text-lg text-purple-300">More Language Support</h3>
-                        <p class="text-text-secondary mt-1">
-                            Added Italian, Polish, Mandarin, Japanese — auto-detection is now even smarter.
-                        </p>
-                    </div>
-                </div>
+          </div>
+          <div class="p-6 md:p-8 space-y-6">
+            <div class="flex items-start gap-4">
+              <div
+                class="mt-1.5 w-8 h-8 rounded-lg bg-emerald-900/30 flex items-center justify-center flex-shrink-0"
+              >
+                <i data-lucide="plus" class="w-5 h-5 text-emerald-400"></i>
+              </div>
+              <div>
+                <h3 class="font-semibold text-lg text-emerald-300">
+                  Student Discount & Free Trial
+                </h3>
+                <p class="text-text-secondary mt-1">
+                  Verified university email addresses now unlock 3 months
+                  completely free (instead of just 50% off). Huge thanks to
+                  everyone who joined early!
+                </p>
+              </div>
             </div>
+            <div class="flex items-start gap-4">
+              <div
+                class="mt-1.5 w-8 h-8 rounded-lg bg-indigo-900/30 flex items-center justify-center flex-shrink-0"
+              >
+                <i data-lucide="sparkles" class="w-5 h-5 text-indigo-400"></i>
+              </div>
+              <div>
+                <h3 class="font-semibold text-lg text-indigo-300">
+                  Improved Correction Modes
+                </h3>
+                <p class="text-text-secondary mt-1">
+                  Added "Creative Preservation", "SEO-Optimized" and "Persuasive
+                  & Influential" modes — better style retention and more nuanced
+                  suggestions.
+                </p>
+              </div>
+            </div>
+            <div class="flex items-start gap-4">
+              <div
+                class="mt-1.5 w-8 h-8 rounded-lg bg-purple-900/30 flex items-center justify-center flex-shrink-0"
+              >
+                <i data-lucide="languages" class="w-5 h-5 text-purple-400"></i>
+              </div>
+              <div>
+                <h3 class="font-semibold text-lg text-purple-300">
+                  More Language Support
+                </h3>
+                <p class="text-text-secondary mt-1">
+                  Added Italian, Polish, Mandarin, Japanese — auto-detection is
+                  now even smarter.
+                </p>
+              </div>
+            </div>
+          </div>
         </div>
 
         <!-- Version 1.1.0 -->
-        <div class="bg-bg-editor rounded-2xl border border-slate-700/60 overflow-hidden shadow-xl">
-            <div class="bg-gradient-to-r from-indigo-950/50 to-purple-950/30 px-6 py-5 border-b border-slate-700/60">
-                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-                    <div>
-                        <h2 class="text-2xl font-bold text-text-primary">v1.1.0</h2>
-                        <p class="text-sm text-text-secondary mt-1">February 5, 2026</p>
-                    </div>
-                    <div class="flex items-center gap-3">
-                        <span class="px-3 py-1 bg-emerald-900/40 text-emerald-400 text-xs font-medium rounded-full">New</span>
-                        <span class="px-3 py-1 bg-sky-900/40 text-sky-300 text-xs font-medium rounded-full">Fix</span>
-                    </div>
-                </div>
+        <div
+          class="bg-bg-editor rounded-2xl border border-slate-700/60 overflow-hidden shadow-xl"
+        >
+          <div
+            class="bg-gradient-to-r from-indigo-950/50 to-purple-950/30 px-6 py-5 border-b border-slate-700/60"
+          >
+            <div
+              class="flex flex-col sm:flex-row sm:items-center justify-between gap-4"
+            >
+              <div>
+                <h2 class="text-2xl font-bold text-text-primary">v1.1.0</h2>
+                <p class="text-sm text-text-secondary mt-1">February 5, 2026</p>
+              </div>
+              <div class="flex items-center gap-3">
+                <span
+                  class="px-3 py-1 bg-emerald-900/40 text-emerald-400 text-xs font-medium rounded-full"
+                  >New</span
+                >
+                <span
+                  class="px-3 py-1 bg-sky-900/40 text-sky-300 text-xs font-medium rounded-full"
+                  >Fix</span
+                >
+              </div>
             </div>
-            <div class="p-6 md:p-8 space-y-6">
-                <div class="flex items-start gap-4">
-                    <div class="mt-1.5 w-8 h-8 rounded-lg bg-emerald-900/30 flex items-center justify-center flex-shrink-0">
-                        <i data-lucide="plus" class="w-5 h-5 text-emerald-400"></i>
-                    </div>
-                    <div>
-                        <h3 class="font-semibold text-lg text-emerald-300">Early-Bird Discount Program</h3>
-                        <p class="text-text-secondary mt-1">
-                            Launched 50% off for first 3 months for everyone who signs up before official pricing — already claimed by hundreds of writers.
-                        </p>
-                    </div>
-                </div>
-                <div class="flex items-start gap-4">
-                    <div class="mt-1.5 w-8 h-8 rounded-lg bg-sky-900/30 flex items-center justify-center flex-shrink-0">
-                        <i data-lucide="check" class="w-5 h-5 text-sky-400"></i>
-                    </div>
-                    <div>
-                        <h3 class="font-semibold text-lg text-sky-300">Fixed paste & copy reliability</h3>
-                        <p class="text-text-secondary mt-1">
-                            Improved clipboard handling across browsers — no more lost formatting or failed pastes.
-                        </p>
-                    </div>
-                </div>
-                <div class="flex items-start gap-4">
-                    <div class="mt-1.5 w-8 h-8 rounded-lg bg-indigo-900/30 flex items-center justify-center flex-shrink-0">
-                        <i data-lucide="zap" class="w-5 h-5 text-indigo-400"></i>
-                    </div>
-                    <div>
-                        <h3 class="font-semibold text-lg text-indigo-300">Faster feedback loading</h3>
-                        <p class="text-text-secondary mt-1">
-                            Reduced average analysis time by ~40% — thanks to backend optimizations.
-                        </p>
-                    </div>
-                </div>
+          </div>
+          <div class="p-6 md:p-8 space-y-6">
+            <div class="flex items-start gap-4">
+              <div
+                class="mt-1.5 w-8 h-8 rounded-lg bg-emerald-900/30 flex items-center justify-center flex-shrink-0"
+              >
+                <i data-lucide="plus" class="w-5 h-5 text-emerald-400"></i>
+              </div>
+              <div>
+                <h3 class="font-semibold text-lg text-emerald-300">
+                  Early-Bird Discount Program
+                </h3>
+                <p class="text-text-secondary mt-1">
+                  Launched 50% off for first 3 months for everyone who signs up
+                  before official pricing — already claimed by hundreds of
+                  writers.
+                </p>
+              </div>
             </div>
+            <div class="flex items-start gap-4">
+              <div
+                class="mt-1.5 w-8 h-8 rounded-lg bg-sky-900/30 flex items-center justify-center flex-shrink-0"
+              >
+                <i data-lucide="check" class="w-5 h-5 text-sky-400"></i>
+              </div>
+              <div>
+                <h3 class="font-semibold text-lg text-sky-300">
+                  Fixed paste & copy reliability
+                </h3>
+                <p class="text-text-secondary mt-1">
+                  Improved clipboard handling across browsers — no more lost
+                  formatting or failed pastes.
+                </p>
+              </div>
+            </div>
+            <div class="flex items-start gap-4">
+              <div
+                class="mt-1.5 w-8 h-8 rounded-lg bg-indigo-900/30 flex items-center justify-center flex-shrink-0"
+              >
+                <i data-lucide="zap" class="w-5 h-5 text-indigo-400"></i>
+              </div>
+              <div>
+                <h3 class="font-semibold text-lg text-indigo-300">
+                  Faster feedback loading
+                </h3>
+                <p class="text-text-secondary mt-1">
+                  Reduced average analysis time by ~40% — thanks to backend
+                  optimizations.
+                </p>
+              </div>
+            </div>
+          </div>
         </div>
 
         <!-- Version 1.0.0 – Launch -->
-        <div class="bg-bg-editor rounded-2xl border border-slate-700/60 overflow-hidden shadow-xl">
-            <div class="bg-gradient-to-r from-indigo-950/50 to-purple-950/30 px-6 py-5 border-b border-slate-700/60">
-                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-                    <div>
-                        <h2 class="text-2xl font-bold text-text-primary">v1.0.0</h2>
-                        <p class="text-sm text-text-secondary mt-1">January 28, 2026</p>
-                    </div>
-                    <div class="flex items-center gap-3">
-                        <span class="px-3 py-1 bg-purple-900/40 text-purple-300 text-xs font-medium rounded-full">Launch</span>
-                    </div>
-                </div>
+        <div
+          class="bg-bg-editor rounded-2xl border border-slate-700/60 overflow-hidden shadow-xl"
+        >
+          <div
+            class="bg-gradient-to-r from-indigo-950/50 to-purple-950/30 px-6 py-5 border-b border-slate-700/60"
+          >
+            <div
+              class="flex flex-col sm:flex-row sm:items-center justify-between gap-4"
+            >
+              <div>
+                <h2 class="text-2xl font-bold text-text-primary">v1.0.0</h2>
+                <p class="text-sm text-text-secondary mt-1">January 28, 2026</p>
+              </div>
+              <div class="flex items-center gap-3">
+                <span
+                  class="px-3 py-1 bg-purple-900/40 text-purple-300 text-xs font-medium rounded-full"
+                  >Launch</span
+                >
+              </div>
             </div>
-            <div class="p-6 md:p-8 space-y-6">
-                <div class="flex items-start gap-4">
-                    <div class="mt-1.5 w-8 h-8 rounded-lg bg-purple-900/30 flex items-center justify-center flex-shrink-0">
-                        <i data-lucide="rocket" class="w-5 h-5 text-purple-400"></i>
-                    </div>
-                    <div>
-                        <h3 class="font-semibold text-lg text-purple-300">Initial Public Launch</h3>
-                        <p class="text-text-secondary mt-1">
-                            AI Grammar Mentor is live! Core features include style-preserving corrections, detailed explanations, multi-language support, and full anonymization via DataCloakAI.
-                        </p>
-                    </div>
-                </div>
-                <div class="flex items-start gap-4">
-                    <div class="mt-1.5 w-8 h-8 rounded-lg bg-emerald-900/30 flex items-center justify-center flex-shrink-0">
-                        <i data-lucide="shield-check" class="w-5 h-5 text-emerald-400"></i>
-                    </div>
-                    <div>
-                        <h3 class="font-semibold text-lg text-emerald-300">Privacy by Design</h3>
-                        <p class="text-text-secondary mt-1">
-                            All text is anonymized on the backend — no training on user data, no logs of personal content, 100% Swiss infrastructure.
-                        </p>
-                    </div>
-                </div>
+          </div>
+          <div class="p-6 md:p-8 space-y-6">
+            <div class="flex items-start gap-4">
+              <div
+                class="mt-1.5 w-8 h-8 rounded-lg bg-purple-900/30 flex items-center justify-center flex-shrink-0"
+              >
+                <i data-lucide="rocket" class="w-5 h-5 text-purple-400"></i>
+              </div>
+              <div>
+                <h3 class="font-semibold text-lg text-purple-300">
+                  Initial Public Launch
+                </h3>
+                <p class="text-text-secondary mt-1">
+                  AI Grammar Mentor is live! Core features include
+                  style-preserving corrections, detailed explanations,
+                  multi-language support, and full anonymization via
+                  DataCloakAI.
+                </p>
+              </div>
             </div>
+            <div class="flex items-start gap-4">
+              <div
+                class="mt-1.5 w-8 h-8 rounded-lg bg-emerald-900/30 flex items-center justify-center flex-shrink-0"
+              >
+                <i
+                  data-lucide="shield-check"
+                  class="w-5 h-5 text-emerald-400"
+                ></i>
+              </div>
+              <div>
+                <h3 class="font-semibold text-lg text-emerald-300">
+                  Privacy by Design
+                </h3>
+                <p class="text-text-secondary mt-1">
+                  All text is anonymized on the backend — no training on user
+                  data, no logs of personal content, 100% Swiss infrastructure.
+                </p>
+              </div>
+            </div>
+          </div>
         </div>
+      </div>
 
-    </div>
+      <!-- Older versions note -->
+      <div class="mt-16 text-center text-text-secondary">
+        <p>
+          We're just getting started. More improvements are coming every week.
+        </p>
+        <p class="mt-2">
+          Want to stay updated?
+          <a href="/pricing.html" class="text-accent hover:underline"
+            >Join the early access list</a
+          >.
+        </p>
+      </div>
+    </section>
 
-    <!-- Older versions note -->
-    <div class="mt-16 text-center text-text-secondary">
-        <p>We're just getting started. More improvements are coming every week.</p>
-        <p class="mt-2">Want to stay updated? <a href="/pricing.html" class="text-accent hover:underline">Join the early access list</a>.</p>
-    </div>
-</section>
+    <!-- Footer Teaser -->
+    <section
+      class="max-w-6xl mx-auto px-5 sm:px-8 py-12 text-center border-t border-slate-800/60"
+    >
+      <p class="text-text-secondary text-base">
+        Back to <a href="/" class="text-accent hover:underline">Home</a> •
+        Questions?
+        <a
+          href="mailto:hello@grammar-mentor.ch"
+          class="text-accent hover:underline"
+          >hello@grammar-mentor.ch</a
+        >
+      </p>
+    </section>
 
-<!-- Footer Teaser -->
-<section class="max-w-6xl mx-auto px-5 sm:px-8 py-12 text-center border-t border-slate-800/60">
-    <p class="text-text-secondary text-base">
-        Back to <a href="/" class="text-accent hover:underline">Home</a> • Questions? <a href="mailto:hello@grammar-mentor.ch" class="text-accent hover:underline">hello@grammar-mentor.ch</a>
-    </p>
-</section>
+    <script>
+      lucide.createIcons();
 
-<script>
-    lucide.createIcons();
-
-    // Optional: Online count (if you want consistency across pages)
-    function getRandomOnlineUsers() {
+      // Optional: Online count (if you want consistency across pages)
+      function getRandomOnlineUsers() {
         const base = 140;
         const variation = Math.floor(Math.random() * 80) - 40;
         const timeFactor = Math.sin(Date.now() / 1000 / 60 / 15) * 30;
         return Math.max(80, Math.round(base + variation + timeFactor));
-    }
+      }
 
-    function updateOnlineCount() {
-        const countEl = document.getElementById('online-count');
-        if (countEl) countEl.textContent = getRandomOnlineUsers().toLocaleString();
-    }
+      function updateOnlineCount() {
+        const countEl = document.getElementById("online-count");
+        if (countEl)
+          countEl.textContent = getRandomOnlineUsers().toLocaleString();
+      }
 
-    updateOnlineCount();
-    setInterval(updateOnlineCount, 8000 + Math.random() * 6000);
-</script>
-
-</body>
+      updateOnlineCount();
+      setInterval(updateOnlineCount, 8000 + Math.random() * 6000);
+    </script>
+  </body>
 </html>

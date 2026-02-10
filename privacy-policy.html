@@ -1,274 +1,393 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en" class="dark">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Privacy Policy – AI Grammar Mentor</title>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Privacy Policy – AI Grammar Mentor</title>
 
-  <!-- SEO -->
-  <meta name="description" content="Privacy Policy for AI Grammar Mentor – how we handle your data when using our AI grammar checking service."/>
-  <meta name="robots" content="index, follow"/>
+    <!-- SEO -->
+    <meta
+      name="description"
+      content="Privacy Policy for AI Grammar Mentor – how we handle your data when using our AI grammar checking service."
+    />
+    <meta name="robots" content="index, follow" />
 
-  <!-- Favicon -->
-        <link rel="icon" type="image/png" href="assets/logo426*426.png" />
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="assets/logo426x426.png" />
 
-  <!-- Tailwind & theme -->
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script>
-    tailwind.config = {
-      darkMode: "class",
-      theme: {
-        extend: {
-          colors: {
-            "bg-primary": "#0f0f17",
-            "bg-secondary": "#171725",
-            "bg-editor": "#111827",
-            "text-primary": "#f1f5f9",
-            "text-secondary": "#cbd5e1",
-            accent: "#6366f1",
-            "accent-dark": "#818cf8",
+    <!-- Tailwind & theme -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "bg-primary": "#0f0f17",
+              "bg-secondary": "#171725",
+              "bg-editor": "#111827",
+              "text-primary": "#f1f5f9",
+              "text-secondary": "#cbd5e1",
+              accent: "#6366f1",
+              "accent-dark": "#818cf8",
+            },
           },
         },
-      },
-    };
-  </script>
+      };
+    </script>
 
-  <!-- Lucide Icons -->
-  <script src="https://unpkg.com/lucide@latest"></script>
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
 
-  <style>
-    .glow-indigo { box-shadow: 0 0 25px -5px rgba(99, 102, 241, 0.35); }
-  </style>
-</head>
+    <style>
+      .glow-indigo {
+        box-shadow: 0 0 25px -5px rgba(99, 102, 241, 0.35);
+      }
+    </style>
+  </head>
 
-<body class="bg-bg-primary text-text-primary font-sans antialiased min-h-screen flex flex-col">
+  <body
+    class="bg-bg-primary text-text-primary font-sans antialiased min-h-screen flex flex-col"
+  >
+    <!-- Navigation -->
+    <nav
+      class="sticky top-0 z-50 w-full bg-bg-secondary/80 backdrop-blur-md border-b border-slate-800/60"
+    >
+      <div class="max-w-7xl mx-auto px-6 md:px-10">
+        <div class="flex items-center justify-between h-16">
+          <a href="/" class="block">
+            <div class="flex items-center gap-3">
+              <img
+                src="assets/logo426x426.png"
+                alt="AI Grammar Mentor Logo"
+                class="w-8 h-8 md:w-9 md:h-9"
+              />
 
-  <!-- Navigation -->
-  <!-- Navigation -->
-        <nav class="sticky top-0 z-50 w-full bg-bg-secondary/80 backdrop-blur-md border-b border-slate-800/60">
-            <div class="max-w-7xl mx-auto px-6 md:px-10">
-                <div class="flex items-center justify-between h-16">
-                    <a href="/" class="block">
-                        <div class="flex items-center gap-3">
-                            <img
-                                src="assets/logo426*426.png"
-                                alt="AI Grammar Mentor Logo"
-                                class="w-8 h-8 md:w-9 md:h-9"
-                            />
-
-                            <span class="text-lg md:text-xl font-semibold tracking-tight text-slate-100">
-                                <span class="text-indigo-400 font-medium">AI</span>
-                                <span
-                                    class="ml-1 bg-clip-text text-transparent bg-gradient-to-r from-indigo-400 via-violet-400 to-pink-400"
-                                >
-                                    Grammar
-                                </span>
-                                <span class="ml-1 text-slate-300 font-medium">Mentor</span>
-                            </span>
-                        </div>
-                    </a>
-
-                    <!-- Desktop Navigation -->
-                    <div class="hidden md:flex items-center gap-10 text-sm font-medium text-text-secondary">
-                        <a
-                            href="#"
-                            class="hover:text-accent transition-colors"
-                            onclick="gtag('event', 'nav_link_click', { link: 'features' })"
-                        >
-                            Features
-                        </a>
-                        <a
-                            href="pricing.html"
-                            class="hover:text-accent transition-colors"
-                            onclick="gtag('event', 'nav_link_click', { link: 'pricing' })"
-                        >
-                            Pricing
-                        </a>
-                        <a
-                            href="privacy.html"
-                            class="hover:text-accent transition-colors"
-                            onclick="gtag('event', 'nav_link_click', { link: 'privacy' })"
-                        >
-                            Privacy
-                        </a>
-                    </div>
-
-                    <!-- Right Side -->
-                    <div class="flex items-center gap-5">
-                        <!-- Service Status -->
-                        <div class="hidden md:flex items-center gap-2 text-xs text-slate-400">
-                            <span class="h-2 w-2 rounded-full bg-emerald-500"></span>
-                            <span><a href="status.html">Operational</a></span>
-                        </div>
-
-                        <!-- Users Online -->
-                        <div class="hidden md:flex items-center gap-2 text-xs text-slate-500">
-                            <span class="h-2 w-2 rounded-full bg-red-500"></span>
-                            <span> <span id="online-count">147</span> online </span>
-                        </div>
-
-                        <!-- Mobile Menu Button -->
-                        <button
-                            class="md:hidden inline-flex items-center justify-center rounded-lg p-2 text-slate-300 hover:bg-slate-800 transition"
-                            onclick="document.getElementById('mobile-menu').classList.toggle('hidden')"
-                        >
-                            <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                class="h-5 w-5"
-                                fill="none"
-                                viewBox="0 0 24 24"
-                                stroke="currentColor"
-                            >
-                                <path
-                                    stroke-linecap="round"
-                                    stroke-linejoin="round"
-                                    stroke-width="2"
-                                    d="M4 6h16M4 12h16M4 18h16"
-                                />
-                            </svg>
-                        </button>
-                    </div>
-                </div>
-
-                <!-- Mobile Menu -->
-                <div id="mobile-menu" class="hidden md:hidden border-t border-slate-800/60 py-4 space-y-3 text-sm">
-                    <a href="#" class="block text-slate-300 hover:text-accent">Features</a>
-                    <a href="pricing.html" class="block text-slate-300 hover:text-accent">Pricing</a>
-                    <a href="privacy.html" class="block text-slate-300 hover:text-accent">Privacy</a>
-
-                    <div
-                        class="flex items-center justify-between pt-3 border-t border-slate-800/60 text-xs text-slate-400"
-                    >
-                        <span class="flex items-center gap-2">
-                            <span class="h-2 w-2 rounded-full bg-emerald-500"></span>
-                            <a href="status.html">Operational</a>
-                        </span>
-                        <span><span id="online-count-mobile">147</span> online</span>
-                    </div>
-                </div>
+              <span
+                class="text-lg md:text-xl font-semibold tracking-tight text-slate-100"
+              >
+                <span class="text-indigo-400 font-medium">AI</span>
+                <span
+                  class="ml-1 bg-clip-text text-transparent bg-gradient-to-r from-indigo-400 via-violet-400 to-pink-400"
+                >
+                  Grammar
+                </span>
+                <span class="ml-1 text-slate-300 font-medium">Mentor</span>
+              </span>
             </div>
-        </nav>
+          </a>
 
-  <!-- Main Content -->
-  <main class="flex-grow max-w-4xl mx-auto px-6 py-16 md:py-24">
-    <div class="prose prose-invert max-w-none">
-      <h1 class="text-4xl md:text-5xl font-extrabold mb-10 bg-clip-text text-transparent bg-gradient-to-r from-indigo-400 via-purple-400 to-pink-400">
-        Privacy Policy
-      </h1>
+          <!-- Desktop Navigation -->
+          <div
+            class="hidden md:flex items-center gap-10 text-sm font-medium text-text-secondary"
+          >
+            <a
+              href="#"
+              class="hover:text-accent transition-colors"
+              onclick="gtag('event', 'nav_link_click', { link: 'features' })"
+            >
+              Features
+            </a>
+            <a
+              href="pricing.html"
+              class="hover:text-accent transition-colors"
+              onclick="gtag('event', 'nav_link_click', { link: 'pricing' })"
+            >
+              Pricing
+            </a>
+            <a
+              href="privacy.html"
+              class="hover:text-accent transition-colors"
+              onclick="gtag('event', 'nav_link_click', { link: 'privacy' })"
+            >
+              Privacy
+            </a>
+          </div>
 
-      <p class="text-lg text-text-secondary mb-12">
-        Last updated: 01.01.2025<br><br>
-        At AI Grammar Mentor, we take your privacy seriously. This Privacy Policy explains how we collect, use, disclose, and protect your information when you use our website and AI-powered grammar checking & writing assistance service (“Service”).
-      </p>
+          <!-- Right Side -->
+          <div class="flex items-center gap-5">
+            <!-- Service Status -->
+            <div
+              class="hidden md:flex items-center gap-2 text-xs text-slate-400"
+            >
+              <span class="h-2 w-2 rounded-full bg-emerald-500"></span>
+              <span><a href="status.html">Operational</a></span>
+            </div>
 
-      <div class="space-y-12 text-lg leading-relaxed text-text-secondary">
-        <section>
-          <h2 class="text-2xl font-bold text-text-primary mb-5">1. Information We Collect</h2>
-          <p class="mb-4">We collect the following types of information:</p>
-          <ul class="list-disc pl-6 space-y-2">
-            <li><strong>Text you submit</strong> – the content you paste or write into the editor for grammar checking</li>
-            <li><strong>Technical data</strong> – IP address, browser type, device information, operating system, pages visited, time spent</li>
-            <li><strong>Usage data</strong> – which features you use, correction mode/language selected, number of checks performed</li>
-            <li><strong>Contact information</strong> – email address only if you voluntarily provide it (e.g. newsletter signup or support request)</li>
-          </ul>
-        </section>
+            <!-- Users Online -->
+            <div
+              class="hidden md:flex items-center gap-2 text-xs text-slate-500"
+            >
+              <span class="h-2 w-2 rounded-full bg-red-500"></span>
+              <span> <span id="online-count">147</span> online </span>
+            </div>
 
-        <section>
-          <h2 class="text-2xl font-bold text-text-primary mb-5">2. How We Use Your Information</h2>
-          <p>We use the collected information to:</p>
-          <ul class="list-disc pl-6 mt-3 space-y-2">
-            <li>Provide, maintain, and improve the Service (including AI grammar analysis)</li>
-            <li>Process and respond to your requests or support inquiries</li>
-            <li>Analyze usage trends to enhance user experience</li>
-            <li>Communicate important updates, security notices, or service changes (rare)</li>
-            <li>Comply with legal obligations</li>
-          </ul>
-          <p class="mt-4">
-            We do <strong>not</strong> use your submitted texts to train public AI models or sell/share them with third parties for marketing purposes.
-          </p>
-        </section>
+            <!-- Mobile Menu Button -->
+            <button
+              class="md:hidden inline-flex items-center justify-center rounded-lg p-2 text-slate-300 hover:bg-slate-800 transition"
+              onclick="
+                document
+                  .getElementById('mobile-menu')
+                  .classList.toggle('hidden')
+              "
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                class="h-5 w-5"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M4 6h16M4 12h16M4 18h16"
+                />
+              </svg>
+            </button>
+          </div>
+        </div>
 
-        <section>
-          <h2 class="text-2xl font-bold text-text-primary mb-5">3. Data Storage & Security</h2>
-          <p>
-            Your submitted text is processed in real time and is not stored permanently on our servers after the request is completed, except for temporary caching required for service delivery.
-          </p>
-          <p class="mt-3">
-            We implement industry-standard technical and organizational measures to protect your data against unauthorized access, loss, or misuse. However, no method of transmission over the internet is 100% secure.
-          </p>
-        </section>
+        <!-- Mobile Menu -->
+        <div
+          id="mobile-menu"
+          class="hidden md:hidden border-t border-slate-800/60 py-4 space-y-3 text-sm"
+        >
+          <a href="#" class="block text-slate-300 hover:text-accent"
+            >Features</a
+          >
+          <a href="pricing.html" class="block text-slate-300 hover:text-accent"
+            >Pricing</a
+          >
+          <a href="privacy.html" class="block text-slate-300 hover:text-accent"
+            >Privacy</a
+          >
 
-        <section>
-          <h2 class="text-2xl font-bold text-text-primary mb-5">4. Cookies & Similar Technologies</h2>
-          <p>
-            We use essential cookies for site functionality (e.g., remembering UI preferences) and analytics cookies to understand usage patterns. You can manage your cookie preferences via your browser settings.
-          </p>
-          <p class="mt-3">
-            For more details, please see our <a href="/cookie-policy.html" class="text-accent hover:underline">Cookie Policy</a> (if you create one).
-          </p>
-        </section>
-
-        <section>
-          <h2 class="text-2xl font-bold text-text-primary mb-5">5. Sharing & Disclosure</h2>
-          <p>We do not sell your personal data. We may share information only:</p>
-          <ul class="list-disc pl-6 mt-3 space-y-2">
-            <li>With service providers (e.g. cloud hosting, analytics) under strict confidentiality</li>
-            <li>When required by law, court order, or governmental request</li>
-            <li>To protect the rights, property, or safety of AI Grammar Mentor, users, or the public</li>
-          </ul>
-        </section>
-
-        <section>
-          <h2 class="text-2xl font-bold text-text-primary mb-5">6. Your Rights</h2>
-          <p>
-            Depending on your location, you may have rights to access, correct, delete, or restrict processing of your personal data. To exercise these rights, contact us at <a href="mailto:hello@grammar-mentor.com" class="text-accent hover:underline">hello@grammar-mentor.com</a>.
-          </p>
-          <p class="mt-3">
-            We will respond to verifiable requests within the timeframes required by applicable law (e.g., 30 days under GDPR / nDSG).
-          </p>
-        </section>
-
-        <section>
-          <h2 class="text-2xl font-bold text-text-primary mb-5">7. International Data Transfers</h2>
-          <p>
-            Data may be processed in countries outside Switzerland or the EU (e.g. by cloud providers). We ensure appropriate safeguards are in place (e.g. Standard Contractual Clauses) when required.
-          </p>
-        </section>
-
-        <section>
-          <h2 class="text-2xl font-bold text-text-primary mb-5">8. Changes to This Policy</h2>
-          <p>
-            We may update this Privacy Policy from time to time. We will post the revised version here and update the “Last updated” date. Significant changes will be communicated via a notice on the website.
-          </p>
-        </section>
-
-        <section>
-          <h2 class="text-2xl font-bold text-text-primary mb-5">9. Contact Us</h2>
-          <p>
-            If you have questions about this Privacy Policy or our data practices, please contact us at:
-            <br><br>
-            <a href="mailto:hello@grammar-mentor.com" class="text-accent hover:underline">hello@grammar-mentor.com</a>
-          </p>
-        </section>
-
-        <section class="pt-10 border-t border-slate-700 mt-16">
-          <p class="text-sm text-slate-400 italic">
-            Note: This Privacy Policy is subject to change. Please review it periodically.
-          </p>
-        </section>
+          <div
+            class="flex items-center justify-between pt-3 border-t border-slate-800/60 text-xs text-slate-400"
+          >
+            <span class="flex items-center gap-2">
+              <span class="h-2 w-2 rounded-full bg-emerald-500"></span>
+              <a href="status.html">Operational</a>
+            </span>
+            <span><span id="online-count-mobile">147</span> online</span>
+          </div>
+        </div>
       </div>
-    </div>
-  </main>
+    </nav>
 
-  <!-- Footer -->
-  <footer class="bg-bg-secondary/50 border-t border-slate-800/60 py-8 mt-auto">
-    <div class="max-w-6xl mx-auto px-6 text-center text-sm text-slate-500">
-      © <script>document.write(new Date().getFullYear());</script> AI Grammar Mentor. Made with precision in Switzerland.
-    </div>
-  </footer>
+    <!-- Main Content -->
+    <main class="flex-grow max-w-4xl mx-auto px-6 py-16 md:py-24">
+      <div class="prose prose-invert max-w-none">
+        <h1
+          class="text-4xl md:text-5xl font-extrabold mb-10 bg-clip-text text-transparent bg-gradient-to-r from-indigo-400 via-purple-400 to-pink-400"
+        >
+          Privacy Policy
+        </h1>
 
-  <script>
-    lucide.createIcons();
-  </script>
-</body>
+        <p class="text-lg text-text-secondary mb-12">
+          Last updated: 01.01.2025<br /><br />
+          At AI Grammar Mentor, we take your privacy seriously. This Privacy
+          Policy explains how we collect, use, disclose, and protect your
+          information when you use our website and AI-powered grammar checking &
+          writing assistance service (“Service”).
+        </p>
+
+        <div class="space-y-12 text-lg leading-relaxed text-text-secondary">
+          <section>
+            <h2 class="text-2xl font-bold text-text-primary mb-5">
+              1. Information We Collect
+            </h2>
+            <p class="mb-4">We collect the following types of information:</p>
+            <ul class="list-disc pl-6 space-y-2">
+              <li>
+                <strong>Text you submit</strong> – the content you paste or
+                write into the editor for grammar checking
+              </li>
+              <li>
+                <strong>Technical data</strong> – IP address, browser type,
+                device information, operating system, pages visited, time spent
+              </li>
+              <li>
+                <strong>Usage data</strong> – which features you use, correction
+                mode/language selected, number of checks performed
+              </li>
+              <li>
+                <strong>Contact information</strong> – email address only if you
+                voluntarily provide it (e.g. newsletter signup or support
+                request)
+              </li>
+            </ul>
+          </section>
+
+          <section>
+            <h2 class="text-2xl font-bold text-text-primary mb-5">
+              2. How We Use Your Information
+            </h2>
+            <p>We use the collected information to:</p>
+            <ul class="list-disc pl-6 mt-3 space-y-2">
+              <li>
+                Provide, maintain, and improve the Service (including AI grammar
+                analysis)
+              </li>
+              <li>Process and respond to your requests or support inquiries</li>
+              <li>Analyze usage trends to enhance user experience</li>
+              <li>
+                Communicate important updates, security notices, or service
+                changes (rare)
+              </li>
+              <li>Comply with legal obligations</li>
+            </ul>
+            <p class="mt-4">
+              We do <strong>not</strong> use your submitted texts to train
+              public AI models or sell/share them with third parties for
+              marketing purposes.
+            </p>
+          </section>
+
+          <section>
+            <h2 class="text-2xl font-bold text-text-primary mb-5">
+              3. Data Storage & Security
+            </h2>
+            <p>
+              Your submitted text is processed in real time and is not stored
+              permanently on our servers after the request is completed, except
+              for temporary caching required for service delivery.
+            </p>
+            <p class="mt-3">
+              We implement industry-standard technical and organizational
+              measures to protect your data against unauthorized access, loss,
+              or misuse. However, no method of transmission over the internet is
+              100% secure.
+            </p>
+          </section>
+
+          <section>
+            <h2 class="text-2xl font-bold text-text-primary mb-5">
+              4. Cookies & Similar Technologies
+            </h2>
+            <p>
+              We use essential cookies for site functionality (e.g., remembering
+              UI preferences) and analytics cookies to understand usage
+              patterns. You can manage your cookie preferences via your browser
+              settings.
+            </p>
+            <p class="mt-3">
+              For more details, please see our
+              <a href="/cookie-policy.html" class="text-accent hover:underline"
+                >Cookie Policy</a
+              >
+              (if you create one).
+            </p>
+          </section>
+
+          <section>
+            <h2 class="text-2xl font-bold text-text-primary mb-5">
+              5. Sharing & Disclosure
+            </h2>
+            <p>
+              We do not sell your personal data. We may share information only:
+            </p>
+            <ul class="list-disc pl-6 mt-3 space-y-2">
+              <li>
+                With service providers (e.g. cloud hosting, analytics) under
+                strict confidentiality
+              </li>
+              <li>
+                When required by law, court order, or governmental request
+              </li>
+              <li>
+                To protect the rights, property, or safety of AI Grammar Mentor,
+                users, or the public
+              </li>
+            </ul>
+          </section>
+
+          <section>
+            <h2 class="text-2xl font-bold text-text-primary mb-5">
+              6. Your Rights
+            </h2>
+            <p>
+              Depending on your location, you may have rights to access,
+              correct, delete, or restrict processing of your personal data. To
+              exercise these rights, contact us at
+              <a
+                href="mailto:hello@grammar-mentor.com"
+                class="text-accent hover:underline"
+                >hello@grammar-mentor.com</a
+              >.
+            </p>
+            <p class="mt-3">
+              We will respond to verifiable requests within the timeframes
+              required by applicable law (e.g., 30 days under GDPR / nDSG).
+            </p>
+          </section>
+
+          <section>
+            <h2 class="text-2xl font-bold text-text-primary mb-5">
+              7. International Data Transfers
+            </h2>
+            <p>
+              Data may be processed in countries outside Switzerland or the EU
+              (e.g. by cloud providers). We ensure appropriate safeguards are in
+              place (e.g. Standard Contractual Clauses) when required.
+            </p>
+          </section>
+
+          <section>
+            <h2 class="text-2xl font-bold text-text-primary mb-5">
+              8. Changes to This Policy
+            </h2>
+            <p>
+              We may update this Privacy Policy from time to time. We will post
+              the revised version here and update the “Last updated” date.
+              Significant changes will be communicated via a notice on the
+              website.
+            </p>
+          </section>
+
+          <section>
+            <h2 class="text-2xl font-bold text-text-primary mb-5">
+              9. Contact Us
+            </h2>
+            <p>
+              If you have questions about this Privacy Policy or our data
+              practices, please contact us at:
+              <br /><br />
+              <a
+                href="mailto:hello@grammar-mentor.com"
+                class="text-accent hover:underline"
+                >hello@grammar-mentor.com</a
+              >
+            </p>
+          </section>
+
+          <section class="pt-10 border-t border-slate-700 mt-16">
+            <p class="text-sm text-slate-400 italic">
+              Note: This Privacy Policy is subject to change. Please review it
+              periodically.
+            </p>
+          </section>
+        </div>
+      </div>
+    </main>
+
+    <!-- Footer -->
+    <footer
+      class="bg-bg-secondary/50 border-t border-slate-800/60 py-8 mt-auto"
+    >
+      <div class="max-w-6xl mx-auto px-6 text-center text-sm text-slate-500">
+        ©
+        <script>
+          document.write(new Date().getFullYear());
+        </script>
+        AI Grammar Mentor. Made with precision in Switzerland.
+      </div>
+    </footer>
+
+    <script>
+      lucide.createIcons();
+    </script>
+  </body>
 </html>

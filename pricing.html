@@ -1,737 +1,1251 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en" class="scroll-smooth">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="AI Grammar Mentor pricing - Free grammar checker with premium plans for unlimited learning. Transparent pricing with monthly, yearly, and 2-year options. No hidden fees.">
-    <meta name="keywords" content="grammar checker pricing, AI writing assistant cost, grammar tool plans, affordable grammar checker">
-    <title>Pricing - AI Grammar Mentor | Transparent Plans That Respect You</title>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="AI Grammar Mentor pricing - Free grammar checker with premium plans for unlimited learning. Transparent pricing with monthly, yearly, and 2-year options. No hidden fees."
+    />
+    <meta
+      name="keywords"
+      content="grammar checker pricing, AI writing assistant cost, grammar tool plans, affordable grammar checker"
+    />
+    <title>
+      Pricing - AI Grammar Mentor | Transparent Plans That Respect You
+    </title>
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="assets/logo426x426.png" />
     <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Crimson+Pro:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Crimson+Pro:wght@400;600;700&display=swap"
+      rel="stylesheet"
+    />
     <style>
-        body {
-            font-family: 'Inter', sans-serif;
+      body {
+        font-family: "Inter", sans-serif;
+      }
+      .serif {
+        font-family: "Crimson Pro", serif;
+      }
+
+      /* Toggle Switch Styles */
+      .toggle-option {
+        transition: all 0.3s ease;
+      }
+      .toggle-option.active {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+      }
+
+      /* Price Animation */
+      .price-amount {
+        transition: all 0.3s ease;
+      }
+
+      /* Savings Badge Animation */
+      @keyframes pulse-glow {
+        0%,
+        100% {
+          box-shadow: 0 0 20px rgba(16, 185, 129, 0.4);
         }
-        .serif {
-            font-family: 'Crimson Pro', serif;
+        50% {
+          box-shadow: 0 0 30px rgba(16, 185, 129, 0.6);
         }
-        
-        /* Toggle Switch Styles */
-        .toggle-option {
-            transition: all 0.3s ease;
-        }
-        .toggle-option.active {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-        }
-        
-        /* Price Animation */
-        .price-amount {
-            transition: all 0.3s ease;
-        }
-        
-        /* Savings Badge Animation */
-        @keyframes pulse-glow {
-            0%, 100% {
-                box-shadow: 0 0 20px rgba(16, 185, 129, 0.4);
-            }
-            50% {
-                box-shadow: 0 0 30px rgba(16, 185, 129, 0.6);
-            }
-        }
-        
-        .savings-badge {
-            animation: pulse-glow 2s ease-in-out infinite;
-        }
+      }
+
+      .savings-badge {
+        animation: pulse-glow 2s ease-in-out infinite;
+      }
     </style>
     <script>
-        tailwind.config = {
-            darkMode: 'class',
-            theme: {
-                extend: {
-                    colors: {
-                        dark: {
-                            900: '#0a0a0a',
-                            800: '#1a1a1a',
-                            700: '#2a2a2a',
-                            600: '#3a3a3a',
-                        }
-                    }
-                }
-            }
-        }
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              dark: {
+                900: "#0a0a0a",
+                800: "#1a1a1a",
+                700: "#2a2a2a",
+                600: "#3a3a3a",
+              },
+            },
+          },
+        },
+      };
     </script>
-</head>
-<body class="bg-dark-900 text-gray-100 antialiased">
-    
+  </head>
+  <body class="bg-dark-900 text-gray-100 antialiased">
     <!-- Header -->
-    <header class="border-b border-gray-800 sticky top-0 bg-dark-900/95 backdrop-blur-sm z-50">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
-            <div class="flex items-center justify-between">
-                <div class="flex items-center gap-4">
-                    <!-- Logo Space -->
-                    <div class="w-12 h-12 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-lg flex items-center justify-center">
-                        <img src="assets/logo426*426.png" alt="">
-                    </div>
-                    <div>
-                        <h2 class="text-xl font-semibold text-white">AI Grammar Mentor</h2>
-                        <p class="text-xs text-gray-400">Built in Switzerland</p>
-                    </div>
-                </div>
-                <nav class="hidden md:flex items-center gap-6">
-                    <a href="index.html" class="text-gray-400 hover:text-white transition-colors">Home</a>
-                    <a href="#" class="text-white font-medium">Pricing</a>
-                    <a href="#faq" class="text-gray-400 hover:text-white transition-colors">FAQ</a>
-                </nav>
+    <header
+      class="border-b border-gray-800 sticky top-0 bg-dark-900/95 backdrop-blur-sm z-50"
+    >
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+        <div class="flex items-center justify-between">
+          <div class="flex items-center gap-4">
+            <!-- Logo Space -->
+            <div
+              class="w-12 h-12 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-lg flex items-center justify-center"
+            >
+              <img src="assets/logo426x426.png" alt="" />
             </div>
+            <div>
+              <h2 class="text-xl font-semibold text-white">
+                AI Grammar Mentor
+              </h2>
+              <p class="text-xs text-gray-400">Built in Switzerland</p>
+            </div>
+          </div>
+          <nav class="hidden md:flex items-center gap-6">
+            <a
+              href="index.html"
+              class="text-gray-400 hover:text-white transition-colors"
+              >Home</a
+            >
+            <a href="#" class="text-white font-medium">Pricing</a>
+            <a
+              href="#faq"
+              class="text-gray-400 hover:text-white transition-colors"
+              >FAQ</a
+            >
+          </nav>
         </div>
+      </div>
     </header>
 
     <!-- Hero Section -->
-    <section class="relative overflow-hidden py-16 sm:py-20">
-        <div class="absolute inset-0 bg-gradient-to-br from-indigo-900/20 via-purple-900/10 to-dark-900"></div>
-        <div class="relative max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <h1 class="text-4xl sm:text-5xl lg:text-6xl font-bold text-white leading-tight mb-6 serif">
-                Pricing That Makes Sense
-            </h1>
-            <p class="text-xl sm:text-2xl text-gray-300 mb-4">
-                Start free. Upgrade when you need more. Cancel anytime.
-            </p>
-            <p class="text-lg text-gray-400 max-w-2xl mx-auto">
-                No hidden fees. No surprise charges. No aggressive upsells. Just honest pricing from a Swiss company that values trust.
-            </p>
-        </div>
+    <section id="pricing" class="relative overflow-hidden py-16 sm:py-20">
+      <div
+        class="absolute inset-0 bg-gradient-to-br from-indigo-900/20 via-purple-900/10 to-dark-900"
+      ></div>
+      <div class="relative max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        <h1
+          class="text-4xl sm:text-5xl lg:text-6xl font-bold text-white leading-tight mb-6 serif"
+        >
+          Pricing That Makes Sense
+        </h1>
+        <p class="text-xl sm:text-2xl text-gray-300 mb-4">
+          Start free. Upgrade when you need more. Cancel anytime.
+        </p>
+        <p class="text-lg text-gray-400 max-w-2xl mx-auto">
+          No hidden fees. No surprise charges. No aggressive upsells. Just
+          honest pricing from a Swiss company that values trust.
+        </p>
+      </div>
     </section>
 
     <!-- Billing Toggle -->
     <section class="pb-8">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex flex-col items-center gap-4">
-                <p class="text-gray-400 text-sm">Choose your billing period</p>
-                <div class="bg-dark-800 p-1.5 rounded-xl border border-gray-700 inline-flex gap-1">
-                    <button onclick="setBillingPeriod('monthly')" 
-                            id="toggle-monthly"
-                            class="toggle-option px-6 py-2.5 rounded-lg font-medium text-sm transition-all">
-                        Monthly
-                    </button>
-                    <button onclick="setBillingPeriod('yearly')" 
-                            id="toggle-yearly"
-                            class="toggle-option active px-6 py-2.5 rounded-lg font-medium text-sm transition-all relative">
-                        Yearly
-                        <span class="absolute -top-2 -right-2 bg-emerald-500 text-white text-xs px-2 py-0.5 rounded-full font-semibold">
-                            Save 40%
-                        </span>
-                    </button>
-                    <button onclick="setBillingPeriod('twoyear')" 
-                            id="toggle-twoyear"
-                            class="toggle-option px-6 py-2.5 rounded-lg font-medium text-sm transition-all relative">
-                        2 Years
-                        <span class="absolute -top-2 -right-2 bg-emerald-500 text-white text-xs px-2 py-0.5 rounded-full font-semibold">
-                            Save 55%
-                        </span>
-                    </button>
-                </div>
-                <p class="text-sm text-gray-500" id="savings-message">
-                    💰 Save <span class="text-emerald-400 font-semibold">$48/year</span> with yearly billing
-                </p>
-            </div>
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex flex-col items-center gap-4">
+          <p class="text-gray-400 text-sm">Choose your billing period</p>
+          <div
+            class="bg-dark-800 p-1.5 rounded-xl border border-gray-700 inline-flex gap-1"
+          >
+            <button
+              onclick="setBillingPeriod('monthly')"
+              id="toggle-monthly"
+              class="toggle-option px-6 py-2.5 rounded-lg font-medium text-sm transition-all"
+            >
+              Monthly
+            </button>
+            <button
+              onclick="setBillingPeriod('yearly')"
+              id="toggle-yearly"
+              class="toggle-option active px-6 py-2.5 rounded-lg font-medium text-sm transition-all relative"
+            >
+              Yearly
+              <span
+                class="absolute -top-2 -right-2 bg-emerald-500 text-white text-xs px-2 py-0.5 rounded-full font-semibold"
+              >
+                Save 40%
+              </span>
+            </button>
+            <button
+              onclick="setBillingPeriod('twoyear')"
+              id="toggle-twoyear"
+              class="toggle-option px-6 py-2.5 rounded-lg font-medium text-sm transition-all relative"
+            >
+              2 Years
+              <span
+                class="absolute -top-2 -right-2 bg-emerald-500 text-white text-xs px-2 py-0.5 rounded-full font-semibold"
+              >
+                Save 55%
+              </span>
+            </button>
+          </div>
+          <p class="text-sm text-gray-500" id="savings-message">
+            💰 Save
+            <span class="text-emerald-400 font-semibold">$48/year</span> with
+            yearly billing
+          </p>
         </div>
+      </div>
     </section>
 
     <!-- Pricing Cards -->
     <section class="py-12 pb-20">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="grid lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
-                
-                <!-- Free Plan -->
-                <div class="bg-dark-800 rounded-2xl border border-gray-700 p-8 flex flex-col">
-                    <div class="mb-6">
-                        <h3 class="text-2xl font-bold text-white mb-2">Free</h3>
-                        <p class="text-gray-400 text-sm">For trying it out and occasional use</p>
-                    </div>
-                    
-                    <div class="mb-8">
-                        <div class="flex items-baseline gap-2">
-                            <span class="text-5xl font-bold text-white">$0</span>
-                            <span class="text-gray-500">/forever</span>
-                        </div>
-                    </div>
-                    
-                    <ul class="space-y-4 mb-8 flex-grow">
-                        <li class="flex items-start gap-3">
-                            <svg class="w-5 h-5 text-emerald-500 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
-                                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
-                            </svg>
-                            <div>
-                                <p class="text-white font-medium">Basic grammar checking</p>
-                                <p class="text-sm text-gray-400 mt-1">Catch typos and common errors so you don't look careless</p>
-                            </div>
-                        </li>
-                        <li class="flex items-start gap-3">
-                            <svg class="w-5 h-5 text-emerald-500 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
-                                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
-                            </svg>
-                            <div>
-                                <p class="text-white font-medium">5 AI explanations per day</p>
-                                <p class="text-sm text-gray-400 mt-1">Understand why something's wrong, not just that it is</p>
-                            </div>
-                        </li>
-                        <li class="flex items-start gap-3">
-                            <svg class="w-5 h-5 text-emerald-500 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
-                                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
-                            </svg>
-                            <div>
-                                <p class="text-white font-medium">Documents up to 10,000 words</p>
-                                <p class="text-sm text-gray-400 mt-1">Plenty of room for essays, articles, and short stories</p>
-                            </div>
-                        </li>
-                        <li class="flex items-start gap-3">
-                            <svg class="w-5 h-5 text-emerald-500 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
-                                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
-                            </svg>
-                            <div>
-                                <p class="text-white font-medium">Core snippet storage</p>
-                                <p class="text-sm text-gray-400 mt-1">Save up to 10 commonly used phrases</p>
-                            </div>
-                        </li>
-                        <li class="flex items-start gap-3">
-                            <svg class="w-5 h-5 text-emerald-500 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
-                                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
-                            </svg>
-                            <div>
-                                <p class="text-white font-medium">One-click ignore</p>
-                                <p class="text-sm text-gray-400 mt-1">Dismiss suggestions you disagree with, no friction</p>
-                            </div>
-                        </li>
-                    </ul>
-                    
-                    <button class="w-full py-3.5 bg-dark-700 hover:bg-dark-600 text-white font-semibold rounded-lg transition-colors border border-gray-600">
-                        Start Free
-                    </button>
-                    <p class="text-center text-xs text-gray-500 mt-3">No credit card required</p>
-                </div>
-                
-                <!-- Pro Plan -->
-                <div class="bg-gradient-to-br from-indigo-900/40 to-purple-900/40 rounded-2xl border-2 border-indigo-500 p-8 flex flex-col relative transform lg:scale-105 shadow-2xl shadow-indigo-900/50">
-                    <div class="absolute -top-4 left-1/2 transform -translate-x-1/2">
-                        <span class="bg-gradient-to-r from-indigo-500 to-purple-600 text-white px-6 py-1.5 rounded-full text-sm font-semibold savings-badge">
-                            Most Popular
-                        </span>
-                    </div>
-                    
-                    <div class="mb-6">
-                        <h3 class="text-2xl font-bold text-white mb-2">Pro</h3>
-                        <p class="text-gray-300 text-sm">For serious writers who want to improve</p>
-                    </div>
-                    
-                    <div class="mb-8">
-                        <div class="flex items-baseline gap-2">
-                            <span class="text-5xl font-bold text-white price-amount" data-monthly="10" data-yearly="6" data-twoyear="4.50">
-                                $6
-                            </span>
-                            <span class="text-gray-400">/month</span>
-                        </div>
-                        <p class="text-sm text-emerald-400 mt-2 billing-note" data-monthly="Billed monthly at $10" data-yearly="Billed yearly at $72 (save $48)" data-twoyear="Billed every 2 years at $108 (save $132)">
-                            Billed yearly at $72 (save $48)
-                        </p>
-                    </div>
-                    
-                    <ul class="space-y-4 mb-8 flex-grow">
-                        <li class="flex items-start gap-3">
-                            <svg class="w-5 h-5 text-emerald-400 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
-                                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
-                            </svg>
-                            <div>
-                                <p class="text-white font-medium">Everything in Free, plus:</p>
-                            </div>
-                        </li>
-                        <li class="flex items-start gap-3">
-                            <svg class="w-5 h-5 text-emerald-400 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
-                                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
-                            </svg>
-                            <div>
-                                <p class="text-white font-medium">Unlimited AI explanations</p>
-                                <p class="text-sm text-gray-300 mt-1">Learn at your own pace without hitting daily limits. Actually internalize grammar rules.</p>
-                            </div>
-                        </li>
-                        <li class="flex items-start gap-3">
-                            <svg class="w-5 h-5 text-emerald-400 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
-                                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
-                            </svg>
-                            <div>
-                                <p class="text-white font-medium">Advanced style checking</p>
-                                <p class="text-sm text-gray-300 mt-1">Preserve your voice while catching tone inconsistencies and awkward phrasing.</p>
-                            </div>
-                        </li>
-                        <li class="flex items-start gap-3">
-                            <svg class="w-5 h-5 text-emerald-400 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
-                                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
-                            </svg>
-                            <div>
-                                <p class="text-white font-medium">Unlimited document length</p>
-                                <p class="text-sm text-gray-300 mt-1">Work on novels, theses, and large projects without worrying about file size limits.</p>
-                            </div>
-                        </li>
-                        <li class="flex items-start gap-3">
-                            <svg class="w-5 h-5 text-emerald-400 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
-                                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
-                            </svg>
-                            <div>
-                                <p class="text-white font-medium">Unlimited snippet storage</p>
-                                <p class="text-sm text-gray-300 mt-1">Build your personal library of templates, sign-offs, and repeated phrases.</p>
-                            </div>
-                        </li>
-                        <li class="flex items-start gap-3">
-                            <svg class="w-5 h-5 text-emerald-400 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
-                                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
-                            </svg>
-                            <div>
-                                <p class="text-white font-medium">Multilingual context awareness</p>
-                                <p class="text-sm text-gray-300 mt-1">Get suggestions that understand you're writing in your second language.</p>
-                            </div>
-                        </li>
-                        <li class="flex items-start gap-3">
-                            <svg class="w-5 h-5 text-emerald-400 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
-                                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
-                            </svg>
-                            <div>
-                                <p class="text-white font-medium">Priority support</p>
-                                <p class="text-sm text-gray-300 mt-1">Get help when you need it from real people who care.</p>
-                            </div>
-                        </li>
-                    </ul>
-                    
-                    <button class="w-full py-3.5 bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 text-white font-semibold rounded-lg transition-all transform hover:scale-105 shadow-lg">
-                        Upgrade to Pro
-                    </button>
-                    <p class="text-center text-xs text-gray-400 mt-3">Cancel anytime, no questions asked</p>
-                </div>
-                
-                <!-- Lifetime Plan -->
-                <div class="bg-dark-800 rounded-2xl border border-gray-700 p-8 flex flex-col">
-                    <div class="mb-6">
-                        <h3 class="text-2xl font-bold text-white mb-2">Lifetime</h3>
-                        <p class="text-gray-400 text-sm">One payment. Forever access.</p>
-                    </div>
-                    
-                    <div class="mb-8">
-                        <div class="flex items-baseline gap-2">
-                            <span class="text-5xl font-bold text-white">$199</span>
-                            <span class="text-gray-500">/forever</span>
-                        </div>
-                        <p class="text-sm text-emerald-400 mt-2">
-                            Pay once, own it forever
-                        </p>
-                    </div>
-                    
-                    <ul class="space-y-4 mb-8 flex-grow">
-                        <li class="flex items-start gap-3">
-                            <svg class="w-5 h-5 text-emerald-500 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
-                                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
-                            </svg>
-                            <div>
-                                <p class="text-white font-medium">Everything in Pro, forever</p>
-                            </div>
-                        </li>
-                        <li class="flex items-start gap-3">
-                            <svg class="w-5 h-5 text-emerald-500 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
-                                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
-                            </svg>
-                            <div>
-                                <p class="text-white font-medium">No recurring payments</p>
-                                <p class="text-sm text-gray-400 mt-1">Never worry about subscriptions, renewals, or price increases again</p>
-                            </div>
-                        </li>
-                        <li class="flex items-start gap-3">
-                            <svg class="w-5 h-5 text-emerald-500 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
-                                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
-                            </svg>
-                            <div>
-                                <p class="text-white font-medium">All future updates included</p>
-                                <p class="text-sm text-gray-400 mt-1">Get every new feature and improvement as we build them</p>
-                            </div>
-                        </li>
-                        <li class="flex items-start gap-3">
-                            <svg class="w-5 h-5 text-emerald-500 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
-                                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
-                            </svg>
-                            <div>
-                                <p class="text-white font-medium">Peace of mind</p>
-                                <p class="text-sm text-gray-400 mt-1">Budget once, benefit forever. No subscription anxiety.</p>
-                            </div>
-                        </li>
-                        <li class="flex items-start gap-3">
-                            <svg class="w-5 h-5 text-emerald-500 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
-                                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
-                            </svg>
-                            <div>
-                                <p class="text-white font-medium">Transferable license</p>
-                                <p class="text-sm text-gray-400 mt-1">You own it. Use it on any device, keep it forever.</p>
-                            </div>
-                        </li>
-                    </ul>
-                    
-                    <button class="w-full py-3.5 bg-dark-700 hover:bg-dark-600 text-white font-semibold rounded-lg transition-colors border border-gray-600">
-                        Get Lifetime Access
-                    </button>
-                    <p class="text-center text-xs text-gray-500 mt-3">One-time payment</p>
-                </div>
-                
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="grid lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
+          <!-- Free Plan -->
+          <div
+            class="bg-dark-800 rounded-2xl border border-gray-700 p-8 flex flex-col"
+          >
+            <div class="mb-6">
+              <h3 class="text-2xl font-bold text-white mb-2">Free</h3>
+              <p class="text-gray-400 text-sm">
+                For trying it out and occasional use
+              </p>
             </div>
+
+            <div class="mb-8">
+              <div class="flex items-baseline gap-2">
+                <span class="text-5xl font-bold text-white">$0</span>
+                <span class="text-gray-500">/forever</span>
+              </div>
+            </div>
+
+            <ul class="space-y-4 mb-8 flex-grow">
+              <li class="flex items-start gap-3">
+                <svg
+                  class="w-5 h-5 text-emerald-500 flex-shrink-0 mt-0.5"
+                  fill="currentColor"
+                  viewBox="0 0 20 20"
+                >
+                  <path
+                    fill-rule="evenodd"
+                    d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                    clip-rule="evenodd"
+                  ></path>
+                </svg>
+                <div>
+                  <p class="text-white font-medium">Basic grammar checking</p>
+                  <p class="text-sm text-gray-400 mt-1">
+                    Catch typos and common errors so you don't look careless
+                  </p>
+                </div>
+              </li>
+              <li class="flex items-start gap-3">
+                <svg
+                  class="w-5 h-5 text-emerald-500 flex-shrink-0 mt-0.5"
+                  fill="currentColor"
+                  viewBox="0 0 20 20"
+                >
+                  <path
+                    fill-rule="evenodd"
+                    d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                    clip-rule="evenodd"
+                  ></path>
+                </svg>
+                <div>
+                  <p class="text-white font-medium">
+                    5 AI explanations per day
+                  </p>
+                  <p class="text-sm text-gray-400 mt-1">
+                    Understand why something's wrong, not just that it is
+                  </p>
+                </div>
+              </li>
+              <li class="flex items-start gap-3">
+                <svg
+                  class="w-5 h-5 text-emerald-500 flex-shrink-0 mt-0.5"
+                  fill="currentColor"
+                  viewBox="0 0 20 20"
+                >
+                  <path
+                    fill-rule="evenodd"
+                    d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                    clip-rule="evenodd"
+                  ></path>
+                </svg>
+                <div>
+                  <p class="text-white font-medium">
+                    Documents up to 10,000 words
+                  </p>
+                  <p class="text-sm text-gray-400 mt-1">
+                    Plenty of room for essays, articles, and short stories
+                  </p>
+                </div>
+              </li>
+              <li class="flex items-start gap-3">
+                <svg
+                  class="w-5 h-5 text-emerald-500 flex-shrink-0 mt-0.5"
+                  fill="currentColor"
+                  viewBox="0 0 20 20"
+                >
+                  <path
+                    fill-rule="evenodd"
+                    d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                    clip-rule="evenodd"
+                  ></path>
+                </svg>
+                <div>
+                  <p class="text-white font-medium">Core snippet storage</p>
+                  <p class="text-sm text-gray-400 mt-1">
+                    Save up to 10 commonly used phrases
+                  </p>
+                </div>
+              </li>
+              <li class="flex items-start gap-3">
+                <svg
+                  class="w-5 h-5 text-emerald-500 flex-shrink-0 mt-0.5"
+                  fill="currentColor"
+                  viewBox="0 0 20 20"
+                >
+                  <path
+                    fill-rule="evenodd"
+                    d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                    clip-rule="evenodd"
+                  ></path>
+                </svg>
+                <div>
+                  <p class="text-white font-medium">One-click ignore</p>
+                  <p class="text-sm text-gray-400 mt-1">
+                    Dismiss suggestions you disagree with, no friction
+                  </p>
+                </div>
+              </li>
+            </ul>
+
+            <button
+              class="w-full py-3.5 bg-dark-700 hover:bg-dark-600 text-white font-semibold rounded-lg transition-colors border border-gray-600"
+            >
+              Start Free
+            </button>
+            <p class="text-center text-xs text-gray-500 mt-3">
+              No credit card required
+            </p>
+          </div>
+
+          <!-- Pro Plan -->
+          <div
+            class="bg-gradient-to-br from-indigo-900/40 to-purple-900/40 rounded-2xl border-2 border-indigo-500 p-8 flex flex-col relative transform lg:scale-105 shadow-2xl shadow-indigo-900/50"
+          >
+            <div class="absolute -top-4 left-1/2 transform -translate-x-1/2">
+              <span
+                class="bg-gradient-to-r from-indigo-500 to-purple-600 text-white px-6 py-1.5 rounded-full text-sm font-semibold savings-badge"
+              >
+                Most Popular
+              </span>
+            </div>
+
+            <div class="mb-6">
+              <h3 class="text-2xl font-bold text-white mb-2">Pro</h3>
+              <p class="text-gray-300 text-sm">
+                For serious writers who want to improve
+              </p>
+            </div>
+
+            <div class="mb-8">
+              <div class="flex items-baseline gap-2">
+                <span
+                  class="text-5xl font-bold text-white price-amount"
+                  data-monthly="10"
+                  data-yearly="6"
+                  data-twoyear="4.50"
+                >
+                  $6
+                </span>
+                <span class="text-gray-400">/month</span>
+              </div>
+              <p
+                class="text-sm text-emerald-400 mt-2 billing-note"
+                data-monthly="Billed monthly at $10"
+                data-yearly="Billed yearly at $72 (save $48)"
+                data-twoyear="Billed every 2 years at $108 (save $132)"
+              >
+                Billed yearly at $72 (save $48)
+              </p>
+            </div>
+
+            <ul class="space-y-4 mb-8 flex-grow">
+              <li class="flex items-start gap-3">
+                <svg
+                  class="w-5 h-5 text-emerald-400 flex-shrink-0 mt-0.5"
+                  fill="currentColor"
+                  viewBox="0 0 20 20"
+                >
+                  <path
+                    fill-rule="evenodd"
+                    d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                    clip-rule="evenodd"
+                  ></path>
+                </svg>
+                <div>
+                  <p class="text-white font-medium">
+                    Everything in Free, plus:
+                  </p>
+                </div>
+              </li>
+              <li class="flex items-start gap-3">
+                <svg
+                  class="w-5 h-5 text-emerald-400 flex-shrink-0 mt-0.5"
+                  fill="currentColor"
+                  viewBox="0 0 20 20"
+                >
+                  <path
+                    fill-rule="evenodd"
+                    d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                    clip-rule="evenodd"
+                  ></path>
+                </svg>
+                <div>
+                  <p class="text-white font-medium">
+                    Unlimited AI explanations
+                  </p>
+                  <p class="text-sm text-gray-300 mt-1">
+                    Learn at your own pace without hitting daily limits.
+                    Actually internalize grammar rules.
+                  </p>
+                </div>
+              </li>
+              <li class="flex items-start gap-3">
+                <svg
+                  class="w-5 h-5 text-emerald-400 flex-shrink-0 mt-0.5"
+                  fill="currentColor"
+                  viewBox="0 0 20 20"
+                >
+                  <path
+                    fill-rule="evenodd"
+                    d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                    clip-rule="evenodd"
+                  ></path>
+                </svg>
+                <div>
+                  <p class="text-white font-medium">Advanced style checking</p>
+                  <p class="text-sm text-gray-300 mt-1">
+                    Preserve your voice while catching tone inconsistencies and
+                    awkward phrasing.
+                  </p>
+                </div>
+              </li>
+              <li class="flex items-start gap-3">
+                <svg
+                  class="w-5 h-5 text-emerald-400 flex-shrink-0 mt-0.5"
+                  fill="currentColor"
+                  viewBox="0 0 20 20"
+                >
+                  <path
+                    fill-rule="evenodd"
+                    d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                    clip-rule="evenodd"
+                  ></path>
+                </svg>
+                <div>
+                  <p class="text-white font-medium">
+                    Unlimited document length
+                  </p>
+                  <p class="text-sm text-gray-300 mt-1">
+                    Work on novels, theses, and large projects without worrying
+                    about file size limits.
+                  </p>
+                </div>
+              </li>
+              <li class="flex items-start gap-3">
+                <svg
+                  class="w-5 h-5 text-emerald-400 flex-shrink-0 mt-0.5"
+                  fill="currentColor"
+                  viewBox="0 0 20 20"
+                >
+                  <path
+                    fill-rule="evenodd"
+                    d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                    clip-rule="evenodd"
+                  ></path>
+                </svg>
+                <div>
+                  <p class="text-white font-medium">
+                    Unlimited snippet storage
+                  </p>
+                  <p class="text-sm text-gray-300 mt-1">
+                    Build your personal library of templates, sign-offs, and
+                    repeated phrases.
+                  </p>
+                </div>
+              </li>
+              <li class="flex items-start gap-3">
+                <svg
+                  class="w-5 h-5 text-emerald-400 flex-shrink-0 mt-0.5"
+                  fill="currentColor"
+                  viewBox="0 0 20 20"
+                >
+                  <path
+                    fill-rule="evenodd"
+                    d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                    clip-rule="evenodd"
+                  ></path>
+                </svg>
+                <div>
+                  <p class="text-white font-medium">
+                    Multilingual context awareness
+                  </p>
+                  <p class="text-sm text-gray-300 mt-1">
+                    Get suggestions that understand you're writing in your
+                    second language.
+                  </p>
+                </div>
+              </li>
+              <li class="flex items-start gap-3">
+                <svg
+                  class="w-5 h-5 text-emerald-400 flex-shrink-0 mt-0.5"
+                  fill="currentColor"
+                  viewBox="0 0 20 20"
+                >
+                  <path
+                    fill-rule="evenodd"
+                    d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                    clip-rule="evenodd"
+                  ></path>
+                </svg>
+                <div>
+                  <p class="text-white font-medium">Priority support</p>
+                  <p class="text-sm text-gray-300 mt-1">
+                    Get help when you need it from real people who care.
+                  </p>
+                </div>
+              </li>
+            </ul>
+
+            <button
+              class="w-full py-3.5 bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 text-white font-semibold rounded-lg transition-all transform hover:scale-105 shadow-lg"
+            >
+              Upgrade to Pro
+            </button>
+            <p class="text-center text-xs text-gray-400 mt-3">
+              Cancel anytime, no questions asked
+            </p>
+          </div>
+
+          <!-- Lifetime Plan -->
+          <div
+            class="bg-dark-800 rounded-2xl border border-gray-700 p-8 flex flex-col"
+          >
+            <div class="mb-6">
+              <h3 class="text-2xl font-bold text-white mb-2">Lifetime</h3>
+              <p class="text-gray-400 text-sm">One payment. Forever access.</p>
+            </div>
+
+            <div class="mb-8">
+              <div class="flex items-baseline gap-2">
+                <span class="text-5xl font-bold text-white">$199</span>
+                <span class="text-gray-500">/forever</span>
+              </div>
+              <p class="text-sm text-emerald-400 mt-2">
+                Pay once, own it forever
+              </p>
+            </div>
+
+            <ul class="space-y-4 mb-8 flex-grow">
+              <li class="flex items-start gap-3">
+                <svg
+                  class="w-5 h-5 text-emerald-500 flex-shrink-0 mt-0.5"
+                  fill="currentColor"
+                  viewBox="0 0 20 20"
+                >
+                  <path
+                    fill-rule="evenodd"
+                    d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                    clip-rule="evenodd"
+                  ></path>
+                </svg>
+                <div>
+                  <p class="text-white font-medium">
+                    Everything in Pro, forever
+                  </p>
+                </div>
+              </li>
+              <li class="flex items-start gap-3">
+                <svg
+                  class="w-5 h-5 text-emerald-500 flex-shrink-0 mt-0.5"
+                  fill="currentColor"
+                  viewBox="0 0 20 20"
+                >
+                  <path
+                    fill-rule="evenodd"
+                    d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                    clip-rule="evenodd"
+                  ></path>
+                </svg>
+                <div>
+                  <p class="text-white font-medium">No recurring payments</p>
+                  <p class="text-sm text-gray-400 mt-1">
+                    Never worry about subscriptions, renewals, or price
+                    increases again
+                  </p>
+                </div>
+              </li>
+              <li class="flex items-start gap-3">
+                <svg
+                  class="w-5 h-5 text-emerald-500 flex-shrink-0 mt-0.5"
+                  fill="currentColor"
+                  viewBox="0 0 20 20"
+                >
+                  <path
+                    fill-rule="evenodd"
+                    d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                    clip-rule="evenodd"
+                  ></path>
+                </svg>
+                <div>
+                  <p class="text-white font-medium">
+                    All future updates included
+                  </p>
+                  <p class="text-sm text-gray-400 mt-1">
+                    Get every new feature and improvement as we build them
+                  </p>
+                </div>
+              </li>
+              <li class="flex items-start gap-3">
+                <svg
+                  class="w-5 h-5 text-emerald-500 flex-shrink-0 mt-0.5"
+                  fill="currentColor"
+                  viewBox="0 0 20 20"
+                >
+                  <path
+                    fill-rule="evenodd"
+                    d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                    clip-rule="evenodd"
+                  ></path>
+                </svg>
+                <div>
+                  <p class="text-white font-medium">Peace of mind</p>
+                  <p class="text-sm text-gray-400 mt-1">
+                    Budget once, benefit forever. No subscription anxiety.
+                  </p>
+                </div>
+              </li>
+              <li class="flex items-start gap-3">
+                <svg
+                  class="w-5 h-5 text-emerald-500 flex-shrink-0 mt-0.5"
+                  fill="currentColor"
+                  viewBox="0 0 20 20"
+                >
+                  <path
+                    fill-rule="evenodd"
+                    d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                    clip-rule="evenodd"
+                  ></path>
+                </svg>
+                <div>
+                  <p class="text-white font-medium">Transferable license</p>
+                  <p class="text-sm text-gray-400 mt-1">
+                    You own it. Use it on any device, keep it forever.
+                  </p>
+                </div>
+              </li>
+            </ul>
+
+            <button
+              class="w-full py-3.5 bg-dark-700 hover:bg-dark-600 text-white font-semibold rounded-lg transition-colors border border-gray-600"
+            >
+              Get Lifetime Access
+            </button>
+            <p class="text-center text-xs text-gray-500 mt-3">
+              One-time payment
+            </p>
+          </div>
         </div>
+      </div>
     </section>
 
     <!-- Comparison Table -->
     <section id="features" class="py-16 bg-dark-800">
-        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-            <h2 class="text-3xl font-bold text-white text-center mb-12 serif">Feature Comparison</h2>
-            
-            <div class="overflow-x-auto">
-                <table class="w-full text-left border-collapse">
-                    <thead>
-                        <tr class="border-b border-gray-700">
-                            <th class="py-4 px-4 text-gray-400 font-medium">Feature</th>
-                            <th class="py-4 px-4 text-center font-semibold text-white">Free</th>
-                            <th class="py-4 px-4 text-center font-semibold text-white">Pro</th>
-                            <th class="py-4 px-4 text-center font-semibold text-white">Lifetime</th>
-                        </tr>
-                    </thead>
-                    <tbody class="text-gray-300">
-                        <tr class="border-b border-gray-700/50">
-                            <td class="py-4 px-4">Basic grammar & spelling checks</td>
-                            <td class="py-4 px-4 text-center">
-                                <svg class="w-5 h-5 text-emerald-500 mx-auto" fill="currentColor" viewBox="0 0 20 20">
-                                    <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
-                                </svg>
-                            </td>
-                            <td class="py-4 px-4 text-center">
-                                <svg class="w-5 h-5 text-emerald-500 mx-auto" fill="currentColor" viewBox="0 0 20 20">
-                                    <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
-                                </svg>
-                            </td>
-                            <td class="py-4 px-4 text-center">
-                                <svg class="w-5 h-5 text-emerald-500 mx-auto" fill="currentColor" viewBox="0 0 20 20">
-                                    <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
-                                </svg>
-                            </td>
-                        </tr>
-                        <tr class="border-b border-gray-700/50">
-                            <td class="py-4 px-4">AI grammar explanations</td>
-                            <td class="py-4 px-4 text-center text-gray-500">5/day</td>
-                            <td class="py-4 px-4 text-center text-emerald-400 font-medium">Unlimited</td>
-                            <td class="py-4 px-4 text-center text-emerald-400 font-medium">Unlimited</td>
-                        </tr>
-                        <tr class="border-b border-gray-700/50">
-                            <td class="py-4 px-4">Document length limit</td>
-                            <td class="py-4 px-4 text-center text-gray-500">10K words</td>
-                            <td class="py-4 px-4 text-center text-emerald-400 font-medium">Unlimited</td>
-                            <td class="py-4 px-4 text-center text-emerald-400 font-medium">Unlimited</td>
-                        </tr>
-                        <tr class="border-b border-gray-700/50">
-                            <td class="py-4 px-4">Advanced style checking</td>
-                            <td class="py-4 px-4 text-center text-gray-600">—</td>
-                            <td class="py-4 px-4 text-center">
-                                <svg class="w-5 h-5 text-emerald-500 mx-auto" fill="currentColor" viewBox="0 0 20 20">
-                                    <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
-                                </svg>
-                            </td>
-                            <td class="py-4 px-4 text-center">
-                                <svg class="w-5 h-5 text-emerald-500 mx-auto" fill="currentColor" viewBox="0 0 20 20">
-                                    <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
-                                </svg>
-                            </td>
-                        </tr>
-                        <tr class="border-b border-gray-700/50">
-                            <td class="py-4 px-4">Snippet storage</td>
-                            <td class="py-4 px-4 text-center text-gray-500">10 snippets</td>
-                            <td class="py-4 px-4 text-center text-emerald-400 font-medium">Unlimited</td>
-                            <td class="py-4 px-4 text-center text-emerald-400 font-medium">Unlimited</td>
-                        </tr>
-                        <tr class="border-b border-gray-700/50">
-                            <td class="py-4 px-4">Multilingual context awareness</td>
-                            <td class="py-4 px-4 text-center text-gray-600">—</td>
-                            <td class="py-4 px-4 text-center">
-                                <svg class="w-5 h-5 text-emerald-500 mx-auto" fill="currentColor" viewBox="0 0 20 20">
-                                    <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
-                                </svg>
-                            </td>
-                            <td class="py-4 px-4 text-center">
-                                <svg class="w-5 h-5 text-emerald-500 mx-auto" fill="currentColor" viewBox="0 0 20 20">
-                                    <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
-                                </svg>
-                            </td>
-                        </tr>
-                        <tr class="border-b border-gray-700/50">
-                            <td class="py-4 px-4">Priority support</td>
-                            <td class="py-4 px-4 text-center text-gray-600">—</td>
-                            <td class="py-4 px-4 text-center">
-                                <svg class="w-5 h-5 text-emerald-500 mx-auto" fill="currentColor" viewBox="0 0 20 20">
-                                    <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
-                                </svg>
-                            </td>
-                            <td class="py-4 px-4 text-center">
-                                <svg class="w-5 h-5 text-emerald-500 mx-auto" fill="currentColor" viewBox="0 0 20 20">
-                                    <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
-                                </svg>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="py-4 px-4">Future updates</td>
-                            <td class="py-4 px-4 text-center">
-                                <svg class="w-5 h-5 text-emerald-500 mx-auto" fill="currentColor" viewBox="0 0 20 20">
-                                    <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
-                                </svg>
-                            </td>
-                            <td class="py-4 px-4 text-center">
-                                <svg class="w-5 h-5 text-emerald-500 mx-auto" fill="currentColor" viewBox="0 0 20 20">
-                                    <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
-                                </svg>
-                            </td>
-                            <td class="py-4 px-4 text-center">
-                                <svg class="w-5 h-5 text-emerald-500 mx-auto" fill="currentColor" viewBox="0 0 20 20">
-                                    <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
-                                </svg>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
+      <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+        <h2 class="text-3xl font-bold text-white text-center mb-12 serif">
+          Feature Comparison
+        </h2>
+
+        <div class="overflow-x-auto">
+          <table class="w-full text-left border-collapse">
+            <thead>
+              <tr class="border-b border-gray-700">
+                <th class="py-4 px-4 text-gray-400 font-medium">Feature</th>
+                <th class="py-4 px-4 text-center font-semibold text-white">
+                  Free
+                </th>
+                <th class="py-4 px-4 text-center font-semibold text-white">
+                  Pro
+                </th>
+                <th class="py-4 px-4 text-center font-semibold text-white">
+                  Lifetime
+                </th>
+              </tr>
+            </thead>
+            <tbody class="text-gray-300">
+              <tr class="border-b border-gray-700/50">
+                <td class="py-4 px-4">Basic grammar & spelling checks</td>
+                <td class="py-4 px-4 text-center">
+                  <svg
+                    class="w-5 h-5 text-emerald-500 mx-auto"
+                    fill="currentColor"
+                    viewBox="0 0 20 20"
+                  >
+                    <path
+                      fill-rule="evenodd"
+                      d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                      clip-rule="evenodd"
+                    ></path>
+                  </svg>
+                </td>
+                <td class="py-4 px-4 text-center">
+                  <svg
+                    class="w-5 h-5 text-emerald-500 mx-auto"
+                    fill="currentColor"
+                    viewBox="0 0 20 20"
+                  >
+                    <path
+                      fill-rule="evenodd"
+                      d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                      clip-rule="evenodd"
+                    ></path>
+                  </svg>
+                </td>
+                <td class="py-4 px-4 text-center">
+                  <svg
+                    class="w-5 h-5 text-emerald-500 mx-auto"
+                    fill="currentColor"
+                    viewBox="0 0 20 20"
+                  >
+                    <path
+                      fill-rule="evenodd"
+                      d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                      clip-rule="evenodd"
+                    ></path>
+                  </svg>
+                </td>
+              </tr>
+              <tr class="border-b border-gray-700/50">
+                <td class="py-4 px-4">AI grammar explanations</td>
+                <td class="py-4 px-4 text-center text-gray-500">5/day</td>
+                <td class="py-4 px-4 text-center text-emerald-400 font-medium">
+                  Unlimited
+                </td>
+                <td class="py-4 px-4 text-center text-emerald-400 font-medium">
+                  Unlimited
+                </td>
+              </tr>
+              <tr class="border-b border-gray-700/50">
+                <td class="py-4 px-4">Document length limit</td>
+                <td class="py-4 px-4 text-center text-gray-500">10K words</td>
+                <td class="py-4 px-4 text-center text-emerald-400 font-medium">
+                  Unlimited
+                </td>
+                <td class="py-4 px-4 text-center text-emerald-400 font-medium">
+                  Unlimited
+                </td>
+              </tr>
+              <tr class="border-b border-gray-700/50">
+                <td class="py-4 px-4">Advanced style checking</td>
+                <td class="py-4 px-4 text-center text-gray-600">—</td>
+                <td class="py-4 px-4 text-center">
+                  <svg
+                    class="w-5 h-5 text-emerald-500 mx-auto"
+                    fill="currentColor"
+                    viewBox="0 0 20 20"
+                  >
+                    <path
+                      fill-rule="evenodd"
+                      d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                      clip-rule="evenodd"
+                    ></path>
+                  </svg>
+                </td>
+                <td class="py-4 px-4 text-center">
+                  <svg
+                    class="w-5 h-5 text-emerald-500 mx-auto"
+                    fill="currentColor"
+                    viewBox="0 0 20 20"
+                  >
+                    <path
+                      fill-rule="evenodd"
+                      d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                      clip-rule="evenodd"
+                    ></path>
+                  </svg>
+                </td>
+              </tr>
+              <tr class="border-b border-gray-700/50">
+                <td class="py-4 px-4">Snippet storage</td>
+                <td class="py-4 px-4 text-center text-gray-500">10 snippets</td>
+                <td class="py-4 px-4 text-center text-emerald-400 font-medium">
+                  Unlimited
+                </td>
+                <td class="py-4 px-4 text-center text-emerald-400 font-medium">
+                  Unlimited
+                </td>
+              </tr>
+              <tr class="border-b border-gray-700/50">
+                <td class="py-4 px-4">Multilingual context awareness</td>
+                <td class="py-4 px-4 text-center text-gray-600">—</td>
+                <td class="py-4 px-4 text-center">
+                  <svg
+                    class="w-5 h-5 text-emerald-500 mx-auto"
+                    fill="currentColor"
+                    viewBox="0 0 20 20"
+                  >
+                    <path
+                      fill-rule="evenodd"
+                      d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                      clip-rule="evenodd"
+                    ></path>
+                  </svg>
+                </td>
+                <td class="py-4 px-4 text-center">
+                  <svg
+                    class="w-5 h-5 text-emerald-500 mx-auto"
+                    fill="currentColor"
+                    viewBox="0 0 20 20"
+                  >
+                    <path
+                      fill-rule="evenodd"
+                      d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                      clip-rule="evenodd"
+                    ></path>
+                  </svg>
+                </td>
+              </tr>
+              <tr class="border-b border-gray-700/50">
+                <td class="py-4 px-4">Priority support</td>
+                <td class="py-4 px-4 text-center text-gray-600">—</td>
+                <td class="py-4 px-4 text-center">
+                  <svg
+                    class="w-5 h-5 text-emerald-500 mx-auto"
+                    fill="currentColor"
+                    viewBox="0 0 20 20"
+                  >
+                    <path
+                      fill-rule="evenodd"
+                      d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                      clip-rule="evenodd"
+                    ></path>
+                  </svg>
+                </td>
+                <td class="py-4 px-4 text-center">
+                  <svg
+                    class="w-5 h-5 text-emerald-500 mx-auto"
+                    fill="currentColor"
+                    viewBox="0 0 20 20"
+                  >
+                    <path
+                      fill-rule="evenodd"
+                      d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                      clip-rule="evenodd"
+                    ></path>
+                  </svg>
+                </td>
+              </tr>
+              <tr>
+                <td class="py-4 px-4">Future updates</td>
+                <td class="py-4 px-4 text-center">
+                  <svg
+                    class="w-5 h-5 text-emerald-500 mx-auto"
+                    fill="currentColor"
+                    viewBox="0 0 20 20"
+                  >
+                    <path
+                      fill-rule="evenodd"
+                      d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                      clip-rule="evenodd"
+                    ></path>
+                  </svg>
+                </td>
+                <td class="py-4 px-4 text-center">
+                  <svg
+                    class="w-5 h-5 text-emerald-500 mx-auto"
+                    fill="currentColor"
+                    viewBox="0 0 20 20"
+                  >
+                    <path
+                      fill-rule="evenodd"
+                      d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                      clip-rule="evenodd"
+                    ></path>
+                  </svg>
+                </td>
+                <td class="py-4 px-4 text-center">
+                  <svg
+                    class="w-5 h-5 text-emerald-500 mx-auto"
+                    fill="currentColor"
+                    viewBox="0 0 20 20"
+                  >
+                    <path
+                      fill-rule="evenodd"
+                      d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                      clip-rule="evenodd"
+                    ></path>
+                  </svg>
+                </td>
+              </tr>
+            </tbody>
+          </table>
         </div>
+      </div>
     </section>
 
     <!-- Trust Section -->
     <section class="py-16">
-        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="bg-dark-800 rounded-2xl border border-gray-700 p-8 md:p-12">
-                <h2 class="text-2xl font-bold text-white mb-6 text-center serif">Our Commitment to You</h2>
-                <div class="grid md:grid-cols-3 gap-8 text-center">
-                    <div>
-                        <div class="text-4xl mb-3">🇨🇭</div>
-                        <h3 class="font-semibold text-white mb-2">Swiss Privacy</h3>
-                        <p class="text-sm text-gray-400">Your data stays private. We don't sell, share, or track.</p>
-                    </div>
-                    <div>
-                        <div class="text-4xl mb-3">💳</div>
-                        <h3 class="font-semibold text-white mb-2">No Hidden Fees</h3>
-                        <p class="text-sm text-gray-400">What you see is what you pay. No surprise charges.</p>
-                    </div>
-                    <div>
-                        <div class="text-4xl mb-3">🚪</div>
-                        <h3 class="font-semibold text-white mb-2">Easy Cancellation</h3>
-                        <p class="text-sm text-gray-400">Cancel anytime with one click. No retention tactics.</p>
-                    </div>
-                </div>
+      <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="bg-dark-800 rounded-2xl border border-gray-700 p-8 md:p-12">
+          <h2 class="text-2xl font-bold text-white mb-6 text-center serif">
+            Our Commitment to You
+          </h2>
+          <div class="grid md:grid-cols-3 gap-8 text-center">
+            <div>
+              <div class="text-4xl mb-3">🇨🇭</div>
+              <h3 class="font-semibold text-white mb-2">Swiss Privacy</h3>
+              <p class="text-sm text-gray-400">
+                Your data stays private. We don't sell, share, or track.
+              </p>
             </div>
+            <div>
+              <div class="text-4xl mb-3">💳</div>
+              <h3 class="font-semibold text-white mb-2">No Hidden Fees</h3>
+              <p class="text-sm text-gray-400">
+                What you see is what you pay. No surprise charges.
+              </p>
+            </div>
+            <div>
+              <div class="text-4xl mb-3">🚪</div>
+              <h3 class="font-semibold text-white mb-2">Easy Cancellation</h3>
+              <p class="text-sm text-gray-400">
+                Cancel anytime with one click. No retention tactics.
+              </p>
+            </div>
+          </div>
         </div>
+      </div>
     </section>
 
     <!-- FAQ Section -->
     <section id="faq" class="py-20 bg-dark-800">
-        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-            <h2 class="text-3xl font-bold text-white text-center mb-12 serif">Frequently Asked Questions</h2>
-            
-            <div class="space-y-6">
-                <div class="bg-dark-900 rounded-xl p-6 border border-gray-700">
-                    <h3 class="text-lg font-semibold text-white mb-3">What's included in the free plan?</h3>
-                    <p class="text-gray-400 leading-relaxed">
-                        The free plan includes basic grammar and spelling checks, 5 AI-powered grammar explanations per day, documents up to 10,000 words, 10 snippet slots, and the ability to ignore suggestions with one click. It's perfect for trying out the tool and occasional writing needs.
-                    </p>
-                </div>
-                
-                <div class="bg-dark-900 rounded-xl p-6 border border-gray-700">
-                    <h3 class="text-lg font-semibold text-white mb-3">Can I cancel my subscription anytime?</h3>
-                    <p class="text-gray-400 leading-relaxed">
-                        Absolutely. You can cancel with one click from your account settings. No phone calls, no retention emails, no questions asked. If you cancel, you'll keep access until the end of your billing period, and you won't be charged again.
-                    </p>
-                </div>
-                
-                <div class="bg-dark-900 rounded-xl p-6 border border-gray-700">
-                    <h3 class="text-lg font-semibold text-white mb-3">Is there a trial period for Pro?</h3>
-                    <p class="text-gray-400 leading-relaxed">
-                        We don't offer traditional trials because our free plan is genuinely useful. Try the free version first—it's not limited to 7 days or designed to frustrate you into upgrading. When you're ready for unlimited explanations and advanced features, upgrade to Pro.
-                    </p>
-                </div>
-                
-                <div class="bg-dark-900 rounded-xl p-6 border border-gray-700">
-                    <h3 class="text-lg font-semibold text-white mb-3">How does billing work?</h3>
-                    <p class="text-gray-400 leading-relaxed">
-                        Monthly plans are billed every month. Yearly plans are billed once per year (saving you 40%). Two-year plans are billed once every two years (saving you 55%). Lifetime is a single payment with no renewals ever. You'll receive an email receipt for every charge. No auto-renewals without clear notice.
-                    </p>
-                </div>
-                
-                <div class="bg-dark-900 rounded-xl p-6 border border-gray-700">
-                    <h3 class="text-lg font-semibold text-white mb-3">Is my data safe?</h3>
-                    <p class="text-gray-400 leading-relaxed">
-                        Yes. We're based in Switzerland and take privacy seriously. Your documents are encrypted in transit and at rest. We don't train AI models on your writing. We don't sell your data to third parties. We don't track you across the web. Your writing is yours, period.
-                    </p>
-                </div>
-                
-                <div class="bg-dark-900 rounded-xl p-6 border border-gray-700">
-                    <h3 class="text-lg font-semibold text-white mb-3">What happens if I downgrade from Pro to Free?</h3>
-                    <p class="text-gray-400 leading-relaxed">
-                        You'll keep access to Pro features until the end of your billing period. After that, you'll return to the free plan limits. Your saved snippets beyond the first 10 will remain stored but read-only—you can still view and use them, but you won't be able to add new ones until you upgrade again or delete some.
-                    </p>
-                </div>
-                
-                <div class="bg-dark-900 rounded-xl p-6 border border-gray-700">
-                    <h3 class="text-lg font-semibold text-white mb-3">Do you offer refunds?</h3>
-                    <p class="text-gray-400 leading-relaxed">
-                        Yes. If you're not satisfied within 30 days of purchase, we'll refund you in full, no questions asked. Just email us at <a href="mailto:hello@grammar-mentor.ch" class="text-indigo-400 hover:text-indigo-300">hello@grammar-mentor.ch</a>.
-                    </p>
-                </div>
-                
-                <div class="bg-dark-900 rounded-xl p-6 border border-gray-700">
-                    <h3 class="text-lg font-semibold text-white mb-3">Can I switch between monthly and yearly billing?</h3>
-                    <p class="text-gray-400 leading-relaxed">
-                        Yes. You can switch from monthly to yearly (or 2-year) anytime. We'll prorate your remaining monthly time and apply it as credit toward your new plan. Switching from yearly to monthly will take effect at the end of your current billing period.
-                    </p>
-                </div>
-                
-                <div class="bg-dark-900 rounded-xl p-6 border border-gray-700">
-                    <h3 class="text-lg font-semibold text-white mb-3">What payment methods do you accept?</h3>
-                    <p class="text-gray-400 leading-relaxed">
-                        We accept all major credit cards (Visa, Mastercard, Amex), PayPal, and SEPA direct debit for European customers. All payments are processed securely through industry-standard payment processors.
-                    </p>
-                </div>
-            </div>
+      <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+        <h2 class="text-3xl font-bold text-white text-center mb-12 serif">
+          Frequently Asked Questions
+        </h2>
+
+        <div class="space-y-6">
+          <div class="bg-dark-900 rounded-xl p-6 border border-gray-700">
+            <h3 class="text-lg font-semibold text-white mb-3">
+              What's included in the free plan?
+            </h3>
+            <p class="text-gray-400 leading-relaxed">
+              The free plan includes basic grammar and spelling checks, 5
+              AI-powered grammar explanations per day, documents up to 10,000
+              words, 10 snippet slots, and the ability to ignore suggestions
+              with one click. It's perfect for trying out the tool and
+              occasional writing needs.
+            </p>
+          </div>
+
+          <div class="bg-dark-900 rounded-xl p-6 border border-gray-700">
+            <h3 class="text-lg font-semibold text-white mb-3">
+              Can I cancel my subscription anytime?
+            </h3>
+            <p class="text-gray-400 leading-relaxed">
+              Absolutely. You can cancel with one click from your account
+              settings. No phone calls, no retention emails, no questions asked.
+              If you cancel, you'll keep access until the end of your billing
+              period, and you won't be charged again.
+            </p>
+          </div>
+
+          <div class="bg-dark-900 rounded-xl p-6 border border-gray-700">
+            <h3 class="text-lg font-semibold text-white mb-3">
+              Is there a trial period for Pro?
+            </h3>
+            <p class="text-gray-400 leading-relaxed">
+              We don't offer traditional trials because our free plan is
+              genuinely useful. Try the free version first—it's not limited to 7
+              days or designed to frustrate you into upgrading. When you're
+              ready for unlimited explanations and advanced features, upgrade to
+              Pro.
+            </p>
+          </div>
+
+          <div class="bg-dark-900 rounded-xl p-6 border border-gray-700">
+            <h3 class="text-lg font-semibold text-white mb-3">
+              How does billing work?
+            </h3>
+            <p class="text-gray-400 leading-relaxed">
+              Monthly plans are billed every month. Yearly plans are billed once
+              per year (saving you 40%). Two-year plans are billed once every
+              two years (saving you 55%). Lifetime is a single payment with no
+              renewals ever. You'll receive an email receipt for every charge.
+              No auto-renewals without clear notice.
+            </p>
+          </div>
+
+          <div class="bg-dark-900 rounded-xl p-6 border border-gray-700">
+            <h3 class="text-lg font-semibold text-white mb-3">
+              Is my data safe?
+            </h3>
+            <p class="text-gray-400 leading-relaxed">
+              Yes. We're based in Switzerland and take privacy seriously. Your
+              documents are encrypted in transit and at rest. We don't train AI
+              models on your writing. We don't sell your data to third parties.
+              We don't track you across the web. Your writing is yours, period.
+            </p>
+          </div>
+
+          <div class="bg-dark-900 rounded-xl p-6 border border-gray-700">
+            <h3 class="text-lg font-semibold text-white mb-3">
+              What happens if I downgrade from Pro to Free?
+            </h3>
+            <p class="text-gray-400 leading-relaxed">
+              You'll keep access to Pro features until the end of your billing
+              period. After that, you'll return to the free plan limits. Your
+              saved snippets beyond the first 10 will remain stored but
+              read-only—you can still view and use them, but you won't be able
+              to add new ones until you upgrade again or delete some.
+            </p>
+          </div>
+
+          <div class="bg-dark-900 rounded-xl p-6 border border-gray-700">
+            <h3 class="text-lg font-semibold text-white mb-3">
+              Do you offer refunds?
+            </h3>
+            <p class="text-gray-400 leading-relaxed">
+              Yes. If you're not satisfied within 30 days of purchase, we'll
+              refund you in full, no questions asked. Just email us at
+              <a
+                href="mailto:hello@grammar-mentor.ch"
+                class="text-indigo-400 hover:text-indigo-300"
+                >hello@grammar-mentor.ch</a
+              >.
+            </p>
+          </div>
+
+          <div class="bg-dark-900 rounded-xl p-6 border border-gray-700">
+            <h3 class="text-lg font-semibold text-white mb-3">
+              Can I switch between monthly and yearly billing?
+            </h3>
+            <p class="text-gray-400 leading-relaxed">
+              Yes. You can switch from monthly to yearly (or 2-year) anytime.
+              We'll prorate your remaining monthly time and apply it as credit
+              toward your new plan. Switching from yearly to monthly will take
+              effect at the end of your current billing period.
+            </p>
+          </div>
+
+          <div class="bg-dark-900 rounded-xl p-6 border border-gray-700">
+            <h3 class="text-lg font-semibold text-white mb-3">
+              What payment methods do you accept?
+            </h3>
+            <p class="text-gray-400 leading-relaxed">
+              We accept all major credit cards (Visa, Mastercard, Amex), PayPal,
+              and SEPA direct debit for European customers. All payments are
+              processed securely through industry-standard payment processors.
+            </p>
+          </div>
         </div>
+      </div>
     </section>
 
     <!-- Final CTA -->
     <section class="py-20">
-        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <h2 class="text-3xl sm:text-4xl font-bold text-white mb-6 serif">
-                Start Writing With Confidence Today
-            </h2>
-            <p class="text-xl text-gray-400 mb-10">
-                Try free, upgrade when ready, cancel anytime.
-            </p>
-            
-            <div class="flex flex-col sm:flex-row gap-4 justify-center items-center">
-                <a href="#" class="inline-flex items-center gap-2 px-8 py-4 bg-indigo-600 hover:bg-indigo-700 text-white text-lg font-semibold rounded-lg transition-all hover:scale-105 shadow-lg shadow-indigo-900/50">
-                    Start Free
-                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path>
-                    </svg>
-                </a>
-            </div>
-            
-            <p class="text-sm text-gray-500 mt-6">
-                Questions? Email us at <a href="mailto:hello@grammar-mentor.ch" class="text-indigo-400 hover:text-indigo-300">hello@grammar-mentor.ch</a>
-            </p>
+      <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        <h2 class="text-3xl sm:text-4xl font-bold text-white mb-6 serif">
+          Start Writing With Confidence Today
+        </h2>
+        <p class="text-xl text-gray-400 mb-10">
+          Try free, upgrade when ready, cancel anytime.
+        </p>
+
+        <div
+          class="flex flex-col sm:flex-row gap-4 justify-center items-center"
+        >
+          <a
+            href="#"
+            class="inline-flex items-center gap-2 px-8 py-4 bg-indigo-600 hover:bg-indigo-700 text-white text-lg font-semibold rounded-lg transition-all hover:scale-105 shadow-lg shadow-indigo-900/50"
+          >
+            Start Free
+            <svg
+              class="w-5 h-5"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M13 7l5 5m0 0l-5 5m5-5H6"
+              ></path>
+            </svg>
+          </a>
         </div>
+
+        <p class="text-sm text-gray-500 mt-6">
+          Questions? Email us at
+          <a
+            href="mailto:hello@grammar-mentor.ch"
+            class="text-indigo-400 hover:text-indigo-300"
+            >hello@grammar-mentor.ch</a
+          >
+        </p>
+      </div>
     </section>
 
     <!-- Footer -->
     <footer class="border-t border-gray-800 py-12 bg-dark-800">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="grid md:grid-cols-4 gap-8 mb-8">
-                <div>
-                    <div class="flex items-center gap-3 mb-4">
-                        <div class="w-10 h-10 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-lg flex items-center justify-center">
-                            <img src="assets/logo426*426.png" alt="">
-                        </div>
-                        <span class="font-semibold text-white">AI Grammar Mentor</span>
-                    </div>
-                    <p class="text-sm text-gray-400 leading-relaxed">
-                        A Swiss startup building writing tools that respect your intelligence and help you learn.
-                    </p>
-                </div>
-                
-                <div>
-                    <h4 class="font-semibold text-white mb-4">Product</h4>
-                    <ul class="space-y-2 text-sm text-gray-400">
-                        <li><a href="index.html" class="hover:text-white transition-colors">Home</a></li>
-                        <li><a href="#" class="hover:text-white transition-colors">Features</a></li>
-                        <li><a href="#" class="hover:text-white transition-colors">Pricing</a></li>
-                        <li><a href="#" class="hover:text-white transition-colors">Changelog</a></li>
-                    </ul>
-                </div>
-                
-                <div>
-                    <h4 class="font-semibold text-white mb-4">Company</h4>
-                    <ul class="space-y-2 text-sm text-gray-400">
-                        <li><a href="#" class="hover:text-white transition-colors">About</a></li>
-                        <li><a href="#" class="hover:text-white transition-colors">Blog</a></li>
-                        <li><a href="#" class="hover:text-white transition-colors">Privacy</a></li>
-                        <li><a href="#" class="hover:text-white transition-colors">Terms</a></li>
-                    </ul>
-                </div>
-                
-                <div>
-                    <h4 class="font-semibold text-white mb-4">Support</h4>
-                    <ul class="space-y-2 text-sm text-gray-400">
-                        <li><a href="#faq" class="hover:text-white transition-colors">FAQ</a></li>
-                        <li><a href="mailto:hello@grammar-mentor.ch" class="hover:text-white transition-colors">Contact</a></li>
-                        <li><a href="#" class="hover:text-white transition-colors">Help Center</a></li>
-                    </ul>
-                </div>
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="grid md:grid-cols-4 gap-8 mb-8">
+          <div>
+            <div class="flex items-center gap-3 mb-4">
+              <div
+                class="w-10 h-10 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-lg flex items-center justify-center"
+              >
+                <img src="assets/logo426x426.png" alt="" />
+              </div>
+              <span class="font-semibold text-white">AI Grammar Mentor</span>
             </div>
-            
-            <div class="border-t border-gray-700 pt-8 flex flex-col sm:flex-row justify-between items-center gap-4 text-sm text-gray-500">
-                <p>© 2026 AI Grammar Mentor. Built with care in Switzerland.</p>
-                <p>🇨🇭 Privacy-focused • No tracking • No data selling</p>
-            </div>
+            <p class="text-sm text-gray-400 leading-relaxed">
+              A Swiss startup building writing tools that respect your
+              intelligence and help you learn.
+            </p>
+          </div>
+
+          <div>
+            <h4 class="font-semibold text-white mb-4">Product</h4>
+            <ul class="space-y-2 text-sm text-gray-400">
+              <li>
+                <a href="index.html" class="hover:text-white transition-colors"
+                  >Home</a
+                >
+              </li>
+              <li>
+                <a href="#" class="hover:text-white transition-colors"
+                  >Features</a
+                >
+              </li>
+              <li>
+                <a href="#" class="hover:text-white transition-colors"
+                  >Pricing</a
+                >
+              </li>
+              <li>
+                <a href="#" class="hover:text-white transition-colors"
+                  >Changelog</a
+                >
+              </li>
+            </ul>
+          </div>
+
+          <div>
+            <h4 class="font-semibold text-white mb-4">Company</h4>
+            <ul class="space-y-2 text-sm text-gray-400">
+              <li>
+                <a href="#" class="hover:text-white transition-colors">About</a>
+              </li>
+              <li>
+                <a href="#" class="hover:text-white transition-colors">Blog</a>
+              </li>
+              <li>
+                <a href="#" class="hover:text-white transition-colors"
+                  >Privacy</a
+                >
+              </li>
+              <li>
+                <a href="#" class="hover:text-white transition-colors">Terms</a>
+              </li>
+            </ul>
+          </div>
+
+          <div>
+            <h4 class="font-semibold text-white mb-4">Support</h4>
+            <ul class="space-y-2 text-sm text-gray-400">
+              <li>
+                <a href="#faq" class="hover:text-white transition-colors"
+                  >FAQ</a
+                >
+              </li>
+              <li>
+                <a
+                  href="mailto:hello@grammar-mentor.ch"
+                  class="hover:text-white transition-colors"
+                  >Contact</a
+                >
+              </li>
+              <li>
+                <a href="#" class="hover:text-white transition-colors"
+                  >Help Center</a
+                >
+              </li>
+            </ul>
+          </div>
         </div>
+
+        <div
+          class="border-t border-gray-700 pt-8 flex flex-col sm:flex-row justify-between items-center gap-4 text-sm text-gray-500"
+        >
+          <p>© 2026 AI Grammar Mentor. Built with care in Switzerland.</p>
+          <p>🇨🇭 Privacy-focused • No tracking • No data selling</p>
+        </div>
+      </div>
     </footer>
 
     <!-- JavaScript for Billing Toggle -->
     <script>
-        let currentPeriod = 'yearly'; // Default to yearly (best value)
+      let currentPeriod = "yearly"; // Default to yearly (best value)
 
-        function setBillingPeriod(period) {
-            currentPeriod = period;
-            
-            // Update toggle buttons
-            document.querySelectorAll('.toggle-option').forEach(btn => {
-                btn.classList.remove('active');
-            });
-            document.getElementById(`toggle-${period}`).classList.add('active');
-            
-            // Update Pro pricing
-            const proPriceEl = document.querySelector('.price-amount');
-            const proBillingNote = document.querySelector('.billing-note');
-            
-            const monthlyPrice = proPriceEl.getAttribute('data-monthly');
-            const yearlyPrice = proPriceEl.getAttribute('data-yearly');
-            const twoyearPrice = proPriceEl.getAttribute('data-twoyear');
-            
-            if (period === 'monthly') {
-                proPriceEl.textContent = `$${monthlyPrice}`;
-                proBillingNote.textContent = 'Billed monthly at $10';
-                proBillingNote.classList.remove('text-emerald-400');
-                proBillingNote.classList.add('text-gray-400');
-                updateSavingsMessage('');
-            } else if (period === 'yearly') {
-                proPriceEl.textContent = `$${yearlyPrice}`;
-                proBillingNote.textContent = 'Billed yearly at $72 (save $48)';
-                proBillingNote.classList.remove('text-gray-400');
-                proBillingNote.classList.add('text-emerald-400');
-                updateSavingsMessage('💰 Save <span class="text-emerald-400 font-semibold">$48/year</span> with yearly billing');
-            } else if (period === 'twoyear') {
-                proPriceEl.textContent = `$${twoyearPrice}`;
-                proBillingNote.textContent = 'Billed every 2 years at $108 (save $132)';
-                proBillingNote.classList.remove('text-gray-400');
-                proBillingNote.classList.add('text-emerald-400');
-                updateSavingsMessage('💰 Save <span class="text-emerald-400 font-semibold">$132 total</span> with 2-year billing');
-            }
+      function setBillingPeriod(period) {
+        currentPeriod = period;
+
+        // Update toggle buttons
+        document.querySelectorAll(".toggle-option").forEach((btn) => {
+          btn.classList.remove("active");
+        });
+        document.getElementById(`toggle-${period}`).classList.add("active");
+
+        // Update Pro pricing
+        const proPriceEl = document.querySelector(".price-amount");
+        const proBillingNote = document.querySelector(".billing-note");
+
+        const monthlyPrice = proPriceEl.getAttribute("data-monthly");
+        const yearlyPrice = proPriceEl.getAttribute("data-yearly");
+        const twoyearPrice = proPriceEl.getAttribute("data-twoyear");
+
+        if (period === "monthly") {
+          proPriceEl.textContent = `$${monthlyPrice}`;
+          proBillingNote.textContent = "Billed monthly at $10";
+          proBillingNote.classList.remove("text-emerald-400");
+          proBillingNote.classList.add("text-gray-400");
+          updateSavingsMessage("");
+        } else if (period === "yearly") {
+          proPriceEl.textContent = `$${yearlyPrice}`;
+          proBillingNote.textContent = "Billed yearly at $72 (save $48)";
+          proBillingNote.classList.remove("text-gray-400");
+          proBillingNote.classList.add("text-emerald-400");
+          updateSavingsMessage(
+            '💰 Save <span class="text-emerald-400 font-semibold">$48/year</span> with yearly billing',
+          );
+        } else if (period === "twoyear") {
+          proPriceEl.textContent = `$${twoyearPrice}`;
+          proBillingNote.textContent =
+            "Billed every 2 years at $108 (save $132)";
+          proBillingNote.classList.remove("text-gray-400");
+          proBillingNote.classList.add("text-emerald-400");
+          updateSavingsMessage(
+            '💰 Save <span class="text-emerald-400 font-semibold">$132 total</span> with 2-year billing',
+          );
         }
-        
-        function updateSavingsMessage(message) {
-            const savingsEl = document.getElementById('savings-message');
-            if (message) {
-                savingsEl.innerHTML = message;
-                savingsEl.style.opacity = '1';
-            } else {
-                savingsEl.style.opacity = '0';
-            }
+      }
+
+      function updateSavingsMessage(message) {
+        const savingsEl = document.getElementById("savings-message");
+        if (message) {
+          savingsEl.innerHTML = message;
+          savingsEl.style.opacity = "1";
+        } else {
+          savingsEl.style.opacity = "0";
         }
-        
-        // Initialize on page load
-        setBillingPeriod('yearly');
+      }
+
+      // Initialize on page load
+      setBillingPeriod("yearly");
     </script>
-
-</body>
+  </body>
 </html>
