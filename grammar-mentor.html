@@ -8,19 +8,201 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link rel="stylesheet" href="style.css">
-    <script src="script.js" defer></script>
     <link
       href="https://fonts.googleapis.com/css2?family=Crimson+Pro:wght@400;600;700&family=DM+Sans:wght@400;500;700&display=swap"
       rel="stylesheet"
     />
+    
+    <!-- Lemon Squeezy SDK -->
+    <script src="https://app.lemonsqueezy.com/js/lemon.js" defer></script>
+    
+    <style>
+      /* Paywall overlay styles */
+      .paywall-overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(15, 23, 42, 0.95);
+        backdrop-filter: blur(4px);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 10;
+        border-radius: 0.75rem;
+      }
+      
+      .paywall-content {
+        text-align: center;
+        padding: 2rem;
+        max-width: 400px;
+      }
+      
+      .paywall-icon {
+        width: 48px;
+        height: 48px;
+        margin: 0 auto 1rem;
+        color: #8b5cf6;
+      }
+      
+      .paywall-title {
+        font-size: 1.25rem;
+        font-weight: 700;
+        color: white;
+        margin-bottom: 0.5rem;
+      }
+      
+      .paywall-description {
+        font-size: 0.875rem;
+        color: #94a3b8;
+        margin-bottom: 1.5rem;
+      }
+      
+      .paywall-btn {
+        display: inline-block;
+        padding: 0.75rem 1.5rem;
+        background: linear-gradient(to right, #6366f1, #8b5cf6);
+        color: white;
+        font-weight: 600;
+        border-radius: 0.5rem;
+        text-decoration: none;
+        transition: all 0.2s;
+      }
+      
+      .paywall-btn:hover {
+        transform: scale(1.05);
+        box-shadow: 0 10px 25px rgba(139, 92, 246, 0.3);
+      }
+      
+      .locked-feature {
+        position: relative;
+        opacity: 0.6;
+        pointer-events: none;
+      }
+      
+      .pro-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.25rem;
+        padding: 0.125rem 0.5rem;
+        background: linear-gradient(to right, #6366f1, #8b5cf6);
+        color: white;
+        font-size: 0.625rem;
+        font-weight: 600;
+        border-radius: 9999px;
+        margin-left: 0.5rem;
+      }
+      
+      .usage-limit-warning {
+        background: #fef3c7;
+        border: 1px solid #fbbf24;
+        color: #92400e;
+        padding: 0.75rem 1rem;
+        border-radius: 0.5rem;
+        margin: 1rem 0;
+        font-size: 0.875rem;
+        display: none;
+      }
+      
+      .auth-panel {
+        position: fixed;
+        top: 1rem;
+        right: 1rem;
+        background: rgba(30, 41, 59, 0.95);
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(148, 163, 184, 0.2);
+        border-radius: 0.75rem;
+        padding: 1rem;
+        z-index: 1000;
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+      }
+      
+      .auth-status {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+      }
+      
+      .auth-avatar {
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, #6366f1, #8b5cf6);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-weight: 600;
+        font-size: 0.875rem;
+      }
+      
+      .auth-info {
+        flex: 1;
+      }
+      
+      .auth-name {
+        font-weight: 600;
+        color: white;
+        font-size: 0.875rem;
+      }
+      
+      .auth-plan {
+        font-size: 0.75rem;
+        color: #94a3b8;
+      }
+      
+      .auth-btn {
+        padding: 0.5rem 1rem;
+        border-radius: 0.5rem;
+        font-size: 0.875rem;
+        font-weight: 600;
+        border: none;
+        cursor: pointer;
+        transition: all 0.2s;
+      }
+      
+      .btn-login {
+        background: linear-gradient(to right, #6366f1, #8b5cf6);
+        color: white;
+      }
+      
+      .btn-login:hover {
+        transform: translateY(-1px);
+        box-shadow: 0 4px 12px rgba(139, 92, 246, 0.4);
+      }
+      
+      .btn-logout {
+        background: rgba(148, 163, 184, 0.1);
+        color: #94a3b8;
+      }
+      
+      .btn-logout:hover {
+        background: rgba(148, 163, 184, 0.2);
+        color: white;
+      }
+    </style>
   </head>
   <body>
+    <!-- Authentication Panel -->
+    <div class="auth-panel" id="authPanel">
+      <div class="auth-status" id="authStatus">
+        <!-- Will be populated by JavaScript -->
+      </div>
+    </div>
+
     <div class="container">
       <div class="header">
         <h1>Grammar Checker Enhanced</h1>
         <p class="subtitle">
           AI-powered grammar checking with learning features
         </p>
+      </div>
+
+      <!-- Usage limit warning (for free users) -->
+      <div class="usage-limit-warning" id="usageLimitWarning">
+        <strong>⚠️ Daily limit reached:</strong> You've used all 5 AI explanations for today. 
+        <a href="#" onclick="openUpgradeModal(); return false;" style="color: #7c3aed; font-weight: 600; text-decoration: underline;">Upgrade to Pro</a> for unlimited explanations.
       </div>
 
       <!-- CONTROLS BAR -->
@@ -45,17 +227,37 @@
           </select>
         </div>
 
-        <div class="control-group">
-          <label class="control-label">Writing Style</label>
+        <div class="control-group" style="position: relative;">
+          <label class="control-label">
+            Writing Style
+            <span class="pro-badge" id="styleProBadge" style="display: none;">
+              <svg width="10" height="10" fill="currentColor" viewBox="0 0 20 20">
+                <path fill-rule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clip-rule="evenodd"/>
+              </svg>
+              PRO
+            </span>
+          </label>
           <select id="styleSelect">
             <option value="neutral">Neutral</option>
-            <option value="formal">Formal</option>
-            <option value="casual">Casual</option>
-            <option value="academic">Academic</option>
-            <option value="creative">Creative</option>
-            <option value="professional">Professional</option>
-            <option value="conversational">Conversational</option>
+            <option value="formal" class="pro-option">Formal</option>
+            <option value="casual" class="pro-option">Casual</option>
+            <option value="academic" class="pro-option">Academic</option>
+            <option value="creative" class="pro-option">Creative</option>
+            <option value="professional" class="pro-option">Professional</option>
+            <option value="conversational" class="pro-option">Conversational</option>
           </select>
+          <div class="paywall-overlay" id="stylePaywall" style="display: none;">
+            <div class="paywall-content">
+              <svg class="paywall-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/>
+              </svg>
+              <div class="paywall-title">Advanced Style Checking</div>
+              <div class="paywall-description">
+                Unlock advanced writing styles to preserve your voice while catching tone inconsistencies
+              </div>
+              <a href="#" onclick="openUpgradeModal(); return false;" class="paywall-btn">Upgrade to Pro</a>
+            </div>
+          </div>
         </div>
 
         <div class="control-group">
@@ -146,9 +348,18 @@
           </div>
 
           <!-- SNIPPET MANAGER -->
-          <div class="snippet-manager">
+          <div class="snippet-manager" style="position: relative;">
             <div class="snippet-header">
-              <span class="snippet-title">📎 Saved Snippets</span>
+              <span class="snippet-title">
+                📎 Saved Snippets
+                <span id="snippetCount">(0/10)</span>
+                <span class="pro-badge" id="snippetProBadge" style="display: none;">
+                  <svg width="10" height="10" fill="currentColor" viewBox="0 0 20 20">
+                    <path fill-rule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clip-rule="evenodd"/>
+                  </svg>
+                  PRO
+                </span>
+              </span>
               <button
                 id="toggleSnippets"
                 class="btn-snippet"
@@ -171,6 +382,18 @@
                 <button id="saveSnippetBtn" class="btn btn-snippet">
                   Save Snippet
                 </button>
+              </div>
+            </div>
+            <div class="paywall-overlay" id="snippetPaywall" style="display: none;">
+              <div class="paywall-content">
+                <svg class="paywall-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/>
+                </svg>
+                <div class="paywall-title">Unlimited Snippet Storage</div>
+                <div class="paywall-description">
+                  Build your personal library of templates, sign-offs, and repeated phrases
+                </div>
+                <a href="#" onclick="openUpgradeModal(); return false;" class="paywall-btn">Upgrade to Pro</a>
               </div>
             </div>
           </div>
@@ -217,5 +440,584 @@
         </div>
       </div>
     </div>
+
+    <!-- UPGRADE MODAL -->
+    <div id="upgradeModal" class="modal-overlay" style="display: none;">
+      <div class="modal-content" style="max-width: 600px;">
+        <div class="modal-header">
+          <h2 class="modal-title">Upgrade to Pro</h2>
+          <button class="modal-close" onclick="closeUpgradeModal()">
+            &times;
+          </button>
+        </div>
+        <div class="modal-body" style="padding: 2rem;">
+          <div style="text-align: center; margin-bottom: 2rem;">
+            <div style="font-size: 3rem; margin-bottom: 1rem;">🚀</div>
+            <h3 style="font-size: 1.5rem; font-weight: 700; color: white; margin-bottom: 0.5rem;">
+              Unlock All Premium Features
+            </h3>
+            <p style="color: #94a3b8;">
+              Get unlimited AI explanations, advanced style checking, and more
+            </p>
+          </div>
+
+          <div style="background: rgba(99, 102, 241, 0.1); border: 1px solid rgba(99, 102, 241, 0.3); border-radius: 0.75rem; padding: 1.5rem; margin-bottom: 1.5rem;">
+            <div style="display: flex; align-items: baseline; gap: 0.5rem; margin-bottom: 0.5rem;">
+              <span style="font-size: 2.5rem; font-weight: 700; color: white;">$6</span>
+              <span style="color: #94a3b8;">/month</span>
+            </div>
+            <p style="font-size: 0.875rem; color: #6ee7b7;">
+              Billed yearly at $72 (save $48)
+            </p>
+          </div>
+
+          <ul style="list-style: none; padding: 0; margin-bottom: 2rem;">
+            <li style="display: flex; align-items: start; gap: 0.75rem; margin-bottom: 0.75rem; color: #e2e8f0;">
+              <svg style="width: 20px; height: 20px; color: #6ee7b7; flex-shrink: 0; margin-top: 2px;" fill="currentColor" viewBox="0 0 20 20">
+                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+              </svg>
+              <span>Unlimited AI explanations</span>
+            </li>
+            <li style="display: flex; align-items: start; gap: 0.75rem; margin-bottom: 0.75rem; color: #e2e8f0;">
+              <svg style="width: 20px; height: 20px; color: #6ee7b7; flex-shrink: 0; margin-top: 2px;" fill="currentColor" viewBox="0 0 20 20">
+                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+              </svg>
+              <span>Advanced style checking</span>
+            </li>
+            <li style="display: flex; align-items: start; gap: 0.75rem; margin-bottom: 0.75rem; color: #e2e8f0;">
+              <svg style="width: 20px; height: 20px; color: #6ee7b7; flex-shrink: 0; margin-top: 2px;" fill="currentColor" viewBox="0 0 20 20">
+                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+              </svg>
+              <span>Unlimited document length</span>
+            </li>
+            <li style="display: flex; align-items: start; gap: 0.75rem; margin-bottom: 0.75rem; color: #e2e8f0;">
+              <svg style="width: 20px; height: 20px; color: #6ee7b7; flex-shrink: 0; margin-top: 2px;" fill="currentColor" viewBox="0 0 20 20">
+                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+              </svg>
+              <span>Unlimited snippet storage</span>
+            </li>
+            <li style="display: flex; align-items: start; gap: 0.75rem; margin-bottom: 0.75rem; color: #e2e8f0;">
+              <svg style="width: 20px; height: 20px; color: #6ee7b7; flex-shrink: 0; margin-top: 2px;" fill="currentColor" viewBox="0 0 20 20">
+                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+              </svg>
+              <span>Multilingual context awareness</span>
+            </li>
+            <li style="display: flex; align-items: start; gap: 0.75rem; color: #e2e8f0;">
+              <svg style="width: 20px; height: 20px; color: #6ee7b7; flex-shrink: 0; margin-top: 2px;" fill="currentColor" viewBox="0 0 20 20">
+                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+              </svg>
+              <span>Priority support</span>
+            </li>
+          </ul>
+
+          <a href="#" id="checkoutBtn" class="lemonsqueezy-button" style="display: block; width: 100%; padding: 1rem; background: linear-gradient(to right, #6366f1, #8b5cf6); color: white; text-align: center; font-weight: 600; border-radius: 0.5rem; text-decoration: none; transition: all 0.2s;">
+            Upgrade Now
+          </a>
+          <p style="text-align: center; font-size: 0.75rem; color: #64748b; margin-top: 1rem;">
+            Cancel anytime, no questions asked
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <script src="script.js" defer></script>
+    <script>
+      // ========================================
+      // LEMON SQUEEZY CONFIGURATION
+      // ========================================
+      const LEMONSQUEEZY_CONFIG = {
+        // PHP Backend API endpoint
+        apiEndpoint: 'lemonsqueezy-api.php', // Update this to your actual path if different
+        
+        // Checkout URLs for different plans
+        checkoutUrls: {
+          monthly: 'https://grammar-mentor.lemonsqueezy.com/checkout/buy/cbb95cf4-1ecc-4032-a73c-79b6f771ed33',
+          yearly: 'https://grammar-mentor.lemonsqueezy.com/checkout/buy/fc3e92b7-331e-4af5-a2cd-4a12a5f5f33a',
+          twoyear: 'https://grammar-mentor.lemonsqueezy.com/checkout/buy/f2f898f3-5680-4656-8221-3f0e6936cf0b',
+          lifetime: 'https://grammar-mentor.lemonsqueezy.com/checkout/buy/2ab2920a-9841-417b-908e-f924e76252af'
+        },
+        
+        // Default checkout URL (yearly plan)
+        checkoutUrl: 'https://grammar-mentor.lemonsqueezy.com/checkout/buy/fc3e92b7-331e-4af5-a2cd-4a12a5f5f33a'
+      };
+
+      // ========================================
+      // USER SESSION & SUBSCRIPTION MANAGEMENT
+      // ========================================
+      class SubscriptionManager {
+        constructor() {
+          this.user = null;
+          this.subscription = null;
+          this.dailyUsage = this.loadDailyUsage();
+          this.init();
+        }
+
+        init() {
+          // Check for existing session
+          this.loadSession();
+          this.updateUI();
+          this.attachEventListeners();
+          
+          // Initialize Lemon Squeezy
+          if (window.createLemonSqueezy) {
+            window.createLemonSqueezy();
+          }
+        }
+
+        loadSession() {
+          // Load user session from localStorage
+          const sessionData = localStorage.getItem('grammar_mentor_session');
+          if (sessionData) {
+            try {
+              const session = JSON.parse(sessionData);
+              this.user = session.user;
+              this.subscription = session.subscription;
+            } catch (e) {
+              console.error('Failed to parse session data:', e);
+            }
+          }
+        }
+
+        saveSession() {
+          // Save user session to localStorage
+          const sessionData = {
+            user: this.user,
+            subscription: this.subscription
+          };
+          localStorage.setItem('grammar_mentor_session', JSON.stringify(sessionData));
+        }
+
+        loadDailyUsage() {
+          const today = new Date().toDateString();
+          const usageData = localStorage.getItem('grammar_mentor_daily_usage');
+          
+          if (usageData) {
+            try {
+              const usage = JSON.parse(usageData);
+              // Reset if it's a new day
+              if (usage.date !== today) {
+                return { date: today, aiExplanations: 0 };
+              }
+              return usage;
+            } catch (e) {
+              console.error('Failed to parse usage data:', e);
+            }
+          }
+          
+          return { date: today, aiExplanations: 0 };
+        }
+
+        saveDailyUsage() {
+          localStorage.setItem('grammar_mentor_daily_usage', JSON.stringify(this.dailyUsage));
+        }
+
+        incrementAIExplanationUsage() {
+          const today = new Date().toDateString();
+          if (this.dailyUsage.date !== today) {
+            this.dailyUsage = { date: today, aiExplanations: 0 };
+          }
+          this.dailyUsage.aiExplanations++;
+          this.saveDailyUsage();
+        }
+
+        hasProAccess() {
+          return this.subscription && 
+                 this.subscription.status === 'active' && 
+                 (this.subscription.plan === 'pro' || this.subscription.plan === 'lifetime');
+        }
+
+        canUseAIExplanation() {
+          if (this.hasProAccess()) {
+            return { allowed: true };
+          }
+          
+          const limit = 5;
+          const used = this.dailyUsage.aiExplanations;
+          
+          if (used >= limit) {
+            return { 
+              allowed: false, 
+              message: `You've reached your daily limit of ${limit} AI explanations. Upgrade to Pro for unlimited access.`,
+              remaining: 0
+            };
+          }
+          
+          return { 
+            allowed: true, 
+            remaining: limit - used 
+          };
+        }
+
+        canUseAdvancedStyle() {
+          return this.hasProAccess();
+        }
+
+        canAddSnippet(currentCount) {
+          if (this.hasProAccess()) {
+            return { allowed: true };
+          }
+          
+          const limit = 10;
+          if (currentCount >= limit) {
+            return { 
+              allowed: false, 
+              message: `Free plan is limited to ${limit} snippets. Upgrade to Pro for unlimited storage.`
+            };
+          }
+          
+          return { allowed: true, remaining: limit - currentCount };
+        }
+
+        checkDocumentLength(wordCount) {
+          if (this.hasProAccess()) {
+            return { allowed: true };
+          }
+          
+          const limit = 10000;
+          if (wordCount > limit) {
+            return { 
+              allowed: false, 
+              message: `Document exceeds the ${limit.toLocaleString()} word limit for free accounts. Upgrade to Pro for unlimited document length.`
+            };
+          }
+          
+          return { allowed: true };
+        }
+
+        async login(email, licenseKey) {
+          // In production, this would call your backend API
+          // which validates the license key with Lemon Squeezy
+          try {
+            // Placeholder: Replace with actual API call
+            const response = await this.validateLicense(email, licenseKey);
+            
+            if (response.valid) {
+              this.user = {
+                email: response.email,
+                name: response.name || email.split('@')[0]
+              };
+              
+              this.subscription = {
+                status: response.status,
+                plan: response.plan,
+                validUntil: response.validUntil
+              };
+              
+              this.saveSession();
+              this.updateUI();
+              return { success: true };
+            } else {
+              return { success: false, error: 'Invalid license key' };
+            }
+          } catch (error) {
+            console.error('Login error:', error);
+            return { success: false, error: 'Login failed. Please try again.' };
+          }
+        }
+
+        async validateLicense(email, licenseKey) {
+          // Call PHP backend to validate license
+          try {
+            // Simulate API call
+            const response = await fetch(LEMONSQUEEZY_CONFIG.apiEndpoint + '?action=validate_license', {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json'
+              },
+              body: JSON.stringify({
+                email: email,
+                licenseKey: licenseKey
+              })
+            });
+            
+            const data = await response.json();
+            
+            if (!data.success) {
+              return {
+                valid: false,
+                error: data.error || 'Validation failed'
+              };
+            }
+            
+            return data;
+          } catch (error) {
+            console.error('License validation error:', error);
+            return {
+              valid: false,
+              error: 'Unable to validate license. Please check your connection.'
+            };
+          }
+        }
+
+        logout() {
+          this.user = null;
+          this.subscription = null;
+          localStorage.removeItem('grammar_mentor_session');
+          this.updateUI();
+        }
+
+        updateUI() {
+          const authStatus = document.getElementById('authStatus');
+          
+          if (this.user && this.subscription) {
+            // Logged in
+            const planName = this.subscription.plan === 'lifetime' ? 'Lifetime' : 'Pro';
+            const initials = this.user.name.split(' ').map(n => n[0]).join('').toUpperCase();
+            
+            authStatus.innerHTML = `
+              <div class="auth-avatar">${initials}</div>
+              <div class="auth-info">
+                <div class="auth-name">${this.user.name}</div>
+                <div class="auth-plan">${planName} Plan</div>
+              </div>
+              <button class="auth-btn btn-logout" onclick="subscriptionManager.logout()">Logout</button>
+            `;
+          } else {
+            // Logged out
+            authStatus.innerHTML = `
+              <button class="auth-btn btn-login" onclick="openLoginModal()">Login</button>
+              <button class="auth-btn btn-login" onclick="openUpgradeModal()">Upgrade</button>
+            `;
+          }
+          
+          // Update feature access
+          this.updateFeatureAccess();
+        }
+
+        updateFeatureAccess() {
+          const isPro = this.hasProAccess();
+          
+          // Style selector paywall
+          const styleSelect = document.getElementById('styleSelect');
+          const stylePaywall = document.getElementById('stylePaywall');
+          const styleProBadge = document.getElementById('styleProBadge');
+          
+          if (!isPro) {
+            styleProBadge.style.display = 'inline-flex';
+            // Show paywall when trying to select advanced styles
+            styleSelect.addEventListener('change', (e) => {
+              if (e.target.options[e.target.selectedIndex].classList.contains('pro-option')) {
+                e.preventDefault();
+                stylePaywall.style.display = 'flex';
+                styleSelect.value = 'neutral';
+              }
+            });
+          } else {
+            styleProBadge.style.display = 'none';
+            stylePaywall.style.display = 'none';
+          }
+          
+          // Snippet storage
+          const snippetProBadge = document.getElementById('snippetProBadge');
+          const snippetPaywall = document.getElementById('snippetPaywall');
+          
+          if (!isPro) {
+            snippetProBadge.style.display = 'inline-flex';
+          } else {
+            snippetProBadge.style.display = 'none';
+            snippetPaywall.style.display = 'none';
+          }
+          
+          // Update snippet count display
+          this.updateSnippetCount();
+        }
+
+        updateSnippetCount() {
+          const snippetCount = document.getElementById('snippetCount');
+          const snippetList = document.getElementById('snippetList');
+          const currentCount = snippetList ? snippetList.children.length : 0;
+          
+          if (this.hasProAccess()) {
+            snippetCount.textContent = `(${currentCount}/∞)`;
+          } else {
+            snippetCount.textContent = `(${currentCount}/10)`;
+          }
+        }
+
+        attachEventListeners() {
+          // Checkout button
+          const checkoutBtn = document.getElementById('checkoutBtn');
+          if (checkoutBtn) {
+            checkoutBtn.href = LEMONSQUEEZY_CONFIG.checkoutUrl;
+            checkoutBtn.addEventListener('click', (e) => {
+              // Track checkout event
+              if (typeof gtag !== 'undefined') {
+                gtag('event', 'begin_checkout', {
+                  items: [{
+                    item_name: 'Grammar Mentor Pro',
+                    price: 72
+                  }]
+                });
+              }
+            });
+          }
+          
+          // Load configuration from backend on init
+          this.loadBackendConfig();
+        }
+        
+        async loadBackendConfig() {
+          try {
+            const response = await fetch(LEMONSQUEEZY_CONFIG.apiEndpoint + '?action=get_config');
+            const data = await response.json();
+            
+            if (data.success) {
+              // Update checkout URLs if needed
+              LEMONSQUEEZY_CONFIG.checkoutUrls = data.checkoutUrls;
+            }
+          } catch (error) {
+            console.error('Failed to load backend config:', error);
+          }
+        }
+
+        showUpgradePrompt(feature) {
+          openUpgradeModal();
+        }
+      }
+
+      // Initialize subscription manager
+      const subscriptionManager = new SubscriptionManager();
+
+      // ========================================
+      // MODAL FUNCTIONS
+      // ========================================
+      function openUpgradeModal() {
+        document.getElementById('upgradeModal').style.display = 'flex';
+      }
+
+      function closeUpgradeModal() {
+        document.getElementById('upgradeModal').style.display = 'none';
+      }
+
+      function openLoginModal() {
+        // Simple prompt for now - you can replace with a proper modal
+        const email = prompt('Enter your email address:');
+        if (!email) return;
+        
+        const licenseKey = prompt('Enter your license key:');
+        if (!licenseKey) return;
+        
+        subscriptionManager.login(email, licenseKey).then(result => {
+          if (result.success) {
+            alert('Welcome back! You now have access to all Pro features.');
+          } else {
+            alert(result.error || 'Login failed. Please check your credentials.');
+          }
+        });
+      }
+
+      function closeRuleModal() {
+        document.getElementById('ruleModal').style.display = 'none';
+      }
+
+      // ========================================
+      // FEATURE GATING EXAMPLES
+      // ========================================
+      
+      // Example: Gate AI explanation feature
+      function requestAIExplanation() {
+        const canUse = subscriptionManager.canUseAIExplanation();
+        
+        if (!canUse.allowed) {
+          // Show warning and prompt upgrade
+          const warningDiv = document.getElementById('usageLimitWarning');
+          warningDiv.style.display = 'block';
+          warningDiv.querySelector('strong').textContent = '⚠️ ' + canUse.message;
+          
+          setTimeout(() => {
+            openUpgradeModal();
+          }, 1000);
+          
+          return false;
+        }
+        
+        // Increment usage for free users
+        if (!subscriptionManager.hasProAccess()) {
+          subscriptionManager.incrementAIExplanationUsage();
+          
+          // Show remaining count
+          if (canUse.remaining !== undefined && canUse.remaining <= 2) {
+            const warningDiv = document.getElementById('usageLimitWarning');
+            warningDiv.style.display = 'block';
+            warningDiv.querySelector('strong').textContent = `ℹ️ ${canUse.remaining} AI explanations remaining today.`;
+          }
+        }
+        
+        return true;
+      }
+
+      // Example: Gate snippet creation
+      function canAddNewSnippet() {
+        const snippetList = document.getElementById('snippetList');
+        const currentCount = snippetList ? snippetList.children.length : 0;
+        const canAdd = subscriptionManager.canAddSnippet(currentCount);
+        
+        if (!canAdd.allowed) {
+          const snippetPaywall = document.getElementById('snippetPaywall');
+          snippetPaywall.style.display = 'flex';
+          return false;
+        }
+        
+        return true;
+      }
+
+      // Example: Gate document length check
+      function checkDocumentLengthLimit(wordCount) {
+        const check = subscriptionManager.checkDocumentLength(wordCount);
+        
+        if (!check.allowed) {
+          alert(check.message);
+          openUpgradeModal();
+          return false;
+        }
+        
+        return true;
+      }
+
+      // Close modals when clicking outside
+      document.addEventListener('click', (e) => {
+        if (e.target.classList.contains('modal-overlay')) {
+          e.target.style.display = 'none';
+        }
+      });
+
+      // ========================================
+      // LEMON SQUEEZY WEBHOOK HANDLER
+      // ========================================
+      // This would be implemented on your backend server
+      /*
+      Example webhook handler (Node.js/Express):
+      
+      app.post('/api/webhooks/lemonsqueezy', express.raw({type: 'application/json'}), async (req, res) => {
+        const signature = req.headers['x-signature'];
+        const payload = req.body;
+        
+        // Verify webhook signature
+        const isValid = verifyWebhookSignature(payload, signature, LEMONSQUEEZY_CONFIG.webhookSecret);
+        
+        if (!isValid) {
+          return res.status(400).send('Invalid signature');
+        }
+        
+        const event = JSON.parse(payload);
+        
+        switch (event.meta.event_name) {
+          case 'subscription_created':
+          case 'subscription_updated':
+            // Update user subscription in your database
+            await updateUserSubscription(event.data);
+            break;
+            
+          case 'subscription_cancelled':
+          case 'subscription_expired':
+            // Revoke user access
+            await revokeUserAccess(event.data);
+            break;
+        }
+        
+        res.status(200).send('OK');
+      });
+      */
+    </script>
   </body>
 </html>
