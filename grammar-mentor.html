@@ -522,502 +522,384 @@
 
     <script src="script.js" defer></script>
     <script>
-      // ========================================
-      // LEMON SQUEEZY CONFIGURATION
-      // ========================================
-      const LEMONSQUEEZY_CONFIG = {
-        // PHP Backend API endpoint
-        apiEndpoint: 'lemonsqueezy-api.php', // Update this to your actual path if different
-        
-        // Checkout URLs for different plans
-        checkoutUrls: {
-          monthly: 'https://grammar-mentor.lemonsqueezy.com/checkout/buy/cbb95cf4-1ecc-4032-a73c-79b6f771ed33',
-          yearly: 'https://grammar-mentor.lemonsqueezy.com/checkout/buy/fc3e92b7-331e-4af5-a2cd-4a12a5f5f33a',
-          twoyear: 'https://grammar-mentor.lemonsqueezy.com/checkout/buy/f2f898f3-5680-4656-8221-3f0e6936cf0b',
-          lifetime: 'https://grammar-mentor.lemonsqueezy.com/checkout/buy/2ab2920a-9841-417b-908e-f924e76252af'
-        },
-        
-        // Default checkout URL (yearly plan)
-        checkoutUrl: 'https://grammar-mentor.lemonsqueezy.com/checkout/buy/fc3e92b7-331e-4af5-a2cd-4a12a5f5f33a'
+  // ========================================
+  // LEMON SQUEEZY CONFIGURATION
+  // ========================================
+  const LEMONSQUEEZY_CONFIG = {
+    apiEndpoint: 'lemonsqueezy-api.php',
+    checkoutUrls: {
+      monthly: 'https://grammar-mentor.lemonsqueezy.com/checkout/buy/cbb95cf4-1ecc-4032-a73c-79b6f771ed33',
+      yearly: 'https://grammar-mentor.lemonsqueezy.com/checkout/buy/fc3e92b7-331e-4af5-a2cd-4a12a5f5f33a',
+      twoyear: 'https://grammar-mentor.lemonsqueezy.com/checkout/buy/f2f898f3-5680-4656-8221-3f0e6936cf0b',
+      lifetime: 'https://grammar-mentor.lemonsqueezy.com/checkout/buy/2ab2920a-9841-417b-908e-f924e76252af'
+    },
+    checkoutUrl: 'https://grammar-mentor.lemonsqueezy.com/checkout/buy/fc3e92b7-331e-4af5-a2cd-4a12a5f5f33a' // yearly default
+  };
+
+  // ========================================
+  // USER SESSION & SUBSCRIPTION MANAGEMENT
+  // ========================================
+  class SubscriptionManager {
+    constructor() {
+      this.user = null;
+      this.subscription = null;
+      this.dailyUsage = this.loadDailyUsage();
+      this.init();
+    }
+
+    init() {
+      this.loadSession();
+      this.updateUI();
+      this.attachEventListeners();
+
+      if (window.createLemonSqueezy) {
+        window.createLemonSqueezy();
+      }
+    }
+
+    loadSession() {
+      const sessionData = localStorage.getItem('grammar_mentor_session');
+      if (sessionData) {
+        try {
+          const session = JSON.parse(sessionData);
+          this.user = session.user;
+          this.subscription = session.subscription;
+        } catch (e) {
+          console.error('Failed to parse session data:', e);
+        }
+      }
+    }
+
+    saveSession() {
+      const sessionData = {
+        user: this.user,
+        subscription: this.subscription
       };
+      localStorage.setItem('grammar_mentor_session', JSON.stringify(sessionData));
+    }
 
-      // ========================================
-      // USER SESSION & SUBSCRIPTION MANAGEMENT
-      // ========================================
-      class SubscriptionManager {
-        constructor() {
-          this.user = null;
-          this.subscription = null;
-          this.dailyUsage = this.loadDailyUsage();
-          this.init();
+    loadDailyUsage() {
+      const today = new Date().toDateString();
+      const usageData = localStorage.getItem('grammar_mentor_daily_usage');
+
+      if (usageData) {
+        try {
+          const usage = JSON.parse(usageData);
+          if (usage.date !== today) return { date: today, aiExplanations: 0 };
+          return usage;
+        } catch (e) {
+          console.error('Failed to parse usage data:', e);
         }
+      }
+      return { date: today, aiExplanations: 0 };
+    }
 
-        init() {
-          // Check for existing session
-          this.loadSession();
-          this.updateUI();
-          this.attachEventListeners();
-          
-          // Initialize Lemon Squeezy
-          if (window.createLemonSqueezy) {
-            window.createLemonSqueezy();
-          }
-        }
+    saveDailyUsage() {
+      localStorage.setItem('grammar_mentor_daily_usage', JSON.stringify(this.dailyUsage));
+    }
 
-        loadSession() {
-          // Load user session from localStorage
-          const sessionData = localStorage.getItem('grammar_mentor_session');
-          if (sessionData) {
-            try {
-              const session = JSON.parse(sessionData);
-              this.user = session.user;
-              this.subscription = session.subscription;
-            } catch (e) {
-              console.error('Failed to parse session data:', e);
-            }
-          }
-        }
+    incrementAIExplanationUsage() {
+      const today = new Date().toDateString();
+      if (this.dailyUsage.date !== today) {
+        this.dailyUsage = { date: today, aiExplanations: 0 };
+      }
+      this.dailyUsage.aiExplanations++;
+      this.saveDailyUsage();
+    }
 
-        saveSession() {
-          // Save user session to localStorage
-          const sessionData = {
-            user: this.user,
-            subscription: this.subscription
+    hasProAccess() {
+      return this.subscription &&
+             this.subscription.status === 'active' &&
+             (this.subscription.plan === 'pro' || this.subscription.plan === 'lifetime');
+    }
+
+    canUseAIExplanation() {
+      if (this.hasProAccess()) return { allowed: true };
+
+      const limit = 5;
+      const used = this.dailyUsage.aiExplanations;
+
+      if (used >= limit) {
+        return {
+          allowed: false,
+          message: `You've reached your daily limit of ${limit} AI explanations. Upgrade to Pro for unlimited access.`,
+          remaining: 0
+        };
+      }
+      return { allowed: true, remaining: limit - used };
+    }
+
+    canUseAdvancedStyle() {
+      return this.hasProAccess();
+    }
+
+    canAddSnippet(currentCount) {
+      if (this.hasProAccess()) return { allowed: true };
+
+      const limit = 10;
+      if (currentCount >= limit) {
+        return {
+          allowed: false,
+          message: `Free plan is limited to ${limit} snippets. Upgrade to Pro for unlimited storage.`
+        };
+      }
+      return { allowed: true, remaining: limit - currentCount };
+    }
+
+    checkDocumentLength(wordCount) {
+      if (this.hasProAccess()) return { allowed: true };
+
+      const limit = 10000;
+      if (wordCount > limit) {
+        return {
+          allowed: false,
+          message: `Document exceeds the ${limit.toLocaleString()} word limit for free accounts. Upgrade to Pro for unlimited document length.`
+        };
+      }
+      return { allowed: true };
+    }
+
+    async login(email) {
+      try {
+        const response = await this.loginWithEmail(email);
+
+        if (response.success && response.valid) {
+          this.user = {
+            email: response.email,
+            name: response.name || email.split('@')[0]
           };
-          localStorage.setItem('grammar_mentor_session', JSON.stringify(sessionData));
-        }
 
-        loadDailyUsage() {
-          const today = new Date().toDateString();
-          const usageData = localStorage.getItem('grammar_mentor_daily_usage');
-          
-          if (usageData) {
-            try {
-              const usage = JSON.parse(usageData);
-              // Reset if it's a new day
-              if (usage.date !== today) {
-                return { date: today, aiExplanations: 0 };
-              }
-              return usage;
-            } catch (e) {
-              console.error('Failed to parse usage data:', e);
-            }
-          }
-          
-          return { date: today, aiExplanations: 0 };
-        }
-
-        saveDailyUsage() {
-          localStorage.setItem('grammar_mentor_daily_usage', JSON.stringify(this.dailyUsage));
-        }
-
-        incrementAIExplanationUsage() {
-          const today = new Date().toDateString();
-          if (this.dailyUsage.date !== today) {
-            this.dailyUsage = { date: today, aiExplanations: 0 };
-          }
-          this.dailyUsage.aiExplanations++;
-          this.saveDailyUsage();
-        }
-
-        hasProAccess() {
-          return this.subscription && 
-                 this.subscription.status === 'active' && 
-                 (this.subscription.plan === 'pro' || this.subscription.plan === 'lifetime');
-        }
-
-        canUseAIExplanation() {
-          if (this.hasProAccess()) {
-            return { allowed: true };
-          }
-          
-          const limit = 5;
-          const used = this.dailyUsage.aiExplanations;
-          
-          if (used >= limit) {
-            return { 
-              allowed: false, 
-              message: `You've reached your daily limit of ${limit} AI explanations. Upgrade to Pro for unlimited access.`,
-              remaining: 0
-            };
-          }
-          
-          return { 
-            allowed: true, 
-            remaining: limit - used 
+          this.subscription = {
+            status: response.status || 'active',
+            plan: response.plan || 'pro',           // ← hier entscheidet dein Backend
+            validUntil: response.validUntil
           };
-        }
 
-        canUseAdvancedStyle() {
-          return this.hasProAccess();
-        }
-
-        canAddSnippet(currentCount) {
-          if (this.hasProAccess()) {
-            return { allowed: true };
-          }
-          
-          const limit = 10;
-          if (currentCount >= limit) {
-            return { 
-              allowed: false, 
-              message: `Free plan is limited to ${limit} snippets. Upgrade to Pro for unlimited storage.`
-            };
-          }
-          
-          return { allowed: true, remaining: limit - currentCount };
-        }
-
-        checkDocumentLength(wordCount) {
-          if (this.hasProAccess()) {
-            return { allowed: true };
-          }
-          
-          const limit = 10000;
-          if (wordCount > limit) {
-            return { 
-              allowed: false, 
-              message: `Document exceeds the ${limit.toLocaleString()} word limit for free accounts. Upgrade to Pro for unlimited document length.`
-            };
-          }
-          
-          return { allowed: true };
-        }
-
-        async login(email, licenseKey) {
-          // In production, this would call your backend API
-          // which validates the license key with Lemon Squeezy
-          try {
-            // Placeholder: Replace with actual API call
-            const response = await this.validateLicense(email, licenseKey);
-            
-            if (response.valid) {
-              this.user = {
-                email: response.email,
-                name: response.name || email.split('@')[0]
-              };
-              
-              this.subscription = {
-                status: response.status,
-                plan: response.plan,
-                validUntil: response.validUntil
-              };
-              
-              this.saveSession();
-              this.updateUI();
-              return { success: true };
-            } else {
-              return { success: false, error: 'Invalid license key' };
-            }
-          } catch (error) {
-            console.error('Login error:', error);
-            return { success: false, error: 'Login failed. Please try again.' };
-          }
-        }
-
-        async validateLicense(email, licenseKey) {
-          // Call PHP backend to validate license
-          try {
-            // Simulate API call
-            const response = await fetch(LEMONSQUEEZY_CONFIG.apiEndpoint + '?action=validate_license', {
-              method: 'POST',
-              headers: {
-                'Content-Type': 'application/json'
-              },
-              body: JSON.stringify({
-                email: email,
-                licenseKey: licenseKey
-              })
-            });
-            
-            const data = await response.json();
-            
-            if (!data.success) {
-              return {
-                valid: false,
-                error: data.error || 'Validation failed'
-              };
-            }
-            
-            return data;
-          } catch (error) {
-            console.error('License validation error:', error);
-            return {
-              valid: false,
-              error: 'Unable to validate license. Please check your connection.'
-            };
-          }
-        }
-
-        logout() {
-          this.user = null;
-          this.subscription = null;
-          localStorage.removeItem('grammar_mentor_session');
+          this.saveSession();
           this.updateUI();
+          alert('Willkommen! Du hast jetzt Zugriff auf alle Funktionen.');
+          return { success: true };
+        } else {
+          alert(response.error || 'Login fehlgeschlagen. Bitte versuche es erneut.');
+          return { success: false, error: response.error };
+        }
+      } catch (error) {
+        console.error('Login error:', error);
+        alert('Login fehlgeschlagen. Bitte überprüfe deine Verbindung.');
+        return { success: false, error: 'Login failed' };
+      }
+    }
+
+    async loginWithEmail(email) {
+      try {
+        const res = await fetch(LEMONSQUEEZY_CONFIG.apiEndpoint + '?action=login_with_email', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email })
+        });
+
+        const data = await res.json();
+
+        if (!data.success) {
+          return { valid: false, error: data.error || 'Login fehlgeschlagen' };
         }
 
-        updateUI() {
-          const authStatus = document.getElementById('authStatus');
-          
-          if (this.user && this.subscription) {
-            // Logged in
-            const planName = this.subscription.plan === 'lifetime' ? 'Lifetime' : 'Pro';
-            const initials = this.user.name.split(' ').map(n => n[0]).join('').toUpperCase();
-            
-            authStatus.innerHTML = `
-              <div class="auth-avatar">${initials}</div>
-              <div class="auth-info">
-                <div class="auth-name">${this.user.name}</div>
-                <div class="auth-plan">${planName} Plan</div>
-              </div>
-              <button class="auth-btn btn-logout" onclick="subscriptionManager.logout()">Logout</button>
-            `;
-          } else {
-            // Logged out
-            authStatus.innerHTML = `
-              <button class="auth-btn btn-login" onclick="openLoginModal()">Login</button>
-              <button class="auth-btn btn-login" onclick="openUpgradeModal()">Upgrade</button>
-            `;
+        return data;
+      } catch (err) {
+        console.error('Email login fetch error:', err);
+        return { valid: false, error: 'Verbindungsfehler' };
+      }
+    }
+
+    logout() {
+      this.user = null;
+      this.subscription = null;
+      localStorage.removeItem('grammar_mentor_session');
+      this.updateUI();
+    }
+
+    updateUI() {
+      const authStatus = document.getElementById('authStatus');
+
+      if (this.user && this.subscription) {
+        const planName = this.subscription.plan === 'lifetime' ? 'Lifetime' : 'Pro';
+        const initials = this.user.name.split(' ').map(n => n[0]).join('').toUpperCase() || '?';
+
+        authStatus.innerHTML = `
+          <div class="auth-avatar">${initials}</div>
+          <div class="auth-info">
+            <div class="auth-name">${this.user.name}</div>
+            <div class="auth-plan">${planName} Plan</div>
+          </div>
+          <button class="auth-btn btn-logout" onclick="subscriptionManager.logout()">Logout</button>
+        `;
+      } else {
+        authStatus.innerHTML = `
+          <button class="auth-btn btn-login" onclick="openLoginModal()">Login</button>
+          <button class="auth-btn btn-login" onclick="openUpgradeModal()">Upgrade</button>
+        `;
+      }
+
+      this.updateFeatureAccess();
+    }
+
+    updateFeatureAccess() {
+      const isPro = this.hasProAccess();
+
+      // Style paywall
+      const styleSelect = document.getElementById('styleSelect');
+      const stylePaywall = document.getElementById('stylePaywall');
+      const styleProBadge = document.getElementById('styleProBadge');
+
+      if (!isPro) {
+        styleProBadge.style.display = 'inline-flex';
+        styleSelect.addEventListener('change', (e) => {
+          if (e.target.options[e.target.selectedIndex].classList.contains('pro-option')) {
+            e.preventDefault();
+            stylePaywall.style.display = 'flex';
+            styleSelect.value = 'neutral';
           }
-          
-          // Update feature access
-          this.updateFeatureAccess();
-        }
+        });
+      } else {
+        styleProBadge.style.display = 'none';
+        stylePaywall.style.display = 'none';
+      }
 
-        updateFeatureAccess() {
-          const isPro = this.hasProAccess();
-          
-          // Style selector paywall
-          const styleSelect = document.getElementById('styleSelect');
-          const stylePaywall = document.getElementById('stylePaywall');
-          const styleProBadge = document.getElementById('styleProBadge');
-          
-          if (!isPro) {
-            styleProBadge.style.display = 'inline-flex';
-            // Show paywall when trying to select advanced styles
-            styleSelect.addEventListener('change', (e) => {
-              if (e.target.options[e.target.selectedIndex].classList.contains('pro-option')) {
-                e.preventDefault();
-                stylePaywall.style.display = 'flex';
-                styleSelect.value = 'neutral';
-              }
+      // Snippet paywall
+      const snippetProBadge = document.getElementById('snippetProBadge');
+      const snippetPaywall = document.getElementById('snippetPaywall');
+
+      if (!isPro) {
+        snippetProBadge.style.display = 'inline-flex';
+      } else {
+        snippetProBadge.style.display = 'none';
+        snippetPaywall.style.display = 'none';
+      }
+
+      this.updateSnippetCount();
+    }
+
+    updateSnippetCount() {
+      const snippetCount = document.getElementById('snippetCount');
+      const snippetList = document.getElementById('snippetList');
+      const count = snippetList ? snippetList.children.length : 0;
+      snippetCount.textContent = this.hasProAccess() ? `(${count}/∞)` : `(${count}/10)`;
+    }
+
+    attachEventListeners() {
+      const checkoutBtn = document.getElementById('checkoutBtn');
+      if (checkoutBtn) {
+        checkoutBtn.href = LEMONSQUEEZY_CONFIG.checkoutUrl;
+        checkoutBtn.addEventListener('click', (e) => {
+          if (typeof gtag !== 'undefined') {
+            gtag('event', 'begin_checkout', {
+              items: [{ item_name: 'Grammar Mentor Pro', price: 72 }]
             });
-          } else {
-            styleProBadge.style.display = 'none';
-            stylePaywall.style.display = 'none';
-          }
-          
-          // Snippet storage
-          const snippetProBadge = document.getElementById('snippetProBadge');
-          const snippetPaywall = document.getElementById('snippetPaywall');
-          
-          if (!isPro) {
-            snippetProBadge.style.display = 'inline-flex';
-          } else {
-            snippetProBadge.style.display = 'none';
-            snippetPaywall.style.display = 'none';
-          }
-          
-          // Update snippet count display
-          this.updateSnippetCount();
-        }
-
-        updateSnippetCount() {
-          const snippetCount = document.getElementById('snippetCount');
-          const snippetList = document.getElementById('snippetList');
-          const currentCount = snippetList ? snippetList.children.length : 0;
-          
-          if (this.hasProAccess()) {
-            snippetCount.textContent = `(${currentCount}/∞)`;
-          } else {
-            snippetCount.textContent = `(${currentCount}/10)`;
-          }
-        }
-
-        attachEventListeners() {
-          // Checkout button
-          const checkoutBtn = document.getElementById('checkoutBtn');
-          if (checkoutBtn) {
-            checkoutBtn.href = LEMONSQUEEZY_CONFIG.checkoutUrl;
-            checkoutBtn.addEventListener('click', (e) => {
-              // Track checkout event
-              if (typeof gtag !== 'undefined') {
-                gtag('event', 'begin_checkout', {
-                  items: [{
-                    item_name: 'Grammar Mentor Pro',
-                    price: 72
-                  }]
-                });
-              }
-            });
-          }
-          
-          // Load configuration from backend on init
-          this.loadBackendConfig();
-        }
-        
-        async loadBackendConfig() {
-          try {
-            const response = await fetch(LEMONSQUEEZY_CONFIG.apiEndpoint + '?action=get_config');
-            const data = await response.json();
-            
-            if (data.success) {
-              // Update checkout URLs if needed
-              LEMONSQUEEZY_CONFIG.checkoutUrls = data.checkoutUrls;
-            }
-          } catch (error) {
-            console.error('Failed to load backend config:', error);
-          }
-        }
-
-        showUpgradePrompt(feature) {
-          openUpgradeModal();
-        }
-      }
-
-      // Initialize subscription manager
-      const subscriptionManager = new SubscriptionManager();
-
-      // ========================================
-      // MODAL FUNCTIONS
-      // ========================================
-      function openUpgradeModal() {
-        document.getElementById('upgradeModal').style.display = 'flex';
-      }
-
-      function closeUpgradeModal() {
-        document.getElementById('upgradeModal').style.display = 'none';
-      }
-
-      function openLoginModal() {
-        // Simple prompt for now - you can replace with a proper modal
-        const email = prompt('Enter your email address:');
-        if (!email) return;
-        
-        const licenseKey = prompt('Enter your license key:');
-        if (!licenseKey) return;
-        
-        subscriptionManager.login(email, licenseKey).then(result => {
-          if (result.success) {
-            alert('Welcome back! You now have access to all Pro features.');
-          } else {
-            alert(result.error || 'Login failed. Please check your credentials.');
           }
         });
       }
 
-      function closeRuleModal() {
-        document.getElementById('ruleModal').style.display = 'none';
+      this.loadBackendConfig();
+    }
+
+    async loadBackendConfig() {
+      try {
+        const res = await fetch(LEMONSQUEEZY_CONFIG.apiEndpoint + '?action=get_config');
+        const data = await res.json();
+        if (data.success) {
+          LEMONSQUEEZY_CONFIG.checkoutUrls = data.checkoutUrls;
+        }
+      } catch (err) {
+        console.error('Failed to load config:', err);
       }
+    }
 
-      // ========================================
-      // FEATURE GATING EXAMPLES
-      // ========================================
-      
-      // Example: Gate AI explanation feature
-      function requestAIExplanation() {
-        const canUse = subscriptionManager.canUseAIExplanation();
-        
-        if (!canUse.allowed) {
-          // Show warning and prompt upgrade
-          const warningDiv = document.getElementById('usageLimitWarning');
-          warningDiv.style.display = 'block';
-          warningDiv.querySelector('strong').textContent = '⚠️ ' + canUse.message;
-          
-          setTimeout(() => {
-            openUpgradeModal();
-          }, 1000);
-          
-          return false;
-        }
-        
-        // Increment usage for free users
-        if (!subscriptionManager.hasProAccess()) {
-          subscriptionManager.incrementAIExplanationUsage();
-          
-          // Show remaining count
-          if (canUse.remaining !== undefined && canUse.remaining <= 2) {
-            const warningDiv = document.getElementById('usageLimitWarning');
-            warningDiv.style.display = 'block';
-            warningDiv.querySelector('strong').textContent = `ℹ️ ${canUse.remaining} AI explanations remaining today.`;
-          }
-        }
-        
-        return true;
+    showUpgradePrompt() {
+      openUpgradeModal();
+    }
+  }
+
+  const subscriptionManager = new SubscriptionManager();
+
+  // ========================================
+  // MODAL FUNCTIONS
+  // ========================================
+  function openUpgradeModal() {
+    document.getElementById('upgradeModal').style.display = 'flex';
+  }
+
+  function closeUpgradeModal() {
+    document.getElementById('upgradeModal').style.display = 'none';
+  }
+
+  function openLoginModal() {
+    const email = prompt('Bitte gib deine E-Mail-Adresse ein:');
+    if (!email || !email.includes('@')) {
+      alert('Bitte eine gültige E-Mail-Adresse eingeben.');
+      return;
+    }
+
+    subscriptionManager.login(email).then(result => {
+      if (!result.success) {
+        // Fehler bereits im login() gezeigt
       }
+    });
+  }
 
-      // Example: Gate snippet creation
-      function canAddNewSnippet() {
-        const snippetList = document.getElementById('snippetList');
-        const currentCount = snippetList ? snippetList.children.length : 0;
-        const canAdd = subscriptionManager.canAddSnippet(currentCount);
-        
-        if (!canAdd.allowed) {
-          const snippetPaywall = document.getElementById('snippetPaywall');
-          snippetPaywall.style.display = 'flex';
-          return false;
-        }
-        
-        return true;
+  function closeRuleModal() {
+    document.getElementById('ruleModal').style.display = 'none';
+  }
+
+  // ========================================
+  // FEATURE GATING
+  // ========================================
+  function requestAIExplanation() {
+    const canUse = subscriptionManager.canUseAIExplanation();
+    if (!canUse.allowed) {
+      const warning = document.getElementById('usageLimitWarning');
+      warning.style.display = 'block';
+      warning.querySelector('strong').textContent = '⚠️ ' + canUse.message;
+      setTimeout(() => openUpgradeModal(), 1200);
+      return false;
+    }
+
+    if (!subscriptionManager.hasProAccess()) {
+      subscriptionManager.incrementAIExplanationUsage();
+      if (canUse.remaining !== undefined && canUse.remaining <= 2) {
+        const warning = document.getElementById('usageLimitWarning');
+        warning.style.display = 'block';
+        warning.querySelector('strong').textContent = `ℹ️ Noch ${canUse.remaining} AI-Erklärungen heute übrig.`;
       }
+    }
+    return true;
+  }
 
-      // Example: Gate document length check
-      function checkDocumentLengthLimit(wordCount) {
-        const check = subscriptionManager.checkDocumentLength(wordCount);
-        
-        if (!check.allowed) {
-          alert(check.message);
-          openUpgradeModal();
-          return false;
-        }
-        
-        return true;
-      }
+  function canAddNewSnippet() {
+    const list = document.getElementById('snippetList');
+    const count = list ? list.children.length : 0;
+    const can = subscriptionManager.canAddSnippet(count);
+    if (!can.allowed) {
+      document.getElementById('snippetPaywall').style.display = 'flex';
+      return false;
+    }
+    return true;
+  }
 
-      // Close modals when clicking outside
-      document.addEventListener('click', (e) => {
-        if (e.target.classList.contains('modal-overlay')) {
-          e.target.style.display = 'none';
-        }
-      });
+  function checkDocumentLengthLimit(wordCount) {
+    const check = subscriptionManager.checkDocumentLength(wordCount);
+    if (!check.allowed) {
+      alert(check.message);
+      openUpgradeModal();
+      return false;
+    }
+    return true;
+  }
 
-      // ========================================
-      // LEMON SQUEEZY WEBHOOK HANDLER
-      // ========================================
-      // This would be implemented on your backend server
-      /*
-      Example webhook handler (Node.js/Express):
-      
-      app.post('/api/webhooks/lemonsqueezy', express.raw({type: 'application/json'}), async (req, res) => {
-        const signature = req.headers['x-signature'];
-        const payload = req.body;
-        
-        // Verify webhook signature
-        const isValid = verifyWebhookSignature(payload, signature, LEMONSQUEEZY_CONFIG.webhookSecret);
-        
-        if (!isValid) {
-          return res.status(400).send('Invalid signature');
-        }
-        
-        const event = JSON.parse(payload);
-        
-        switch (event.meta.event_name) {
-          case 'subscription_created':
-          case 'subscription_updated':
-            // Update user subscription in your database
-            await updateUserSubscription(event.data);
-            break;
-            
-          case 'subscription_cancelled':
-          case 'subscription_expired':
-            // Revoke user access
-            await revokeUserAccess(event.data);
-            break;
-        }
-        
-        res.status(200).send('OK');
-      });
-      */
-    </script>
+  document.addEventListener('click', e => {
+    if (e.target.classList.contains('modal-overlay')) {
+      e.target.style.display = 'none';
+    }
+  });
+</script>
   </body>
 </html>
