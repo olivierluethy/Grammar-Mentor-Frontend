@@ -528,12 +528,11 @@
   const LEMONSQUEEZY_CONFIG = {
     apiEndpoint: 'lemonsqueezy-api.php',
     checkoutUrls: {
-      monthly: 'https://grammar-mentor.lemonsqueezy.com/checkout/buy/cbb95cf4-1ecc-4032-a73c-79b6f771ed33',
-      yearly: 'https://grammar-mentor.lemonsqueezy.com/checkout/buy/fc3e92b7-331e-4af5-a2cd-4a12a5f5f33a',
-      twoyear: 'https://grammar-mentor.lemonsqueezy.com/checkout/buy/f2f898f3-5680-4656-8221-3f0e6936cf0b',
-      lifetime: 'https://grammar-mentor.lemonsqueezy.com/checkout/buy/2ab2920a-9841-417b-908e-f924e76252af'
+      monthly: 'https://grammar-mentor.lemonsqueezy.com/checkout/buy/f1ea24e6-4964-46a0-b442-3a659f76ed5a',
+      yearly: 'https://grammar-mentor.lemonsqueezy.com/checkout/buy/4f3f8322-6efa-41d6-b884-8176cbcac195',
+      lifetime: 'https://grammar-mentor.lemonsqueezy.com/checkout/buy/d9b6bd65-57d6-47eb-851e-47278b468439'
     },
-    checkoutUrl: 'https://grammar-mentor.lemonsqueezy.com/checkout/buy/fc3e92b7-331e-4af5-a2cd-4a12a5f5f33a' // yearly default
+    checkoutUrl: 'https://grammar-mentor.lemonsqueezy.com/checkout/buy/4f3f8322-6efa-41d6-b884-8176cbcac195' // yearly default
   };
 
   // ========================================
@@ -677,15 +676,15 @@
 
           this.saveSession();
           this.updateUI();
-          alert('Willkommen! Du hast jetzt Zugriff auf alle Funktionen.');
+          alert('Welcome! You now have access to all features.');
           return { success: true };
         } else {
-          alert(response.error || 'Login fehlgeschlagen. Bitte versuche es erneut.');
+          alert(response.error || 'Login failed. Please try again.');
           return { success: false, error: response.error };
         }
       } catch (error) {
         console.error('Login error:', error);
-        alert('Login fehlgeschlagen. Bitte überprüfe deine Verbindung.');
+        alert('Login failed. Please check your connection.');
         return { success: false, error: 'Login failed' };
       }
     }
@@ -701,13 +700,13 @@
         const data = await res.json();
 
         if (!data.success) {
-          return { valid: false, error: data.error || 'Login fehlgeschlagen' };
+          return { valid: false, error: data.error || 'Login failed' };
         }
 
         return data;
       } catch (err) {
         console.error('Email login fetch error:', err);
-        return { valid: false, error: 'Verbindungsfehler' };
+        return { valid: false, error: 'connection error' };
       }
     }
 
@@ -833,9 +832,9 @@
   }
 
   function openLoginModal() {
-    const email = prompt('Bitte gib deine E-Mail-Adresse ein:');
+    const email = prompt('Please enter your email address:');
     if (!email || !email.includes('@')) {
-      alert('Bitte eine gültige E-Mail-Adresse eingeben.');
+      alert('Please enter a valid email address.');
       return;
     }
 
@@ -868,7 +867,7 @@
       if (canUse.remaining !== undefined && canUse.remaining <= 2) {
         const warning = document.getElementById('usageLimitWarning');
         warning.style.display = 'block';
-        warning.querySelector('strong').textContent = `ℹ️ Noch ${canUse.remaining} AI-Erklärungen heute übrig.`;
+        warning.querySelector('strong').textContent = `ℹ️ Only ${canUse.remaining} AI explanations left today.`;
       }
     }
     return true;
