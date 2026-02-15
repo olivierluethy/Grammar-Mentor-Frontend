@@ -877,6 +877,16 @@
                             this.saveSession();
                             this.updateUI();
                             alert("Welcome! You now have access to all features.");
+
+                            // ── HIER HINZUFÜGEN ──
+                            gtag("event", "login_success", {
+                                event_category: "Auth",
+                                event_label: "Successful Login",
+                                method: "email_prompt", // weil du prompt() nutzt
+                                user_plan: this.subscription?.plan || "unknown",
+                                user_email_domain: this.user.email.split("@")[1] || "unknown", // z. B. gmail.com, outlook.com
+                                value: 1,
+                            });
                             return { success: true };
                         } else {
                             alert(response.error || "Login failed. Please try again.");
@@ -930,21 +940,62 @@
                                 .toUpperCase() || "?";
 
                         authStatus.innerHTML = `
-          <div class="auth-avatar">${initials}</div>
-          <div class="auth-info">
-            <div class="auth-name">${this.user.name}</div>
-            <div class="auth-plan">${planName} Plan</div>
-          </div>
-          <button class="auth-btn btn-logout" onclick="subscriptionManager.logout()">Logout</button>
-        `;
+  <div class="auth-avatar">${initials}</div>
+  <div class="auth-info">
+    <div class="auth-name">${this.user.name}</div>
+    <div class="auth-plan">${planName} Plan</div>
+  </div>
+  <button 
+    class="auth-btn btn-logout" 
+    onclick="
+      gtag('event', 'logout', {
+        event_category: 'Auth',
+        event_label: 'User Logout',
+        user_plan: '${planName.toLowerCase()}'
+      });
+      subscriptionManager.logout();
+    "
+  >
+    Logout
+  </button>
+`;
                     } else {
                         authStatus.innerHTML = `
-          <button class="auth-btn btn-login" onclick="openLoginModal()">Login</button>
-          <button class="auth-btn btn-login" onclick="openUpgradeModal()">Upgrade</button>
-        `;
+    <button 
+      class="auth-btn btn-login" 
+      onclick="
+        gtag('event', 'login_attempt', {
+          event_category: 'Auth',
+          event_label: 'Login Button Clicked'
+        });
+        openLoginModal();
+      "
+    >
+      Login
+    </button>
+    <button 
+      class="auth-btn btn-login" 
+      onclick="
+        gtag('event', 'upgrade_click', {
+          event_category: 'Upgrade',
+          event_label: 'Upgrade from Not-Logged-In State',
+          value: 1
+        });
+        openUpgradeModal();
+      "
+    >
+      Upgrade
+    </button>
+  `;
                     }
 
                     this.updateFeatureAccess();
+                    // Ganz am Ende von updateUI(), nach dem Setzen von innerHTML
+                    gtag("event", "auth_status_view", {
+                        event_category: "Auth",
+                        event_label: this.user ? "Logged In" : "Not Logged In",
+                        user_plan: this.user ? this.subscription?.plan || "unknown" : "guest",
+                    });
                 }
 
                 updateFeatureAccess() {
@@ -1035,18 +1086,44 @@
             // ========================================
             function openUpgradeModal() {
                 document.getElementById("upgradeModal").style.display = "flex";
+
+                gtag("event", "upgrade_modal_open", {
+                    event_category: "Modal",
+                    event_label: "Upgrade Modal Opened",
+                    value: 1,
+                });
             }
 
             function closeUpgradeModal() {
                 document.getElementById("upgradeModal").style.display = "none";
+
+                gtag("event", "upgrade_modal_close", {
+                    event_category: "Modal",
+                    event_label: "Upgrade Modal Closed",
+                    value: 1,
+                });
             }
 
             function openLoginModal() {
+                gtag("event", "login_modal_open", {
+                    event_category: "Modal",
+                    event_label: "Login Modal / Prompt Opened",
+                    value: 1,
+                });
+
                 const email = prompt("Please enter your email address:");
                 if (!email || !email.includes("@")) {
                     alert("Please enter a valid email address.");
                     return;
                 }
+
+                // Direkt vor dem Login-Versuch → sehr starkes Intent-Signal
+                gtag("event", "login_attempt", {
+                    event_category: "Auth",
+                    event_label: "Login Attempt Started",
+                    method: "email_prompt",
+                    value: 1,
+                });
 
                 subscriptionManager.login(email).then((result) => {
                     if (!result.success) {
@@ -1057,6 +1134,12 @@
 
             function closeRuleModal() {
                 document.getElementById("ruleModal").style.display = "none";
+
+                gtag("event", "rule_modal_close", {
+                    event_category: "Modal",
+                    event_label: "Grammar Rule Modal Closed",
+                    value: 1,
+                });
             }
 
             // ========================================
