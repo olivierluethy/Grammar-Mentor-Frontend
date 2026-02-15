@@ -42,149 +42,160 @@ const saveSnippetBtn = document.getElementById("saveSnippetBtn");
 // ========================================
 
 textEditor.addEventListener("scroll", () => {
-  highlightLayer.scrollTop = textEditor.scrollTop;
-  highlightLayer.scrollLeft = textEditor.scrollLeft;
+    highlightLayer.scrollTop = textEditor.scrollTop;
+    highlightLayer.scrollLeft = textEditor.scrollLeft;
 });
 
 textEditor.addEventListener("input", () => {
-  updateWordCount();
+    updateWordCount();
 });
 
 checkBtn.addEventListener("click", async () => {
-  const text = textEditor.value.trim();
-  if (!text) {
-    alert("Please enter some text to check.");
-    return;
-  }
-  await checkGrammar(text);
+    const text = textEditor.value.trim();
+    if (!text) {
+        alert("Please enter some text to check.");
+        return;
+    }
+    await checkGrammar(text);
 });
 
 acceptAllBtn.addEventListener("click", () => {
-  acceptAllCorrections();
+    acceptAllCorrections();
 });
 
 clearBtn.addEventListener("click", () => {
-  textEditor.value = "";
-  corrections = [];
-  fixedCount = 0;
-  renderHighlights();
-  renderAdvicePanel();
-  updateStats();
-  statsSection.style.display = "none";
-  acceptAllBtn.style.display = "none";
+    textEditor.value = "";
+    corrections = [];
+    fixedCount = 0;
+    renderHighlights();
+    renderAdvicePanel();
+    updateStats();
+    statsSection.style.display = "none";
+    acceptAllBtn.style.display = "none";
 });
 
 pasteBtn.addEventListener("click", async () => {
-  try {
-    const text = await navigator.clipboard.readText();
-    // Hängt den Text einfach hinten an
-    textEditor.value += text;
-  } catch (err) {
-    console.error("Fehler beim Lesen der Zwischenablage: ", err);
-  }
+    try {
+        const text = await navigator.clipboard.readText();
+        // Hängt den Text einfach hinten an
+        textEditor.value += text;
+    } catch (err) {
+        console.error("Fehler beim Lesen der Zwischenablage: ", err);
+    }
 });
 
 copyBtn.addEventListener("click", async () => {
-  try {
-    // Den aktuellen Wert des Texteditors nehmen
-    const textToCopy = textEditor.value;
+    try {
+        // Den aktuellen Wert des Texteditors nehmen
+        const textToCopy = textEditor.value;
 
-    // In die Zwischenablage schreiben
-    await navigator.clipboard.writeText(textToCopy);
-  } catch (err) {
-    console.error("Fehler beim Kopieren: ", err);
-  }
+        // In die Zwischenablage schreiben
+        await navigator.clipboard.writeText(textToCopy);
+    } catch (err) {
+        console.error("Fehler beim Kopieren: ", err);
+    }
 });
 
 // Snippet management
 toggleSnippets.addEventListener("click", () => {
-  snippetContainer.style.display =
-    snippetContainer.style.display === "none" ? "block" : "none";
+    snippetContainer.style.display = snippetContainer.style.display === "none" ? "block" : "none";
 });
 
 saveSnippetBtn.addEventListener("click", () => {
-  const text = snippetInput.value.trim();
-  if (text) {
-    snippets.push(text);
-    localStorage.setItem("grammarSnippets", JSON.stringify(snippets));
-    snippetInput.value = "";
-    renderSnippets();
-  }
+    const text = snippetInput.value.trim();
+    if (text) {
+        snippets.push(text);
+        localStorage.setItem("grammarSnippets", JSON.stringify(snippets));
+        snippetInput.value = "";
+        renderSnippets();
+    }
 });
 
 // Close modal on background click
 ruleModal.addEventListener("click", (e) => {
-  if (e.target === ruleModal) {
-    closeRuleModal();
-  }
+    if (e.target === ruleModal) {
+        closeRuleModal();
+    }
 });
 
 // ========================================
 // MAIN GRAMMAR CHECKING FUNCTION
 // ========================================
 async function checkGrammar(text) {
-  checkBtn.disabled = true;
-  checkBtn.textContent = "Checking...";
-  acceptAllBtn.style.display = "none";
-  advicePanel.innerHTML = `
+    checkBtn.disabled = true;
+    checkBtn.textContent = "Checking...";
+    acceptAllBtn.style.display = "none";
+    advicePanel.innerHTML = `
                 <div class="loading">
                     <div class="spinner"></div>
                     <p>Analyzing your text...</p>
                 </div>
             `;
 
-  try {
-    const response = await fetch(API_ENDPOINT, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        text: text,
-        language: languageSelect.value,
-        style: styleSelect.value,
-        tone: toneSelect.value,
-      }),
-    });
+    try {
+        const response = await fetch(API_ENDPOINT, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                text: text,
+                language: languageSelect.value,
+                style: styleSelect.value,
+                tone: toneSelect.value,
+            }),
+        });
 
-    if (!response.ok) {
-      throw new Error(`API request failed with status ${response.status}`);
-    }
+        if (!response.ok) {
+            throw new Error(`API request failed with status ${response.status}`);
+        }
 
-    const data = await response.json();
+        const data = await response.json();
 
-    if (data.error) {
-      throw new Error(data.error);
-    }
+        if (data.error) {
+            throw new Error(data.error);
+        }
 
-    corrections = data.corrections || [];
-    fixedCount = 0;
+        corrections = data.corrections || [];
+        fixedCount = 0;
 
-    // Update detected language
-    if (data.detected_language) {
-      detectedLang.textContent = data.detected_language.toUpperCase();
-    }
+        // Update detected language
+        if (data.detected_language) {
+            detectedLang.textContent = data.detected_language.toUpperCase();
+        }
 
-    renderHighlights();
-    renderAdvicePanel();
-    updateStats();
-    statsSection.style.display = "flex";
+        renderHighlights();
+        renderAdvicePanel();
+        updateStats();
+        statsSection.style.display = "flex";
 
-    if (corrections.length > 0) {
-      acceptAllBtn.style.display = "block";
-    }
-  } catch (error) {
-    console.error("Error:", error);
-    advicePanel.innerHTML = `
+        if (corrections.length > 0) {
+            acceptAllBtn.style.display = "block";
+        }
+
+        // ── ADD THIS RIGHT AFTER renderAdvicePanel() and updateStats() ──
+        const words = text.split(/\s+/).filter(Boolean).length;
+        const issues = corrections.filter((c) => !c.ignored).length;
+
+        gtag("event", "text_checked", {
+            event_category: "Tool",
+            event_label: "Grammar Check Completed",
+            value: words, // how much text was actually checked
+            issues_found: issues, // how many suggestions appeared
+            language: languageSelect.value || "auto",
+        });
+    } catch (error) {
+        console.error("Error:", error);
+        advicePanel.innerHTML = `
                     <div class="empty-state">
                         <p style="color: #ef4444; font-weight: 600;">Error: ${error.message}</p>
                         <p style="margin-top: 1rem; font-size: 0.9rem;">Please check your API configuration and try again.</p>
                     </div>
                 `;
-  } finally {
-    checkBtn.disabled = false;
-    checkBtn.textContent = "Check Grammar";
-  }
+    } finally {
+        checkBtn.disabled = false;
+        checkBtn.textContent = "Check Grammar";
+    }
 }
 
 // ========================================
@@ -192,50 +203,48 @@ async function checkGrammar(text) {
 // ========================================
 
 function renderHighlights() {
-  const text = textEditor.value;
+    const text = textEditor.value;
 
-  if (corrections.length === 0) {
-    highlightLayer.innerHTML = "";
-    return;
-  }
-
-  let htmlParts = [];
-  let currentPos = 0;
-
-  const sortedCorrections = [...corrections]
-    .filter((c) => !c.ignored)
-    .sort((a, b) => a.position - b.position);
-
-  sortedCorrections.forEach((correction) => {
-    const start = correction.position;
-    const end = start + correction.original.length;
-
-    if (currentPos < start) {
-      htmlParts.push(escapeHtml(text.substring(currentPos, start)));
+    if (corrections.length === 0) {
+        highlightLayer.innerHTML = "";
+        return;
     }
 
-    const actualIndex = corrections.indexOf(correction);
+    let htmlParts = [];
+    let currentPos = 0;
 
-    htmlParts.push(
-      `<span class="error-highlight" data-index="${actualIndex}" ` +
-        `onmouseover="onHighlightHover(${actualIndex})" ` +
-        `onmouseout="onHighlightLeave(${actualIndex})" ` +
-        `onclick="clickHighlight(${actualIndex})">${escapeHtml(correction.original)}</span>`,
-    );
+    const sortedCorrections = [...corrections].filter((c) => !c.ignored).sort((a, b) => a.position - b.position);
 
-    currentPos = end;
-  });
+    sortedCorrections.forEach((correction) => {
+        const start = correction.position;
+        const end = start + correction.original.length;
 
-  if (currentPos < text.length) {
-    htmlParts.push(escapeHtml(text.substring(currentPos)));
-  }
+        if (currentPos < start) {
+            htmlParts.push(escapeHtml(text.substring(currentPos, start)));
+        }
 
-  highlightLayer.innerHTML = htmlParts.join("");
+        const actualIndex = corrections.indexOf(correction);
+
+        htmlParts.push(
+            `<span class="error-highlight" data-index="${actualIndex}" ` +
+                `onmouseover="onHighlightHover(${actualIndex})" ` +
+                `onmouseout="onHighlightLeave(${actualIndex})" ` +
+                `onclick="clickHighlight(${actualIndex})">${escapeHtml(correction.original)}</span>`
+        );
+
+        currentPos = end;
+    });
+
+    if (currentPos < text.length) {
+        htmlParts.push(escapeHtml(text.substring(currentPos)));
+    }
+
+    highlightLayer.innerHTML = htmlParts.join("");
 }
 
 function renderAdvicePanel() {
-  if (corrections.length === 0) {
-    advicePanel.innerHTML = `
+    if (corrections.length === 0) {
+        advicePanel.innerHTML = `
                     <div class="empty-state">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
@@ -244,14 +253,14 @@ function renderAdvicePanel() {
                         <p style="margin-top: 0.5rem;">Your text looks great.</p>
                     </div>
                 `;
-    acceptAllBtn.style.display = "none";
-    return;
-  }
+        acceptAllBtn.style.display = "none";
+        return;
+    }
 
-  const activeCorrections = corrections.filter((c) => !c.ignored);
+    const activeCorrections = corrections.filter((c) => !c.ignored);
 
-  if (activeCorrections.length === 0) {
-    advicePanel.innerHTML = `
+    if (activeCorrections.length === 0) {
+        advicePanel.innerHTML = `
                     <div class="empty-state">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
@@ -259,14 +268,14 @@ function renderAdvicePanel() {
                         <p style="color: #10b981; font-weight: 600;">All suggestions handled!</p>
                     </div>
                 `;
-    acceptAllBtn.style.display = "none";
-    return;
-  }
+        acceptAllBtn.style.display = "none";
+        return;
+    }
 
-  advicePanel.innerHTML = activeCorrections
-    .map((correction) => {
-      const actualIndex = corrections.indexOf(correction);
-      return `
+    advicePanel.innerHTML = activeCorrections
+        .map((correction) => {
+            const actualIndex = corrections.indexOf(correction);
+            return `
                     <div class="advice-card" id="advice-${actualIndex}" 
                          data-index="${actualIndex}"
                          onmouseover="highlightText(${actualIndex})"
@@ -293,8 +302,8 @@ function renderAdvicePanel() {
                         </div>
                     </div>
                 `;
-    })
-    .join("");
+        })
+        .join("");
 }
 
 // ========================================
@@ -302,83 +311,88 @@ function renderAdvicePanel() {
 // ========================================
 
 function acceptCorrection(index) {
-  const correction = corrections[index];
-  if (!correction || correction.ignored) return;
+    const correction = corrections[index];
+    if (!correction || correction.ignored) return;
 
-  const text = textEditor.value;
-  const start = correction.position;
-  const end = start + correction.original.length;
-
-  const newText =
-    text.substring(0, start) + correction.correction + text.substring(end);
-  textEditor.value = newText;
-
-  const lengthDiff = correction.correction.length - correction.original.length;
-
-  corrections.forEach((c, i) => {
-    if (i !== index && c.position > start && !c.ignored) {
-      c.position += lengthDiff;
-    }
-  });
-
-  correction.ignored = true;
-  fixedCount++;
-
-  const card = document.getElementById(`advice-${index}`);
-  if (card) {
-    card.classList.add("dismissed");
-  }
-
-  setTimeout(() => {
-    renderHighlights();
-    renderAdvicePanel();
-    updateStats();
-  }, 300);
-}
-
-function acceptAllCorrections() {
-  if (corrections.length === 0) return;
-
-  const activeCorrections = corrections
-    .map((c, index) => ({ ...c, originalIndex: index }))
-    .filter((c) => !c.ignored)
-    .sort((a, b) => b.position - a.position);
-
-  if (activeCorrections.length === 0) return;
-
-  let text = textEditor.value;
-
-  activeCorrections.forEach((correction) => {
+    const text = textEditor.value;
     const start = correction.position;
     const end = start + correction.original.length;
 
-    text =
-      text.substring(0, start) + correction.correction + text.substring(end);
+    const newText = text.substring(0, start) + correction.correction + text.substring(end);
+    textEditor.value = newText;
 
-    corrections[correction.originalIndex].ignored = true;
+    const lengthDiff = correction.correction.length - correction.original.length;
+
+    corrections.forEach((c, i) => {
+        if (i !== index && c.position > start && !c.ignored) {
+            c.position += lengthDiff;
+        }
+    });
+
+    correction.ignored = true;
     fixedCount++;
-  });
 
-  textEditor.value = text;
+    gtag("event", "suggestion_accepted", {
+        event_category: "Tool",
+        event_label: "Single Suggestion Accepted",
+        value: 1,
+    });
 
-  renderHighlights();
-  renderAdvicePanel();
-  updateStats();
+    const card = document.getElementById(`advice-${index}`);
+    if (card) {
+        card.classList.add("dismissed");
+    }
+
+    setTimeout(() => {
+        renderHighlights();
+        renderAdvicePanel();
+        updateStats();
+    }, 300);
 }
 
-function ignoreCorrection(index) {
-  corrections[index].ignored = true;
+function acceptAllCorrections() {
+    if (corrections.length === 0) return;
 
-  const card = document.getElementById(`advice-${index}`);
-  if (card) {
-    card.classList.add("dismissed");
-  }
+    const activeCorrections = corrections
+        .map((c, index) => ({ ...c, originalIndex: index }))
+        .filter((c) => !c.ignored)
+        .sort((a, b) => b.position - a.position);
 
-  setTimeout(() => {
+    if (activeCorrections.length === 0) return;
+
+    let text = textEditor.value;
+
+    activeCorrections.forEach((correction) => {
+        const start = correction.position;
+        const end = start + correction.original.length;
+
+        text = text.substring(0, start) + correction.correction + text.substring(end);
+
+        corrections[correction.originalIndex].ignored = true;
+        fixedCount++;
+    });
+
+    textEditor.value = text;
+
     renderHighlights();
     renderAdvicePanel();
     updateStats();
-  }, 300);
+}
+
+function ignoreCorrection(index) {
+    corrections[index].ignored = true;
+
+    const card = document.getElementById(`advice-${index}`);
+    if (card) {
+        card.classList.add("dismissed");
+    }
+    gtag("event", "suggestion_ignored", { event_category: "Tool", event_label: "Suggestion Ignored" });
+
+    setTimeout(() => {
+        renderHighlights();
+        renderAdvicePanel();
+        updateStats();
+    }, 300);
 }
 
 // ========================================
@@ -390,23 +404,23 @@ function ignoreCorrection(index) {
  * → Scroll to and emphasize the corresponding advice card
  */
 function onHighlightHover(index) {
-  const card = document.getElementById(`advice-${index}`);
-  if (card) {
-    card.classList.add("emphasized");
-    // SCROLL THE ADVICE PANEL TO SHOW THIS CARD
-    card.scrollIntoView({
-      behavior: "smooth",
-      block: "center",
-      inline: "nearest",
-    });
-  }
+    const card = document.getElementById(`advice-${index}`);
+    if (card) {
+        card.classList.add("emphasized");
+        // SCROLL THE ADVICE PANEL TO SHOW THIS CARD
+        card.scrollIntoView({
+            behavior: "smooth",
+            block: "center",
+            inline: "nearest",
+        });
+    }
 }
 
 function onHighlightLeave(index) {
-  const card = document.getElementById(`advice-${index}`);
-  if (card) {
-    card.classList.remove("emphasized");
-  }
+    const card = document.getElementById(`advice-${index}`);
+    if (card) {
+        card.classList.remove("emphasized");
+    }
 }
 
 /**
@@ -414,34 +428,28 @@ function onHighlightLeave(index) {
  * → Emphasize the corresponding text highlight
  */
 function highlightText(index) {
-  const highlights = document.querySelectorAll(
-    `.error-highlight[data-index="${index}"]`,
-  );
-  highlights.forEach((h) => h.classList.add("emphasized"));
+    const highlights = document.querySelectorAll(`.error-highlight[data-index="${index}"]`);
+    highlights.forEach((h) => h.classList.add("emphasized"));
 }
 
 function unhighlightText(index) {
-  const highlights = document.querySelectorAll(
-    `.error-highlight[data-index="${index}"]`,
-  );
-  highlights.forEach((h) => h.classList.remove("emphasized"));
+    const highlights = document.querySelectorAll(`.error-highlight[data-index="${index}"]`);
+    highlights.forEach((h) => h.classList.remove("emphasized"));
 }
 
 function clickHighlight(index) {
-  const highlights = document.querySelectorAll(
-    `.error-highlight[data-index="${index}"]`,
-  );
-  highlights.forEach((h) => h.classList.add("clicked"));
-  setTimeout(() => {
-    highlights.forEach((h) => h.classList.remove("clicked"));
-  }, 500);
+    const highlights = document.querySelectorAll(`.error-highlight[data-index="${index}"]`);
+    highlights.forEach((h) => h.classList.add("clicked"));
+    setTimeout(() => {
+        highlights.forEach((h) => h.classList.remove("clicked"));
+    }, 500);
 
-  const card = document.getElementById(`advice-${index}`);
-  if (card) {
-    card.scrollIntoView({ behavior: "smooth", block: "center" });
-    card.classList.add("emphasized");
-    setTimeout(() => card.classList.remove("emphasized"), 1000);
-  }
+    const card = document.getElementById(`advice-${index}`);
+    if (card) {
+        card.scrollIntoView({ behavior: "smooth", block: "center" });
+        card.classList.add("emphasized");
+        setTimeout(() => card.classList.remove("emphasized"), 1000);
+    }
 }
 
 // ========================================
@@ -449,41 +457,40 @@ function clickHighlight(index) {
 // ========================================
 
 async function showGrammarRule(index) {
-  const correction = corrections[index];
-  if (!correction) return;
+    const correction = corrections[index];
+    if (!correction) return;
 
-  modalTitle.textContent =
-    "Grammar Rule: " + (correction.rule_name || "Grammar Error");
-  modalBody.innerHTML = `
+    modalTitle.textContent = "Grammar Rule: " + (correction.rule_name || "Grammar Error");
+    modalBody.innerHTML = `
                 <div class="loading">
                     <div class="spinner"></div>
                     <p>Loading detailed explanation...</p>
                 </div>
             `;
-  ruleModal.classList.add("active");
+    ruleModal.classList.add("active");
 
-  try {
-    // Request detailed rule from API
-    const response = await fetch(API_ENDPOINT, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        action: "get_rule",
-        correction: correction,
-      }),
-    });
+    try {
+        // Request detailed rule from API
+        const response = await fetch(API_ENDPOINT, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                action: "get_rule",
+                correction: correction,
+            }),
+        });
 
-    const data = await response.json();
+        const data = await response.json();
 
-    if (data.error) {
-      throw new Error(data.error);
-    }
+        if (data.error) {
+            throw new Error(data.error);
+        }
 
-    const rule = data.rule;
+        const rule = data.rule;
 
-    modalBody.innerHTML = `
+        modalBody.innerHTML = `
                     <div class="rule-section">
                         <h3>📖 Rule Explanation</h3>
                         <p>${escapeHtml(rule.explanation || correction.explanation)}</p>
@@ -493,15 +500,15 @@ async function showGrammarRule(index) {
                         <h3>✅ Correct Examples</h3>
                         <div class="examples-grid">
                             ${(rule.correct_examples || [])
-                              .map(
-                                (ex) => `
+                                .map(
+                                    (ex) => `
                                 <div class="example-item correct">
                                     <div class="example-label">✓ Correct</div>
                                     <div class="example-text">${escapeHtml(ex)}</div>
                                 </div>
-                            `,
-                              )
-                              .join("")}
+                            `
+                                )
+                                .join("")}
                         </div>
                     </div>
 
@@ -509,44 +516,50 @@ async function showGrammarRule(index) {
                         <h3>❌ Incorrect Examples</h3>
                         <div class="examples-grid">
                             ${(rule.incorrect_examples || [])
-                              .map(
-                                (ex) => `
+                                .map(
+                                    (ex) => `
                                 <div class="example-item incorrect">
                                     <div class="example-label">✗ Incorrect</div>
                                     <div class="example-text">${escapeHtml(ex)}</div>
                                 </div>
-                            `,
-                              )
-                              .join("")}
+                            `
+                                )
+                                .join("")}
                         </div>
                     </div>
 
                     ${
-                      rule.quiz
-                        ? `
+                        rule.quiz
+                            ? `
                         <div class="rule-section">
                             <h3>🎯 Quick Quiz</h3>
                             <p><strong>Question:</strong> ${escapeHtml(rule.quiz.question)}</p>
                             <div class="examples-grid" style="margin-top: 1rem;">
                                 ${rule.quiz.options
-                                  .map(
-                                    (opt, i) => `
+                                    .map(
+                                        (opt, i) => `
                                     <div class="example-item" style="cursor: pointer; border-left-color: #6b7280;" 
                                          onclick="checkQuizAnswer(${i}, ${rule.quiz.correct})">
                                         <div class="example-text">${String.fromCharCode(65 + i)}. ${escapeHtml(opt)}</div>
                                     </div>
-                                `,
-                                  )
-                                  .join("")}
+                                `
+                                    )
+                                    .join("")}
                             </div>
                         </div>
                     `
-                        : ""
+                            : ""
                     }
                 `;
-  } catch (error) {
-    console.error("Error loading rule:", error);
-    modalBody.innerHTML = `
+        // ── ADD THIS RIGHT AFTER modalBody.innerHTML = `...` in the try block ──
+        gtag("event", "ai_explanation_view", {
+            event_category: "Tool",
+            event_label: correction.rule_name || correction.type || "Unknown Rule",
+            value: 1,
+        });
+    } catch (error) {
+        console.error("Error loading rule:", error);
+        modalBody.innerHTML = `
                     <div class="rule-section">
                         <h3>📖 Rule Explanation</h3>
                         <p>${escapeHtml(correction.explanation)}</p>
@@ -555,23 +568,19 @@ async function showGrammarRule(index) {
                         </p>
                     </div>
                 `;
-  }
+    }
 }
 
 function checkQuizAnswer(selected, correct) {
-  if (selected === correct) {
-    alert("✅ Correct! Well done!");
-  } else {
-    alert(
-      "❌ Not quite. The correct answer is option " +
-        String.fromCharCode(65 + correct) +
-        ".",
-    );
-  }
+    if (selected === correct) {
+        alert("✅ Correct! Well done!");
+    } else {
+        alert("❌ Not quite. The correct answer is option " + String.fromCharCode(65 + correct) + ".");
+    }
 }
 
 function closeRuleModal() {
-  ruleModal.classList.remove("active");
+    ruleModal.classList.remove("active");
 }
 
 // ========================================
@@ -579,15 +588,15 @@ function closeRuleModal() {
 // ========================================
 
 function renderSnippets() {
-  if (snippets.length === 0) {
-    snippetList.innerHTML =
-      '<p style="text-align: center; color: #9ca3af; padding: 1rem;">No snippets saved yet.</p>';
-    return;
-  }
+    if (snippets.length === 0) {
+        snippetList.innerHTML =
+            '<p style="text-align: center; color: #9ca3af; padding: 1rem;">No snippets saved yet.</p>';
+        return;
+    }
 
-  snippetList.innerHTML = snippets
-    .map(
-      (snippet, index) => `
+    snippetList.innerHTML = snippets
+        .map(
+            (snippet, index) => `
                 <div class="snippet-item">
                     <div class="snippet-text" onclick="insertSnippet(${index})">
                         ${escapeHtml(snippet.substring(0, 60))}${snippet.length > 60 ? "..." : ""}
@@ -597,30 +606,29 @@ function renderSnippets() {
                         <button class="snippet-btn delete" onclick="deleteSnippet(${index})">Delete</button>
                     </div>
                 </div>
-            `,
-    )
-    .join("");
+            `
+        )
+        .join("");
 }
 
 function insertSnippet(index) {
-  const snippet = snippets[index];
-  const cursorPos = textEditor.selectionStart;
-  const textBefore = textEditor.value.substring(0, cursorPos);
-  const textAfter = textEditor.value.substring(cursorPos);
+    const snippet = snippets[index];
+    const cursorPos = textEditor.selectionStart;
+    const textBefore = textEditor.value.substring(0, cursorPos);
+    const textAfter = textEditor.value.substring(cursorPos);
 
-  textEditor.value = textBefore + snippet + textAfter;
-  textEditor.selectionStart = textEditor.selectionEnd =
-    cursorPos + snippet.length;
-  textEditor.focus();
-  updateWordCount();
+    textEditor.value = textBefore + snippet + textAfter;
+    textEditor.selectionStart = textEditor.selectionEnd = cursorPos + snippet.length;
+    textEditor.focus();
+    updateWordCount();
 }
 
 function deleteSnippet(index) {
-  if (confirm("Delete this snippet?")) {
-    snippets.splice(index, 1);
-    localStorage.setItem("grammarSnippets", JSON.stringify(snippets));
-    renderSnippets();
-  }
+    if (confirm("Delete this snippet?")) {
+        snippets.splice(index, 1);
+        localStorage.setItem("grammarSnippets", JSON.stringify(snippets));
+        renderSnippets();
+    }
 }
 
 // ========================================
@@ -628,20 +636,20 @@ function deleteSnippet(index) {
 // ========================================
 
 function updateStats() {
-  updateWordCount();
-  const activeIssues = corrections.filter((c) => !c.ignored).length;
-  issueCount.textContent = activeIssues;
-  fixedCountEl.textContent = fixedCount;
+    updateWordCount();
+    const activeIssues = corrections.filter((c) => !c.ignored).length;
+    issueCount.textContent = activeIssues;
+    fixedCountEl.textContent = fixedCount;
 
-  if (activeIssues === 0) {
-    acceptAllBtn.style.display = "none";
-  }
+    if (activeIssues === 0) {
+        acceptAllBtn.style.display = "none";
+    }
 }
 
 function updateWordCount() {
-  const text = textEditor.value.trim();
-  const words = text ? text.split(/\s+/).length : 0;
-  wordCount.textContent = words;
+    const text = textEditor.value.trim();
+    const words = text ? text.split(/\s+/).length : 0;
+    wordCount.textContent = words;
 }
 
 // ========================================
@@ -649,9 +657,9 @@ function updateWordCount() {
 // ========================================
 
 function escapeHtml(text) {
-  const div = document.createElement("div");
-  div.textContent = text;
-  return div.innerHTML;
+    const div = document.createElement("div");
+    div.textContent = text;
+    return div.innerHTML;
 }
 
 // ========================================

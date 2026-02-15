@@ -11,6 +11,19 @@
             name="keywords"
             content="grammar checker pricing, AI writing assistant cost, grammar tool plans, affordable grammar checker"
         />
+        <!-- Google tag (gtag.js) -->
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-PRESJVG5VB"></script>
+        <script>
+            window.dataLayer = window.dataLayer || [];
+            function gtag() {
+                dataLayer.push(arguments);
+            }
+            gtag("js", new Date());
+            gtag("config", "G-PRESJVG5VB", {
+                send_page_view: true,
+                debug_mode: true,
+            });
+        </script>
         <title>Pricing - AI Grammar Mentor | Transparent Plans That Respect You</title>
         <!-- Favicon -->
         <link rel="icon" type="image/png" href="assets/logo426x426.png" />
@@ -116,7 +129,10 @@
             <a href="pricing.html#features" class="hover:text-white"
               >Features</a
             >
-            <a href="pricing.html#pricing" class="hover:text-white">Pricing</a>
+            <a href="pricing.html#pricing" class="hover:text-white"
+   onclick="gtag('event', 'nav_click', { event_category: 'Navigation', event_label: 'Pricing' })">
+   Pricing
+</a>
             <a href="privacy-policy.html" class="hover:text-white">Privacy</a>
           </nav>
 
@@ -233,24 +249,22 @@
                     <p class="text-gray-400 text-sm">Choose your billing period</p>
                     <div class="bg-dark-800 p-1.5 rounded-xl border border-gray-700 inline-flex gap-1">
                         <button
-                            onclick="setBillingPeriod('monthly')"
-                            id="toggle-monthly"
-                            class="toggle-option px-6 py-2.5 rounded-lg font-medium text-sm transition-all"
-                        >
-                            Monthly
-                        </button>
+    onclick="setBillingPeriod('monthly'); gtag('event', 'billing_toggle', { event_category: 'Pricing', event_label: 'Monthly Selected' });"
+    id="toggle-monthly"
+    class="toggle-option px-6 py-2.5 rounded-lg font-medium text-sm transition-all"
+>
+    Monthly
+</button>
                         <button
-                            onclick="setBillingPeriod('yearly')"
-                            id="toggle-yearly"
-                            class="toggle-option active px-6 py-2.5 rounded-lg font-medium text-sm transition-all relative"
-                        >
-                            Yearly
-                            <span
-                                class="absolute -top-2 -right-2 bg-emerald-500 text-white text-xs px-2 py-0.5 rounded-full font-semibold"
-                            >
-                                Save 40%
-                            </span>
-                        </button>
+    onclick="setBillingPeriod('yearly'); gtag('event', 'billing_toggle', { event_category: 'Pricing', event_label: 'Yearly Selected' });"
+    id="toggle-yearly"
+    class="toggle-option active px-6 py-2.5 rounded-lg font-medium text-sm transition-all relative"
+>
+    Yearly
+    <span class="absolute -top-2 -right-2 bg-emerald-500 text-white text-xs px-2 py-0.5 rounded-full font-semibold">
+        Save 40%
+    </span>
+</button>
                     </div>
                     <p class="text-sm text-gray-500" id="savings-message">
                         💰 Save <span class="text-emerald-400 font-semibold">$48/year</span> with yearly billing
@@ -374,11 +388,11 @@
                         </ul>
 
                         <button
-                            class="w-full py-3.5 bg-dark-700 hover:bg-dark-600 text-white font-semibold rounded-lg transition-colors border border-gray-600"
-                            onclick="paymentPage('free')"
-                        >
-                            Start Free
-                        </button>
+    class="w-full py-3.5 bg-dark-700 hover:bg-dark-600 text-white font-semibold rounded-lg transition-colors border border-gray-600"
+    onclick="paymentPage('free'); gtag('event', 'plan_select', { event_category: 'Pricing Card', event_label: 'Free – Start Free', value: 0 });"
+>
+    Start Free
+</button>
                         <p class="text-center text-xs text-gray-500 mt-3">No credit card required</p>
                     </div>
 
@@ -557,11 +571,12 @@
                         </ul>
 
                         <button
-                            id="upgradeToPro"
-                            class="w-full py-3.5 bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 text-white font-semibold rounded-lg transition-all transform hover:scale-105 shadow-lg"
-                        >
-                            Upgrade to Pro
-                        </button>
+    id="upgradeToPro"
+    class="w-full py-3.5 bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 text-white font-semibold rounded-lg transition-all transform hover:scale-105 shadow-lg"
+    onclick="gtag('event', 'plan_select', { event_category: 'Pricing Card', event_label: 'Pro – Upgrade', value: 6 });"
+>
+    Upgrade to Pro
+</button>
                         <p class="text-center text-xs text-gray-400 mt-3">Cancel anytime, no questions asked</p>
                     </div>
 
@@ -686,11 +701,12 @@
                         </ul>
 
                         <button
-                            id="lifetimeAccess"
-                            class="w-full py-3.5 bg-gradient-to-r from-emerald-600 to-emerald-700 hover:from-emerald-500 hover:to-emerald-600 text-white font-semibold rounded-lg transition-all shadow-lg shadow-emerald-900/30"
-                        >
-                            Claim Lifetime Access Now
-                        </button>
+    id="lifetimeAccess"
+    class="w-full py-3.5 bg-gradient-to-r from-emerald-600 to-emerald-700 hover:from-emerald-500 hover:to-emerald-600 text-white font-semibold rounded-lg transition-all shadow-lg shadow-emerald-900/30"
+    onclick="gtag('event', 'plan_select', { event_category: 'Pricing Card', event_label: 'Lifetime – Claim', value: 199 });"
+>
+    Claim Lifetime Access Now
+</button>
                         <p class="text-center text-xs text-gray-500 mt-3">One-time payment • Only first 50 spots</p>
                     </div>
                 </div>
@@ -1009,9 +1025,16 @@
                         <p class="text-gray-400 leading-relaxed">
                             Yes. If you're not satisfied within 30 days of purchase, we'll refund you in full, no
                             questions asked. Just email us at
-                            <a href="mailto:hello@grammar-mentor.ch" class="text-indigo-400 hover:text-indigo-300"
-                                >hello@grammar-mentor.ch</a
-                            >.
+                            <a 
+    href="mailto:hello@grammar-mentor.ch" 
+    class="text-indigo-400 hover:text-indigo-300"
+    onclick="gtag('event', 'outbound_click', { 
+        event_category: 'Support', 
+        event_label: 'Email – Pricing Page' 
+    })"
+>
+    hello@grammar-mentor.ch
+</a>.
                         </p>
                     </div>
 
@@ -1048,9 +1071,10 @@
 
                 <div class="flex flex-col sm:flex-row gap-4 justify-center items-center">
                     <a
-                        href="#"
+                        href="https://grammar-mentor.com/grammar-mentor.html"
                         class="inline-flex items-center gap-2 px-8 py-4 bg-indigo-600 hover:bg-indigo-700 text-white text-lg font-semibold rounded-lg transition-all hover:scale-105 shadow-lg shadow-indigo-900/50"
-                    >
+                        onclick="gtag('event', 'cta_click', { event_category: 'Final CTA', event_label: 'Start Free – Bottom' });"
+                        >
                         Start Free
                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path
@@ -1065,9 +1089,16 @@
 
                 <p class="text-sm text-gray-500 mt-6">
                     Questions? Email us at
-                    <a href="mailto:hello@grammar-mentor.ch" class="text-indigo-400 hover:text-indigo-300"
-                        >hello@grammar-mentor.ch</a
-                    >
+                    <a 
+    href="mailto:hello@grammar-mentor.ch" 
+    class="text-indigo-400 hover:text-indigo-300"
+    onclick="gtag('event', 'outbound_click', { 
+        event_category: 'Support', 
+        event_label: 'Email – Pricing Page' 
+    })"
+>
+    hello@grammar-mentor.ch
+</a>
                 </p>
             </div>
         </section>
@@ -1266,6 +1297,23 @@
                     window.location.href = "https://grammar-mentor.com/grammar-mentor.html";
                 }
             }
+
+            let trackedScrolls = new Set();
+    function onScroll() {
+        const scrollPercent = Math.round(((window.scrollY + window.innerHeight) / document.body.scrollHeight) * 100);
+        const depths = [25, 50, 75, 90];
+        depths.forEach((depth) => {
+            if (scrollPercent >= depth && !trackedScrolls.has(depth)) {
+                gtag("event", "scroll", {
+                    event_category: "Engagement",
+                    event_label: `${depth}% scroll`,
+                    value: depth,
+                });
+                trackedScrolls.add(depth);
+            }
+        });
+    }
+    window.addEventListener("scroll", onScroll, { passive: true });
         </script>
     </body>
 </html>
