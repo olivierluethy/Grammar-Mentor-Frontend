@@ -278,9 +278,27 @@
                         <option value="professional" class="pro-option">Professional</option>
                         <option value="conversational" class="pro-option">Conversational</option>
                     </select>
-                    <div class="paywall-overlay" id="stylePaywall" style="display: none">
-                        <div class="paywall-content">
-                            <svg class="paywall-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <div
+                        class="fixed inset-0 bg-black/55 backdrop-blur-sm flex items-center justify-center p-6 z-50 hidden"
+                        id="stylePaywall"
+                    >
+                        <div
+                            class="relative bg-white max-w-md w-full rounded-2xl p-10 text-center shadow-2xl animate-fadeIn"
+                        >
+                            <!-- Close Button -->
+                            <button
+                                onclick="document.getElementById('stylePaywall').style.display='none'"
+                                class="absolute top-4 right-4 text-gray-400 hover:text-gray-600 transition-colors text-xl font-bold"
+                            >
+                                &times;
+                            </button>
+
+                            <svg
+                                class="w-12 h-12 mx-auto mb-5 text-indigo-600"
+                                fill="none"
+                                stroke="currentColor"
+                                viewBox="0 0 24 24"
+                            >
                                 <path
                                     stroke-linecap="round"
                                     stroke-linejoin="round"
@@ -288,17 +306,21 @@
                                     d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"
                                 />
                             </svg>
-                            <div class="paywall-title">Advanced Style Checking</div>
-                            <div class="paywall-description">
+
+                            <div class="text-xl font-semibold mb-3">Advanced Style Checking</div>
+
+                            <div class="text-gray-600 text-sm mb-7 leading-relaxed">
                                 Unlock advanced writing styles to preserve your voice while catching tone
                                 inconsistencies
                             </div>
+
                             <a
                                 href="#"
                                 onclick="openUpgradeModal(); gtag('event', 'upgrade_click', { event_category: 'Upgrade', event_label: 'Open Upgrade Modal', value: 1 }); return false;"
-                                class="paywall-btn"
-                                >Upgrade to Pro</a
+                                class="inline-block bg-indigo-600 text-white font-medium rounded-full px-6 py-3 hover:bg-indigo-700 hover:shadow-lg transform hover:-translate-y-1 transition-all duration-200"
                             >
+                                Upgrade to Pro
+                            </a>
                         </div>
                     </div>
                 </div>
@@ -440,9 +462,27 @@
                                 </button>
                             </div>
                         </div>
-                        <div class="paywall-overlay" id="snippetPaywall" style="display: none">
-                            <div class="paywall-content">
-                                <svg class="paywall-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <div
+                            class="fixed inset-0 bg-black/55 backdrop-blur-sm flex items-center justify-center p-6 z-50 hidden"
+                            id="snippetPaywall"
+                        >
+                            <div
+                                class="relative bg-white max-w-md w-full rounded-2xl p-10 text-center shadow-2xl animate-fadeIn"
+                            >
+                                <!-- Close Button -->
+                                <button
+                                    onclick="document.getElementById('snippetPaywall').style.display='none'"
+                                    class="absolute top-4 right-4 text-gray-400 hover:text-gray-600 transition-colors text-xl font-bold"
+                                >
+                                    &times;
+                                </button>
+
+                                <svg
+                                    class="w-12 h-12 mx-auto mb-5 text-indigo-600"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    viewBox="0 0 24 24"
+                                >
                                     <path
                                         stroke-linecap="round"
                                         stroke-linejoin="round"
@@ -450,16 +490,20 @@
                                         d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"
                                     />
                                 </svg>
-                                <div class="paywall-title">Unlimited Snippet Storage</div>
-                                <div class="paywall-description">
+
+                                <div class="text-xl font-semibold mb-3">Unlimited Snippet Storage</div>
+
+                                <div class="text-gray-600 text-sm mb-7 leading-relaxed">
                                     Build your personal library of templates, sign-offs, and repeated phrases
                                 </div>
+
                                 <a
                                     href="#"
                                     onclick="openUpgradeModal(); gtag('event', 'upgrade_click', { event_category: 'Upgrade', event_label: 'Open Upgrade Modal', value: 1 }); return false;"
-                                    class="paywall-btn"
-                                    >Upgrade to Pro</a
+                                    class="inline-block bg-indigo-600 text-white font-medium rounded-full px-6 py-3 hover:bg-indigo-700 hover:shadow-lg transform hover:-translate-y-1 transition-all duration-200"
                                 >
+                                    Upgrade to Pro
+                                </a>
                             </div>
                         </div>
                     </div>
@@ -690,73 +734,94 @@
             </div>
         </div>
 
-<!-- Login Modal -->
-<div id="loginModal" class="modal-overlay fixed inset-0 bg-black/60 flex items-center justify-center z-50 hidden">
-  <div class="modal-content bg-slate-900 border border-slate-700 rounded-2xl shadow-2xl max-w-md w-full mx-4 p-8 relative">
-    <button class="absolute top-4 right-4 text-slate-400 hover:text-white text-2xl" onclick="closeLoginModal()">×</button>
-    
-    <h2 class="text-2xl font-bold text-white mb-2 text-center">Willkommen zurück</h2>
-    <p class="text-slate-400 text-center mb-6">
-      Melde dich an, um deine Snippets, deinen Verlauf und alle Pro-Funktionen zu nutzen
-    </p>
+        <!-- Login Modal -->
+        <div
+            id="loginModal"
+            class="modal-overlay fixed inset-0 bg-black/60 flex items-center justify-center z-50 hidden"
+        >
+            <div
+                class="modal-content bg-slate-900 border border-slate-700 rounded-2xl shadow-2xl max-w-md w-full mx-4 p-8 relative"
+            >
+                <button
+                    class="absolute top-4 right-4 text-slate-400 hover:text-white text-2xl"
+                    onclick="closeLoginModal()"
+                >
+                    ×
+                </button>
 
-    <!-- Google Sign-In Container (offizieller GIS-Button) -->
-    <div id="g_id_onload"
-         data-client_id="321621097003-j12qbjotes9glvohuqbepb2pouol7b7j.apps.googleusercontent.com"
-         data-auto_prompt="false"
-         data-callback="handleGoogleSignIn"
-         data-use_fedcm_for_prompt="true">
-    </div>
+                <h2 class="text-2xl font-bold text-white mb-2 text-center">Welcome back</h2>
+                <p class="text-slate-400 text-center mb-6">
+                    Sign in to access your snippets, history, and all Pro features
+                </p>
 
-    <div class="g_id_signin mb-6"
-         data-type="standard"
-         data-size="large"
-         data-theme="outline"
-         data-text="signin_with"
-         data-shape="rectangular"
-         data-logo_alignment="left">
-    </div>
+                <!-- Google Sign-In Container (offizieller GIS-Button) -->
+                <div
+                    id="g_id_onload"
+                    data-client_id="321621097003-j12qbjotes9glvohuqbepb2pouol7b7j.apps.googleusercontent.com"
+                    data-auto_prompt="false"
+                    data-callback="handleGoogleSignIn"
+                    data-use_fedcm_for_prompt="true"
+                ></div>
 
-    <!-- Trennlinie -->
-    <div class="relative my-6">
-      <div class="absolute inset-0 flex items-center">
-        <div class="w-full border-t border-slate-700"></div>
-      </div>
-      <div class="relative flex justify-center text-sm">
-        <span class="px-4 bg-slate-900 text-slate-500">oder mit E-Mail fortfahren</span>
-      </div>
-    </div>
+                <div
+                    class="g_id_signin mb-6"
+                    data-type="standard"
+                    data-size="large"
+                    data-theme="outline"
+                    data-text="signin_with"
+                    data-shape="rectangular"
+                    data-logo_alignment="left"
+                ></div>
 
-    <!-- E-Mail Formular -->
-    <form id="emailLoginForm" class="space-y-5">
-      <div>
-        <label for="loginEmail" class="block text-sm font-medium text-slate-300 mb-1">
-          E-Mail-Adresse
-        </label>
-        <input type="email" id="loginEmail" 
-               class="w-full px-4 py-3 bg-slate-800 border border-slate-700 rounded-lg text-white placeholder-slate-500 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition"
-               placeholder="du@beispiel.ch" required>
-      </div>
-      
-      <button type="submit" 
-              class="w-full bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 text-white font-semibold py-3 px-4 rounded-lg transition shadow-md hover:shadow-lg">
-        Mit E-Mail anmelden
-      </button>
-    </form>
+                <!-- Trennlinie -->
+                <div class="relative my-6">
+                    <div class="absolute inset-0 flex items-center">
+                        <div class="w-full border-t border-slate-700"></div>
+                    </div>
+                    <div class="relative flex justify-center text-sm">
+                        <span class="px-4 bg-slate-900 text-slate-500">or continue with email</span>
+                    </div>
+                </div>
 
-    <p class="text-center text-sm text-slate-500 mt-6">
-      Noch kein Konto? 
-      <a href="#" class="text-indigo-400 hover:text-indigo-300 font-medium" 
-         onclick="openUpgradeModal(); closeLoginModal();">
-        Jetzt zu Pro upgraden
-      </a>
-    </p>
+                <!-- E-Mail Formular -->
+                <form id="emailLoginForm" class="space-y-5">
+                    <div>
+                        <label for="loginEmail" class="block text-sm font-medium text-slate-300 mb-1">
+                            Email address
+                        </label>
+                        <input
+                            type="email"
+                            id="loginEmail"
+                            class="w-full px-4 py-3 bg-slate-800 border border-slate-700 rounded-lg text-white placeholder-slate-500 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition"
+                            placeholder="du@beispiel.ch"
+                            required
+                        />
+                    </div>
 
-    <p class="text-center text-xs text-slate-600 mt-4">
-      Deine Daten sind sicher – wir speichern nur das Nötigste (DSGVO-konform).
-    </p>
-  </div>
-</div>
+                    <button
+                        type="submit"
+                        class="w-full bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 text-white font-semibold py-3 px-4 rounded-lg transition shadow-md hover:shadow-lg"
+                    >
+                        Sign up with email
+                    </button>
+                </form>
+
+                <p class="text-center text-sm text-slate-500 mt-6">
+                    Don't have an account yet?
+                    <a
+                        href="#"
+                        class="text-indigo-400 hover:text-indigo-300 font-medium"
+                        onclick="openUpgradeModal(); closeLoginModal();"
+                    >
+                        Upgrade to Pro now
+                    </a>
+                </p>
+
+                <p class="text-center text-xs text-slate-600 mt-4">
+                    Your data is secure – we only store what is necessary (GDPR compliant).
+                </p>
+            </div>
+        </div>
 
         <script src="script.js" defer></script>
         <script>
@@ -932,39 +997,47 @@
                     try {
                         const response = await this.loginWithEmail(email);
 
-                        if (response.success && response.valid) {
+                        if (response.success) {
                             this.user = {
                                 email: response.email,
                                 name: response.name || email.split("@")[0],
                             };
 
                             this.subscription = {
-                                status: response.status || "active",
-                                plan: response.plan || "pro", // ← hier entscheidet dein Backend
+                                status: response.status || "free",
+                                plan: response.plan || "free",
                                 validUntil: response.validUntil,
                             };
 
                             this.saveSession();
                             this.updateUI();
-                            alert("Welcome! You now have access to all features.");
 
-                            // ── HIER HINZUFÜGEN ──
+                            // Unterschiedliche Begrüßung je nach Plan
+                            // In login():
+                            if (this.subscription.plan === "pro" && this.subscription.status === "active") {
+                                showToast("Willkommen zurück! Alle Pro-Features sind freigeschaltet.", "success");
+                            } else {
+                                showToast("Willkommen! Du bist auf Free. Upgrade für unbegrenzte Features?", "warning");
+                                setTimeout(() => openUpgradeModal(), 1200);
+                            }
+
                             gtag("event", "login_success", {
                                 event_category: "Auth",
                                 event_label: "Successful Login",
-                                method: "email_prompt", // weil du prompt() nutzt
+                                method: "email_prompt", // oder "google_gsi" – je nach Flow anpassen
                                 user_plan: this.subscription?.plan || "unknown",
-                                user_email_domain: this.user.email.split("@")[1] || "unknown", // z. B. gmail.com, outlook.com
+                                user_email_domain: this.user.email.split("@")[1] || "unknown",
                                 value: 1,
                             });
+
                             return { success: true };
                         } else {
-                            alert(response.error || "Login failed. Please try again.");
+                            alert(response.error || "Login fehlgeschlagen. Bitte versuche es erneut.");
                             return { success: false, error: response.error };
                         }
                     } catch (error) {
                         console.error("Login error:", error);
-                        alert("Login failed. Please check your connection.");
+                        alert("Login fehlgeschlagen. Bitte überprüfe deine Verbindung.");
                         return { success: false, error: "Login failed" };
                     }
                 }
@@ -1001,7 +1074,26 @@
                     const authStatus = document.getElementById("authStatus");
 
                     if (this.user && this.subscription) {
-                        const planName = this.subscription.plan === "lifetime" ? "Lifetime" : "Pro";
+                        // Plan-Namen dynamisch aus subscription.plan holen
+                        let planName;
+                        switch (this.subscription.plan) {
+                            case "lifetime":
+                                planName = "Lifetime";
+                                break;
+                            case "pro":
+                                planName = "Pro";
+                                break;
+                            case "free":
+                            default:
+                                planName = "Free";
+                                break;
+                        }
+
+                        // Optional: Status noch sichtbar machen (z. B. "Free (Upgrade verfügbar)")
+                        if (planName === "Free") {
+                            planName += " <span class='text-amber-400 text-xs'>(Upgrade möglich)</span>";
+                        }
+
                         const initials =
                             this.user.name
                                 .split(" ")
@@ -1021,7 +1113,7 @@
       gtag('event', 'logout', {
         event_category: 'Auth',
         event_label: 'User Logout',
-        user_plan: '${planName.toLowerCase()}'
+        user_plan: '${this.subscription.plan || "unknown"}'
       });
       subscriptionManager.logout();
     "
@@ -1030,6 +1122,7 @@
   </button>
 `;
                     } else {
+                        // Nicht eingeloggt – bleibt gleich
                         authStatus.innerHTML = `
     <button 
       class="auth-btn btn-login" 
@@ -1060,7 +1153,8 @@
                     }
 
                     this.updateFeatureAccess();
-                    // Ganz am Ende von updateUI(), nach dem Setzen von innerHTML
+
+                    // GA-Event bleibt gleich, verwendet jetzt den echten Plan
                     gtag("event", "auth_status_view", {
                         event_category: "Auth",
                         event_label: this.user ? "Logged In" : "Not Logged In",
@@ -1174,111 +1268,117 @@
                 });
             }
 
-           function openLoginModal() {
-  document.getElementById("loginModal").classList.remove("hidden");
-  gtag("event", "login_modal_open", {
-    event_category: "Modal",
-    event_label: "Login Modal Opened",
-    value: 1,
-  });
-}
+            function openLoginModal() {
+                document.getElementById("loginModal").classList.remove("hidden");
+                gtag("event", "login_modal_open", {
+                    event_category: "Modal",
+                    event_label: "Login Modal Opened",
+                    value: 1,
+                });
+            }
 
-function closeLoginModal() {
-  document.getElementById("loginModal").classList.add("hidden");
-}
+            function closeLoginModal() {
+                document.getElementById("loginModal").classList.add("hidden");
+            }
 
-// Google Sign-In Callback (wird automatisch aufgerufen)
-function handleGoogleSignIn(response) {
-  // response.credential = das ID Token (JWT)
-  const idToken = response.credential;
+            // Google Sign-In Callback (wird automatisch aufgerufen)
+            function handleGoogleSignIn(response) {
+                // response.credential = das ID Token (JWT)
+                const idToken = response.credential;
 
-  gtag("event", "login_attempt", {
-    event_category: "Auth",
-    event_label: "Google ID Token Received",
-    method: "google_gsi",
-    value: 1,
-  });
+                gtag("event", "login_attempt", {
+                    event_category: "Auth",
+                    event_label: "Google ID Token Received",
+                    method: "google_gsi",
+                    value: 1,
+                });
 
-  // Sende das Token an dein PHP-Backend zur Validierung
-  fetch('lemonsqueezy-api.php?action=google_login', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ id_token: idToken })
-  })
-  .then(res => res.json())
-  .then(data => {
-    if (data.success && data.valid) {
-      // Erfolgreich → nutze deine bestehende login-Logik
-      subscriptionManager.login(data.email).then(result => {
-        if (result.success) {
-          closeLoginModal();
-          // Optional: location.reload() oder UI refresh
-        } else {
-          alert("Login erfolgreich, aber kein aktives Pro-Abo gefunden.");
-          openUpgradeModal();
-        }
-      });
-    } else {
-      alert(data.error || "Google-Anmeldung fehlgeschlagen");
-    }
-  })
-  .catch(err => {
-    console.error(err);
-    alert("Verbindungsfehler");
-  });
-}
+                // Sende das Token an dein PHP-Backend zur Validierung
+                fetch("lemonsqueezy-api.php?action=google_login", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ id_token: idToken }),
+                })
+                    .then((res) => res.json())
+                    .then((data) => {
+                        if (data.success) {
+                            subscriptionManager.login(data.email).then((result) => {
+                                if (result.success) {
+                                    closeLoginModal();
 
-// Email-Form bleibt fast gleich (dein bestehender Code)
-document.getElementById("emailLoginForm")?.addEventListener("submit", function(e) {
-  e.preventDefault();
-  const email = document.getElementById("loginEmail").value.trim();
-  if (!email || !email.includes("@")) {
-    alert("Bitte eine gültige E-Mail-Adresse eingeben.");
-    return;
-  }
+                                    // Nudge je nach Status
+                                    if (data.plan === "free" || data.status !== "active") {
+                                        alert(
+                                            data.message ||
+                                                "Du bist jetzt eingeloggt (Free-Plan). Upgrade für unbegrenzte Features?"
+                                        );
+                                        openUpgradeModal(); // ← direkt Upgrade zeigen bei Free-Usern
+                                    } else {
+                                        alert("Willkommen! Pro-Features aktiviert.");
+                                    }
+                                }
+                            });
+                        } else {
+                            alert(data.error || "Anmeldung fehlgeschlagen");
+                        }
+                    })
+                    .catch((err) => {
+                        console.error(err);
+                        alert("Verbindungsfehler");
+                    });
+            }
 
-  gtag("event", "login_attempt", {
-    event_category: "Auth",
-    event_label: "Email Login Attempt",
-    method: "email_form",
-    value: 1,
-  });
+            // Email-Form bleibt fast gleich (dein bestehender Code)
+            document.getElementById("emailLoginForm")?.addEventListener("submit", function (e) {
+                e.preventDefault();
+                const email = document.getElementById("loginEmail").value.trim();
+                if (!email || !email.includes("@")) {
+                    alert("Bitte eine gültige E-Mail-Adresse eingeben.");
+                    return;
+                }
 
-  subscriptionManager.login(email).then(result => {
-    if (result.success) {
-      closeLoginModal();
-    } else {
-      alert(result.error || "Login fehlgeschlagen.");
-    }
-  });
-});
+                gtag("event", "login_attempt", {
+                    event_category: "Auth",
+                    event_label: "Email Login Attempt",
+                    method: "email_form",
+                    value: 1,
+                });
 
-// Email form submit
-document.getElementById("emailLoginForm")?.addEventListener("submit", (e) => {
-  e.preventDefault();
-  const email = document.getElementById("loginEmail").value.trim();
+                subscriptionManager.login(email).then((result) => {
+                    if (result.success) {
+                        closeLoginModal();
+                    } else {
+                        alert(result.error || "Login fehlgeschlagen.");
+                    }
+                });
+            });
 
-  if (!email || !email.includes("@")) {
-    alert("Please enter a valid email address.");
-    return;
-  }
+            // Email form submit
+            document.getElementById("emailLoginForm")?.addEventListener("submit", (e) => {
+                e.preventDefault();
+                const email = document.getElementById("loginEmail").value.trim();
 
-  gtag("event", "login_attempt", {
-    event_category: "Auth",
-    event_label: "Email Login Attempt",
-    method: "email_form",
-    value: 1,
-  });
+                if (!email || !email.includes("@")) {
+                    alert("Please enter a valid email address.");
+                    return;
+                }
 
-  subscriptionManager.login(email).then((result) => {
-    if (result.success) {
-      closeLoginModal();
-      // Optional success message
-    } else {
-      alert(result.error || "Login failed. If you have Pro, check your subscription.");
-    }
-  });
-});
+                gtag("event", "login_attempt", {
+                    event_category: "Auth",
+                    event_label: "Email Login Attempt",
+                    method: "email_form",
+                    value: 1,
+                });
+
+                subscriptionManager.login(email).then((result) => {
+                    if (result.success) {
+                        closeLoginModal();
+                        // Optional success message
+                    } else {
+                        alert(result.error || "Login failed. If you have Pro, check your subscription.");
+                    }
+                });
+            });
 
             function closeRuleModal() {
                 document.getElementById("ruleModal").style.display = "none";
@@ -1356,6 +1456,28 @@ document.getElementById("emailLoginForm")?.addEventListener("submit", (e) => {
             document.getElementById("goBack").addEventListener("click", () => {
                 window.location.href = "https://grammar-mentor.com";
             });
+
+            function showToast(message, type = "success") {
+                const toast = document.getElementById("toast");
+                toast.textContent = message;
+                toast.className = `fixed bottom-6 right-6 px-6 py-4 rounded-xl shadow-2xl text-white font-medium transition-all duration-300 transform translate-y-0 opacity-100 z-50 ${
+                    type === "success" ? "bg-green-600" : "bg-amber-600"
+                }`;
+                toast.classList.remove("hidden");
+
+                setTimeout(() => {
+                    toast.classList.add("translate-y-20", "opacity-0");
+                    setTimeout(() => toast.classList.add("hidden"), 300);
+                }, 4000);
+            }
         </script>
+
+        <!-- Toast Notification -->
+        <div
+            id="toast"
+            class="fixed bottom-6 right-6 hidden px-6 py-4 rounded-xl shadow-2xl text-white font-medium transition-all duration-300 transform translate-y-20 opacity-0 z-50"
+        >
+            <!-- Inhalt wird per JS gesetzt -->
+        </div>
     </body>
 </html>
