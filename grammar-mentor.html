@@ -28,6 +28,8 @@
             rel="stylesheet"
         />
 
+        <script src="https://accounts.google.com/gsi/client" async defer></script>
+
         <!-- Lemon Squeezy SDK -->
         <script src="https://app.lemonsqueezy.com/js/lemon.js" defer></script>
 
@@ -688,6 +690,74 @@
             </div>
         </div>
 
+<!-- Login Modal -->
+<div id="loginModal" class="modal-overlay fixed inset-0 bg-black/60 flex items-center justify-center z-50 hidden">
+  <div class="modal-content bg-slate-900 border border-slate-700 rounded-2xl shadow-2xl max-w-md w-full mx-4 p-8 relative">
+    <button class="absolute top-4 right-4 text-slate-400 hover:text-white text-2xl" onclick="closeLoginModal()">×</button>
+    
+    <h2 class="text-2xl font-bold text-white mb-2 text-center">Willkommen zurück</h2>
+    <p class="text-slate-400 text-center mb-6">
+      Melde dich an, um deine Snippets, deinen Verlauf und alle Pro-Funktionen zu nutzen
+    </p>
+
+    <!-- Google Sign-In Container (offizieller GIS-Button) -->
+    <div id="g_id_onload"
+         data-client_id="321621097003-j12qbjotes9glvohuqbepb2pouol7b7j.apps.googleusercontent.com"
+         data-auto_prompt="false"
+         data-callback="handleGoogleSignIn"
+         data-use_fedcm_for_prompt="true">
+    </div>
+
+    <div class="g_id_signin mb-6"
+         data-type="standard"
+         data-size="large"
+         data-theme="outline"
+         data-text="signin_with"
+         data-shape="rectangular"
+         data-logo_alignment="left">
+    </div>
+
+    <!-- Trennlinie -->
+    <div class="relative my-6">
+      <div class="absolute inset-0 flex items-center">
+        <div class="w-full border-t border-slate-700"></div>
+      </div>
+      <div class="relative flex justify-center text-sm">
+        <span class="px-4 bg-slate-900 text-slate-500">oder mit E-Mail fortfahren</span>
+      </div>
+    </div>
+
+    <!-- E-Mail Formular -->
+    <form id="emailLoginForm" class="space-y-5">
+      <div>
+        <label for="loginEmail" class="block text-sm font-medium text-slate-300 mb-1">
+          E-Mail-Adresse
+        </label>
+        <input type="email" id="loginEmail" 
+               class="w-full px-4 py-3 bg-slate-800 border border-slate-700 rounded-lg text-white placeholder-slate-500 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition"
+               placeholder="du@beispiel.ch" required>
+      </div>
+      
+      <button type="submit" 
+              class="w-full bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 text-white font-semibold py-3 px-4 rounded-lg transition shadow-md hover:shadow-lg">
+        Mit E-Mail anmelden
+      </button>
+    </form>
+
+    <p class="text-center text-sm text-slate-500 mt-6">
+      Noch kein Konto? 
+      <a href="#" class="text-indigo-400 hover:text-indigo-300 font-medium" 
+         onclick="openUpgradeModal(); closeLoginModal();">
+        Jetzt zu Pro upgraden
+      </a>
+    </p>
+
+    <p class="text-center text-xs text-slate-600 mt-4">
+      Deine Daten sind sicher – wir speichern nur das Nötigste (DSGVO-konform).
+    </p>
+  </div>
+</div>
+
         <script src="script.js" defer></script>
         <script>
             let pageStart = Date.now();
@@ -1104,33 +1174,111 @@
                 });
             }
 
-            function openLoginModal() {
-                gtag("event", "login_modal_open", {
-                    event_category: "Modal",
-                    event_label: "Login Modal / Prompt Opened",
-                    value: 1,
-                });
+           function openLoginModal() {
+  document.getElementById("loginModal").classList.remove("hidden");
+  gtag("event", "login_modal_open", {
+    event_category: "Modal",
+    event_label: "Login Modal Opened",
+    value: 1,
+  });
+}
 
-                const email = prompt("Please enter your email address:");
-                if (!email || !email.includes("@")) {
-                    alert("Please enter a valid email address.");
-                    return;
-                }
+function closeLoginModal() {
+  document.getElementById("loginModal").classList.add("hidden");
+}
 
-                // Direkt vor dem Login-Versuch → sehr starkes Intent-Signal
-                gtag("event", "login_attempt", {
-                    event_category: "Auth",
-                    event_label: "Login Attempt Started",
-                    method: "email_prompt",
-                    value: 1,
-                });
+// Google Sign-In Callback (wird automatisch aufgerufen)
+function handleGoogleSignIn(response) {
+  // response.credential = das ID Token (JWT)
+  const idToken = response.credential;
 
-                subscriptionManager.login(email).then((result) => {
-                    if (!result.success) {
-                        // Fehler bereits im login() gezeigt
-                    }
-                });
-            }
+  gtag("event", "login_attempt", {
+    event_category: "Auth",
+    event_label: "Google ID Token Received",
+    method: "google_gsi",
+    value: 1,
+  });
+
+  // Sende das Token an dein PHP-Backend zur Validierung
+  fetch('lemonsqueezy-api.php?action=google_login', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ id_token: idToken })
+  })
+  .then(res => res.json())
+  .then(data => {
+    if (data.success && data.valid) {
+      // Erfolgreich → nutze deine bestehende login-Logik
+      subscriptionManager.login(data.email).then(result => {
+        if (result.success) {
+          closeLoginModal();
+          // Optional: location.reload() oder UI refresh
+        } else {
+          alert("Login erfolgreich, aber kein aktives Pro-Abo gefunden.");
+          openUpgradeModal();
+        }
+      });
+    } else {
+      alert(data.error || "Google-Anmeldung fehlgeschlagen");
+    }
+  })
+  .catch(err => {
+    console.error(err);
+    alert("Verbindungsfehler");
+  });
+}
+
+// Email-Form bleibt fast gleich (dein bestehender Code)
+document.getElementById("emailLoginForm")?.addEventListener("submit", function(e) {
+  e.preventDefault();
+  const email = document.getElementById("loginEmail").value.trim();
+  if (!email || !email.includes("@")) {
+    alert("Bitte eine gültige E-Mail-Adresse eingeben.");
+    return;
+  }
+
+  gtag("event", "login_attempt", {
+    event_category: "Auth",
+    event_label: "Email Login Attempt",
+    method: "email_form",
+    value: 1,
+  });
+
+  subscriptionManager.login(email).then(result => {
+    if (result.success) {
+      closeLoginModal();
+    } else {
+      alert(result.error || "Login fehlgeschlagen.");
+    }
+  });
+});
+
+// Email form submit
+document.getElementById("emailLoginForm")?.addEventListener("submit", (e) => {
+  e.preventDefault();
+  const email = document.getElementById("loginEmail").value.trim();
+
+  if (!email || !email.includes("@")) {
+    alert("Please enter a valid email address.");
+    return;
+  }
+
+  gtag("event", "login_attempt", {
+    event_category: "Auth",
+    event_label: "Email Login Attempt",
+    method: "email_form",
+    value: 1,
+  });
+
+  subscriptionManager.login(email).then((result) => {
+    if (result.success) {
+      closeLoginModal();
+      // Optional success message
+    } else {
+      alert(result.error || "Login failed. If you have Pro, check your subscription.");
+    }
+  });
+});
 
             function closeRuleModal() {
                 document.getElementById("ruleModal").style.display = "none";

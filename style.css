@@ -542,8 +542,16 @@ select:focus {
   color: #065f46;
 }
 
-.example-item.incorrect .example-label {
+.example-item.correct .example-text {
+  color: black;
+}
+
+.example-item.incorrect .example-label { 
   color: #991b1b;
+}
+
+.example-item.incorrect .example-text {
+ color: black;
 }
 
 .example-text {

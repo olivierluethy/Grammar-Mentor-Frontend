@@ -9,4 +9,77 @@
         <changefreq>weekly</changefreq>
         <priority>1.0</priority>
     </url>
+
+    <!-- App -->
+    <url>
+        <loc>https://www.grammar-mentor.com/grammar-mentor.html</loc>
+        <lastmod>2026-02-07</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.9</priority>
+    </url>
+
+    <!-- Static pages -->
+    <url>
+        <loc>https://www.grammar-mentor.com/about.html</loc>
+        <lastmod>2026-02-07</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.6</priority>
+    </url>
+
+    <url>
+        <loc>https://www.grammar-mentor.com/blogs.html</loc>
+        <lastmod>2026-02-07</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.7</priority>
+    </url>
+
+    <url>
+        <loc>https://www.grammar-mentor.com/changelog.html</loc>
+        <lastmod>2026-02-07</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.5</priority>
+    </url>
+
+    <url>
+        <loc>https://www.grammar-mentor.com/helpcenter.html</loc>
+        <lastmod>2026-02-07</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.6</priority>
+    </url>
+
+    <url>
+        <loc>https://www.grammar-mentor.com/legal-notice.html</loc>
+        <lastmod>2026-02-07</lastmod>
+        <changefreq>yearly</changefreq>
+        <priority>0.4</priority>
+    </url>
+
+    <url>
+        <loc>https://www.grammar-mentor.com/pricing.html</loc>
+        <lastmod>2026-02-07</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+    </url>
+
+    <url>
+        <loc>https://www.grammar-mentor.com/privacy-policy.html</loc>
+        <lastmod>2026-02-07</lastmod>
+        <changefreq>yearly</changefreq>
+        <priority>0.4</priority>
+    </url>
+
+    <url>
+        <loc>https://www.grammar-mentor.com/status.html</loc>
+        <lastmod>2026-02-07</lastmod>
+        <changefreq>daily</changefreq>
+        <priority>0.4</priority>
+    </url>
+
+    <url>
+        <loc>https://www.grammar-mentor.com/terms-of-service.html</loc>
+        <lastmod>2026-02-07</lastmod>
+        <changefreq>yearly</changefreq>
+        <priority>0.4</priority>
+    </url>
+
 </urlset>
