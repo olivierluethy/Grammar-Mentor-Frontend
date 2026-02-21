@@ -1015,9 +1015,9 @@
                             // Unterschiedliche Begrüßung je nach Plan
                             // In login():
                             if (this.subscription.plan === "pro" && this.subscription.status === "active") {
-                                showToast("Willkommen zurück! Alle Pro-Features sind freigeschaltet.", "success");
+                                showToast("Welcome back! All Pro features are unlocked.", "success");
                             } else {
-                                showToast("Willkommen! Du bist auf Free. Upgrade für unbegrenzte Features?", "warning");
+                                showToast("Welcome! You are on the Free plan. Upgrade for unlimited features?", "warning");
                                 setTimeout(() => openUpgradeModal(), 1200);
                             }
 
@@ -1032,12 +1032,12 @@
 
                             return { success: true };
                         } else {
-                            alert(response.error || "Login fehlgeschlagen. Bitte versuche es erneut.");
+                            alert(response.error || "Login failed. Please try again.");
                             return { success: false, error: response.error };
                         }
                     } catch (error) {
                         console.error("Login error:", error);
-                        alert("Login fehlgeschlagen. Bitte überprüfe deine Verbindung.");
+                        alert("Login failed. Please check your connection.");
                         return { success: false, error: "Login failed" };
                     }
                 }
@@ -1091,7 +1091,7 @@
 
                         // Optional: Status noch sichtbar machen (z. B. "Free (Upgrade verfügbar)")
                         if (planName === "Free") {
-                            planName += " <span class='text-amber-400 text-xs'>(Upgrade möglich)</span>";
+                            planName += " <span class='text-amber-400 text-xs'>(Upgrade possible)</span>";
                         }
 
                         const initials =

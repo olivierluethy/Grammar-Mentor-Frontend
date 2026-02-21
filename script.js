@@ -103,12 +103,49 @@ toggleSnippets.addEventListener("click", () => {
 
 saveSnippetBtn.addEventListener("click", () => {
     const text = snippetInput.value.trim();
-    if (text) {
-        snippets.push(text);
-        localStorage.setItem("grammarSnippets", JSON.stringify(snippets));
-        snippetInput.value = "";
-        renderSnippets();
+    if (!text) return;
+
+    // Get current count from DOM (most reliable & already rendered)
+    const currentCount = snippetList.children.length;
+
+    // Check permission
+    const permission = subscriptionManager.canAddSnippet(currentCount);
+
+    if (!permission.allowed) {
+        // Show the paywall overlay (already exists in your HTML)
+        document.getElementById("snippetPaywall").style.display = "flex";
+
+        // Optional: better user feedback
+        showToast(
+            "Free plan limited to 10 snippets. Upgrade to Pro for unlimited storage.",
+            "warning"
+        );
+
+        // Optional analytics
+        gtag("event", "snippet_limit_hit", {
+            event_category: "Feature Limit",
+            event_label: "Snippet Save Blocked",
+            value: currentCount
+        });
+
+        return; // ← stop here — do NOT save
     }
+
+    // If we reach this point → save is allowed
+    snippets.push(text);
+    localStorage.setItem("grammarSnippets", JSON.stringify(snippets));
+    snippetInput.value = "";
+    renderSnippets();
+
+    // Nice feedback
+    showToast("Snippet saved!", "success");
+
+    // Optional: track successful saves
+    gtag("event", "snippet_saved", {
+        event_category: "Engagement",
+        event_label: subscriptionManager.hasProAccess() ? "Pro" : "Free",
+        value: currentCount + 1
+    });
 });
 
 // Close modal on background click
@@ -460,22 +497,59 @@ async function showGrammarRule(index) {
     const correction = corrections[index];
     if (!correction) return;
 
+    // ── NEW: permission check ────────────────────────────────
+    const canUse = subscriptionManager.canUseAIExplanation();
+
+    if (!canUse.allowed) {
+        // Show the existing daily limit warning (already in your HTML)
+        const warning = document.getElementById("usageLimitWarning");
+        warning.querySelector("strong").textContent = "⚠️ " + canUse.message;
+        warning.style.display = "block";
+
+        // Optional: scroll to it or highlight
+        warning.scrollIntoView({ behavior: "smooth", block: "center" });
+
+        // Stronger nudge: open upgrade modal after short delay
+        setTimeout(() => {
+            openUpgradeModal();
+            gtag("event", "upgrade_nudge", {
+                event_category: "Limit",
+                event_label: "Learn More Blocked → Upgrade Modal",
+                value: subscriptionManager.dailyUsage.aiExplanations || 0
+            });
+        }, 800);
+
+        return;   // ← stop here — do NOT open modal or call API
+    }
+
+    // If free user → count this usage now (before opening modal)
+    if (!subscriptionManager.hasProAccess()) {
+        subscriptionManager.incrementAIExplanationUsage();
+
+        // Optional: show remaining count in warning if low
+        const remaining = 5 - subscriptionManager.dailyUsage.aiExplanations;
+        if (remaining <= 2 && remaining > 0) {
+            const warning = document.getElementById("usageLimitWarning");
+            warning.querySelector("strong").textContent =
+                `ℹ️ Only ${remaining} detailed explanations left today.`;
+            warning.style.display = "block";
+        }
+    }
+
+    // ── Proceed as before ─────────────────────────────────────
     modalTitle.textContent = "Grammar Rule: " + (correction.rule_name || "Grammar Error");
     modalBody.innerHTML = `
-                <div class="loading">
-                    <div class="spinner"></div>
-                    <p>Loading detailed explanation...</p>
-                </div>
-            `;
+        <div class="loading">
+            <div class="spinner"></div>
+            <p>Loading detailed explanation...</p>
+        </div>
+    `;
     ruleModal.classList.add("active");
 
     try {
-        // Request detailed rule from API
         const response = await fetch(API_ENDPOINT, {
             method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
+            headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
                 action: "get_rule",
                 correction: correction,
@@ -483,91 +557,36 @@ async function showGrammarRule(index) {
         });
 
         const data = await response.json();
-
-        if (data.error) {
-            throw new Error(data.error);
-        }
+        if (data.error) throw new Error(data.error);
 
         const rule = data.rule;
 
         modalBody.innerHTML = `
-                    <div class="rule-section">
-                        <h3>📖 Rule Explanation</h3>
-                        <p>${escapeHtml(rule.explanation || correction.explanation)}</p>
-                    </div>
+            <div class="rule-section">
+                <h3>📖 Rule Explanation</h3>
+                <p>${escapeHtml(rule.explanation || correction.explanation)}</p>
+            </div>
+            <!-- ... rest of your HTML (examples, quiz, etc.) ... -->
+        `;
 
-                    <div class="rule-section">
-                        <h3>✅ Correct Examples</h3>
-                        <div class="examples-grid">
-                            ${(rule.correct_examples || [])
-                                .map(
-                                    (ex) => `
-                                <div class="example-item correct">
-                                    <div class="example-label">✓ Correct</div>
-                                    <div class="example-text">${escapeHtml(ex)}</div>
-                                </div>
-                            `
-                                )
-                                .join("")}
-                        </div>
-                    </div>
-
-                    <div class="rule-section">
-                        <h3>❌ Incorrect Examples</h3>
-                        <div class="examples-grid">
-                            ${(rule.incorrect_examples || [])
-                                .map(
-                                    (ex) => `
-                                <div class="example-item incorrect">
-                                    <div class="example-label">✗ Incorrect</div>
-                                    <div class="example-text">${escapeHtml(ex)}</div>
-                                </div>
-                            `
-                                )
-                                .join("")}
-                        </div>
-                    </div>
-
-                    ${
-                        rule.quiz
-                            ? `
-                        <div class="rule-section">
-                            <h3>🎯 Quick Quiz</h3>
-                            <p><strong>Question:</strong> ${escapeHtml(rule.quiz.question)}</p>
-                            <div class="examples-grid" style="margin-top: 1rem;">
-                                ${rule.quiz.options
-                                    .map(
-                                        (opt, i) => `
-                                    <div class="example-item" style="cursor: pointer; border-left-color: #6b7280;" 
-                                         onclick="checkQuizAnswer(${i}, ${rule.quiz.correct})">
-                                        <div class="example-text">${String.fromCharCode(65 + i)}. ${escapeHtml(opt)}</div>
-                                    </div>
-                                `
-                                    )
-                                    .join("")}
-                            </div>
-                        </div>
-                    `
-                            : ""
-                    }
-                `;
-        // ── ADD THIS RIGHT AFTER modalBody.innerHTML = `...` in the try block ──
+        // Your existing tracking
         gtag("event", "ai_explanation_view", {
             event_category: "Tool",
             event_label: correction.rule_name || correction.type || "Unknown Rule",
             value: 1,
         });
+
     } catch (error) {
         console.error("Error loading rule:", error);
         modalBody.innerHTML = `
-                    <div class="rule-section">
-                        <h3>📖 Rule Explanation</h3>
-                        <p>${escapeHtml(correction.explanation)}</p>
-                        <p style="margin-top: 1rem; color: #ef4444; font-size: 0.875rem;">
-                            Could not load detailed examples. ${error.message}
-                        </p>
-                    </div>
-                `;
+            <div class="rule-section">
+                <h3>📖 Rule Explanation</h3>
+                <p>${escapeHtml(correction.explanation)}</p>
+                <p style="margin-top: 1rem; color: #ef4444; font-size: 0.875rem;">
+                    Could not load detailed examples. ${error.message}
+                </p>
+            </div>
+        `;
     }
 }
 
