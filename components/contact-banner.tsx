@@ -2,7 +2,7 @@ import Link from "next/link"
 
 export function ContactBanner() {
   return (
-    <section className="bg-gray-950 py-8">
+    <section className="bg-gray-950 pb-8">
       <div className="mx-auto max-w-6xl px-6">
         <div className="flex flex-col items-center justify-between gap-6 rounded-2xl border border-gray-700 bg-gray-900 p-8 shadow-2xl md:flex-row md:p-10">
           

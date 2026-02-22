@@ -360,7 +360,7 @@ class SubscriptionManagerClass {
 // ========================================
 
 const LEMONSQUEEZY_CONFIG: LemonSqueezyConfig = {
-  apiEndpoint: "lemonsqueezy-api.php",
+  apiEndpoint: "api.grammar-mentor.com/lemonsqueezy-api.php",
   checkoutUrls: {
     monthly:
       "https://grammar-mentor.lemonsqueezy.com/checkout/buy/f1ea24e6-4964-46a0-b442-3a659f76ed5a",
@@ -373,7 +373,7 @@ const LEMONSQUEEZY_CONFIG: LemonSqueezyConfig = {
     "https://grammar-mentor.lemonsqueezy.com/checkout/buy/4f3f8322-6efa-41d6-b884-8176cbcac195",
 };
 
-const API_ENDPOINT = "subscribe.php";
+const API_ENDPOINT = "api.grammar-mentor.com/subscribe.php";
 
 // Create singleton instance
 const subscriptionManager = new SubscriptionManagerClass();

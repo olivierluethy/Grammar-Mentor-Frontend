@@ -38,7 +38,7 @@ const tiers = [
 
 export function PricingSection() {
   return (
-    <section className="bg-slate-950 py-20 text-slate-200">
+    <section className="bg-slate-950 py-5 text-slate-200">
       <div className="mx-auto max-w-6xl p-6">
         <div className="flex flex-col gap-6 md:flex-row">
           {tiers.map((tier, index) => (
