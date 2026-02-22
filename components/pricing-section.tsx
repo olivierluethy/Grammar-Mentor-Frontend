@@ -27,7 +27,7 @@ const tiers = [
     name: "Subscribe",
     description: "Subscribe to learn even more from your mistakes",
     features: ["Priority Processing", "Unlimited History"],
-    cta: "Subscribe",
+    cta: "Register",
     isButton: true,
     href: "/register",
     // Kräftiger Blau-Gradient für das Haupt-Abo
@@ -78,20 +78,17 @@ export function PricingSection() {
                   )}
                 </div>
                 
-                {tier.isButton ? (
-                  <Link href={tier.href || "#"} className="group">
-                    <button
-                      className={`group flex w-full items-center justify-center gap-2 rounded-xl px-4 py-3 text-sm font-bold text-white transition-all duration-200 active:scale-[0.98] ${tier.buttonStyles}`}
-                    >
-                      {tier.cta}
-                      <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
-                    </button>
-                  </Link>
-                ) : (
-                  <div className="py-3 text-center text-sm font-medium text-slate-500 border border-slate-800 rounded-xl bg-slate-900/50">
-                    No Sign up required
-                  </div>
-                )}
+                {/* Only render if isButton is true */}
+{tier.isButton && (
+  <Link href={tier.href || "#"} className="group">
+    <button
+      className={`group flex w-full items-center justify-center gap-2 rounded-xl px-4 py-3 text-sm font-bold text-white transition-all duration-200 active:scale-[0.98] ${tier.buttonStyles}`}
+    >
+      {tier.cta}
+      <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+    </button>
+  </Link>
+)}
               </div>
             </div>
           ))}

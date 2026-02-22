@@ -10,12 +10,25 @@ export default function ContactPage() {
     message: "",
   })
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault()
-    // Handle form submission logic here
-    console.log("Form Submitted:", formData)
-    alert("Message sent! (This is a demo)")
+  const handleSubmit = async (e: React.FormEvent) => {
+  e.preventDefault();
+  
+  try {
+    const response = await fetch("https://api.grammar-mentor.com", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(formData),
+    });
+    
+    if (response.ok) {
+      alert("Nachricht erfolgreich gespeichert!");
+      setFormData({ fullName: "", email: "", message: "" });
+    }
+  } catch (error) {
+    console.error("Fehler beim Senden:", error);
   }
+};
+
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     setFormData({ ...formData, [e.target.name]: e.target.value })
