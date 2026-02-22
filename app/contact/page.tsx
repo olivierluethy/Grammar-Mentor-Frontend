@@ -36,20 +36,20 @@ export default function ContactPage() {
       try {
         result = await response.json()
       } catch {
-        throw new Error("Ungültige Serverantwort")
+        throw new Error("Invalid server response")
       }
 
       if (response.ok && result.success) {
         setIsError(false)
-        setStatusMessage("Nachricht erfolgreich gesendet!")
+        setStatusMessage("Message sent successfully!")
         setFormData({ fullName: "", email: "", message: "" })
       } else {
         setIsError(true)
-        setStatusMessage(result?.error || "Ein Fehler ist aufgetreten.")
+        setStatusMessage(result?.error || "An error has occurred.")
       }
     } catch (error) {
       setIsError(true)
-      setStatusMessage("Server nicht erreichbar. Bitte später erneut versuchen.")
+      setStatusMessage("Server unavailable. Please try again later.")
     } finally {
       setLoading(false)
     }

@@ -1,16 +1,24 @@
 "use client";
 
-import { useState, useEffect, useRef, useCallback, JSX } from "react";
+import {
+  useState,
+  useEffect,
+  useRef,
+  useCallback,
+  useLayoutEffect,
+  createContext,
+  useContext,
+  useMemo,
+  JSX,
+} from "react";
 import Script from "next/script";
 import Head from "next/head";
-// Add this line at the top of components/grammar-checker-demo.tsx
 import { Search, CheckCheck, Trash2, ClipboardPaste, Copy, Loader2 } from "lucide-react"
 
 // ========================================
 // TYPE DEFINITIONS
 // ========================================
 
-// Extend Window interface for gtag and dataLayer
 declare global {
   interface Window {
     dataLayer: Array<Record<string, unknown>>;
@@ -88,16 +96,19 @@ interface GrammarCheckResponse {
   error?: string;
 }
 
-interface RuleResponse {
-  rule?: {
-    explanation: string;
-    examples?: Array<{ correct: string; incorrect: string }>;
-    quiz?: {
-      question: string;
-      options: string[];
-      correct: number;
-    };
+interface RuleData {
+  explanation: string;
+  correct_examples?: string[];
+  incorrect_examples?: string[];
+  quiz?: {
+    question: string;
+    options: string[];
+    correct: number;
   };
+}
+
+interface RuleResponse {
+  rule?: RuleData;
   error?: string;
 }
 
@@ -109,6 +120,42 @@ interface LemonSqueezyConfig {
     lifetime: string;
   };
   checkoutUrl: string;
+}
+
+interface SubscriptionState {
+  user: User | null;
+  subscription: Subscription | null;
+  dailyUsage: DailyUsage;
+  isPro: boolean;
+}
+
+// ========================================
+// DEBOUNCE UTILITY
+// ========================================
+
+function debounce<T extends (...args: Parameters<T>) => void>(
+  func: T,
+  wait: number
+): T & { cancel: () => void } {
+  let timeoutId: ReturnType<typeof setTimeout> | null = null;
+
+  const debounced = (...args: Parameters<T>) => {
+    if (timeoutId) {
+      clearTimeout(timeoutId);
+    }
+    timeoutId = setTimeout(() => {
+      func(...args);
+    }, wait);
+  };
+
+  debounced.cancel = () => {
+    if (timeoutId) {
+      clearTimeout(timeoutId);
+      timeoutId = null;
+    }
+  };
+
+  return debounced as T & { cancel: () => void };
 }
 
 // ========================================
@@ -126,6 +173,26 @@ function gtag(...args: GtagArgs): void {
 }
 
 // ========================================
+// LEMON SQUEEZY CONFIG
+// ========================================
+
+const LEMONSQUEEZY_CONFIG: LemonSqueezyConfig = {
+  apiEndpoint: "https://api.grammar-mentor.com/lemonsqueezy-api.php",
+  checkoutUrls: {
+    monthly:
+      "https://grammar-mentor.lemonsqueezy.com/checkout/buy/f1ea24e6-4964-46a0-b442-3a659f76ed5a",
+    yearly:
+      "https://grammar-mentor.lemonsqueezy.com/checkout/buy/4f3f8322-6efa-41d6-b884-8176cbcac195",
+    lifetime:
+      "https://grammar-mentor.lemonsqueezy.com/checkout/buy/d9b6bd65-57d6-47eb-851e-47278b468439",
+  },
+  checkoutUrl:
+    "https://grammar-mentor.lemonsqueezy.com/checkout/buy/4f3f8322-6efa-41d6-b884-8176cbcac195",
+};
+
+const API_ENDPOINT = "https://api.grammar-mentor.com/subscribe.php";
+
+// ========================================
 // SUBSCRIPTION MANAGER CLASS
 // ========================================
 
@@ -133,14 +200,21 @@ class SubscriptionManagerClass {
   user: User | null = null;
   subscription: Subscription | null = null;
   dailyUsage: DailyUsage;
-  private updateUICallback: (() => void) | null = null;
+  private listeners: Set<() => void> = new Set();
 
   constructor() {
     this.dailyUsage = this.loadDailyUsage();
   }
 
-  setUpdateUICallback(callback: () => void): void {
-    this.updateUICallback = callback;
+  subscribe(listener: () => void): () => void {
+    this.listeners.add(listener);
+    return () => {
+      this.listeners.delete(listener);
+    };
+  }
+
+  private notifyListeners(): void {
+    this.listeners.forEach((listener) => listener());
   }
 
   init(): void {
@@ -158,6 +232,7 @@ class SubscriptionManagerClass {
         const session: SessionData = JSON.parse(sessionData);
         this.user = session.user;
         this.subscription = session.subscription;
+        this.notifyListeners();
       } catch (e) {
         console.error("Failed to parse session data:", e);
       }
@@ -207,6 +282,7 @@ class SubscriptionManagerClass {
     }
     this.dailyUsage.aiExplanations++;
     this.saveDailyUsage();
+    this.notifyListeners();
   }
 
   hasProAccess(): boolean {
@@ -240,18 +316,14 @@ class SubscriptionManagerClass {
     return { allowed: true, remaining: limit - used };
   }
 
-  canUseAdvancedStyle(): boolean {
-    return this.hasProAccess();
-  }
-
   canAddSnippet(currentCount: number): CheckPermissionResult {
     if (this.hasProAccess()) return { allowed: true };
 
     const limit = 10;
     if (currentCount >= limit) {
-      gtag("event", "paywall_view", {
+      gtag("event", "snippet_limit_hit", {
         event_category: "Upgrade",
-        event_label: "Snippet Storage Limit Paywall Shown",
+        event_label: "Snippet Storage Limit Hit",
         value: currentCount,
       });
       return {
@@ -292,9 +364,7 @@ class SubscriptionManagerClass {
         };
 
         this.saveSession();
-        if (this.updateUICallback) {
-          this.updateUICallback();
-        }
+        this.notifyListeners();
 
         gtag("event", "login_success", {
           event_category: "Auth",
@@ -317,7 +387,8 @@ class SubscriptionManagerClass {
 
   async loginWithEmail(email: string): Promise<LoginResponse> {
     try {
-      const res = await fetch(LEMONSQUEEZY_CONFIG.apiEndpoint + "?action=login_with_email",
+      const res = await fetch(
+        LEMONSQUEEZY_CONFIG.apiEndpoint + "?action=login_with_email",
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
@@ -344,9 +415,22 @@ class SubscriptionManagerClass {
     if (typeof window !== "undefined") {
       localStorage.removeItem("grammar_mentor_session");
     }
-    if (this.updateUICallback) {
-      this.updateUICallback();
-    }
+    this.notifyListeners();
+
+    gtag("event", "logout", {
+      event_category: "Auth",
+      event_label: "User Logged Out",
+      value: 1,
+    });
+  }
+
+  getState(): SubscriptionState {
+    return {
+      user: this.user,
+      subscription: this.subscription,
+      dailyUsage: this.dailyUsage,
+      isPro: this.hasProAccess(),
+    };
   }
 
   updateSnippetCount(count: number): string {
@@ -354,38 +438,157 @@ class SubscriptionManagerClass {
   }
 }
 
-// ========================================
-// LEMON SQUEEZY CONFIG
-// ========================================
-
-const LEMONSQUEEZY_CONFIG: LemonSqueezyConfig = {
-  apiEndpoint: "https://api.grammar-mentor.com/lemonsqueezy-api.php",
-  checkoutUrls: {
-    monthly:
-      "https://grammar-mentor.lemonsqueezy.com/checkout/buy/f1ea24e6-4964-46a0-b442-3a659f76ed5a",
-    yearly:
-      "https://grammar-mentor.lemonsqueezy.com/checkout/buy/4f3f8322-6efa-41d6-b884-8176cbcac195",
-    lifetime:
-      "https://grammar-mentor.lemonsqueezy.com/checkout/buy/d9b6bd65-57d6-47eb-851e-47278b468439",
-  },
-  checkoutUrl:
-    "https://grammar-mentor.lemonsqueezy.com/checkout/buy/4f3f8322-6efa-41d6-b884-8176cbcac195",
-};
-
-const API_ENDPOINT = "https://api.grammar-mentor.com/subscribe.php";
-
 // Create singleton instance
 const subscriptionManager = new SubscriptionManagerClass();
+
+// ========================================
+// SUBSCRIPTION CONTEXT (Priority 2 - Fix #4)
+// ========================================
+
+const SubscriptionContext = createContext<SubscriptionManagerClass>(subscriptionManager);
+
+function useSubscription(): SubscriptionState {
+  const manager = useContext(SubscriptionContext);
+  const [state, setState] = useState<SubscriptionState>(manager.getState());
+
+  useEffect(() => {
+    const unsubscribe = manager.subscribe(() => {
+      setState(manager.getState());
+    });
+    return unsubscribe;
+  }, [manager]);
+
+  return state;
+}
+
+// ========================================
+// RULE MODAL CONTENT COMPONENT (Priority 3 - Fix #7)
+// ========================================
+
+interface RuleModalContentProps {
+  rule: RuleData | null;
+  correction: Correction;
+  isLoading: boolean;
+  error: string | null;
+}
+
+function RuleModalContent({
+  rule,
+  correction,
+  isLoading,
+  error,
+}: RuleModalContentProps): JSX.Element {
+  if (isLoading) {
+    return (
+      <div className="text-center p-8 text-gray-500">
+        <div className="w-10 h-10 border-[3px] border-gray-100 border-t-indigo-500 rounded-full animate-spin mx-auto mb-4"></div>
+        <p>Loading detailed explanation...</p>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="mb-8">
+        <h3 className="text-xl font-semibold text-white mb-4">📖 Rule Explanation</h3>
+        <p className="text-white leading-relaxed mb-4">{correction.explanation}</p>
+        <p className="mt-4 text-red-500 text-sm">
+          Could not load detailed examples. {error}
+        </p>
+      </div>
+    );
+  }
+
+  const explanation = rule?.explanation || correction.explanation;
+  const correctExamples = rule?.correct_examples || [];
+  const incorrectExamples = rule?.incorrect_examples || [];
+  const hasCorrectExamples = correctExamples.length > 0;
+  const hasIncorrectExamples = incorrectExamples.length > 0;
+
+  return (
+    <>
+      <div className="mb-8">
+        <h3 className="text-xl font-semibold text-white mb-4">📖 Rule Explanation</h3>
+        <p className="text-white leading-relaxed mb-4">{explanation}</p>
+      </div>
+
+      {hasCorrectExamples && (
+        <div className="mb-8">
+          <h3 className="text-xl font-semibold text-white mb-4">✅ Correct Examples</h3>
+          <div className="grid gap-3 mt-4">
+            {correctExamples.map((ex, index) => (
+              <div key={index} className="p-4 rounded-lg border-l-4 bg-emerald-100 border-emerald-500">
+                <div className="text-xs font-semibold uppercase mb-2 text-emerald-800">
+                  ✓ Correct
+                </div>
+                <div className="text-black">{ex}</div>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+
+      {hasIncorrectExamples && (
+        <div className="mb-8">
+          <h3 className="text-xl font-semibold text-white mb-4">❌ Incorrect Examples</h3>
+          <div className="grid gap-3 mt-4">
+            {incorrectExamples.map((ex, index) => (
+              <div key={index} className="p-4 rounded-lg border-l-4 bg-red-100 border-red-500">
+                <div className="text-xs font-semibold uppercase mb-2 text-red-800">
+                  ✗ Incorrect
+                </div>
+                <div className="text-black">{ex}</div>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+
+      {rule?.quiz && (
+        <div className="mb-8">
+          <h3 className="text-xl font-semibold text-white mb-4">🎯 Quick Quiz</h3>
+          <p className="text-white mb-4"><strong>Question:</strong> {rule.quiz.question}</p>
+          <div className="grid gap-2">
+            {rule.quiz.options.map((option, index) => (
+              <button
+                key={index}
+                onClick={() => {
+                  if (index === rule.quiz!.correct) {
+                    alert("✅ Correct! Well done!");
+                  } else {
+                    alert(
+                      `❌ Not quite. The correct answer is option ${String.fromCharCode(
+                        65 + rule.quiz!.correct
+                      )}.`
+                    );
+                  }
+                }}
+                className="w-full text-left p-3 bg-slate-800 text-white rounded-lg hover:bg-slate-700 transition-colors cursor-pointer"
+              >
+                {String.fromCharCode(65 + index)}. {option}
+              </button>
+            ))}
+          </div>
+        </div>
+      )}
+    </>
+  );
+}
 
 // ========================================
 // MAIN COMPONENT
 // ========================================
 
 export default function GrammarMentor(): JSX.Element {
+  // Use subscription context instead of forceUpdate
+  const subscriptionState = useSubscription();
+  const { user, subscription, isPro } = subscriptionState;
+
   // State
   const [corrections, setCorrections] = useState<Correction[]>([]);
   const [fixedCount, setFixedCount] = useState<number>(0);
   const [snippets, setSnippets] = useState<string[]>([]);
+  const [snippetsLoading, setSnippetsLoading] = useState<boolean>(true);
   const [text, setText] = useState<string>("");
   const [isChecking, setIsChecking] = useState<boolean>(false);
   const [showStats, setShowStats] = useState<boolean>(false);
@@ -397,21 +600,25 @@ export default function GrammarMentor(): JSX.Element {
   const [showSnippets, setShowSnippets] = useState<boolean>(false);
   const [showRuleModal, setShowRuleModal] = useState<boolean>(false);
   const [modalTitle, setModalTitle] = useState<string>("");
-  const [modalContent, setModalContent] = useState<string>("");
+  const [ruleData, setRuleData] = useState<RuleData | null>(null);
+  const [ruleLoading, setRuleLoading] = useState<boolean>(false);
+  const [ruleError, setRuleError] = useState<string | null>(null);
+  const [activeCorrection, setActiveCorrection] = useState<Correction | null>(null);
   const [showUpgradeModal, setShowUpgradeModal] = useState<boolean>(false);
   const [showLoginModal, setShowLoginModal] = useState<boolean>(false);
   const [showStylePaywall, setShowStylePaywall] = useState<boolean>(false);
   const [showSnippetPaywall, setShowSnippetPaywall] = useState<boolean>(false);
   const [usageLimitWarning, setUsageLimitWarning] = useState<string>("");
-  const [showUsageLimitWarning, setShowUsageLimitWarning] =
-    useState<boolean>(false);
+  const [showUsageLimitWarning, setShowUsageLimitWarning] = useState<boolean>(false);
   const [loginEmail, setLoginEmail] = useState<string>("");
   const [toast, setToast] = useState<{
     message: string;
     type: string;
     show: boolean;
   }>({ message: "", type: "success", show: false });
-  const [, forceUpdate] = useState<number>(0);
+
+  // Debounced word count state
+  const [wordCountValue, setWordCountValue] = useState<number>(0);
 
   // Refs
   const textEditorRef = useRef<HTMLTextAreaElement>(null);
@@ -423,23 +630,40 @@ export default function GrammarMentor(): JSX.Element {
   // ========================================
 
   useEffect(() => {
-    // Load snippets from localStorage
+    // Load snippets from localStorage with error handling (Priority 3 - Fix #9)
     if (typeof window !== "undefined") {
-      const savedSnippets = localStorage.getItem("grammarSnippets");
-      if (savedSnippets) {
-        try {
+      setSnippetsLoading(true);
+      try {
+        const savedSnippets = localStorage.getItem("grammarSnippets");
+        if (savedSnippets) {
           setSnippets(JSON.parse(savedSnippets));
-        } catch (e) {
-          console.error("Failed to parse snippets:", e);
         }
+      } catch (e) {
+        console.error("Failed to parse snippets:", e);
+        // Reset corrupted data
+        localStorage.removeItem("grammarSnippets");
+      } finally {
+        setSnippetsLoading(false);
+      }
+
+      // Load persisted text (Priority 3 - Fix #10)
+      try {
+        const savedText = localStorage.getItem("grammar_mentor_text");
+        if (savedText) {
+          setText(savedText);
+        }
+      } catch (e) {
+        console.error("Failed to load saved text:", e);
       }
     }
 
     // Initialize subscription manager
     subscriptionManager.init();
-    subscriptionManager.setUpdateUICallback(() => {
-      forceUpdate((n) => n + 1);
-    });
+
+    // Initialize Lemon Squeezy (Priority 2 - Fix #6)
+    if (typeof window !== "undefined" && window.createLemonSqueezy) {
+      window.createLemonSqueezy();
+    }
 
     // Track time on page
     const handleBeforeUnload = (): void => {
@@ -459,28 +683,130 @@ export default function GrammarMentor(): JSX.Element {
     };
   }, []);
 
-  // Update auth status tracking
+  // ========================================
+  // GOOGLE SIGN-IN CALLBACK (Priority 1 - Fix #1)
+  // ========================================
+
   useEffect(() => {
-    gtag("event", "auth_status_view", {
-      event_category: "Auth",
-      event_label: subscriptionManager.user ? "Logged In" : "Not Logged In",
-      user_plan: subscriptionManager.user
-        ? subscriptionManager.subscription?.plan || "unknown"
-        : "guest",
-    });
+    window.handleGoogleSignIn = async (response: GoogleSignInResponse) => {
+      const idToken = response.credential;
+
+      gtag("event", "login_attempt", {
+        event_category: "Auth",
+        event_label: "Google Sign-In Attempt",
+        method: "google_gsi",
+        value: 1,
+      });
+
+      try {
+        const res = await fetch(
+          LEMONSQUEEZY_CONFIG.apiEndpoint + "?action=google_login",
+          {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ id_token: idToken }),
+          }
+        );
+
+        const data = await res.json();
+
+        if (data.success) {
+          const result = await subscriptionManager.login(data.email);
+          if (result.success) {
+            setShowLoginModal(false);
+
+            gtag("event", "login_success", {
+              event_category: "Auth",
+              event_label: "Google Sign-In Success",
+              method: "google_gsi",
+              user_plan: data.plan || "unknown",
+              value: 1,
+            });
+
+            if (data.plan === "free" || data.status !== "active") {
+              showToastMessage(
+                "Welcome! You are on the Free plan. Upgrade for unlimited features?",
+                "warning"
+              );
+              setTimeout(() => setShowUpgradeModal(true), 1200);
+            } else {
+              showToastMessage("Welcome! Pro features activated.", "success");
+            }
+          }
+        } else {
+          alert(data.error || "Google login failed");
+          gtag("event", "login_error", {
+            event_category: "Auth",
+            event_label: "Google Sign-In Failed",
+            error: data.error || "unknown",
+          });
+        }
+      } catch (err) {
+        console.error(err);
+        alert("Connection error");
+        gtag("event", "login_error", {
+          event_category: "Auth",
+          event_label: "Google Sign-In Connection Error",
+        });
+      }
+    };
+
+    return () => {
+      delete window.handleGoogleSignIn;
+    };
   }, []);
+
+  // ========================================
+  // HIGHLIGHT LAYER SCROLL SYNC (Priority 1 - Fix #2)
+  // ========================================
+
+  useLayoutEffect(() => {
+    if (highlightLayerRef.current && textEditorRef.current) {
+      highlightLayerRef.current.scrollTop = textEditorRef.current.scrollTop;
+      highlightLayerRef.current.scrollLeft = textEditorRef.current.scrollLeft;
+    }
+  }, [text]);
+
+  // ========================================
+  // DEBOUNCED UPDATES (Priority 2 - Fix #5)
+  // ========================================
+
+  const debouncedUpdateWordCount = useMemo(
+    () =>
+      debounce(() => {
+        const trimmedText = text.trim();
+        const count = trimmedText ? trimmedText.split(/\s+/).length : 0;
+        setWordCountValue(count);
+      }, 150),
+    [text]
+  );
+
+  useEffect(() => {
+    debouncedUpdateWordCount();
+    return () => debouncedUpdateWordCount.cancel();
+  }, [text, debouncedUpdateWordCount]);
+
+  // Persist text to localStorage (Priority 3 - Fix #10)
+  const debouncedPersistText = useMemo(
+    () =>
+      debounce(() => {
+        if (typeof window !== "undefined") {
+          localStorage.setItem("grammar_mentor_text", text);
+        }
+      }, 500),
+    [text]
+  );
+
+  useEffect(() => {
+    debouncedPersistText();
+    return () => debouncedPersistText.cancel();
+  }, [text, debouncedPersistText]);
 
   // ========================================
   // UTILITY FUNCTIONS
   // ========================================
 
-  const escapeHtml = (inputText: string): string => {
-    const div = document.createElement("div");
-    div.textContent = inputText;
-    return div.innerHTML;
-  };
-
-  const showToast = useCallback(
+  const showToastMessage = useCallback(
     (message: string, type: "success" | "warning" = "success"): void => {
       setToast({ message, type, show: true });
       setTimeout(() => {
@@ -489,11 +815,6 @@ export default function GrammarMentor(): JSX.Element {
     },
     []
   );
-
-  const updateWordCount = (): number => {
-    const trimmedText = text.trim();
-    return trimmedText ? trimmedText.split(/\s+/).length : 0;
-  };
 
   // ========================================
   // GRAMMAR CHECKING
@@ -506,7 +827,6 @@ export default function GrammarMentor(): JSX.Element {
       return;
     }
 
-    // Track character count when Check Grammar is clicked
     const characterCount = trimmedText.length;
     gtag("event", "grammar_check_submit", {
       event_category: "Tool",
@@ -572,14 +892,14 @@ export default function GrammarMentor(): JSX.Element {
       const errorMessage =
         error instanceof Error ? error.message : "Unknown error";
       setCorrections([]);
-      showToast(`Error: ${errorMessage}`, "warning");
+      showToastMessage(`Error: ${errorMessage}`, "warning");
     } finally {
       setIsChecking(false);
     }
   };
 
   // ========================================
-  // CORRECTION HANDLING
+  // CORRECTION HANDLING (Priority 1 - Fix #3 - Complete gtag tracking)
   // ========================================
 
   const acceptCorrection = (index: number): void => {
@@ -608,10 +928,13 @@ export default function GrammarMentor(): JSX.Element {
     setCorrections(updatedCorrections);
     setFixedCount((prev) => prev + 1);
 
+    // Complete gtag tracking
     gtag("event", "suggestion_accepted", {
       event_category: "Tool",
       event_label: "Single Suggestion Accepted",
       value: 1,
+      issue_type: correction.type || "unknown",
+      rule_name: correction.rule_name || "unknown",
     });
   };
 
@@ -653,13 +976,17 @@ export default function GrammarMentor(): JSX.Element {
 
     setCorrections(updatedCorrections);
 
+    // Complete gtag tracking
     gtag("event", "accept_all", {
       event_category: "Tool",
       event_label: "Accept All Suggestions",
+      value: activeCorrections.length,
+      issues_fixed: activeCorrections.length,
     });
   };
 
   const ignoreCorrection = (index: number): void => {
+    const correction = corrections[index];
     const updatedCorrections = corrections.map((c, i) => {
       if (i === index) {
         return { ...c, ignored: true };
@@ -668,14 +995,18 @@ export default function GrammarMentor(): JSX.Element {
     });
     setCorrections(updatedCorrections);
 
+    // Complete gtag tracking
     gtag("event", "suggestion_ignored", {
       event_category: "Tool",
       event_label: "Suggestion Ignored",
+      value: 1,
+      issue_type: correction?.type || "unknown",
+      rule_name: correction?.rule_name || "unknown",
     });
   };
 
   // ========================================
-  // GRAMMAR RULE MODAL
+  // GRAMMAR RULE MODAL (Using proper JSX - Priority 3 - Fix #7)
   // ========================================
 
   const showGrammarRule = async (index: number): Promise<void> => {
@@ -713,12 +1044,10 @@ export default function GrammarMentor(): JSX.Element {
     }
 
     setModalTitle("Grammar Rule: " + (correction.rule_name || "Grammar Error"));
-    setModalContent(`
-      <div class="mb-8">
-        <div class="w-10 h-10 border-[3px] border-gray-100 border-t-indigo-500 rounded-full animate-spin mx-auto mb-4"></div>
-        <p class="text-gray-500">Loading detailed explanation...</p>
-      </div>
-    `);
+    setActiveCorrection(correction);
+    setRuleData(null);
+    setRuleLoading(true);
+    setRuleError(null);
     setShowRuleModal(true);
 
     try {
@@ -734,58 +1063,23 @@ export default function GrammarMentor(): JSX.Element {
       const data: RuleResponse = await response.json();
       if (data.error) throw new Error(data.error);
 
-      const rule = data.rule;
+      setRuleData(data.rule || null);
 
-      setModalContent(`
-        <div class="mb-8">
-          <h3 class="text-xl font-semibold text-white mb-4">📖 Rule Explanation</h3>
-          <p class="text-white leading-relaxed mb-4">${escapeHtml(rule?.explanation || correction.explanation)}</p>
-        </div>
-        ${
-          rule?.examples
-            ? `
-          <div class="mb-8">
-            <h3 class="text-xl font-semibold text-white mb-4">📝 Examples</h3>
-            <div class="grid gap-4 mt-4">
-              ${rule.examples
-                .map(
-                  (ex) => `
-                <div class="p-4 rounded-lg border-l-4 bg-emerald-100 border-emerald-500">
-                  <div class="text-xs font-semibold uppercase mb-2 text-emerald-800">Correct</div>
-                  <div class="text-black">${escapeHtml(ex.correct)}</div>
-                </div>
-                <div class="p-4 rounded-lg border-l-4 bg-red-100 border-red-500">
-                  <div class="text-xs font-semibold uppercase mb-2 text-red-800">Incorrect</div>
-                  <div class="text-black">${escapeHtml(ex.incorrect)}</div>
-                </div>
-              `
-                )
-                .join("")}
-            </div>
-          </div>
-        `
-            : ""
-        }
-      `);
-
+      // Complete gtag tracking
       gtag("event", "ai_explanation_view", {
         event_category: "Tool",
         event_label: correction.rule_name || correction.type || "Unknown Rule",
         value: 1,
+        has_examples: data.rule?.correct_examples || data.rule?.incorrect_examples ? "yes" : "no",
+        has_quiz: data.rule?.quiz ? "yes" : "no",
       });
     } catch (error) {
       console.error("Error loading rule:", error);
       const errorMessage =
         error instanceof Error ? error.message : "Unknown error";
-      setModalContent(`
-        <div class="mb-8">
-          <h3 class="text-xl font-semibold text-white mb-4">📖 Rule Explanation</h3>
-          <p class="text-white leading-relaxed mb-4">${escapeHtml(correction.explanation)}</p>
-          <p class="mt-4 text-red-500 text-sm">
-            Could not load detailed examples. ${errorMessage}
-          </p>
-        </div>
-      `);
+      setRuleError(errorMessage);
+    } finally {
+      setRuleLoading(false);
     }
   };
 
@@ -802,17 +1096,12 @@ export default function GrammarMentor(): JSX.Element {
 
     if (!permission.allowed) {
       setShowSnippetPaywall(true);
-      showToast(
+      showToastMessage(
         "Free plan limited to 10 snippets. Upgrade to Pro for unlimited storage.",
         "warning"
       );
 
-      gtag("event", "snippet_limit_hit", {
-        event_category: "Feature Limit",
-        event_label: "Snippet Save Blocked",
-        value: currentCount,
-      });
-
+      // gtag already fired in canAddSnippet
       return;
     }
 
@@ -821,17 +1110,14 @@ export default function GrammarMentor(): JSX.Element {
     localStorage.setItem("grammarSnippets", JSON.stringify(newSnippets));
     setSnippetInput("");
 
-    showToast("Snippet saved!", "success");
+    showToastMessage("Snippet saved!", "success");
 
+    // Complete gtag tracking
     gtag("event", "snippet_saved", {
       event_category: "Engagement",
-      event_label: subscriptionManager.hasProAccess() ? "Pro" : "Free",
+      event_label: isPro ? "Pro" : "Free",
       value: currentCount + 1,
-    });
-
-    gtag("event", "save_snippet", {
-      event_category: "Tool",
-      event_label: "Save Snippet Clicked",
+      snippet_length: trimmedInput.length,
     });
   };
 
@@ -853,6 +1139,12 @@ export default function GrammarMentor(): JSX.Element {
         textEditorRef.current.focus();
       }
     }, 0);
+
+    gtag("event", "snippet_inserted", {
+      event_category: "Tool",
+      event_label: "Snippet Inserted",
+      value: 1,
+    });
   };
 
   const deleteSnippet = (index: number): void => {
@@ -860,6 +1152,12 @@ export default function GrammarMentor(): JSX.Element {
       const newSnippets = snippets.filter((_, i) => i !== index);
       setSnippets(newSnippets);
       localStorage.setItem("grammarSnippets", JSON.stringify(newSnippets));
+
+      gtag("event", "snippet_deleted", {
+        event_category: "Tool",
+        event_label: "Snippet Deleted",
+        value: 1,
+      });
     }
   };
 
@@ -877,17 +1175,24 @@ export default function GrammarMentor(): JSX.Element {
       "conversational",
     ];
 
-    if (proStyles.includes(newStyle) && !subscriptionManager.hasProAccess()) {
+    if (proStyles.includes(newStyle) && !isPro) {
       setShowStylePaywall(true);
       gtag("event", "paywall_view", {
         event_category: "Upgrade",
         event_label: "Advanced Style Paywall Shown",
+        attempted_style: newStyle,
       });
       setStyle("neutral");
       return;
     }
 
     setStyle(newStyle);
+
+    gtag("event", "style_changed", {
+      event_category: "Tool",
+      event_label: "Writing Style Changed",
+      new_style: newStyle,
+    });
   };
 
   // ========================================
@@ -914,12 +1219,12 @@ export default function GrammarMentor(): JSX.Element {
       setShowLoginModal(false);
 
       if (
-        subscriptionManager.subscription?.plan === "pro" &&
-        subscriptionManager.subscription?.status === "active"
+        subscription?.plan === "pro" &&
+        subscription?.status === "active"
       ) {
-        showToast("Welcome back! All Pro features are unlocked.", "success");
+        showToastMessage("Welcome back! All Pro features are unlocked.", "success");
       } else {
-        showToast(
+        showToastMessage(
           "Welcome! You are on the Free plan. Upgrade for unlimited features?",
           "warning"
         );
@@ -967,6 +1272,9 @@ export default function GrammarMentor(): JSX.Element {
 
   const closeRuleModal = (): void => {
     setShowRuleModal(false);
+    setActiveCorrection(null);
+    setRuleData(null);
+    setRuleError(null);
     gtag("event", "rule_modal_close", {
       event_category: "Modal",
       event_label: "Grammar Rule Modal Closed",
@@ -1000,7 +1308,7 @@ export default function GrammarMentor(): JSX.Element {
         page: "home",
         action: "copy_text",
       });
-      showToast("Copied to clipboard!", "success");
+      showToastMessage("Copied to clipboard!", "success");
     } catch (err) {
       console.error("Error copying:", err);
     }
@@ -1011,6 +1319,13 @@ export default function GrammarMentor(): JSX.Element {
     setCorrections([]);
     setFixedCount(0);
     setShowStats(false);
+    localStorage.removeItem("grammar_mentor_text");
+
+    gtag("event", "button_click", {
+      button: "clear",
+      page: "home",
+      action: "clear_text",
+    });
   };
 
   // ========================================
@@ -1080,19 +1395,15 @@ export default function GrammarMentor(): JSX.Element {
   // ========================================
 
   const activeCorrections = corrections.filter((c) => !c.ignored);
-  const wordCountValue = updateWordCount();
   const issueCountValue = activeCorrections.length;
-  const snippetCountText = subscriptionManager.updateSnippetCount(
-    snippets.length
-  );
-  const isPro = subscriptionManager.hasProAccess();
+  const snippetCountText = subscriptionManager.updateSnippetCount(snippets.length);
 
   // ========================================
   // RENDER
   // ========================================
 
   return (
-    <>
+    <SubscriptionContext.Provider value={subscriptionManager}>
       <Head>
         <title>Grammar Checker - Enhanced</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -1137,6 +1448,11 @@ export default function GrammarMentor(): JSX.Element {
       <Script
         src="https://app.lemonsqueezy.com/js/lemon.js"
         strategy="afterInteractive"
+        onLoad={() => {
+          if (window.createLemonSqueezy) {
+            window.createLemonSqueezy();
+          }
+        }}
       />
 
       {/* Main Container */}
@@ -1150,11 +1466,6 @@ export default function GrammarMentor(): JSX.Element {
               onClick={(e) => {
                 e.preventDefault();
                 openUpgradeModal();
-                gtag("event", "upgrade_click", {
-                  event_category: "Upgrade",
-                  event_label: "Open Upgrade Modal",
-                  value: 1,
-                });
               }}
               className="text-indigo-600 hover:text-indigo-800 underline"
             >
@@ -1165,82 +1476,78 @@ export default function GrammarMentor(): JSX.Element {
         )}
 
         {/* Controls Bar */}
-        <div className="bg-slate-900 py-6 px-8 border-b border-gray-200 flex gap-4 flex-wrap items-center">
-          <div className="flex flex-col gap-1">
-            <label className="text-xs text-gray-500 font-semibold uppercase tracking-wider">Language</label>
-            <select
-              value={language}
-              onChange={(e) => setLanguage(e.target.value)}
-              className="py-2 pl-3 pr-8 border-2 border-gray-800 rounded-md bg-white text-sm text-gray-900 cursor-pointer transition-colors hover:border-indigo-500 focus:outline-none focus:border-indigo-500 focus:ring-[3px] focus:ring-indigo-500/10"
-            >
-              <option value="auto">Auto-detect</option>
-              <option value="en">English</option>
-              <option value="es">Spanish</option>
-              <option value="fr">French</option>
-              <option value="de">German</option>
-              <option value="it">Italian</option>
-              <option value="pt">Portuguese</option>
-              <option value="nl">Dutch</option>
-              <option value="pl">Polish</option>
-              <option value="ru">Russian</option>
-              <option value="zh">Chinese</option>
-              <option value="ja">Japanese</option>
-              <option value="ko">Korean</option>
-              <option value="ar">Arabic</option>
-            </select>
-          </div>
+        {/* Controls Bar */}
+<div className="bg-slate-900 py-6 px-8 border-b border-gray-200 flex gap-4 flex-wrap items-center">
+  <div className="flex flex-col gap-1">
+    <label className="text-xs text-gray-500 font-semibold uppercase tracking-wider">
+      Language
+    </label>
+    <select
+      value={language}
+      onChange={(e) => setLanguage(e.target.value)}
+      className="py-2 pl-3 pr-8 border-2 border-gray-800 rounded-md bg-white text-black text-sm cursor-pointer transition-colors hover:border-indigo-500 focus:outline-none focus:border-indigo-500 focus:ring-[3px] focus:ring-indigo-500/10"
+    >
+      <option value="auto" className="text-black">Auto-detect</option>
+      <option value="en" className="text-black">English</option>
+      <option value="es" className="text-black">Spanish</option>
+      <option value="fr" className="text-black">French</option>
+      <option value="de" className="text-black">German</option>
+      <option value="it" className="text-black">Italian</option>
+      <option value="pt" className="text-black">Portuguese</option>
+      <option value="nl" className="text-black">Dutch</option>
+      <option value="pl" className="text-black">Polish</option>
+      <option value="ru" className="text-black">Russian</option>
+      <option value="zh" className="text-black">Chinese</option>
+      <option value="ja" className="text-black">Japanese</option>
+      <option value="ko" className="text-black">Korean</option>
+      <option value="ar" className="text-black">Arabic</option>
+    </select>
+  </div>
 
-          <div className="flex flex-col gap-1 relative">
-            <label className="text-xs text-gray-500 font-semibold uppercase tracking-wider">
-              Writing Style
-              {!isPro && (
-                <span className="inline-flex items-center gap-1 py-0.5 px-2 bg-gradient-to-r from-indigo-500 to-purple-500 text-white text-[10px] font-semibold rounded-full ml-2">
-                  <svg
-                    width="10"
-                    height="10"
-                    fill="currentColor"
-                    viewBox="0 0 20 20"
-                  >
-                    <path
-                      fillRule="evenodd"
-                      d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z"
-                      clipRule="evenodd"
-                    />
-                  </svg>
-                  PRO
-                </span>
-              )}
-            </label>
-            <select
-              value={style}
-              onChange={(e) => handleStyleChange(e.target.value)}
-              className="py-2 pl-3 pr-8 border-2 border-gray-800 rounded-md bg-white text-sm text-gray-900 cursor-pointer transition-colors hover:border-indigo-500 focus:outline-none focus:border-indigo-500 focus:ring-[3px] focus:ring-indigo-500/10"
-            >
-              <option value="neutral">Neutral</option>
-              <option value="formal">Formal</option>
-              <option value="casual">Casual</option>
-              <option value="academic">Academic</option>
-              <option value="creative">Creative</option>
-              <option value="professional">Professional</option>
-              <option value="conversational">Conversational</option>
-            </select>
-          </div>
+  <div className="flex flex-col gap-1 relative">
+    <label className="text-xs text-gray-500 font-semibold uppercase tracking-wider">
+      Writing Style
+      {!isPro && (
+        <span className="inline-flex items-center gap-1 py-0.5 px-2 bg-gradient-to-r from-indigo-500 to-purple-500 text-white text-[10px] font-semibold rounded-full ml-2">
+          <svg width="10" height="10" fill="currentColor" viewBox="0 0 20 20">
+            <path fillRule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clipRule="evenodd" />
+          </svg>
+          PRO
+        </span>
+      )}
+    </label>
+    <select
+      value={style}
+      onChange={(e) => handleStyleChange(e.target.value)}
+      className="py-2 pl-3 pr-8 border-2 border-gray-800 rounded-md bg-white text-black text-sm cursor-pointer transition-colors hover:border-indigo-500 focus:outline-none focus:border-indigo-500 focus:ring-[3px] focus:ring-indigo-500/10"
+    >
+      <option value="neutral" className="text-black">Neutral</option>
+      <option value="formal" className="text-black">Formal</option>
+      <option value="casual" className="text-black">Casual</option>
+      <option value="academic" className="text-black">Academic</option>
+      <option value="creative" className="text-black">Creative</option>
+      <option value="professional" className="text-black">Professional</option>
+      <option value="conversational" className="text-black">Conversational</option>
+    </select>
+  </div>
 
-          <div className="flex flex-col gap-1">
-            <label className="text-xs text-gray-500 font-semibold uppercase tracking-wider">Tone</label>
-            <select
-              value={tone}
-              onChange={(e) => setTone(e.target.value)}
-              className="py-2 pl-3 pr-8 border-2 border-gray-800 rounded-md bg-white text-sm text-gray-900 cursor-pointer transition-colors hover:border-indigo-500 focus:outline-none focus:border-indigo-500 focus:ring-[3px] focus:ring-indigo-500/10"
-            >
-              <option value="preserve">Preserve Original</option>
-              <option value="natural">More Natural</option>
-              <option value="confident">More Confident</option>
-              <option value="friendly">More Friendly</option>
-              <option value="concise">More Concise</option>
-            </select>
-          </div>
-        </div>
+  <div className="flex flex-col gap-1">
+    <label className="text-xs text-gray-500 font-semibold uppercase tracking-wider">
+      Tone
+    </label>
+    <select
+      value={tone}
+      onChange={(e) => setTone(e.target.value)}
+      className="py-2 pl-3 pr-8 border-2 border-gray-800 rounded-md bg-white text-black text-sm cursor-pointer transition-colors hover:border-indigo-500 focus:outline-none focus:border-indigo-500 focus:ring-[3px] focus:ring-indigo-500/10"
+    >
+      <option value="preserve" className="text-black">Preserve Original</option>
+      <option value="natural" className="text-black">More Natural</option>
+      <option value="confident" className="text-black">More Confident</option>
+      <option value="friendly" className="text-black">More Friendly</option>
+      <option value="concise" className="text-black">More Concise</option>
+    </select>
+  </div>
+</div>
 
         <div className="grid grid-cols-1 lg:grid-cols-[1fr_450px] gap-0 min-h-[600px]">
           {/* Editor Section */}
@@ -1264,7 +1571,7 @@ export default function GrammarMentor(): JSX.Element {
             </div>
 
             <div className="mt-6 flex gap-4 items-center flex-wrap">
-  {/* Check Grammar Button */}
+              {/* Check Grammar Button */}
   <button
     disabled={isChecking}
     onClick={checkGrammar}
@@ -1282,19 +1589,16 @@ export default function GrammarMentor(): JSX.Element {
       </>
     )}
   </button>
-
-  {/* Accept All Button */}
-  {activeCorrections.length > 0 && (
-    <button
+              {activeCorrections.length > 0 && (
+                <button
       onClick={acceptAllCorrections}
       className="flex items-center gap-2 py-3.5 px-8 rounded-lg font-semibold cursor-pointer transition-all duration-300 border-none text-base bg-emerald-500 text-white shadow-[0_4px_12px_rgba(16,185,129,0.4)] hover:-translate-y-0.5 hover:shadow-[0_6px_20px_rgba(16,185,129,0.5)]"
     >
       <CheckCheck className="h-5 w-5" />
       <span>Accept All</span>
     </button>
-  )}
-
-  {/* Clear All Button */}
+              )}
+              {/* Clear All Button */}
   <button
     onClick={handleClear}
     className="flex items-center gap-2 py-2 px-4 rounded-lg font-semibold cursor-pointer transition-all duration-300 border-none text-sm bg-gray-500 text-white hover:bg-gray-600"
@@ -1302,8 +1606,7 @@ export default function GrammarMentor(): JSX.Element {
     <Trash2 className="h-4 w-4" />
     <span>Clear All</span>
   </button>
-
-  {/* Paste Button */}
+              {/* Paste Button */}
   <button
     type="button"
     title="Paste from clipboard"
@@ -1313,8 +1616,7 @@ export default function GrammarMentor(): JSX.Element {
     <ClipboardPaste className="h-4 w-4" />
     <span>Paste</span>
   </button>
-
-  {/* Copy Button */}
+              {/* Copy Button */}
   <button
     type="button"
     title="Copy to clipboard"
@@ -1324,25 +1626,41 @@ export default function GrammarMentor(): JSX.Element {
     <Copy className="h-4 w-4" />
     <span>Copy</span>
   </button>
-</div>
+            </div>
 
             {showStats && (
-              <div className="flex gap-8 mt-4 p-4 bg-gray-50 rounded-lg">
+              <div className="flex gap-8 mt-4 p-4 bg-gray-50 rounded-lg flex-wrap">
                 <div className="flex flex-col">
-                  <span className="text-xs text-gray-500 uppercase tracking-wider">Words</span>
-                  <span className="text-2xl font-bold text-gray-800">{wordCountValue}</span>
+                  <span className="text-xs text-gray-500 uppercase tracking-wider">
+                    Words
+                  </span>
+                  <span className="text-2xl font-bold text-gray-800">
+                    {wordCountValue}
+                  </span>
                 </div>
                 <div className="flex flex-col">
-                  <span className="text-xs text-gray-500 uppercase tracking-wider">Issues Found</span>
-                  <span className="text-2xl font-bold text-gray-800">{issueCountValue}</span>
+                  <span className="text-xs text-gray-500 uppercase tracking-wider">
+                    Issues Found
+                  </span>
+                  <span className="text-2xl font-bold text-gray-800">
+                    {issueCountValue}
+                  </span>
                 </div>
                 <div className="flex flex-col">
-                  <span className="text-xs text-gray-500 uppercase tracking-wider">Issues Fixed</span>
-                  <span className="text-2xl font-bold text-gray-800">{fixedCount}</span>
+                  <span className="text-xs text-gray-500 uppercase tracking-wider">
+                    Issues Fixed
+                  </span>
+                  <span className="text-2xl font-bold text-gray-800">
+                    {fixedCount}
+                  </span>
                 </div>
                 <div className="flex flex-col">
-                  <span className="text-xs text-gray-500 uppercase tracking-wider">Language</span>
-                  <span className="text-base font-bold text-gray-800">{detectedLanguage}</span>
+                  <span className="text-xs text-gray-500 uppercase tracking-wider">
+                    Language
+                  </span>
+                  <span className="text-base font-bold text-gray-800">
+                    {detectedLanguage}
+                  </span>
                 </div>
               </div>
             )}
@@ -1434,7 +1752,9 @@ export default function GrammarMentor(): JSX.Element {
           {/* Advice Section */}
           <div className="bg-slate-900 p-8 overflow-y-auto max-h-[800px]">
             <div className="flex justify-between items-center mb-6">
-              <h2 className="font-['Crimson_Pro',serif] text-2xl text-white">Suggestions</h2>
+              <h2 className="font-['Crimson_Pro',serif] text-2xl text-white">
+                Suggestions
+              </h2>
             </div>
             <div>
               {isChecking ? (
@@ -1498,12 +1818,11 @@ export default function GrammarMentor(): JSX.Element {
                       className="bg-white rounded-xl p-5 mb-4 border-2 border-gray-200 transition-all duration-300 cursor-pointer hover:border-indigo-500 hover:shadow-[0_4px_12px_rgba(102,126,234,0.15)] hover:translate-x-1"
                     >
                       <div className="text-red-500 font-semibold mb-2 text-[15px]">
-                        <strong>Issue:</strong> &quot;{correction.original}
-                        &quot;
+                        <strong>Issue:</strong> &quot;{correction.original}&quot;
                       </div>
                       <div className="text-emerald-500 font-semibold mb-2 text-[15px]">
-                        <strong>Suggestion:</strong> &quot;
-                        {correction.correction}&quot;
+                        <strong>Suggestion:</strong> &quot;{correction.correction}
+                        &quot;
                       </div>
                       <div className="text-gray-500 text-sm mb-4 leading-relaxed">
                         <strong>Reason:</strong> {correction.explanation}
@@ -1537,29 +1856,35 @@ export default function GrammarMentor(): JSX.Element {
         </div>
       </div>
 
-      {/* Rule Modal */}
-      {showRuleModal && (
+      {/* Rule Modal - Now using proper JSX component */}
+      {showRuleModal && activeCorrection && (
         <div
-          className="fixed inset-0 bg-black/70 z-[1000] flex items-center justify-center p-8 backdrop-blur-sm"
+          className="fixed inset-0 bg-black/70 z-[1000] flex items-center justify-center p-4 md:p-8 backdrop-blur-sm"
           onClick={() => closeRuleModal()}
         >
           <div
-            className="bg-black rounded-2xl max-w-[700px] max-h-[90vh] overflow-y-auto shadow-[0_25px_50px_rgba(0,0,0,0.5)] animate-[modalSlideIn_0.3s_ease]"
+            className="bg-black rounded-2xl w-full max-w-[700px] max-h-[90vh] overflow-y-auto shadow-[0_25px_50px_rgba(0,0,0,0.5)] animate-[modalSlideIn_0.3s_ease]"
             onClick={(e) => e.stopPropagation()}
           >
-            <div className="p-8 border-b border-gray-200 flex justify-between items-center">
-              <h2 className="font-['Crimson_Pro',serif] text-3xl font-bold text-white">{modalTitle}</h2>
+            <div className="p-8 border-b border-gray-200 flex justify-between items-center sticky top-0 bg-black z-10">
+              <h2 className="font-['Crimson_Pro',serif] text-2xl md:text-3xl font-bold text-white pr-4">
+                {modalTitle}
+              </h2>
               <button
-                className="bg-transparent border-none text-3xl text-white cursor-pointer p-0 w-8 h-8 flex items-center justify-center rounded-full transition-all hover:bg-gray-100 hover:text-gray-800"
+                className="bg-transparent border-none text-3xl text-white cursor-pointer p-0 w-8 h-8 flex items-center justify-center rounded-full transition-all hover:bg-gray-100 hover:text-gray-800 flex-shrink-0"
                 onClick={closeRuleModal}
               >
                 &times;
               </button>
             </div>
-            <div
-              className="p-8"
-              dangerouslySetInnerHTML={{ __html: modalContent }}
-            />
+            <div className="p-8">
+              <RuleModalContent
+                rule={ruleData}
+                correction={activeCorrection}
+                isLoading={ruleLoading}
+                error={ruleError}
+              />
+            </div>
           </div>
         </div>
       )}
@@ -1567,15 +1892,17 @@ export default function GrammarMentor(): JSX.Element {
       {/* Upgrade Modal */}
       {showUpgradeModal && (
         <div
-          className="fixed inset-0 bg-black/70 z-[1000] flex items-center justify-center p-8 backdrop-blur-sm"
+          className="fixed inset-0 bg-black/70 z-[1000] flex items-center justify-center p-4 md:p-8 backdrop-blur-sm"
           onClick={closeUpgradeModal}
         >
           <div
-            className="bg-black rounded-2xl max-w-[600px] max-h-[90vh] overflow-y-auto shadow-[0_25px_50px_rgba(0,0,0,0.5)] animate-[modalSlideIn_0.3s_ease]"
+            className="bg-black rounded-2xl w-full max-w-[600px] max-h-[90vh] overflow-y-auto shadow-[0_25px_50px_rgba(0,0,0,0.5)] animate-[modalSlideIn_0.3s_ease]"
             onClick={(e) => e.stopPropagation()}
           >
             <div className="p-8 border-b border-gray-200 flex justify-between items-center">
-              <h2 className="font-['Crimson_Pro',serif] text-3xl font-bold text-white">Upgrade to Pro</h2>
+              <h2 className="font-['Crimson_Pro',serif] text-2xl md:text-3xl font-bold text-white">
+                Upgrade to Pro
+              </h2>
               <button
                 className="bg-transparent border-none text-3xl text-white cursor-pointer p-0 w-8 h-8 flex items-center justify-center rounded-full transition-all hover:bg-gray-100 hover:text-gray-800"
                 onClick={closeUpgradeModal}
@@ -1586,7 +1913,7 @@ export default function GrammarMentor(): JSX.Element {
             <div className="p-8">
               <div className="text-center mb-8">
                 <div className="text-5xl mb-4">🚀</div>
-                <h3 className="text-2xl font-bold text-white mb-2">
+                <h3 className="text-xl md:text-2xl font-bold text-white mb-2">
                   Unlock All Premium Features
                 </h3>
                 <p className="text-slate-400">
@@ -1597,7 +1924,9 @@ export default function GrammarMentor(): JSX.Element {
 
               <div className="bg-indigo-500/10 border border-indigo-500/30 rounded-xl p-6 mb-6">
                 <div className="flex items-baseline gap-2 mb-2">
-                  <span className="text-4xl font-bold text-white">$6</span>
+                  <span className="text-3xl md:text-4xl font-bold text-white">
+                    $6
+                  </span>
                   <span className="text-slate-400">/month</span>
                 </div>
                 <p className="text-sm text-emerald-400">
@@ -1659,11 +1988,11 @@ export default function GrammarMentor(): JSX.Element {
       {/* Login Modal */}
       {showLoginModal && (
         <div
-          className="fixed inset-0 bg-black/60 flex items-center justify-center z-50"
+          className="fixed inset-0 bg-black/60 flex items-center justify-center z-50 p-4"
           onClick={closeLoginModal}
         >
           <div
-            className="bg-slate-900 border border-slate-700 rounded-2xl shadow-2xl max-w-md w-full mx-4 p-8 relative"
+            className="bg-slate-900 border border-slate-700 rounded-2xl shadow-2xl max-w-md w-full p-8 relative"
             onClick={(e) => e.stopPropagation()}
           >
             <button
@@ -1765,11 +2094,11 @@ export default function GrammarMentor(): JSX.Element {
       {/* Style Paywall */}
       {showStylePaywall && (
         <div
-          className="fixed inset-0 bg-slate-900/95 backdrop-blur-sm flex items-center justify-center z-[1000] p-6"
+          className="fixed inset-0 bg-slate-900/95 backdrop-blur-sm flex items-center justify-center z-[1000] p-4 md:p-6"
           onClick={() => setShowStylePaywall(false)}
         >
           <div
-            className="relative bg-white max-w-md w-full rounded-2xl p-10 text-center shadow-2xl"
+            className="relative bg-white max-w-md w-full rounded-2xl p-8 md:p-10 text-center shadow-2xl"
             onClick={(e) => e.stopPropagation()}
           >
             <button
@@ -1806,12 +2135,8 @@ export default function GrammarMentor(): JSX.Element {
               href="#"
               onClick={(e) => {
                 e.preventDefault();
+                setShowStylePaywall(false);
                 openUpgradeModal();
-                gtag("event", "upgrade_click", {
-                  event_category: "Upgrade",
-                  event_label: "Open Upgrade Modal",
-                  value: 1,
-                });
               }}
               className="inline-block bg-indigo-600 text-white font-medium rounded-full px-6 py-3 hover:bg-indigo-700 hover:shadow-lg transform hover:-translate-y-1 transition-all duration-200"
             >
@@ -1824,11 +2149,11 @@ export default function GrammarMentor(): JSX.Element {
       {/* Snippet Paywall */}
       {showSnippetPaywall && (
         <div
-          className="fixed inset-0 bg-slate-900/95 backdrop-blur-sm flex items-center justify-center z-[1000] p-6"
+          className="fixed inset-0 bg-slate-900/95 backdrop-blur-sm flex items-center justify-center z-[1000] p-4 md:p-6"
           onClick={() => setShowSnippetPaywall(false)}
         >
           <div
-            className="relative bg-white max-w-md w-full rounded-2xl p-10 text-center shadow-2xl"
+            className="relative bg-white max-w-md w-full rounded-2xl p-8 md:p-10 text-center shadow-2xl"
             onClick={(e) => e.stopPropagation()}
           >
             <button
@@ -1865,12 +2190,8 @@ export default function GrammarMentor(): JSX.Element {
               href="#"
               onClick={(e) => {
                 e.preventDefault();
+                setShowSnippetPaywall(false);
                 openUpgradeModal();
-                gtag("event", "upgrade_click", {
-                  event_category: "Upgrade",
-                  event_label: "Open Upgrade Modal",
-                  value: 1,
-                });
               }}
               className="inline-block bg-indigo-600 text-white font-medium rounded-full px-6 py-3 hover:bg-indigo-700 hover:shadow-lg transform hover:-translate-y-1 transition-all duration-200"
             >
@@ -1890,6 +2211,6 @@ export default function GrammarMentor(): JSX.Element {
           {toast.message}
         </div>
       )}
-    </>
+    </SubscriptionContext.Provider>
   );
 }
