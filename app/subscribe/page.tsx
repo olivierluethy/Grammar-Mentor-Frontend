@@ -2,7 +2,7 @@
 "use client"
 
 import { useState } from "react"
-import { Check, ChevronDown, ChevronUp } from "lucide-react"
+import { Check } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import {
   Card,
@@ -14,10 +14,9 @@ import {
 } from "@/components/ui/card"
 import { Switch } from "@/components/ui/switch"
 import { Label } from "@/components/ui/label"
-import { cn } from "@/lib/utils" // ← assuming you have this helper
 
 const LEMONSQUEEZY_LINKS = {
-  free: "https://grammar-mentor.com/grammar-mentor.html",
+  free: "https://grammar-mentor.com/",
   pro_monthly:
     "https://grammar-mentor.lemonsqueezy.com/checkout/buy/f1ea24e6-4964-46a0-b442-3a659f76ed5a",
   pro_yearly:
@@ -28,13 +27,11 @@ const LEMONSQUEEZY_LINKS = {
 
 export default function PricingClient() {
   const [isYearly, setIsYearly] = useState(true)
-  const [showProFeatures, setShowProFeatures] = useState(false)     // closed by default
-  const [showLifetimeFeatures, setShowLifetimeFeatures] = useState(false)
 
   const proPrice = isYearly ? "$6" : "$10"
   const proBillingText = isYearly
-    ? "Billed yearly • $72 (save $48)"
-    : "Billed monthly • $10"
+    ? "Billed yearly at $72 (save $48)"
+    : "Billed monthly at $10"
 
   const handleProClick = () => {
     const url = isYearly ? LEMONSQUEEZY_LINKS.pro_yearly : LEMONSQUEEZY_LINKS.pro_monthly
@@ -42,20 +39,36 @@ export default function PricingClient() {
   }
 
   return (
-    <div className="min-h-screen bg-[#0a0a0a] text-gray-100 antialiased pb-16">
-      {/* Header + Toggle */}
-      <section className="pt-10 pb-10 sticky top-0 z-10 bg-[#0a0a0a]/80 backdrop-blur-sm border-b border-gray-800">
-        <div className="mx-auto max-w-5xl px-5">
-          <div className="flex flex-col items-center gap-4">
-            <div className="inline-flex items-center gap-1.5 rounded-xl border border-gray-700 bg-[#1a1a1a] p-1.5 shadow-sm">
+    <div className="min-h-screen bg-[#0a0a0a] text-gray-100 antialiased">
+      {/* Hero */}
+      <section className="relative overflow-hidden py-8 sm:py-16 lg:py-20">
+        <div className="absolute inset-0 bg-gradient-to-br from-indigo-900/20 via-purple-900/10 to-[#0a0a0a]" />
+        <div className="relative mx-auto max-w-4xl px-4 text-center sm:px-6 lg:px-8">
+          <h1 className="text-2xl font-bold leading-tight text-white sm:text-4xl lg:text-6xl font-serif">
+            Pricing That Makes Sense
+          </h1>
+          <p className="mt-3 text-base text-gray-300 sm:mt-6 sm:text-xl lg:text-2xl">
+            Start free. Upgrade when you need more. Cancel anytime.
+          </p>
+          <p className="mt-2 text-sm text-gray-400 max-w-2xl mx-auto sm:mt-4 sm:text-lg">
+            No hidden fees. No surprise charges. No aggressive upsells. Just honest pricing from a Swiss company that values trust.
+          </p>
+        </div>
+      </section>
+
+      {/* Billing Toggle */}
+      <section className="pb-4 sm:pb-8">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div className="flex flex-col items-center gap-2 sm:gap-4">
+            <p className="text-xs text-gray-400 sm:text-sm">Choose your billing period</p>
+            <div className="inline-flex items-center gap-1 rounded-xl border border-gray-700 bg-[#1a1a1a] p-1 sm:p-1.5">
               <Label
                 htmlFor="billing-monthly"
-                className={cn(
-                  "cursor-pointer rounded-lg px-5 sm:px-6 py-2.5 text-sm font-medium transition-all",
+                className={`cursor-pointer rounded-lg px-3 py-1.5 text-xs font-medium transition-all sm:px-6 sm:py-2.5 sm:text-sm ${
                   !isYearly
-                    ? "bg-gradient-to-r from-indigo-600 to-purple-600 text-white shadow-sm"
-                    : "text-gray-300 hover:text-white hover:bg-gray-800/50"
-                )}
+                    ? "bg-gradient-to-r from-indigo-600 to-purple-600 text-white"
+                    : "text-gray-300 hover:text-white"
+                }`}
                 onClick={() => setIsYearly(false)}
               >
                 Monthly
@@ -65,205 +78,379 @@ export default function PricingClient() {
                 id="billing-yearly"
                 checked={isYearly}
                 onCheckedChange={setIsYearly}
-                className="data-[state=checked]:bg-indigo-600 data-[state=unchecked]:bg-gray-700"
+                className="data-[state=checked]:bg-indigo-600 scale-90 sm:scale-100"
               />
 
               <Label
                 htmlFor="billing-yearly"
-                className={cn(
-                  "relative cursor-pointer rounded-lg px-5 sm:px-6 py-2.5 text-sm font-medium transition-all",
+                className={`relative cursor-pointer rounded-lg px-3 py-1.5 text-xs font-medium transition-all sm:px-6 sm:py-2.5 sm:text-sm ${
                   isYearly
-                    ? "bg-gradient-to-r from-indigo-600 to-purple-600 text-white shadow-sm"
-                    : "text-gray-300 hover:text-white hover:bg-gray-800/50"
-                )}
+                    ? "bg-gradient-to-r from-indigo-600 to-purple-600 text-white"
+                    : "text-gray-300 hover:text-white"
+                }`}
               >
                 Yearly
-                <span className="absolute -top-2 -right-2 rounded-full bg-emerald-600 px-2 py-0.5 text-xs font-bold text-white">
+                <span className="absolute -top-1.5 -right-1.5 rounded-full bg-emerald-500 px-1.5 py-0.5 text-[10px] font-semibold text-white sm:-top-2 sm:-right-2 sm:px-2 sm:text-xs">
                   Save 40%
                 </span>
               </Label>
             </div>
-
-            <p className="text-sm text-gray-400 text-center">
-              Save <span className="text-emerald-400 font-semibold">$48/year</span> with yearly billing
+            <p className="text-xs text-gray-500 sm:text-sm">
+              💰 Save <span className="font-semibold text-emerald-400">$48/year</span> with yearly billing
             </p>
           </div>
         </div>
       </section>
 
-      {/* Main pricing cards – centered, max 2-column on larger screens */}
-      <section className="py-10 px-5">
-        <div className="mx-auto max-w-5xl grid gap-8 md:grid-cols-2 md:gap-10 lg:gap-12">
-          {/* ──────────────── Pro Card ──────────────── */}
-          <Card
-            className={cn(
-              "relative flex flex-col rounded-2xl border-2 transition-all duration-300",
-              "border-indigo-600/70 bg-gradient-to-b from-indigo-950/60 to-purple-950/40",
-              "shadow-xl shadow-indigo-950/40 hover:shadow-indigo-900/60",
-              "md:scale-[1.03] lg:scale-[1.05]"
-            )}
-          >
-            <div className="absolute -top-3 left-1/2 -translate-x-1/2">
-              <span className="rounded-full bg-gradient-to-r from-indigo-600 to-purple-600 px-5 py-1 text-sm font-semibold text-white shadow-md">
-                Most Popular
-              </span>
-            </div>
-
-            <CardHeader className="pb-4 pt-8 text-center">
-              <CardTitle className="text-3xl font-bold">Pro</CardTitle>
-              <CardDescription className="text-base text-gray-300 mt-1">
-                For serious writers who want to improve
-              </CardDescription>
-            </CardHeader>
-
-            <CardContent className="flex-1 px-6 pb-6">
-              <div className="text-center mb-8">
-                <div className="flex items-baseline justify-center gap-1.5">
-                  <span className="text-5xl sm:text-6xl font-extrabold text-white">
-                    {proPrice}
-                  </span>
-                  <span className="text-2xl text-gray-400">/mo</span>
+      {/* Pricing Cards */}
+      <section className="py-6 pb-10 sm:py-12 sm:pb-20">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div className="grid gap-4 sm:gap-8 lg:grid-cols-3 max-w-6xl mx-auto">
+            {/* Free */}
+            <Card className="flex flex-col rounded-xl sm:rounded-2xl border border-gray-700 bg-[#1a1a1a] p-4 sm:p-8">
+              <CardHeader className="mb-3 sm:mb-6 p-0">
+                <CardTitle className="text-lg font-bold text-white sm:text-2xl">Registered</CardTitle>
+                <CardDescription className="text-xs text-gray-400 sm:text-sm">
+                  For trying it out and occasional use
+                </CardDescription>
+              </CardHeader>
+              <CardContent className="flex-1 p-0">
+                <div className="mb-4 sm:mb-8 flex items-baseline gap-1 sm:gap-2">
+                  <span className="text-3xl font-bold text-white sm:text-5xl">$0</span>
+                  <span className="text-gray-500 text-sm sm:text-base">/forever</span>
                 </div>
-                <p className="mt-2 text-sm text-emerald-400 font-medium">
-                  {proBillingText}
-                </p>
-              </div>
-
-              {/* Features – collapsible on mobile */}
-              <div className="space-y-4">
-                <button
-                  onClick={() => setShowProFeatures(!showProFeatures)}
-                  className="w-full flex items-center justify-between text-left py-3 px-4 rounded-lg bg-gray-900/50 hover:bg-gray-800/60 transition-colors md:hidden"
-                >
-                  <span className="font-medium">
-                    {showProFeatures ? "Hide" : "Show"} features
-                  </span>
-                  {showProFeatures ? (
-                    <ChevronUp className="h-5 w-5" />
-                  ) : (
-                    <ChevronDown className="h-5 w-5" />
-                  )}
-                </button>
-
-                <ul
-                  className={cn(
-                    "space-y-4 transition-all duration-300",
-                    showProFeatures || "hidden md:block"
-                  )}
-                >
+                <ul className="mb-4 sm:mb-8 space-y-2 sm:space-y-4">
                   {[
-                    { main: "Unlimited AI explanations" },
-                    { main: "Advanced style checking" },
-                    { main: "Unlimited document length" },
-                    { main: "Unlimited snippet storage" },
-                    { main: "Multilingual context awareness" },
-                    { main: "Priority human support" },
+                    {
+                      main: "Basic grammar checking",
+                      sub: "Catch typos and common errors so you don't look careless",
+                    },
+                    {
+                      main: "5 AI explanations per day",
+                      sub: "Understand why something's wrong, not just that it is",
+                    },
+                    {
+                      main: "Documents up to 10,000 words",
+                      sub: "Plenty of room for essays, articles, and short stories",
+                    },
+                    {
+                      main: "Core snippet storage",
+                      sub: "Save up to 10 commonly used phrases",
+                    },
+                    {
+                      main: "One-click ignore",
+                      sub: "Dismiss suggestions you disagree with, no friction",
+                    },
                   ].map((f) => (
-                    <li key={f.main} className="flex items-start gap-3">
-                      <Check className="mt-1 h-5 w-5 flex-shrink-0 text-emerald-500" />
-                      <span className="text-gray-100">{f.main}</span>
+                    <li key={f.main} className="flex items-start gap-2 sm:gap-3">
+                      <Check className="mt-0.5 h-4 w-4 flex-shrink-0 text-emerald-500 sm:h-5 sm:w-5" />
+                      <div>
+                        <p className="text-sm font-medium text-white sm:text-base">{f.main}</p>
+                        <p className="mt-0.5 text-xs text-gray-400 sm:mt-1 sm:text-sm">{f.sub}</p>
+                      </div>
                     </li>
                   ))}
                 </ul>
-              </div>
-            </CardContent>
-
-            <CardFooter className="px-6 pb-8 pt-2">
-              <Button
-                onClick={handleProClick}
-                size="lg"
-                className="w-full h-14 text-lg font-semibold bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-500 hover:to-purple-500 active:scale-[0.98] transition-all shadow-lg shadow-indigo-900/40"
-              >
-                Get Pro
-              </Button>
-            </CardFooter>
-
-            <p className="text-center text-xs text-gray-500 pb-6 -mt-2">
-              Cancel anytime • No questions asked
-            </p>
-          </Card>
-
-          {/* ──────────────── Lifetime Card ──────────────── */}
-          <Card className="flex flex-col rounded-2xl border border-amber-700/40 bg-gradient-to-b from-amber-950/30 to-gray-950 p-6 shadow-xl shadow-amber-950/20">
-            <CardHeader className="pb-4 pt-8 text-center">
-              <CardTitle className="text-3xl font-bold">Lifetime</CardTitle>
-              <CardDescription className="text-base text-gray-300 mt-1">
-                One payment. Forever access.
-              </CardDescription>
-            </CardHeader>
-
-            <CardContent className="flex-1 px-6 pb-6">
-              <div className="text-center mb-8">
-                <div className="flex items-baseline justify-center gap-1.5">
-                  <span className="text-5xl sm:text-6xl font-extrabold text-white">
-                    $199
-                  </span>
-                  <span className="text-2xl text-gray-400">/once</span>
-                </div>
-                <p className="mt-2 text-base font-medium text-emerald-400">
-                  Pay once • Own forever
-                </p>
-
-                <div className="mt-4 inline-flex items-center gap-2 rounded-lg border border-amber-700/50 bg-amber-950/60 px-4 py-2 mx-auto">
-                  <span className="uppercase tracking-wide text-xs font-bold text-amber-400">
-                    Limited
-                  </span>
-                  <span className="font-semibold text-white">First 50 people only</span>
-                </div>
-              </div>
-
-              {/* Features – collapsible */}
-              <div className="space-y-4">
-                <button
-                  onClick={() => setShowLifetimeFeatures(!showLifetimeFeatures)}
-                  className="w-full flex items-center justify-between text-left py-3 px-4 rounded-lg bg-gray-900/50 hover:bg-gray-800/60 transition-colors md:hidden"
+              </CardContent>
+              <CardFooter className="p-0">
+                <Button
+                  variant="outline"
+                  className="w-full border-gray-600 bg-[#2a2a2a] py-2.5 text-sm text-white hover:bg-[#3a3a3a] sm:py-3.5 sm:text-base"
+                  asChild
                 >
-                  <span className="font-medium">
-                    {showLifetimeFeatures ? "Hide" : "Show"} features
-                  </span>
-                  {showLifetimeFeatures ? (
-                    <ChevronUp className="h-5 w-5" />
-                  ) : (
-                    <ChevronDown className="h-5 w-5" />
-                  )}
-                </button>
+                  <a href={LEMONSQUEEZY_LINKS.free}>Start Free</a>
+                </Button>
+              </CardFooter>
+              <p className="mt-2 text-center text-[10px] text-gray-500 sm:mt-3 sm:text-xs">No credit card required</p>
+            </Card>
 
-                <ul
-                  className={cn(
-                    "space-y-4 transition-all duration-300",
-                    showLifetimeFeatures || "hidden md:block"
-                  )}
-                >
+            {/* Pro */}
+            <Card className="relative flex flex-col scale-100 lg:scale-105 rounded-xl sm:rounded-2xl border-2 border-indigo-500 bg-gradient-to-br from-indigo-900/40 to-purple-900/40 p-4 sm:p-8 shadow-xl sm:shadow-2xl shadow-indigo-900/50">
+              <div className="absolute -top-3 left-1/2 -translate-x-1/2 sm:-top-4">
+                <span className="rounded-full bg-gradient-to-r from-indigo-500 to-purple-600 px-4 py-1 text-xs font-semibold text-white sm:px-6 sm:py-1.5 sm:text-sm">
+                  Most Popular
+                </span>
+              </div>
+              <CardHeader className="mb-3 sm:mb-6 p-0 pt-2 sm:pt-0">
+                <CardTitle className="text-lg font-bold text-white sm:text-2xl">Pro</CardTitle>
+                <CardDescription className="text-xs text-gray-300 sm:text-sm">
+                  For serious writers who want to improve
+                </CardDescription>
+              </CardHeader>
+              <CardContent className="flex-1 p-0">
+                <div className="mb-4 sm:mb-8">
+                  <div className="flex items-baseline gap-1 sm:gap-2">
+                    <span className="text-3xl font-bold text-white sm:text-5xl">{proPrice}</span>
+                    <span className="text-gray-400 text-sm sm:text-base">/month</span>
+                  </div>
+                  <p className="mt-1 text-xs font-medium text-emerald-400 sm:mt-2 sm:text-sm">{proBillingText}</p>
+                </div>
+                <ul className="mb-4 sm:mb-8 space-y-2 sm:space-y-4">
                   {[
-                    { main: "Everything in Pro — forever" },
-                    { main: "No recurring payments ever" },
-                    { main: "All future updates included" },
-                    { main: "Transferable license" },
-                    { main: "Peace of mind (no sub anxiety)" },
+                    { main: "Everything in Free, plus:" },
+                    {
+                      main: "Unlimited AI explanations",
+                      sub: "Learn at your own pace without hitting daily limits. Actually internalize grammar rules.",
+                    },
+                    {
+                      main: "Advanced style checking",
+                      sub: "Preserve your voice while catching tone inconsistencies and awkward phrasing.",
+                    },
+                    {
+                      main: "Unlimited document length",
+                      sub: "Work on novels, theses, and large projects without worrying about file size limits.",
+                    },
+                    {
+                      main: "Unlimited snippet storage",
+                      sub: "Build your personal library of templates, sign-offs, and repeated phrases.",
+                    },
+                    {
+                      main: "Multilingual context awareness",
+                      sub: "Get suggestions that understand you're writing in your second language.",
+                    },
+                    {
+                      main: "Priority support",
+                      sub: "Get help when you need it from real people who care.",
+                    },
                   ].map((f) => (
-                    <li key={f.main} className="flex items-start gap-3">
-                      <Check className="mt-1 h-5 w-5 flex-shrink-0 text-emerald-500" />
-                      <span className="text-gray-100">{f.main}</span>
+                    <li key={f.main} className="flex items-start gap-2 sm:gap-3">
+                      <Check className="mt-0.5 h-4 w-4 flex-shrink-0 text-emerald-400 sm:h-5 sm:w-5" />
+                      <div>
+                        <p className="text-sm font-medium text-white sm:text-base">{f.main}</p>
+                        {f.sub && <p className="mt-0.5 text-xs text-gray-300 sm:mt-1 sm:text-sm">{f.sub}</p>}
+                      </div>
                     </li>
                   ))}
                 </ul>
-              </div>
-            </CardContent>
+              </CardContent>
+              <CardFooter className="p-0">
+                <Button
+                  onClick={handleProClick}
+                  className="w-full bg-gradient-to-r from-indigo-600 to-purple-600 py-2.5 text-sm text-white hover:from-indigo-700 hover:to-purple-700 hover:scale-105 shadow-lg sm:py-3.5 sm:text-base"
+                >
+                  Buy
+                </Button>
+              </CardFooter>
+              <p className="mt-2 text-center text-[10px] text-gray-400 sm:mt-3 sm:text-xs">Cancel anytime, no questions asked</p>
+            </Card>
 
-            <CardFooter className="px-6 pb-8 pt-2">
-              <Button
-                onClick={() => (window.location.href = LEMONSQUEEZY_LINKS.lifetime)}
-                size="lg"
-                className="w-full h-14 text-lg font-semibold bg-gradient-to-r from-emerald-600 to-emerald-700 hover:from-emerald-500 hover:to-emerald-600 active:scale-[0.98] transition-all shadow-lg shadow-emerald-900/30"
+            {/* Lifetime */}
+            <Card className="flex flex-col rounded-xl sm:rounded-2xl border border-gray-700 bg-[#1a1a1a] p-4 sm:p-8">
+              <CardHeader className="mb-3 sm:mb-6 p-0">
+                <CardTitle className="text-lg font-bold text-white sm:text-2xl">Lifetime</CardTitle>
+                <CardDescription className="text-xs text-gray-400 sm:text-sm">
+                  One payment. Forever access.
+                </CardDescription>
+              </CardHeader>
+              <CardContent className="flex-1 p-0">
+                <div className="mb-4 sm:mb-6">
+                  <div className="flex items-baseline gap-1 sm:gap-2">
+                    <span className="text-3xl font-bold text-white sm:text-5xl">$199</span>
+                    <span className="text-gray-500 text-sm sm:text-base">/forever</span>
+                  </div>
+                  <p className="mt-1 text-xs font-medium text-emerald-400 sm:mt-2 sm:text-sm">Pay once, own it forever</p>
+                  <div className="mt-3 sm:mt-5 inline-flex items-center gap-1.5 sm:gap-2 rounded-lg border border-amber-700/40 bg-amber-950/60 px-2.5 py-1.5 sm:px-4 sm:py-2.5">
+                    <span className="uppercase tracking-wider text-[10px] font-semibold text-amber-400 sm:text-xs">
+                      Limited:
+                    </span>
+                    <span className="text-xs font-medium text-white sm:text-sm">First 50 people only</span>
+                  </div>
+                </div>
+                <ul className="mb-4 sm:mb-8 space-y-2 sm:space-y-4">
+                  {[
+                    { main: "Everything in Pro, forever" },
+                    {
+                      main: "No recurring payments",
+                      sub: "Never worry about subscriptions, renewals, or price increases again",
+                    },
+                    {
+                      main: "All future updates included",
+                      sub: "Get every new feature and improvement as we build them",
+                    },
+                    {
+                      main: "Peace of mind",
+                      sub: "Budget once, benefit forever. No subscription anxiety.",
+                    },
+                    {
+                      main: "Transferable license",
+                      sub: "You own it. Use it on any device, keep it forever.",
+                    },
+                  ].map((f) => (
+                    <li key={f.main} className="flex items-start gap-2 sm:gap-3">
+                      <Check className="mt-0.5 h-4 w-4 flex-shrink-0 text-emerald-500 sm:h-5 sm:w-5" />
+                      <div>
+                        <p className="text-sm font-medium text-white sm:text-base">{f.main}</p>
+                        {f.sub && <p className="mt-0.5 text-xs text-gray-400 sm:mt-1 sm:text-sm">{f.sub}</p>}
+                      </div>
+                    </li>
+                  ))}
+                </ul>
+              </CardContent>
+              <CardFooter className="p-0">
+                <Button
+                  onClick={() => (window.location.href = LEMONSQUEEZY_LINKS.lifetime)}
+                  className="w-full bg-gradient-to-r from-emerald-600 to-emerald-700 py-2.5 text-sm text-white hover:from-emerald-500 hover:to-emerald-600 shadow-lg shadow-emerald-900/30 sm:py-3.5 sm:text-base"
+                >
+                  Buy
+                </Button>
+              </CardFooter>
+              <p className="mt-2 text-center text-[10px] text-gray-500 sm:mt-3 sm:text-xs">One-time payment • Only first 50 spots</p>
+            </Card>
+          </div>
+        </div>
+      </section>
+
+      {/* Comparison Table */}
+      <section id="features" className="py-8 sm:py-16 bg-[#1a1a1a]">
+        <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+          <h2 className="mb-6 sm:mb-12 text-center text-xl font-bold text-white font-serif sm:text-3xl">
+            Feature Comparison
+          </h2>
+          <div className="overflow-x-auto -mx-4 px-4 sm:mx-0 sm:px-0">
+            <table className="w-full border-collapse text-left text-gray-300 text-xs sm:text-base">
+              <thead>
+                <tr className="border-b border-gray-700">
+                  <th className="py-2 px-2 font-medium text-gray-400 sm:py-4 sm:px-4">Feature</th>
+                  <th className="py-2 px-2 text-center font-semibold text-white sm:py-4 sm:px-4">Free</th>
+                  <th className="py-2 px-2 text-center font-semibold text-white sm:py-4 sm:px-4">Pro</th>
+                  <th className="py-2 px-2 text-center font-semibold text-white sm:py-4 sm:px-4">Lifetime</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr className="border-b border-gray-700/50">
+                  <td className="py-2 px-2 sm:py-4 sm:px-4">Basic grammar & spelling</td>
+                  <td className="py-2 px-2 text-center sm:py-4 sm:px-4">
+                    <Check className="mx-auto h-4 w-4 text-emerald-500 sm:h-5 sm:w-5" />
+                  </td>
+                  <td className="py-2 px-2 text-center sm:py-4 sm:px-4">
+                    <Check className="mx-auto h-4 w-4 text-emerald-500 sm:h-5 sm:w-5" />
+                  </td>
+                  <td className="py-2 px-2 text-center sm:py-4 sm:px-4">
+                    <Check className="mx-auto h-4 w-4 text-emerald-500 sm:h-5 sm:w-5" />
+                  </td>
+                </tr>
+                <tr className="border-b border-gray-700/50">
+                  <td className="py-2 px-2 sm:py-4 sm:px-4">AI explanations</td>
+                  <td className="py-2 px-2 text-center text-gray-500 sm:py-4 sm:px-4">5/day</td>
+                  <td className="py-2 px-2 text-center font-medium text-emerald-400 sm:py-4 sm:px-4">Unlimited</td>
+                  <td className="py-2 px-2 text-center font-medium text-emerald-400 sm:py-4 sm:px-4">Unlimited</td>
+                </tr>
+                <tr className="border-b border-gray-700/50">
+                  <td className="py-2 px-2 sm:py-4 sm:px-4">Document length</td>
+                  <td className="py-2 px-2 text-center text-gray-500 sm:py-4 sm:px-4">10K</td>
+                  <td className="py-2 px-2 text-center font-medium text-emerald-400 sm:py-4 sm:px-4">∞</td>
+                  <td className="py-2 px-2 text-center font-medium text-emerald-400 sm:py-4 sm:px-4">∞</td>
+                </tr>
+                <tr className="border-b border-gray-700/50">
+                  <td className="py-2 px-2 sm:py-4 sm:px-4">Advanced style checking</td>
+                  <td className="py-2 px-2 text-center text-gray-600 sm:py-4 sm:px-4">—</td>
+                  <td className="py-2 px-2 text-center sm:py-4 sm:px-4">
+                    <Check className="mx-auto h-4 w-4 text-emerald-500 sm:h-5 sm:w-5" />
+                  </td>
+                  <td className="py-2 px-2 text-center sm:py-4 sm:px-4">
+                    <Check className="mx-auto h-4 w-4 text-emerald-500 sm:h-5 sm:w-5" />
+                  </td>
+                </tr>
+                <tr className="border-b border-gray-700/50">
+                  <td className="py-2 px-2 sm:py-4 sm:px-4">Snippet storage</td>
+                  <td className="py-2 px-2 text-center text-gray-500 sm:py-4 sm:px-4">10</td>
+                  <td className="py-2 px-2 text-center font-medium text-emerald-400 sm:py-4 sm:px-4">∞</td>
+                  <td className="py-2 px-2 text-center font-medium text-emerald-400 sm:py-4 sm:px-4">∞</td>
+                </tr>
+                <tr className="border-b border-gray-700/50">
+                  <td className="py-2 px-2 sm:py-4 sm:px-4">Multilingual awareness</td>
+                  <td className="py-2 px-2 text-center text-gray-600 sm:py-4 sm:px-4">—</td>
+                  <td className="py-2 px-2 text-center sm:py-4 sm:px-4">
+                    <Check className="mx-auto h-4 w-4 text-emerald-500 sm:h-5 sm:w-5" />
+                  </td>
+                  <td className="py-2 px-2 text-center sm:py-4 sm:px-4">
+                    <Check className="mx-auto h-4 w-4 text-emerald-500 sm:h-5 sm:w-5" />
+                  </td>
+                </tr>
+                <tr className="border-b border-gray-700/50">
+                  <td className="py-2 px-2 sm:py-4 sm:px-4">Priority support</td>
+                  <td className="py-2 px-2 text-center text-gray-600 sm:py-4 sm:px-4">—</td>
+                  <td className="py-2 px-2 text-center sm:py-4 sm:px-4">
+                    <Check className="mx-auto h-4 w-4 text-emerald-500 sm:h-5 sm:w-5" />
+                  </td>
+                  <td className="py-2 px-2 text-center sm:py-4 sm:px-4">
+                    <Check className="mx-auto h-4 w-4 text-emerald-500 sm:h-5 sm:w-5" />
+                  </td>
+                </tr>
+                <tr>
+                  <td className="py-2 px-2 sm:py-4 sm:px-4">Future updates</td>
+                  <td className="py-2 px-2 text-center sm:py-4 sm:px-4">
+                    <Check className="mx-auto h-4 w-4 text-emerald-500 sm:h-5 sm:w-5" />
+                  </td>
+                  <td className="py-2 px-2 text-center sm:py-4 sm:px-4">
+                    <Check className="mx-auto h-4 w-4 text-emerald-500 sm:h-5 sm:w-5" />
+                  </td>
+                  <td className="py-2 px-2 text-center sm:py-4 sm:px-4">
+                    <Check className="mx-auto h-4 w-4 text-emerald-500 sm:h-5 sm:w-5" />
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      {/* FAQ */}
+      <section id="faq" className="py-10 sm:py-20 bg-[#1a1a1a]">
+        <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
+          <h2 className="mb-6 sm:mb-12 text-center text-xl font-bold text-white font-serif sm:text-3xl">
+            Frequently Asked Questions
+          </h2>
+          <div className="space-y-3 sm:space-y-6">
+            {[
+              {
+                q: "What's included in the free plan?",
+                a: "The free plan includes basic grammar and spelling checks, 5 AI-powered grammar explanations per day, documents up to 10,000 words, 10 snippet slots, and the ability to ignore suggestions with one click. It's perfect for trying out the tool and occasional writing needs.",
+              },
+              {
+                q: "Can I cancel my subscription anytime?",
+                a: "Absolutely. You can cancel with one click from your account settings. No phone calls, no retention emails, no questions asked. If you cancel, you'll keep access until the end of your billing period, and you won't be charged again.",
+              },
+              {
+                q: "Is there a trial period for Pro?",
+                a: "We don't offer traditional trials because our free plan is genuinely useful. Try the free version first—it's not limited to 7 days or designed to frustrate you into upgrading. When you're ready for unlimited explanations and advanced features, upgrade to Pro.",
+              },
+              {
+                q: "How does billing work?",
+                a: "Monthly plans are billed every month. Yearly plans are billed once per year (saving you 40%). Lifetime is a single payment with no renewals ever. You'll receive an email receipt for every charge. No auto-renewals without clear notice.",
+              },
+              {
+                q: "Is my data safe?",
+                a: "Yes. We're based in Switzerland and take privacy seriously. Your documents are encrypted in transit and at rest. We don't train AI models on your writing. We don't sell your data to third parties. We don't track you across the web. Your writing is yours, period.",
+              },
+              {
+                q: "What happens if I downgrade from Pro to Free?",
+                a: "You'll keep access to Pro features until the end of your billing period. After that, you'll return to the free plan limits. Your saved snippets beyond the first 10 will remain stored but read-only—you can still view and use them, but you won't be able to add new ones until you upgrade again or delete some.",
+              },
+              {
+                q: "Do you offer refunds?",
+                a: (
+                  <>
+                    Yes. If you're not satisfied within 30 days of purchase, we'll refund you in full, no questions asked. Just email us at{" "}
+                    <a
+                      href="mailto:hello@grammar-mentor.ch"
+                      className="text-indigo-400 hover:text-indigo-300"
+                    >
+                      hello@grammar-mentor.ch
+                    </a>.
+                  </>
+                ),
+              },
+            ].map((item) => (
+              <div
+                key={item.q}
+                className="rounded-lg sm:rounded-xl border border-gray-700 bg-[#0a0a0a] p-4 sm:p-6"
               >
-                Get Lifetime
-              </Button>
-            </CardFooter>
-
-            <p className="text-center text-xs text-gray-500 pb-6 -mt-2">
-              One-time payment • Only first 50 spots
-            </p>
-          </Card>
+                <h3 className="mb-1.5 sm:mb-3 text-sm font-semibold text-white sm:text-lg">{item.q}</h3>
+                <p className="leading-relaxed text-xs text-gray-400 sm:text-base">{item.a}</p>
+              </div>
+            ))}
+          </div>
         </div>
       </section>
     </div>
