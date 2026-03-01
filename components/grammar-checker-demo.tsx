@@ -1448,7 +1448,7 @@ export default function GrammarMentor(): JSX.Element {
       />
 
       {/* Main Container - Mobile optimized padding */}
-      <div className="max-w-[1400px] mx-auto bg-gray-900 rounded-xl sm:rounded-3xl shadow-[0_20px_60px_rgba(0,0,0,0.8)] overflow-hidden">
+      <div className="-mb-16 sm:-mb-24 max-w-[1400px] mx-auto bg-gray-900 rounded-xl sm:rounded-3xl shadow-[0_20px_60px_rgba(0,0,0,0.8)] overflow-hidden">
         {/* Usage Limit Warning - Compact on mobile */}
         {showUsageLimitWarning && (
           <div className="bg-amber-100 border border-amber-400 text-amber-800 py-2 sm:py-3 px-3 sm:px-4 rounded-lg my-2 sm:my-4 mx-2 sm:mx-4 text-xs sm:text-sm">
