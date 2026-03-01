@@ -5,7 +5,7 @@ const features = [
     title: "Contextual Logic",
     description: (
       <>
-        We don't just underline errors; we explain the <strong>grammatical rules</strong> behind them so you understand the "why" and never make the same mistake twice.
+        We don't just underline errors; we explain the <strong>grammatical rules</strong> behind them.
       </>
     ),
     icon: Lightbulb,
@@ -15,7 +15,7 @@ const features = [
     title: "Vocabulary Growth",
     description: (
       <>
-        Expand your lexicon with <strong>dynamic synonyms</strong> tailored to your tone. Learn how subtle word choices change the impact of your writing.
+        Expand your lexicon with <strong>dynamic synonyms</strong> tailored to your tone.
       </>
     ),
     icon: BookOpen,
@@ -25,7 +25,7 @@ const features = [
     title: "Style Mentorship",
     description: (
       <>
-        Our algorithms analyze your unique voice. Receive <strong>personalized tips</strong> to transition from basic writing to professional-grade storytelling.
+        Our algorithms analyze your voice with <strong>personalized tips</strong> for storytelling.
       </>
     ),
     icon: GraduationCap,
@@ -35,18 +35,22 @@ const features = [
 
 export function FeaturesSection() {
   return (
-    <section className="bg-gray-950 py-5">
-      <div className="mx-auto max-w-6xl px-6">
-        <div className="grid grid-cols-1 gap-12 text-center md:grid-cols-3">
+    <section className="bg-gray-950 py-8 sm:py-16">
+      <div className="mx-auto max-w-6xl px-4 sm:px-6">
+        {/* Gap von 12 auf 6 reduziert für Mobile */}
+        <div className="grid grid-cols-1 gap-6 md:gap-12 md:grid-cols-3">
           {features.map((feature, index) => (
-            <div key={index} className="flex flex-col items-center">
-              <div className={`mb-6 flex h-16 w-16 items-center justify-center rounded-full ${feature.colorClass}`}>
-                <feature.icon className="h-8 w-8" />
+            <div key={index} className="flex flex-col items-center md:items-center text-center">
+              {/* Icon-Box verkleinert: h-12 statt h-16 auf Mobile */}
+              <div className={`mb-3 sm:mb-6 flex h-12 w-12 sm:h-16 sm:w-16 items-center justify-center rounded-full ${feature.colorClass}`}>
+                <feature.icon className="h-6 w-6 sm:h-8 sm:w-8" />
               </div>
-              <h3 className="mb-3 text-xl font-bold text-white">
+              {/* Titel kleiner auf Mobile: text-lg statt text-xl */}
+              <h3 className="mb-1 sm:mb-3 text-lg sm:text-xl font-bold text-white">
                 {feature.title}
               </h3>
-              <p className="text-sm leading-relaxed text-gray-400">
+              {/* Beschreibung kompakter */}
+              <p className="text-xs sm:text-sm leading-relaxed text-gray-400 max-w-[280px] sm:max-w-none">
                 {feature.description}
               </p>
             </div>

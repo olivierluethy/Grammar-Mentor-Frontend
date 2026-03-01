@@ -66,9 +66,9 @@ export function Navbar() {
         </button>
       </nav>
 
-      {/* Mobile Menu */}
+      {/* Mobile Menu - Jetzt absolut positioniert */}
       {mobileOpen && (
-        <div className="border-t border-border bg-background px-4 pb-6 md:hidden">
+        <div className="absolute left-0 top-[64px] w-full border-b border-border bg-background px-4 pb-6 shadow-xl md:hidden">
           <ul className="flex flex-col gap-3 pt-4">
             {navLinks.map((link) => (
               <li key={link.href}>
@@ -93,7 +93,7 @@ export function Navbar() {
                 </Button>
                 <Button size="sm" asChild className="w-full justify-start">
                   <Link href="/sign-up" onClick={() => setMobileOpen(false)}>
-                    Get Started
+                    Register
                   </Link>
                 </Button>
               </>
