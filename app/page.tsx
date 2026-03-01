@@ -12,6 +12,7 @@ export default function HomePage() {
       <FeaturesSection2 />
       <PricingSection />
       <ContactBanner />
+      
     </>
   )
 }

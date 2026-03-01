@@ -15,19 +15,19 @@ const navLinks = [
 
 export function Navbar() {
   const [mobileOpen, setMobileOpen] = useState(false)
-  const { isSignedIn, user } = useUser()
+  const { isSignedIn } = useUser()
 
   return (
     <header className="sticky top-0 z-50 w-full border-b border-border bg-background/80 backdrop-blur-md">
       <nav className="mx-auto flex h-16 max-w-6xl items-center justify-between px-4 lg:px-6">
-
+        
         {/* Logo */}
         <Link href="/" className="flex items-center gap-2 font-semibold text-lg">
           <Image src="/logo426x426.png" alt="AI Grammar Mentor Logo" width={32} height={32} />
           <span>AI Grammar Mentor</span>
         </Link>
 
-        {/* Links */}
+        {/* Desktop Links */}
         <ul className="hidden items-center gap-8 md:flex">
           {navLinks.map((link) => (
             <li key={link.href}>
@@ -38,7 +38,7 @@ export function Navbar() {
           ))}
         </ul>
 
-        {/* Rechts: Auth-Bereich */}
+        {/* Rechts: Auth-Bereich (Desktop) */}
         <div className="hidden items-center gap-3 md:flex">
           {!isSignedIn ? (
             <>
@@ -50,17 +50,13 @@ export function Navbar() {
               </Button>
             </>
           ) : (
-            <>
-              <SignOutButton>
-                <Button variant="ghost" size="sm">
-                  Logout
-                </Button>
-              </SignOutButton>
-            </>
+            <SignOutButton>
+              <Button variant="ghost" size="sm">Logout</Button>
+            </SignOutButton>
           )}
         </div>
 
-        {/* Mobile Button */}
+        {/* Mobile Toggle Button */}
         <button
           className="md:hidden"
           onClick={() => setMobileOpen(!mobileOpen)}
@@ -70,8 +66,9 @@ export function Navbar() {
         </button>
       </nav>
 
+      {/* Mobile Menu */}
       {mobileOpen && (
-        <div className="border-t border-border bg-background px-4 pb-4 md:hidden">
+        <div className="border-t border-border bg-background px-4 pb-6 md:hidden">
           <ul className="flex flex-col gap-3 pt-4">
             {navLinks.map((link) => (
               <li key={link.href}>
@@ -85,17 +82,33 @@ export function Navbar() {
               </li>
             ))}
           </ul>
-          <div className="mt-4 flex flex-col gap-2">
-            <Button variant="ghost" size="sm" asChild>
-              <Link href="/login" onClick={() => setMobileOpen(false)}>
-                Log in
-              </Link>
-            </Button>
-            <Button size="sm" asChild>
-              <Link href="/sign-up" onClick={() => setMobileOpen(false)}>
-                Get Started
-              </Link>
-            </Button>
+
+          <div className="mt-6 flex flex-col gap-2">
+            {!isSignedIn ? (
+              <>
+                <Button variant="ghost" size="sm" asChild className="w-full justify-start">
+                  <Link href="/sign-in" onClick={() => setMobileOpen(false)}>
+                    Log in
+                  </Link>
+                </Button>
+                <Button size="sm" asChild className="w-full justify-start">
+                  <Link href="/sign-up" onClick={() => setMobileOpen(false)}>
+                    Get Started
+                  </Link>
+                </Button>
+              </>
+            ) : (
+              <SignOutButton>
+                <Button 
+                  variant="ghost" 
+                  size="sm" 
+                  className="w-full justify-start text-red-500 hover:text-red-600 hover:bg-red-50/10"
+                  onClick={() => setMobileOpen(false)}
+                >
+                  Logout
+                </Button>
+              </SignOutButton>
+            )}
           </div>
         </div>
       )}

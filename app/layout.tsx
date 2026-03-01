@@ -6,6 +6,7 @@ import { Footer } from "@/components/footer"
 import { ClerkProvider } from "@clerk/nextjs";
 import { dark } from "@clerk/themes";
 import "./globals.css"
+import TawkToClient from '@/components/TawkToClient';
 
 const _inter = Inter({ subsets: ["latin"], variable: "--font-inter" })
 const _jetbrainsMono = JetBrains_Mono({
@@ -47,6 +48,7 @@ export default function RootLayout({
           <main>{children}</main>
           <Footer />
           <Analytics />
+          <TawkToClient />
         </body>
       </html>
     </ClerkProvider>
