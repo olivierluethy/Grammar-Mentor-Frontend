@@ -1,3 +1,6 @@
+"use client"
+
+import { useUser } from "@clerk/nextjs"
 import { Check, ArrowRight } from "lucide-react"
 import Link from "next/link"
 
@@ -29,7 +32,7 @@ const tiers = [
     features: ["Priority Processing", "Unlimited History"],
     cta: "Register",
     isButton: true,
-    href: "/register",
+    href: "/subscribe",
     // Kräftiger Blau-Gradient für das Haupt-Abo
     borderColor: "border-blue-500/50",
     buttonStyles: "bg-gradient-to-r from-blue-600 to-cyan-500 hover:from-blue-500 hover:to-cyan-400 shadow-[0_0_20px_rgba(37,99,235,0.4)]",
@@ -37,6 +40,7 @@ const tiers = [
 ]
 
 export function PricingSection() {
+  const { isSignedIn } = useUser()
   return (
     <section className="bg-slate-950 py-5 text-slate-200">
       <div className="mx-auto max-w-6xl p-6">
@@ -79,15 +83,42 @@ export function PricingSection() {
                 </div>
                 
                 {/* Only render if isButton is true */}
-{tier.isButton && (
-  <Link href={tier.href || "#"} className="group">
-    <button
-      className={`group flex w-full items-center justify-center gap-2 rounded-xl px-4 py-3 text-sm font-bold text-white transition-all duration-200 active:scale-[0.98] ${tier.buttonStyles}`}
-    >
-      {tier.cta}
-      <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
-    </button>
-  </Link>
+{tier.name === "Registered" ? (
+  // REGISTERED: nur anzeigen, wenn NICHT eingeloggt
+  !isSignedIn && (
+    <Link href={tier.href || "#"} className="group">
+      <button
+        className={`group flex w-full items-center justify-center gap-2 rounded-xl px-4 py-3 text-sm font-bold text-white transition-all duration-200 active:scale-[0.98] ${tier.buttonStyles}`}
+      >
+        {tier.cta}
+        <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+      </button>
+    </Link>
+  )
+) : tier.name === "Subscribe" ? (
+  // SUBSCRIBE: Text abhängig vom Login-Status
+  tier.isButton && (
+    <Link href={tier.href || "#"} className="group">
+      <button
+        className={`group flex w-full items-center justify-center gap-2 rounded-xl px-4 py-3 text-sm font-bold text-white transition-all duration-200 active:scale-[0.98] ${tier.buttonStyles}`}
+      >
+        {isSignedIn ? "Subscribe" : tier.cta}
+        <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+      </button>
+    </Link>
+  )
+) : (
+  // alle anderen Tiers (falls du später mehr hast)
+  tier.isButton && (
+    <Link href={tier.href || "#"} className="group">
+      <button
+        className={`group flex w-full items-center justify-center gap-2 rounded-xl px-4 py-3 text-sm font-bold text-white transition-all duration-200 active:scale-[0.98] ${tier.buttonStyles}`}
+      >
+        {tier.cta}
+        <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+      </button>
+    </Link>
+  )
 )}
               </div>
             </div>
