@@ -442,7 +442,7 @@ class SubscriptionManagerClass {
 const subscriptionManager = new SubscriptionManagerClass();
 
 // ========================================
-// SUBSCRIPTION CONTEXT (Priority 2 - Fix #4)
+// SUBSCRIPTION CONTEXT
 // ========================================
 
 const SubscriptionContext = createContext<SubscriptionManagerClass>(subscriptionManager);
@@ -462,7 +462,7 @@ function useSubscription(): SubscriptionState {
 }
 
 // ========================================
-// RULE MODAL CONTENT COMPONENT (Priority 3 - Fix #7)
+// RULE MODAL CONTENT COMPONENT
 // ========================================
 
 interface RuleModalContentProps {
@@ -480,19 +480,19 @@ function RuleModalContent({
 }: RuleModalContentProps): JSX.Element {
   if (isLoading) {
     return (
-      <div className="text-center p-8 text-gray-500">
-        <div className="w-10 h-10 border-[3px] border-gray-100 border-t-indigo-500 rounded-full animate-spin mx-auto mb-4"></div>
-        <p>Loading detailed explanation...</p>
+      <div className="text-center p-4 sm:p-8 text-gray-500">
+        <div className="w-8 h-8 sm:w-10 sm:h-10 border-[3px] border-gray-100 border-t-indigo-500 rounded-full animate-spin mx-auto mb-3 sm:mb-4"></div>
+        <p className="text-sm sm:text-base">Loading detailed explanation...</p>
       </div>
     );
   }
 
   if (error) {
     return (
-      <div className="mb-8">
-        <h3 className="text-xl font-semibold text-white mb-4">📖 Rule Explanation</h3>
-        <p className="text-white leading-relaxed mb-4">{correction.explanation}</p>
-        <p className="mt-4 text-red-500 text-sm">
+      <div className="mb-4 sm:mb-8">
+        <h3 className="text-lg sm:text-xl font-semibold text-white mb-3 sm:mb-4">📖 Rule Explanation</h3>
+        <p className="text-white leading-relaxed mb-3 sm:mb-4 text-sm sm:text-base">{correction.explanation}</p>
+        <p className="mt-3 sm:mt-4 text-red-500 text-xs sm:text-sm">
           Could not load detailed examples. {error}
         </p>
       </div>
@@ -507,21 +507,21 @@ function RuleModalContent({
 
   return (
     <>
-      <div className="mb-8">
-        <h3 className="text-xl font-semibold text-white mb-4">📖 Rule Explanation</h3>
-        <p className="text-white leading-relaxed mb-4">{explanation}</p>
+      <div className="mb-4 sm:mb-8">
+        <h3 className="text-lg sm:text-xl font-semibold text-white mb-3 sm:mb-4">📖 Rule Explanation</h3>
+        <p className="text-white leading-relaxed mb-3 sm:mb-4 text-sm sm:text-base">{explanation}</p>
       </div>
 
       {hasCorrectExamples && (
-        <div className="mb-8">
-          <h3 className="text-xl font-semibold text-white mb-4">✅ Correct Examples</h3>
-          <div className="grid gap-3 mt-4">
+        <div className="mb-4 sm:mb-8">
+          <h3 className="text-lg sm:text-xl font-semibold text-white mb-3 sm:mb-4">✅ Correct Examples</h3>
+          <div className="grid gap-2 sm:gap-3 mt-3 sm:mt-4">
             {correctExamples.map((ex, index) => (
-              <div key={index} className="p-4 rounded-lg border-l-4 bg-emerald-100 border-emerald-500">
-                <div className="text-xs font-semibold uppercase mb-2 text-emerald-800">
+              <div key={index} className="p-3 sm:p-4 rounded-lg border-l-4 bg-emerald-100 border-emerald-500">
+                <div className="text-[10px] sm:text-xs font-semibold uppercase mb-1 sm:mb-2 text-emerald-800">
                   ✓ Correct
                 </div>
-                <div className="text-black">{ex}</div>
+                <div className="text-black text-sm sm:text-base">{ex}</div>
               </div>
             ))}
           </div>
@@ -529,15 +529,15 @@ function RuleModalContent({
       )}
 
       {hasIncorrectExamples && (
-        <div className="mb-8">
-          <h3 className="text-xl font-semibold text-white mb-4">❌ Incorrect Examples</h3>
-          <div className="grid gap-3 mt-4">
+        <div className="mb-4 sm:mb-8">
+          <h3 className="text-lg sm:text-xl font-semibold text-white mb-3 sm:mb-4">❌ Incorrect Examples</h3>
+          <div className="grid gap-2 sm:gap-3 mt-3 sm:mt-4">
             {incorrectExamples.map((ex, index) => (
-              <div key={index} className="p-4 rounded-lg border-l-4 bg-red-100 border-red-500">
-                <div className="text-xs font-semibold uppercase mb-2 text-red-800">
+              <div key={index} className="p-3 sm:p-4 rounded-lg border-l-4 bg-red-100 border-red-500">
+                <div className="text-[10px] sm:text-xs font-semibold uppercase mb-1 sm:mb-2 text-red-800">
                   ✗ Incorrect
                 </div>
-                <div className="text-black">{ex}</div>
+                <div className="text-black text-sm sm:text-base">{ex}</div>
               </div>
             ))}
           </div>
@@ -545,9 +545,9 @@ function RuleModalContent({
       )}
 
       {rule?.quiz && (
-        <div className="mb-8">
-          <h3 className="text-xl font-semibold text-white mb-4">🎯 Quick Quiz</h3>
-          <p className="text-white mb-4"><strong>Question:</strong> {rule.quiz.question}</p>
+        <div className="mb-4 sm:mb-8">
+          <h3 className="text-lg sm:text-xl font-semibold text-white mb-3 sm:mb-4">🎯 Quick Quiz</h3>
+          <p className="text-white mb-3 sm:mb-4 text-sm sm:text-base"><strong>Question:</strong> {rule.quiz.question}</p>
           <div className="grid gap-2">
             {rule.quiz.options.map((option, index) => (
               <button
@@ -563,7 +563,7 @@ function RuleModalContent({
                     );
                   }
                 }}
-                className="w-full text-left p-3 bg-slate-800 text-white rounded-lg hover:bg-slate-700 transition-colors cursor-pointer"
+                className="w-full text-left p-2.5 sm:p-3 bg-slate-800 text-white rounded-lg hover:bg-slate-700 transition-colors cursor-pointer text-sm sm:text-base"
               >
                 {String.fromCharCode(65 + index)}. {option}
               </button>
@@ -630,7 +630,7 @@ export default function GrammarMentor(): JSX.Element {
   // ========================================
 
   useEffect(() => {
-    // Load snippets from localStorage with error handling (Priority 3 - Fix #9)
+    // Load snippets from localStorage with error handling
     if (typeof window !== "undefined") {
       setSnippetsLoading(true);
       try {
@@ -640,13 +640,12 @@ export default function GrammarMentor(): JSX.Element {
         }
       } catch (e) {
         console.error("Failed to parse snippets:", e);
-        // Reset corrupted data
         localStorage.removeItem("grammarSnippets");
       } finally {
         setSnippetsLoading(false);
       }
 
-      // Load persisted text (Priority 3 - Fix #10)
+      // Load persisted text
       try {
         const savedText = localStorage.getItem("grammar_mentor_text");
         if (savedText) {
@@ -660,7 +659,7 @@ export default function GrammarMentor(): JSX.Element {
     // Initialize subscription manager
     subscriptionManager.init();
 
-    // Initialize Lemon Squeezy (Priority 2 - Fix #6)
+    // Initialize Lemon Squeezy
     if (typeof window !== "undefined" && window.createLemonSqueezy) {
       window.createLemonSqueezy();
     }
@@ -684,7 +683,7 @@ export default function GrammarMentor(): JSX.Element {
   }, []);
 
   // ========================================
-  // GOOGLE SIGN-IN CALLBACK (Priority 1 - Fix #1)
+  // GOOGLE SIGN-IN CALLBACK
   // ========================================
 
   useEffect(() => {
@@ -757,7 +756,7 @@ export default function GrammarMentor(): JSX.Element {
   }, []);
 
   // ========================================
-  // HIGHLIGHT LAYER SCROLL SYNC (Priority 1 - Fix #2)
+  // HIGHLIGHT LAYER SCROLL SYNC
   // ========================================
 
   useLayoutEffect(() => {
@@ -768,7 +767,7 @@ export default function GrammarMentor(): JSX.Element {
   }, [text]);
 
   // ========================================
-  // DEBOUNCED UPDATES (Priority 2 - Fix #5)
+  // DEBOUNCED UPDATES
   // ========================================
 
   const debouncedUpdateWordCount = useMemo(
@@ -786,7 +785,7 @@ export default function GrammarMentor(): JSX.Element {
     return () => debouncedUpdateWordCount.cancel();
   }, [text, debouncedUpdateWordCount]);
 
-  // Persist text to localStorage (Priority 3 - Fix #10)
+  // Persist text to localStorage
   const debouncedPersistText = useMemo(
     () =>
       debounce(() => {
@@ -899,7 +898,7 @@ export default function GrammarMentor(): JSX.Element {
   };
 
   // ========================================
-  // CORRECTION HANDLING (Priority 1 - Fix #3 - Complete gtag tracking)
+  // CORRECTION HANDLING
   // ========================================
 
   const acceptCorrection = (index: number): void => {
@@ -928,7 +927,6 @@ export default function GrammarMentor(): JSX.Element {
     setCorrections(updatedCorrections);
     setFixedCount((prev) => prev + 1);
 
-    // Complete gtag tracking
     gtag("event", "suggestion_accepted", {
       event_category: "Tool",
       event_label: "Single Suggestion Accepted",
@@ -976,7 +974,6 @@ export default function GrammarMentor(): JSX.Element {
 
     setCorrections(updatedCorrections);
 
-    // Complete gtag tracking
     gtag("event", "accept_all", {
       event_category: "Tool",
       event_label: "Accept All Suggestions",
@@ -995,7 +992,6 @@ export default function GrammarMentor(): JSX.Element {
     });
     setCorrections(updatedCorrections);
 
-    // Complete gtag tracking
     gtag("event", "suggestion_ignored", {
       event_category: "Tool",
       event_label: "Suggestion Ignored",
@@ -1006,7 +1002,7 @@ export default function GrammarMentor(): JSX.Element {
   };
 
   // ========================================
-  // GRAMMAR RULE MODAL (Using proper JSX - Priority 3 - Fix #7)
+  // GRAMMAR RULE MODAL
   // ========================================
 
   const showGrammarRule = async (index: number): Promise<void> => {
@@ -1065,7 +1061,6 @@ export default function GrammarMentor(): JSX.Element {
 
       setRuleData(data.rule || null);
 
-      // Complete gtag tracking
       gtag("event", "ai_explanation_view", {
         event_category: "Tool",
         event_label: correction.rule_name || correction.type || "Unknown Rule",
@@ -1100,8 +1095,6 @@ export default function GrammarMentor(): JSX.Element {
         "Free plan limited to 10 snippets. Upgrade to Pro for unlimited storage.",
         "warning"
       );
-
-      // gtag already fired in canAddSnippet
       return;
     }
 
@@ -1112,7 +1105,6 @@ export default function GrammarMentor(): JSX.Element {
 
     showToastMessage("Snippet saved!", "success");
 
-    // Complete gtag tracking
     gtag("event", "snippet_saved", {
       event_category: "Engagement",
       event_label: isPro ? "Pro" : "Free",
@@ -1455,11 +1447,11 @@ export default function GrammarMentor(): JSX.Element {
         }}
       />
 
-      {/* Main Container */}
-      <div className="max-w-[1400px] mx-auto bg-gray-900 rounded-3xl shadow-[0_20px_60px_rgba(0,0,0,0.8)] overflow-hidden">
-        {/* Usage Limit Warning */}
+      {/* Main Container - Mobile optimized padding */}
+      <div className="max-w-[1400px] mx-auto bg-gray-900 rounded-xl sm:rounded-3xl shadow-[0_20px_60px_rgba(0,0,0,0.8)] overflow-hidden">
+        {/* Usage Limit Warning - Compact on mobile */}
         {showUsageLimitWarning && (
-          <div className="bg-amber-100 border border-amber-400 text-amber-800 py-3 px-4 rounded-lg my-4 mx-4 text-sm">
+          <div className="bg-amber-100 border border-amber-400 text-amber-800 py-2 sm:py-3 px-3 sm:px-4 rounded-lg my-2 sm:my-4 mx-2 sm:mx-4 text-xs sm:text-sm">
             <strong>{usageLimitWarning}</strong>{" "}
             <a
               href="#"
@@ -1475,353 +1467,309 @@ export default function GrammarMentor(): JSX.Element {
           </div>
         )}
 
-        {/* Controls Bar */}
-{/* Controls Bar */}
-<div className="bg-slate-900 py-4 px-4 border-b border-gray-200">
+        {/* Controls Bar - Compact mobile layout */}
+        <div className="bg-slate-900 py-2 sm:py-4 px-2 sm:px-4 border-b border-gray-200">
+          <div className="grid grid-cols-3 gap-1.5 sm:gap-4">
+            {/* Language */}
+            <div className="flex flex-col gap-0.5">
+              <label className="text-[9px] sm:text-xs text-gray-500 font-semibold uppercase tracking-wider">
+                Language
+              </label>
+              <select
+                value={language}
+                onChange={(e) => setLanguage(e.target.value)}
+                className="py-1.5 sm:py-2 pl-1.5 sm:pl-3 pr-4 sm:pr-8 border-2 border-gray-800 rounded-md bg-white text-black text-[11px] sm:text-sm cursor-pointer transition-colors hover:border-indigo-500 focus:outline-none focus:border-indigo-500 focus:ring-[3px] focus:ring-indigo-500/10"
+              >
+                <option value="auto">Auto</option>
+                <option value="en">EN</option>
+                <option value="es">ES</option>
+                <option value="fr">FR</option>
+                <option value="de">DE</option>
+                <option value="it">IT</option>
+                <option value="pt">PT</option>
+                <option value="nl">NL</option>
+                <option value="pl">PL</option>
+                <option value="ru">RU</option>
+                <option value="zh">ZH</option>
+                <option value="ja">JA</option>
+                <option value="ko">KO</option>
+                <option value="ar">AR</option>
+              </select>
+            </div>
 
-  <div className="grid grid-cols-3 gap-2 sm:flex sm:gap-4 sm:flex-wrap sm:items-center">
+            {/* Writing Style */}
+            <div className="flex flex-col gap-0.5 relative">
+              <label className="text-[9px] sm:text-xs text-gray-500 font-semibold uppercase tracking-wider flex items-center gap-1">
+                <span className="hidden sm:inline">Writing </span>Style
+                {!isPro && (
+                  <span className="inline-flex items-center py-0.5 px-1 sm:px-2 bg-gradient-to-r from-indigo-500 to-purple-500 text-white text-[7px] sm:text-[9px] font-semibold rounded-full">
+                    PRO
+                  </span>
+                )}
+              </label>
+              <select
+                value={style}
+                onChange={(e) => handleStyleChange(e.target.value)}
+                className="py-1.5 sm:py-2 pl-1.5 sm:pl-3 pr-4 sm:pr-8 border-2 border-gray-800 rounded-md bg-white text-black text-[11px] sm:text-sm cursor-pointer transition-colors hover:border-indigo-500 focus:outline-none focus:border-indigo-500 focus:ring-[3px] focus:ring-indigo-500/10"
+              >
+                <option value="neutral">Neutral</option>
+                <option value="formal">Formal</option>
+                <option value="casual">Casual</option>
+                <option value="academic">Academic</option>
+                <option value="creative">Creative</option>
+                <option value="professional">Professional</option>
+                <option value="conversational">Conversational</option>
+              </select>
+            </div>
 
-    {/* Language */}
-    <div className="flex flex-col gap-0.5">
-      <label className="text-[10px] sm:text-xs text-gray-500 font-semibold uppercase tracking-wider">
-        Language
-      </label>
-      <select
-        value={language}
-        onChange={(e) => setLanguage(e.target.value)}
-        className="
-          py-1 sm:py-2
-          pl-2 sm:pl-3
-          pr-6 sm:pr-8
-          border-2 border-gray-800
-          rounded-md
-          bg-white text-black
-          text-xs sm:text-sm
-          cursor-pointer
-          transition-colors
-          hover:border-indigo-500
-          focus:outline-none
-          focus:border-indigo-500
-          focus:ring-[3px]
-          focus:ring-indigo-500/10
-        "
-      >
-        <option value="auto">Auto</option>
-        <option value="en">EN</option>
-        <option value="es">ES</option>
-        <option value="fr">FR</option>
-        <option value="de">DE</option>
-        <option value="it">IT</option>
-        <option value="pt">PT</option>
-        <option value="nl">NL</option>
-        <option value="pl">PL</option>
-        <option value="ru">RU</option>
-        <option value="zh">ZH</option>
-        <option value="ja">JA</option>
-        <option value="ko">KO</option>
-        <option value="ar">AR</option>
-      </select>
-    </div>
+            {/* Tone */}
+            <div className="flex flex-col gap-0.5">
+              <label className="text-[9px] sm:text-xs text-gray-500 font-semibold uppercase tracking-wider">
+                Tone
+              </label>
+              <select
+                value={tone}
+                onChange={(e) => setTone(e.target.value)}
+                className="py-1.5 sm:py-2 pl-1.5 sm:pl-3 pr-4 sm:pr-8 border-2 border-gray-800 rounded-md bg-white text-black text-[11px] sm:text-sm cursor-pointer transition-colors hover:border-indigo-500 focus:outline-none focus:border-indigo-500 focus:ring-[3px] focus:ring-indigo-500/10"
+              >
+                <option value="preserve">Preserve</option>
+                <option value="natural">Natural</option>
+                <option value="confident">Confident</option>
+                <option value="friendly">Friendly</option>
+                <option value="concise">Concise</option>
+              </select>
+            </div>
+          </div>
+        </div>
 
-    {/* Writing Style */}
-    <div className="flex flex-col gap-0.5 relative">
-      <label className="text-[10px] sm:text-xs text-gray-500 font-semibold uppercase tracking-wider">
-        Writing Style
-        {!isPro && (
-          <span className="inline-flex items-center gap-1 py-0.5 px-2 bg-gradient-to-r from-indigo-500 to-purple-500 text-white text-[9px] font-semibold rounded-full ml-1">
-            PRO
-          </span>
-        )}
-      </label>
-      <select
-        value={style}
-        onChange={(e) => handleStyleChange(e.target.value)}
-        className="
-          py-1 sm:py-2
-          pl-2 sm:pl-3
-          pr-6 sm:pr-8
-          border-2 border-gray-800
-          rounded-md
-          bg-white text-black
-          text-xs sm:text-sm
-          cursor-pointer
-          transition-colors
-          hover:border-indigo-500
-          focus:outline-none
-          focus:border-indigo-500
-          focus:ring-[3px]
-          focus:ring-indigo-500/10
-        "
-      >
-        <option value="neutral">Neutral</option>
-        <option value="formal">Formal</option>
-        <option value="casual">Casual</option>
-        <option value="academic">Academic</option>
-        <option value="creative">Creative</option>
-        <option value="professional">Professional</option>
-        <option value="conversational">Conversational</option>
-      </select>
-    </div>
-
-    {/* Tone */}
-    <div className="flex flex-col gap-0.5">
-      <label className="text-[10px] sm:text-xs text-gray-500 font-semibold uppercase tracking-wider">
-        Tone
-      </label>
-      <select
-        value={tone}
-        onChange={(e) => setTone(e.target.value)}
-        className="
-          py-1 sm:py-2
-          pl-2 sm:pl-3
-          pr-6 sm:pr-8
-          border-2 border-gray-800
-          rounded-md
-          bg-white text-black
-          text-xs sm:text-sm
-          cursor-pointer
-          transition-colors
-          hover:border-indigo-500
-          focus:outline-none
-          focus:border-indigo-500
-          focus:ring-[3px]
-          focus:ring-indigo-500/10
-        "
-      >
-        <option value="preserve">Preserve</option>
-        <option value="natural">Natural</option>
-        <option value="confident">Confident</option>
-        <option value="friendly">Friendly</option>
-        <option value="concise">Concise</option>
-      </select>
-    </div>
-
-  </div>
-</div>
-
-        <div className="grid grid-cols-1 lg:grid-cols-[1fr_450px] gap-0 min-h-[600px]">
-          {/* Editor Section */}
-          <div className="p-8 text-white border-r border-gray-800 lg:border-b-0 border-b border-gray-200">
-            <div className="relative w-full min-h-[400px] border-2 border-gray-200 rounded-xl bg-slate-950 transition-colors focus-within:border-indigo-500 focus-within:ring-[3px] focus-within:ring-indigo-500/10">
+        <div className="grid grid-cols-1 lg:grid-cols-[1fr_400px] gap-0 min-h-[400px] sm:min-h-[600px]">
+          {/* Editor Section - Compact padding on mobile */}
+          <div className="p-3 sm:p-8 text-white border-r border-gray-800 lg:border-b-0 border-b border-gray-200">
+            <div className="relative w-full min-h-[200px] sm:min-h-[400px] border-2 border-gray-200 rounded-lg sm:rounded-xl bg-slate-950 transition-colors focus-within:border-indigo-500 focus-within:ring-[3px] focus-within:ring-indigo-500/10">
               <div
                 ref={highlightLayerRef}
-                className="absolute top-0 left-0 w-full min-h-[400px] p-6 text-lg leading-[1.8] font-['Crimson_Pro',serif] pointer-events-none whitespace-pre-wrap break-words text-transparent overflow-hidden z-[1]"
+                className="absolute top-0 left-0 w-full min-h-[200px] sm:min-h-[400px] p-3 sm:p-6 text-sm sm:text-lg leading-[1.6] sm:leading-[1.8] font-['Crimson_Pro',serif] pointer-events-none whitespace-pre-wrap break-words text-transparent overflow-hidden z-[1]"
               >
                 {renderHighlights()}
               </div>
               <textarea
                 ref={textEditorRef}
-                placeholder="Type or paste your text here to check for grammar errors..."
+                placeholder="Type or paste your text here..."
                 spellCheck={false}
                 value={text}
                 onChange={(e) => setText(e.target.value)}
                 onScroll={handleEditorScroll}
-                className="w-full min-h-[400px] p-6 text-lg leading-[1.8] font-['Crimson_Pro',serif] border-none outline-none resize-y bg-transparent relative z-[2] text-white placeholder:text-gray-500"
+                className="w-full min-h-[200px] sm:min-h-[400px] p-3 sm:p-6 text-sm sm:text-lg leading-[1.6] sm:leading-[1.8] font-['Crimson_Pro',serif] border-none outline-none resize-y bg-transparent relative z-[2] text-white placeholder:text-gray-500"
               />
             </div>
 
-            <div className="mt-6 flex gap-4 items-center flex-wrap">
-              {/* Check Grammar Button */}
-  <button
-    disabled={isChecking}
-    onClick={checkGrammar}
-    className="flex items-center gap-2 py-3.5 px-8 rounded-lg font-semibold cursor-pointer transition-all duration-300 border-none text-base bg-gradient-to-br from-indigo-500 to-purple-600 text-white shadow-[0_4px_12px_rgba(102,126,234,0.4)] hover:-translate-y-0.5 hover:shadow-[0_6px_20px_rgba(102,126,234,0.5)] disabled:opacity-60 disabled:cursor-not-allowed disabled:transform-none"
-  >
-    {isChecking ? (
-      <>
-        <Loader2 className="h-5 w-5 animate-spin" />
-        <span>Checking...</span>
-      </>
-    ) : (
-      <>
-        <Search className="h-5 w-5" />
-        <span>Check Grammar</span>
-      </>
-    )}
-  </button>
+            {/* Action buttons - Mobile optimized */}
+            <div className="mt-3 sm:mt-6 flex flex-wrap gap-2 sm:gap-4 items-center">
+              {/* Check Grammar Button - Full width on mobile */}
+              <button
+                disabled={isChecking}
+                onClick={checkGrammar}
+                className="w-full sm:w-auto flex items-center justify-center gap-1.5 sm:gap-2 py-2.5 sm:py-3.5 px-4 sm:px-8 rounded-lg font-semibold cursor-pointer transition-all duration-300 border-none text-sm sm:text-base bg-gradient-to-br from-indigo-500 to-purple-600 text-white shadow-[0_4px_12px_rgba(102,126,234,0.4)] hover:-translate-y-0.5 hover:shadow-[0_6px_20px_rgba(102,126,234,0.5)] disabled:opacity-60 disabled:cursor-not-allowed disabled:transform-none"
+              >
+                {isChecking ? (
+                  <>
+                    <Loader2 className="h-4 w-4 sm:h-5 sm:w-5 animate-spin" />
+                    <span>Checking...</span>
+                  </>
+                ) : (
+                  <>
+                    <Search className="h-4 w-4 sm:h-5 sm:w-5" />
+                    <span>Check Grammar</span>
+                  </>
+                )}
+              </button>
+
               {activeCorrections.length > 0 && (
                 <button
-      onClick={acceptAllCorrections}
-      className="flex items-center gap-2 py-3.5 px-8 rounded-lg font-semibold cursor-pointer transition-all duration-300 border-none text-base bg-emerald-500 text-white shadow-[0_4px_12px_rgba(16,185,129,0.4)] hover:-translate-y-0.5 hover:shadow-[0_6px_20px_rgba(16,185,129,0.5)]"
-    >
-      <CheckCheck className="h-5 w-5" />
-      <span>Accept All</span>
-    </button>
+                  onClick={acceptAllCorrections}
+                  className="flex-1 sm:flex-none flex items-center justify-center gap-1.5 sm:gap-2 py-2 sm:py-3.5 px-3 sm:px-8 rounded-lg font-semibold cursor-pointer transition-all duration-300 border-none text-xs sm:text-base bg-emerald-500 text-white shadow-[0_4px_12px_rgba(16,185,129,0.4)] hover:-translate-y-0.5 hover:shadow-[0_6px_20px_rgba(16,185,129,0.5)]"
+                >
+                  <CheckCheck className="h-4 w-4 sm:h-5 sm:w-5" />
+                  <span className="hidden sm:inline">Accept All</span>
+                  <span className="sm:hidden">All</span>
+                </button>
               )}
-              {/* Clear All Button */}
-  <button
-    onClick={handleClear}
-    className="flex items-center gap-2 py-2 px-4 rounded-lg font-semibold cursor-pointer transition-all duration-300 border-none text-sm bg-gray-500 text-white hover:bg-gray-600"
-  >
-    <Trash2 className="h-4 w-4" />
-    <span>Clear All</span>
-  </button>
-              {/* Paste Button */}
-  <button
-    type="button"
-    title="Paste from clipboard"
-    onClick={handlePaste}
-    className="group flex items-center gap-2 px-4 py-2.5 bg-slate-700/70 hover:bg-slate-600 border border-slate-600/70 hover:border-slate-500 rounded-xl text-slate-300 hover:text-white font-medium text-sm transition-all duration-200 shadow-sm hover:shadow-md active:scale-[0.97]"
-  >
-    <ClipboardPaste className="h-4 w-4" />
-    <span>Paste</span>
-  </button>
-              {/* Copy Button */}
-  <button
-    type="button"
-    title="Copy to clipboard"
-    onClick={handleCopy}
-    className="group flex items-center gap-2 px-4 py-2.5 bg-slate-700/70 hover:bg-slate-600 border border-slate-600/70 hover:border-slate-500 rounded-xl text-slate-300 hover:text-white font-medium text-sm transition-all duration-200 shadow-sm hover:shadow-md active:scale-[0.97]"
-  >
-    <Copy className="h-4 w-4" />
-    <span>Copy</span>
-  </button>
+
+              {/* Utility buttons row */}
+              <div className="flex gap-2 w-full sm:w-auto">
+                <button
+                  onClick={handleClear}
+                  className="flex-1 sm:flex-none flex items-center justify-center gap-1 sm:gap-2 py-2 px-2 sm:px-4 rounded-lg font-semibold cursor-pointer transition-all duration-300 border-none text-xs sm:text-sm bg-gray-500 text-white hover:bg-gray-600"
+                >
+                  <Trash2 className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
+                  <span>Clear</span>
+                </button>
+
+                <button
+                  type="button"
+                  title="Paste from clipboard"
+                  onClick={handlePaste}
+                  className="flex-1 sm:flex-none group flex items-center justify-center gap-1 sm:gap-2 px-2 sm:px-4 py-2 bg-slate-700/70 hover:bg-slate-600 border border-slate-600/70 hover:border-slate-500 rounded-lg sm:rounded-xl text-slate-300 hover:text-white font-medium text-xs sm:text-sm transition-all duration-200 shadow-sm hover:shadow-md active:scale-[0.97]"
+                >
+                  <ClipboardPaste className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
+                  <span>Paste</span>
+                </button>
+
+                <button
+                  type="button"
+                  title="Copy to clipboard"
+                  onClick={handleCopy}
+                  className="flex-1 sm:flex-none group flex items-center justify-center gap-1 sm:gap-2 px-2 sm:px-4 py-2 bg-slate-700/70 hover:bg-slate-600 border border-slate-600/70 hover:border-slate-500 rounded-lg sm:rounded-xl text-slate-300 hover:text-white font-medium text-xs sm:text-sm transition-all duration-200 shadow-sm hover:shadow-md active:scale-[0.97]"
+                >
+                  <Copy className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
+                  <span>Copy</span>
+                </button>
+              </div>
             </div>
 
+            {/* Stats - Compact mobile layout */}
             {showStats && (
-              <div className="flex gap-8 mt-4 p-4 bg-gray-50 rounded-lg flex-wrap">
-                <div className="flex flex-col">
-                  <span className="text-xs text-gray-500 uppercase tracking-wider">
+              <div className="grid grid-cols-4 gap-2 sm:flex sm:gap-8 mt-3 sm:mt-4 p-2 sm:p-4 bg-gray-50 rounded-lg">
+                <div className="flex flex-col items-center sm:items-start">
+                  <span className="text-[9px] sm:text-xs text-gray-500 uppercase tracking-wider">
                     Words
                   </span>
-                  <span className="text-2xl font-bold text-gray-800">
+                  <span className="text-lg sm:text-2xl font-bold text-gray-800">
                     {wordCountValue}
                   </span>
                 </div>
-                <div className="flex flex-col">
-                  <span className="text-xs text-gray-500 uppercase tracking-wider">
-                    Issues Found
+                <div className="flex flex-col items-center sm:items-start">
+                  <span className="text-[9px] sm:text-xs text-gray-500 uppercase tracking-wider">
+                    Issues
                   </span>
-                  <span className="text-2xl font-bold text-gray-800">
+                  <span className="text-lg sm:text-2xl font-bold text-gray-800">
                     {issueCountValue}
                   </span>
                 </div>
-                <div className="flex flex-col">
-                  <span className="text-xs text-gray-500 uppercase tracking-wider">
-                    Issues Fixed
+                <div className="flex flex-col items-center sm:items-start">
+                  <span className="text-[9px] sm:text-xs text-gray-500 uppercase tracking-wider">
+                    Fixed
                   </span>
-                  <span className="text-2xl font-bold text-gray-800">
+                  <span className="text-lg sm:text-2xl font-bold text-gray-800">
                     {fixedCount}
                   </span>
                 </div>
-                <div className="flex flex-col">
-                  <span className="text-xs text-gray-500 uppercase tracking-wider">
-                    Language
+                <div className="flex flex-col items-center sm:items-start">
+                  <span className="text-[9px] sm:text-xs text-gray-500 uppercase tracking-wider">
+                    Lang
                   </span>
-                  <span className="text-base font-bold text-gray-800">
+                  <span className="text-sm sm:text-base font-bold text-gray-800">
                     {detectedLanguage}
                   </span>
                 </div>
               </div>
             )}
 
-            {/* Snippet Manager */}
-<div className="mt-6 p-4 bg-gray-50 text-black rounded-lg border-2 border-dashed border-gray-300 relative">
-  <div className="flex justify-between items-center mb-4">
-    <span className="font-semibold text-gray-800">
-      📎 Saved Snippets
-      <span> {snippetCountText}</span>
-      {!isPro && (
-        <span className="inline-flex items-center gap-1 py-0.5 px-2 bg-gradient-to-r from-indigo-500 to-purple-500 text-white text-[10px] font-semibold rounded-full ml-2">
-          <svg width="10" height="10" fill="currentColor" viewBox="0 0 20 20">
-            <path fillRule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clipRule="evenodd" />
-          </svg>
-          PRO
-        </span>
-      )}
-    </span>
-    <button
-      className="bg-purple-500 text-white py-1 px-2 text-xs rounded hover:bg-purple-600 transition-colors"
-      onClick={() => setShowSnippets(!showSnippets)}
-    >
-      Show/Hide
-    </button>
-  </div>
+            {/* Snippet Manager - Compact mobile layout */}
+            <div className="mt-3 sm:mt-6 p-2 sm:p-4 bg-gray-50 text-black rounded-lg border-2 border-dashed border-gray-300 relative">
+              <div className="flex justify-between items-center mb-2 sm:mb-4">
+                <span className="font-semibold text-gray-800 text-xs sm:text-base flex items-center gap-1 sm:gap-2">
+                  📎 <span className="hidden sm:inline">Saved </span>Snippets
+                  <span className="text-[10px] sm:text-sm">{snippetCountText}</span>
+                  {!isPro && (
+                    <span className="inline-flex items-center gap-0.5 py-0.5 px-1 sm:px-2 bg-gradient-to-r from-indigo-500 to-purple-500 text-white text-[8px] sm:text-[10px] font-semibold rounded-full">
+                      <svg width="8" height="8" fill="currentColor" viewBox="0 0 20 20" className="hidden sm:block">
+                        <path fillRule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clipRule="evenodd" />
+                      </svg>
+                      PRO
+                    </span>
+                  )}
+                </span>
+                <button
+                  className="bg-purple-500 text-white py-1 px-2 text-[10px] sm:text-xs rounded hover:bg-purple-600 transition-colors"
+                  onClick={() => setShowSnippets(!showSnippets)}
+                >
+                  {showSnippets ? 'Hide' : 'Show'}
+                </button>
+              </div>
 
-  {showSnippets && (
-    <div>
-      {/* Scroll-Container: max-h begrenzt die Höhe, overflow-y-auto aktiviert die Scrollleiste */}
-      <div className="flex flex-col gap-2 max-h-[280px] overflow-y-auto pr-2 custom-scrollbar">
-        {snippets.length === 0 ? (
-          <p className="text-center text-gray-400 p-4">
-            No snippets saved yet.
-          </p>
-        ) : (
-          snippets.map((snippet, index) => (
-            <div
-              key={index}
-              className="bg-white p-3 rounded-md border border-gray-200 flex justify-between items-center transition-all hover:border-purple-500 hover:shadow-[0_2px_8px_rgba(139,92,246,0.1)]"
-            >
-              <div
-                className="flex-1 text-sm text-gray-600 cursor-pointer"
-                onClick={() => insertSnippet(index)}
-              >
-                {snippet.substring(0, 60)}
-                {snippet.length > 60 ? "..." : ""}
-              </div>
-              <div className="flex gap-2">
-                <button
-                  className="py-1 px-2 text-xs border-none rounded cursor-pointer transition-colors bg-purple-500 text-white hover:bg-purple-600"
-                  onClick={() => insertSnippet(index)}
-                >
-                  Insert
-                </button>
-                <button
-                  className="py-1 px-2 text-xs border-none rounded cursor-pointer transition-colors bg-red-500 text-white hover:bg-red-600"
-                  onClick={() => deleteSnippet(index)}
-                >
-                  Delete
-                </button>
-              </div>
+              {showSnippets && (
+                <div>
+                  <div className="flex flex-col gap-1.5 sm:gap-2 max-h-[180px] sm:max-h-[280px] overflow-y-auto pr-1 sm:pr-2 custom-scrollbar">
+                    {snippets.length === 0 ? (
+                      <p className="text-center text-gray-400 p-2 sm:p-4 text-xs sm:text-base">
+                        No snippets saved yet.
+                      </p>
+                    ) : (
+                      snippets.map((snippet, index) => (
+                        <div
+                          key={index}
+                          className="bg-white p-2 sm:p-3 rounded-md border border-gray-200 flex justify-between items-center transition-all hover:border-purple-500 hover:shadow-[0_2px_8px_rgba(139,92,246,0.1)]"
+                        >
+                          <div
+                            className="flex-1 text-[11px] sm:text-sm text-gray-600 cursor-pointer truncate mr-2"
+                            onClick={() => insertSnippet(index)}
+                          >
+                            {snippet.substring(0, 40)}
+                            {snippet.length > 40 ? "..." : ""}
+                          </div>
+                          <div className="flex gap-1 sm:gap-2 flex-shrink-0">
+                            <button
+                              className="py-1 px-1.5 sm:px-2 text-[10px] sm:text-xs border-none rounded cursor-pointer transition-colors bg-purple-500 text-white hover:bg-purple-600"
+                              onClick={() => insertSnippet(index)}
+                            >
+                              Insert
+                            </button>
+                            <button
+                              className="py-1 px-1.5 sm:px-2 text-[10px] sm:text-xs border-none rounded cursor-pointer transition-colors bg-red-500 text-white hover:bg-red-600"
+                              onClick={() => deleteSnippet(index)}
+                            >
+                              Del
+                            </button>
+                          </div>
+                        </div>
+                      ))
+                    )}
+                  </div>
+
+                  <div className="flex gap-1.5 sm:gap-2 mt-2 sm:mt-4">
+                    <input
+                      type="text"
+                      className="flex-1 p-1.5 sm:p-2 border-2 border-gray-200 rounded-md text-[11px] sm:text-sm focus:outline-none focus:border-purple-500"
+                      placeholder="Enter snippet text..."
+                      value={snippetInput}
+                      onChange={(e) => setSnippetInput(e.target.value)}
+                    />
+                    <button
+                      className="py-1.5 sm:py-2 px-2 sm:px-4 rounded-lg font-semibold cursor-pointer transition-all border-none text-[11px] sm:text-sm bg-purple-500 text-white hover:bg-purple-600"
+                      onClick={saveSnippet}
+                    >
+                      Save
+                    </button>
+                  </div>
+                </div>
+              )}
             </div>
-          ))
-        )}
-      </div>
-
-      {/* Eingabebereich bleibt fix unter der Scroll-Liste */}
-      <div className="flex gap-2 mt-4">
-        <input
-          type="text"
-          className="flex-1 p-2 border-2 border-gray-200 rounded-md text-sm focus:outline-none focus:border-purple-500"
-          placeholder="Enter text to save as snippet..."
-          value={snippetInput}
-          onChange={(e) => setSnippetInput(e.target.value)}
-        />
-        <button
-          className="py-2 px-4 rounded-lg font-semibold cursor-pointer transition-all border-none text-sm bg-purple-500 text-white hover:bg-purple-600"
-          onClick={saveSnippet}
-        >
-          Save Snippet
-        </button>
-      </div>
-    </div>
-  )}
-</div>
           </div>
 
-          {/* Advice Section */}
-          <div className="bg-slate-900 p-8 overflow-y-auto max-h-[800px]">
-            <div className="flex justify-between items-center mb-6">
-              <h2 className="font-['Crimson_Pro',serif] text-2xl text-white">
+          {/* Advice Section - Compact mobile layout */}
+          <div className="bg-slate-900 p-3 sm:p-8 overflow-y-auto max-h-[400px] sm:max-h-[800px]">
+            <div className="flex justify-between items-center mb-3 sm:mb-6">
+              <h2 className="font-['Crimson_Pro',serif] text-lg sm:text-2xl text-white">
                 Suggestions
               </h2>
             </div>
             <div>
               {isChecking ? (
-                <div className="text-center p-8 text-gray-500">
-                  <div className="w-10 h-10 border-[3px] border-gray-100 border-t-indigo-500 rounded-full animate-spin mx-auto mb-4"></div>
-                  <p>Analyzing your text...</p>
+                <div className="text-center p-4 sm:p-8 text-gray-500">
+                  <div className="w-8 h-8 sm:w-10 sm:h-10 border-[3px] border-gray-100 border-t-indigo-500 rounded-full animate-spin mx-auto mb-3 sm:mb-4"></div>
+                  <p className="text-sm sm:text-base">Analyzing your text...</p>
                 </div>
               ) : corrections.length === 0 ? (
-                <div className="text-center py-12 px-8 text-gray-400">
+                <div className="text-center py-6 sm:py-12 px-4 sm:px-8 text-gray-400">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
-                    width="80"
-                    height="80"
+                    width="48"
+                    height="48"
                     fill="none"
                     viewBox="0 0 24 24"
                     stroke="currentColor"
-                    className="mx-auto mb-4 opacity-50"
+                    className="mx-auto mb-3 sm:mb-4 opacity-50 w-12 h-12 sm:w-20 sm:h-20"
                   >
                     <path
                       strokeLinecap="round"
@@ -1830,21 +1778,20 @@ export default function GrammarMentor(): JSX.Element {
                       d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
                     />
                   </svg>
-                  <p>
-                    Enter text and click &quot;Check Grammar&quot; to see
-                    suggestions
+                  <p className="text-xs sm:text-base">
+                    Enter text and click &quot;Check Grammar&quot; to see suggestions
                   </p>
                 </div>
               ) : activeCorrections.length === 0 ? (
-                <div className="text-center py-12 px-8 text-gray-400">
+                <div className="text-center py-6 sm:py-12 px-4 sm:px-8 text-gray-400">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
-                    width="80"
-                    height="80"
+                    width="48"
+                    height="48"
                     fill="none"
                     viewBox="0 0 24 24"
                     stroke="currentColor"
-                    className="mx-auto mb-4 opacity-50"
+                    className="mx-auto mb-3 sm:mb-4 opacity-50 w-12 h-12 sm:w-20 sm:h-20"
                   >
                     <path
                       strokeLinecap="round"
@@ -1853,7 +1800,7 @@ export default function GrammarMentor(): JSX.Element {
                       d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
                     />
                   </svg>
-                  <p className="text-emerald-500 font-semibold">
+                  <p className="text-emerald-500 font-semibold text-sm sm:text-base">
                     All suggestions handled!
                   </p>
                 </div>
@@ -1865,33 +1812,32 @@ export default function GrammarMentor(): JSX.Element {
                       key={actualIndex}
                       id={`advice-${actualIndex}`}
                       data-index={actualIndex}
-                      className="bg-white rounded-xl p-5 mb-4 border-2 border-gray-200 transition-all duration-300 cursor-pointer hover:border-indigo-500 hover:shadow-[0_4px_12px_rgba(102,126,234,0.15)] hover:translate-x-1"
+                      className="bg-white rounded-lg sm:rounded-xl p-3 sm:p-5 mb-2 sm:mb-4 border-2 border-gray-200 transition-all duration-300 cursor-pointer hover:border-indigo-500 hover:shadow-[0_4px_12px_rgba(102,126,234,0.15)] hover:translate-x-1"
                     >
-                      <div className="text-red-500 font-semibold mb-2 text-[15px]">
+                      <div className="text-red-500 font-semibold mb-1 sm:mb-2 text-xs sm:text-[15px]">
                         <strong>Issue:</strong> &quot;{correction.original}&quot;
                       </div>
-                      <div className="text-emerald-500 font-semibold mb-2 text-[15px]">
-                        <strong>Suggestion:</strong> &quot;{correction.correction}
-                        &quot;
+                      <div className="text-emerald-500 font-semibold mb-1 sm:mb-2 text-xs sm:text-[15px]">
+                        <strong>Fix:</strong> &quot;{correction.correction}&quot;
                       </div>
-                      <div className="text-gray-500 text-sm mb-4 leading-relaxed">
-                        <strong>Reason:</strong> {correction.explanation}
+                      <div className="text-gray-500 text-[11px] sm:text-sm mb-2 sm:mb-4 leading-relaxed">
+                        <strong>Why:</strong> {correction.explanation}
                       </div>
-                      <div className="flex gap-2 flex-wrap">
+                      <div className="flex gap-1.5 sm:gap-2 flex-wrap">
                         <button
-                          className="bg-blue-500 text-white py-2 px-4 text-sm rounded-lg font-semibold cursor-pointer transition-colors hover:bg-blue-600"
+                          className="flex-1 sm:flex-none bg-blue-500 text-white py-1.5 sm:py-2 px-2 sm:px-4 text-[10px] sm:text-sm rounded-lg font-semibold cursor-pointer transition-colors hover:bg-blue-600"
                           onClick={() => showGrammarRule(actualIndex)}
                         >
-                          📚 Learn More
+                          📚 Learn
                         </button>
                         <button
-                          className="bg-emerald-500 text-white py-2 px-4 text-sm rounded-lg font-semibold cursor-pointer transition-colors hover:bg-emerald-600"
+                          className="flex-1 sm:flex-none bg-emerald-500 text-white py-1.5 sm:py-2 px-2 sm:px-4 text-[10px] sm:text-sm rounded-lg font-semibold cursor-pointer transition-colors hover:bg-emerald-600"
                           onClick={() => acceptCorrection(actualIndex)}
                         >
                           Accept
                         </button>
                         <button
-                          className="bg-gray-500 text-white py-2 px-4 text-sm rounded-lg font-semibold cursor-pointer transition-colors hover:bg-gray-600"
+                          className="flex-1 sm:flex-none bg-gray-500 text-white py-1.5 sm:py-2 px-2 sm:px-4 text-[10px] sm:text-sm rounded-lg font-semibold cursor-pointer transition-colors hover:bg-gray-600"
                           onClick={() => ignoreCorrection(actualIndex)}
                         >
                           Ignore
@@ -1906,28 +1852,28 @@ export default function GrammarMentor(): JSX.Element {
         </div>
       </div>
 
-      {/* Rule Modal - Now using proper JSX component */}
+      {/* Rule Modal - Mobile optimized */}
       {showRuleModal && activeCorrection && (
         <div
-          className="fixed inset-0 bg-black/70 z-[1000] flex items-center justify-center p-4 md:p-8 backdrop-blur-sm"
+          className="fixed inset-0 bg-black/70 z-[1000] flex items-end sm:items-center justify-center p-0 sm:p-8 backdrop-blur-sm"
           onClick={() => closeRuleModal()}
         >
           <div
-            className="bg-black rounded-2xl w-full max-w-[700px] max-h-[90vh] overflow-y-auto shadow-[0_25px_50px_rgba(0,0,0,0.5)] animate-[modalSlideIn_0.3s_ease]"
+            className="bg-black rounded-t-2xl sm:rounded-2xl w-full sm:max-w-[700px] max-h-[85vh] sm:max-h-[90vh] overflow-y-auto shadow-[0_25px_50px_rgba(0,0,0,0.5)] animate-[modalSlideIn_0.3s_ease]"
             onClick={(e) => e.stopPropagation()}
           >
-            <div className="p-8 border-b border-gray-200 flex justify-between items-center sticky top-0 bg-black z-10">
-              <h2 className="font-['Crimson_Pro',serif] text-2xl md:text-3xl font-bold text-white pr-4">
+            <div className="p-4 sm:p-8 border-b border-gray-200 flex justify-between items-center sticky top-0 bg-black z-10">
+              <h2 className="font-['Crimson_Pro',serif] text-lg sm:text-3xl font-bold text-white pr-4 line-clamp-2">
                 {modalTitle}
               </h2>
               <button
-                className="bg-transparent border-none text-3xl text-white cursor-pointer p-0 w-8 h-8 flex items-center justify-center rounded-full transition-all hover:bg-gray-100 hover:text-gray-800 flex-shrink-0"
+                className="bg-transparent border-none text-2xl sm:text-3xl text-white cursor-pointer p-0 w-8 h-8 flex items-center justify-center rounded-full transition-all hover:bg-gray-100 hover:text-gray-800 flex-shrink-0"
                 onClick={closeRuleModal}
               >
                 &times;
               </button>
             </div>
-            <div className="p-8">
+            <div className="p-4 sm:p-8">
               <RuleModalContent
                 rule={ruleData}
                 correction={activeCorrection}
@@ -1939,52 +1885,51 @@ export default function GrammarMentor(): JSX.Element {
         </div>
       )}
 
-      {/* Upgrade Modal */}
+      {/* Upgrade Modal - Mobile optimized */}
       {showUpgradeModal && (
         <div
-          className="fixed inset-0 bg-black/70 z-[1000] flex items-center justify-center p-4 md:p-8 backdrop-blur-sm"
+          className="fixed inset-0 bg-black/70 z-[1000] flex items-end sm:items-center justify-center p-0 sm:p-8 backdrop-blur-sm"
           onClick={closeUpgradeModal}
         >
           <div
-            className="bg-black rounded-2xl w-full max-w-[600px] max-h-[90vh] overflow-y-auto shadow-[0_25px_50px_rgba(0,0,0,0.5)] animate-[modalSlideIn_0.3s_ease]"
+            className="bg-black rounded-t-2xl sm:rounded-2xl w-full sm:max-w-[600px] max-h-[85vh] sm:max-h-[90vh] overflow-y-auto shadow-[0_25px_50px_rgba(0,0,0,0.5)] animate-[modalSlideIn_0.3s_ease]"
             onClick={(e) => e.stopPropagation()}
           >
-            <div className="p-8 border-b border-gray-200 flex justify-between items-center">
-              <h2 className="font-['Crimson_Pro',serif] text-2xl md:text-3xl font-bold text-white">
+            <div className="p-4 sm:p-8 border-b border-gray-200 flex justify-between items-center">
+              <h2 className="font-['Crimson_Pro',serif] text-xl sm:text-3xl font-bold text-white">
                 Upgrade to Pro
               </h2>
               <button
-                className="bg-transparent border-none text-3xl text-white cursor-pointer p-0 w-8 h-8 flex items-center justify-center rounded-full transition-all hover:bg-gray-100 hover:text-gray-800"
+                className="bg-transparent border-none text-2xl sm:text-3xl text-white cursor-pointer p-0 w-8 h-8 flex items-center justify-center rounded-full transition-all hover:bg-gray-100 hover:text-gray-800"
                 onClick={closeUpgradeModal}
               >
                 &times;
               </button>
             </div>
-            <div className="p-8">
-              <div className="text-center mb-8">
-                <div className="text-5xl mb-4">🚀</div>
-                <h3 className="text-xl md:text-2xl font-bold text-white mb-2">
+            <div className="p-4 sm:p-8">
+              <div className="text-center mb-4 sm:mb-8">
+                <div className="text-3xl sm:text-5xl mb-2 sm:mb-4">🚀</div>
+                <h3 className="text-lg sm:text-2xl font-bold text-white mb-1 sm:mb-2">
                   Unlock All Premium Features
                 </h3>
-                <p className="text-slate-400">
-                  Get unlimited AI explanations, advanced style checking, and
-                  more
+                <p className="text-slate-400 text-sm sm:text-base">
+                  Get unlimited AI explanations, advanced style checking, and more
                 </p>
               </div>
 
-              <div className="bg-indigo-500/10 border border-indigo-500/30 rounded-xl p-6 mb-6">
-                <div className="flex items-baseline gap-2 mb-2">
-                  <span className="text-3xl md:text-4xl font-bold text-white">
+              <div className="bg-indigo-500/10 border border-indigo-500/30 rounded-xl p-4 sm:p-6 mb-4 sm:mb-6">
+                <div className="flex items-baseline gap-2 mb-1 sm:mb-2">
+                  <span className="text-2xl sm:text-4xl font-bold text-white">
                     $6
                   </span>
-                  <span className="text-slate-400">/month</span>
+                  <span className="text-slate-400 text-sm sm:text-base">/month</span>
                 </div>
-                <p className="text-sm text-emerald-400">
+                <p className="text-xs sm:text-sm text-emerald-400">
                   Billed yearly at $72 (save $48)
                 </p>
               </div>
 
-              <ul className="list-none p-0 mb-8">
+              <ul className="list-none p-0 mb-4 sm:mb-8 space-y-2 sm:space-y-3">
                 {[
                   "Unlimited AI explanations",
                   "Advanced style checking",
@@ -1995,10 +1940,10 @@ export default function GrammarMentor(): JSX.Element {
                 ].map((feature, index) => (
                   <li
                     key={index}
-                    className="flex items-start gap-3 mb-3 text-slate-200"
+                    className="flex items-start gap-2 sm:gap-3 text-slate-200 text-sm sm:text-base"
                   >
                     <svg
-                      className="w-5 h-5 text-emerald-400 flex-shrink-0 mt-0.5"
+                      className="w-4 h-4 sm:w-5 sm:h-5 text-emerald-400 flex-shrink-0 mt-0.5"
                       fill="currentColor"
                       viewBox="0 0 20 20"
                     >
@@ -2015,7 +1960,7 @@ export default function GrammarMentor(): JSX.Element {
 
               <a
                 href={LEMONSQUEEZY_CONFIG.checkoutUrl}
-                className="block w-full p-4 bg-gradient-to-r from-indigo-500 to-purple-500 text-white text-center font-semibold rounded-lg no-underline transition-all hover:shadow-lg"
+                className="block w-full p-3 sm:p-4 bg-gradient-to-r from-indigo-500 to-purple-500 text-white text-center font-semibold rounded-lg no-underline transition-all hover:shadow-lg text-sm sm:text-base"
                 onClick={() => {
                   gtag("event", "begin_checkout", {
                     event_category: "Checkout",
@@ -2027,7 +1972,7 @@ export default function GrammarMentor(): JSX.Element {
               >
                 Upgrade Now
               </a>
-              <p className="text-center text-xs text-slate-500 mt-4">
+              <p className="text-center text-[10px] sm:text-xs text-slate-500 mt-3 sm:mt-4">
                 Cancel anytime, no questions asked
               </p>
             </div>
@@ -2035,28 +1980,28 @@ export default function GrammarMentor(): JSX.Element {
         </div>
       )}
 
-      {/* Login Modal */}
+      {/* Login Modal - Mobile optimized */}
       {showLoginModal && (
         <div
-          className="fixed inset-0 bg-black/60 flex items-center justify-center z-50 p-4"
+          className="fixed inset-0 bg-black/60 flex items-end sm:items-center justify-center z-50 p-0 sm:p-4"
           onClick={closeLoginModal}
         >
           <div
-            className="bg-slate-900 border border-slate-700 rounded-2xl shadow-2xl max-w-md w-full p-8 relative"
+            className="bg-slate-900 border border-slate-700 rounded-t-2xl sm:rounded-2xl shadow-2xl w-full sm:max-w-md p-4 sm:p-8 relative max-h-[85vh] overflow-y-auto"
             onClick={(e) => e.stopPropagation()}
           >
             <button
-              className="absolute top-4 right-4 text-slate-400 hover:text-white text-2xl"
+              className="absolute top-3 sm:top-4 right-3 sm:right-4 text-slate-400 hover:text-white text-xl sm:text-2xl"
               onClick={closeLoginModal}
             >
               ×
             </button>
 
-            <h2 className="text-2xl font-bold text-white mb-2 text-center">
+            <h2 className="text-xl sm:text-2xl font-bold text-white mb-1 sm:mb-2 text-center">
               Welcome back
             </h2>
-            <p className="text-slate-400 text-center mb-6">
-              Sign in to access your snippets, history, and all Pro features
+            <p className="text-slate-400 text-center mb-4 sm:mb-6 text-sm sm:text-base">
+              Sign in to access your snippets and Pro features
             </p>
 
             {/* Google Sign-In Container */}
@@ -2069,7 +2014,7 @@ export default function GrammarMentor(): JSX.Element {
             ></div>
 
             <div
-              className="g_id_signin mb-6"
+              className="g_id_signin mb-4 sm:mb-6"
               data-type="standard"
               data-size="large"
               data-theme="outline"
@@ -2079,30 +2024,30 @@ export default function GrammarMentor(): JSX.Element {
             ></div>
 
             {/* Divider */}
-            <div className="relative my-6">
+            <div className="relative my-4 sm:my-6">
               <div className="absolute inset-0 flex items-center">
                 <div className="w-full border-t border-slate-700"></div>
               </div>
-              <div className="relative flex justify-center text-sm">
-                <span className="px-4 bg-slate-900 text-slate-500">
+              <div className="relative flex justify-center text-xs sm:text-sm">
+                <span className="px-3 sm:px-4 bg-slate-900 text-slate-500">
                   or continue with email
                 </span>
               </div>
             </div>
 
             {/* Email Form */}
-            <form onSubmit={handleEmailLogin} className="space-y-5">
+            <form onSubmit={handleEmailLogin} className="space-y-3 sm:space-y-5">
               <div>
                 <label
                   htmlFor="loginEmail"
-                  className="block text-sm font-medium text-slate-300 mb-1"
+                  className="block text-xs sm:text-sm font-medium text-slate-300 mb-1"
                 >
                   Email address
                 </label>
                 <input
                   type="email"
                   id="loginEmail"
-                  className="w-full px-4 py-3 bg-slate-800 border border-slate-700 rounded-lg text-white placeholder-slate-500 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition"
+                  className="w-full px-3 sm:px-4 py-2.5 sm:py-3 bg-slate-800 border border-slate-700 rounded-lg text-white placeholder-slate-500 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition text-sm sm:text-base"
                   placeholder="you@example.com"
                   value={loginEmail}
                   onChange={(e) => setLoginEmail(e.target.value)}
@@ -2112,13 +2057,13 @@ export default function GrammarMentor(): JSX.Element {
 
               <button
                 type="submit"
-                className="w-full bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 text-white font-semibold py-3 px-4 rounded-lg transition shadow-md hover:shadow-lg"
+                className="w-full bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 text-white font-semibold py-2.5 sm:py-3 px-4 rounded-lg transition shadow-md hover:shadow-lg text-sm sm:text-base"
               >
                 Sign up with email
               </button>
             </form>
 
-            <p className="text-center text-sm text-slate-500 mt-6">
+            <p className="text-center text-xs sm:text-sm text-slate-500 mt-4 sm:mt-6">
               Don&apos;t have an account yet?{" "}
               <a
                 href="#"
@@ -2133,33 +2078,32 @@ export default function GrammarMentor(): JSX.Element {
               </a>
             </p>
 
-            <p className="text-center text-xs text-slate-600 mt-4">
-              Your data is secure – we only store what is necessary (GDPR
-              compliant).
+            <p className="text-center text-[10px] sm:text-xs text-slate-600 mt-3 sm:mt-4">
+              Your data is secure – we only store what is necessary (GDPR compliant).
             </p>
           </div>
         </div>
       )}
 
-      {/* Style Paywall */}
+      {/* Style Paywall - Mobile optimized */}
       {showStylePaywall && (
         <div
-          className="fixed inset-0 bg-slate-900/95 backdrop-blur-sm flex items-center justify-center z-[1000] p-4 md:p-6"
+          className="fixed inset-0 bg-slate-900/95 backdrop-blur-sm flex items-end sm:items-center justify-center z-[1000] p-0 sm:p-6"
           onClick={() => setShowStylePaywall(false)}
         >
           <div
-            className="relative bg-white max-w-md w-full rounded-2xl p-8 md:p-10 text-center shadow-2xl"
+            className="relative bg-white w-full sm:max-w-md rounded-t-2xl sm:rounded-2xl p-6 sm:p-10 text-center shadow-2xl"
             onClick={(e) => e.stopPropagation()}
           >
             <button
               onClick={() => setShowStylePaywall(false)}
-              className="absolute top-4 right-4 text-gray-400 hover:text-gray-600 transition-colors text-xl font-bold"
+              className="absolute top-3 sm:top-4 right-3 sm:right-4 text-gray-400 hover:text-gray-600 transition-colors text-lg sm:text-xl font-bold"
             >
               &times;
             </button>
 
             <svg
-              className="w-12 h-12 mx-auto mb-5 text-indigo-600"
+              className="w-10 h-10 sm:w-12 sm:h-12 mx-auto mb-3 sm:mb-5 text-indigo-600"
               fill="none"
               stroke="currentColor"
               viewBox="0 0 24 24"
@@ -2172,13 +2116,12 @@ export default function GrammarMentor(): JSX.Element {
               />
             </svg>
 
-            <div className="text-xl font-semibold mb-3 text-gray-900">
+            <div className="text-lg sm:text-xl font-semibold mb-2 sm:mb-3 text-gray-900">
               Advanced Style Checking
             </div>
 
-            <div className="text-gray-600 text-sm mb-7 leading-relaxed">
-              Unlock advanced writing styles to preserve your voice while
-              catching tone inconsistencies
+            <div className="text-gray-600 text-xs sm:text-sm mb-5 sm:mb-7 leading-relaxed">
+              Unlock advanced writing styles to preserve your voice while catching tone inconsistencies
             </div>
 
             <a
@@ -2188,7 +2131,7 @@ export default function GrammarMentor(): JSX.Element {
                 setShowStylePaywall(false);
                 openUpgradeModal();
               }}
-              className="inline-block bg-indigo-600 text-white font-medium rounded-full px-6 py-3 hover:bg-indigo-700 hover:shadow-lg transform hover:-translate-y-1 transition-all duration-200"
+              className="inline-block w-full sm:w-auto bg-indigo-600 text-white font-medium rounded-full px-6 py-2.5 sm:py-3 hover:bg-indigo-700 hover:shadow-lg transform hover:-translate-y-1 transition-all duration-200 text-sm sm:text-base"
             >
               Upgrade to Pro
             </a>
@@ -2196,25 +2139,25 @@ export default function GrammarMentor(): JSX.Element {
         </div>
       )}
 
-      {/* Snippet Paywall */}
+      {/* Snippet Paywall - Mobile optimized */}
       {showSnippetPaywall && (
         <div
-          className="fixed inset-0 bg-slate-900/95 backdrop-blur-sm flex items-center justify-center z-[1000] p-4 md:p-6"
+          className="fixed inset-0 bg-slate-900/95 backdrop-blur-sm flex items-end sm:items-center justify-center z-[1000] p-0 sm:p-6"
           onClick={() => setShowSnippetPaywall(false)}
         >
           <div
-            className="relative bg-white max-w-md w-full rounded-2xl p-8 md:p-10 text-center shadow-2xl"
+            className="relative bg-white w-full sm:max-w-md rounded-t-2xl sm:rounded-2xl p-6 sm:p-10 text-center shadow-2xl"
             onClick={(e) => e.stopPropagation()}
           >
             <button
               onClick={() => setShowSnippetPaywall(false)}
-              className="absolute top-4 right-4 text-gray-400 hover:text-gray-600 transition-colors text-xl font-bold"
+              className="absolute top-3 sm:top-4 right-3 sm:right-4 text-gray-400 hover:text-gray-600 transition-colors text-lg sm:text-xl font-bold"
             >
               &times;
             </button>
 
             <svg
-              className="w-12 h-12 mx-auto mb-5 text-indigo-600"
+              className="w-10 h-10 sm:w-12 sm:h-12 mx-auto mb-3 sm:mb-5 text-indigo-600"
               fill="none"
               stroke="currentColor"
               viewBox="0 0 24 24"
@@ -2227,13 +2170,12 @@ export default function GrammarMentor(): JSX.Element {
               />
             </svg>
 
-            <div className="text-xl font-semibold mb-3 text-gray-900">
+            <div className="text-lg sm:text-xl font-semibold mb-2 sm:mb-3 text-gray-900">
               Unlimited Snippet Storage
             </div>
 
-            <div className="text-gray-600 text-sm mb-7 leading-relaxed">
-              Build your personal library of templates, sign-offs, and repeated
-              phrases
+            <div className="text-gray-600 text-xs sm:text-sm mb-5 sm:mb-7 leading-relaxed">
+              Build your personal library of templates, sign-offs, and repeated phrases
             </div>
 
             <a
@@ -2243,7 +2185,7 @@ export default function GrammarMentor(): JSX.Element {
                 setShowSnippetPaywall(false);
                 openUpgradeModal();
               }}
-              className="inline-block bg-indigo-600 text-white font-medium rounded-full px-6 py-3 hover:bg-indigo-700 hover:shadow-lg transform hover:-translate-y-1 transition-all duration-200"
+              className="inline-block w-full sm:w-auto bg-indigo-600 text-white font-medium rounded-full px-6 py-2.5 sm:py-3 hover:bg-indigo-700 hover:shadow-lg transform hover:-translate-y-1 transition-all duration-200 text-sm sm:text-base"
             >
               Upgrade to Pro
             </a>
@@ -2251,10 +2193,10 @@ export default function GrammarMentor(): JSX.Element {
         </div>
       )}
 
-      {/* Toast Notification */}
+      {/* Toast Notification - Mobile optimized */}
       {toast.show && (
         <div
-          className={`fixed bottom-6 right-6 px-6 py-4 rounded-xl shadow-2xl text-white font-medium transition-all duration-300 transform z-50 ${
+          className={`fixed bottom-4 sm:bottom-6 left-4 right-4 sm:left-auto sm:right-6 px-4 sm:px-6 py-3 sm:py-4 rounded-xl shadow-2xl text-white font-medium transition-all duration-300 transform z-50 text-sm sm:text-base ${
             toast.type === "success" ? "bg-green-600" : "bg-amber-600"
           }`}
         >
