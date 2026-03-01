@@ -166,7 +166,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
             Try AI Grammar Mentor free and learn from every correction.
           </p>
           <Link
-            href="/register"
+            href="/sign-up"
             className="mt-4 inline-flex rounded-lg bg-primary px-4 py-2 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90"
           >
             Get Started Free

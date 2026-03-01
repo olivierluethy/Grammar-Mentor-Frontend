@@ -4,6 +4,7 @@ import { Analytics } from "@vercel/analytics/next"
 import { Navbar } from "@/components/navbar"
 import { Footer } from "@/components/footer"
 import { ClerkProvider } from "@clerk/nextjs";
+import { dark } from "@clerk/themes";
 import "./globals.css"
 
 const _inter = Inter({ subsets: ["latin"], variable: "--font-inter" })
@@ -38,15 +39,16 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <ClerkProvider>
-    <html lang="en" className="dark">
-      <body className="font-sans antialiased bg-background text-foreground">
-        <Navbar />
-        <main>{children}</main>
-        <Footer />
-        <Analytics />
-      </body>
-    </html>
+    // 2. Das appearance-Prop hier zentral setzen
+    <ClerkProvider appearance={{ baseTheme: dark }}>
+      <html lang="en" className="dark">
+        <body className="font-sans antialiased bg-background text-foreground">
+          <Navbar />
+          <main>{children}</main>
+          <Footer />
+          <Analytics />
+        </body>
+      </html>
     </ClerkProvider>
   )
 }

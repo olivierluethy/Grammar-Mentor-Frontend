@@ -51,10 +51,6 @@ export function Navbar() {
             </>
           ) : (
             <>
-              <span className="text-sm text-muted-foreground">
-                Hi {user?.firstName ?? "there"} 👋
-              </span>
-
               <SignOutButton>
                 <Button variant="ghost" size="sm">
                   Logout
@@ -73,6 +69,36 @@ export function Navbar() {
           {mobileOpen ? <X /> : <Menu />}
         </button>
       </nav>
+
+      {mobileOpen && (
+        <div className="border-t border-border bg-background px-4 pb-4 md:hidden">
+          <ul className="flex flex-col gap-3 pt-4">
+            {navLinks.map((link) => (
+              <li key={link.href}>
+                <Link
+                  href={link.href}
+                  className="block text-sm text-muted-foreground transition-colors hover:text-foreground"
+                  onClick={() => setMobileOpen(false)}
+                >
+                  {link.label}
+                </Link>
+              </li>
+            ))}
+          </ul>
+          <div className="mt-4 flex flex-col gap-2">
+            <Button variant="ghost" size="sm" asChild>
+              <Link href="/login" onClick={() => setMobileOpen(false)}>
+                Log in
+              </Link>
+            </Button>
+            <Button size="sm" asChild>
+              <Link href="/sign-up" onClick={() => setMobileOpen(false)}>
+                Get Started
+              </Link>
+            </Button>
+          </div>
+        </div>
+      )}
     </header>
   )
 }

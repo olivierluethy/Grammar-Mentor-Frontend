@@ -1476,76 +1476,126 @@ export default function GrammarMentor(): JSX.Element {
         )}
 
         {/* Controls Bar */}
-        {/* Controls Bar */}
-<div className="bg-slate-900 py-6 px-8 border-b border-gray-200 flex gap-4 flex-wrap items-center">
-  <div className="flex flex-col gap-1">
-    <label className="text-xs text-gray-500 font-semibold uppercase tracking-wider">
-      Language
-    </label>
-    <select
-      value={language}
-      onChange={(e) => setLanguage(e.target.value)}
-      className="py-2 pl-3 pr-8 border-2 border-gray-800 rounded-md bg-white text-black text-sm cursor-pointer transition-colors hover:border-indigo-500 focus:outline-none focus:border-indigo-500 focus:ring-[3px] focus:ring-indigo-500/10"
-    >
-      <option value="auto" className="text-black">Auto-detect</option>
-      <option value="en" className="text-black">English</option>
-      <option value="es" className="text-black">Spanish</option>
-      <option value="fr" className="text-black">French</option>
-      <option value="de" className="text-black">German</option>
-      <option value="it" className="text-black">Italian</option>
-      <option value="pt" className="text-black">Portuguese</option>
-      <option value="nl" className="text-black">Dutch</option>
-      <option value="pl" className="text-black">Polish</option>
-      <option value="ru" className="text-black">Russian</option>
-      <option value="zh" className="text-black">Chinese</option>
-      <option value="ja" className="text-black">Japanese</option>
-      <option value="ko" className="text-black">Korean</option>
-      <option value="ar" className="text-black">Arabic</option>
-    </select>
-  </div>
+{/* Controls Bar */}
+<div className="bg-slate-900 py-4 px-4 border-b border-gray-200">
 
-  <div className="flex flex-col gap-1 relative">
-    <label className="text-xs text-gray-500 font-semibold uppercase tracking-wider">
-      Writing Style
-      {!isPro && (
-        <span className="inline-flex items-center gap-1 py-0.5 px-2 bg-gradient-to-r from-indigo-500 to-purple-500 text-white text-[10px] font-semibold rounded-full ml-2">
-          <svg width="10" height="10" fill="currentColor" viewBox="0 0 20 20">
-            <path fillRule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clipRule="evenodd" />
-          </svg>
-          PRO
-        </span>
-      )}
-    </label>
-    <select
-      value={style}
-      onChange={(e) => handleStyleChange(e.target.value)}
-      className="py-2 pl-3 pr-8 border-2 border-gray-800 rounded-md bg-white text-black text-sm cursor-pointer transition-colors hover:border-indigo-500 focus:outline-none focus:border-indigo-500 focus:ring-[3px] focus:ring-indigo-500/10"
-    >
-      <option value="neutral" className="text-black">Neutral</option>
-      <option value="formal" className="text-black">Formal</option>
-      <option value="casual" className="text-black">Casual</option>
-      <option value="academic" className="text-black">Academic</option>
-      <option value="creative" className="text-black">Creative</option>
-      <option value="professional" className="text-black">Professional</option>
-      <option value="conversational" className="text-black">Conversational</option>
-    </select>
-  </div>
+  <div className="grid grid-cols-3 gap-2 sm:flex sm:gap-4 sm:flex-wrap sm:items-center">
 
-  <div className="flex flex-col gap-1">
-    <label className="text-xs text-gray-500 font-semibold uppercase tracking-wider">
-      Tone
-    </label>
-    <select
-      value={tone}
-      onChange={(e) => setTone(e.target.value)}
-      className="py-2 pl-3 pr-8 border-2 border-gray-800 rounded-md bg-white text-black text-sm cursor-pointer transition-colors hover:border-indigo-500 focus:outline-none focus:border-indigo-500 focus:ring-[3px] focus:ring-indigo-500/10"
-    >
-      <option value="preserve" className="text-black">Preserve Original</option>
-      <option value="natural" className="text-black">More Natural</option>
-      <option value="confident" className="text-black">More Confident</option>
-      <option value="friendly" className="text-black">More Friendly</option>
-      <option value="concise" className="text-black">More Concise</option>
-    </select>
+    {/* Language */}
+    <div className="flex flex-col gap-0.5">
+      <label className="text-[10px] sm:text-xs text-gray-500 font-semibold uppercase tracking-wider">
+        Language
+      </label>
+      <select
+        value={language}
+        onChange={(e) => setLanguage(e.target.value)}
+        className="
+          py-1 sm:py-2
+          pl-2 sm:pl-3
+          pr-6 sm:pr-8
+          border-2 border-gray-800
+          rounded-md
+          bg-white text-black
+          text-xs sm:text-sm
+          cursor-pointer
+          transition-colors
+          hover:border-indigo-500
+          focus:outline-none
+          focus:border-indigo-500
+          focus:ring-[3px]
+          focus:ring-indigo-500/10
+        "
+      >
+        <option value="auto">Auto</option>
+        <option value="en">EN</option>
+        <option value="es">ES</option>
+        <option value="fr">FR</option>
+        <option value="de">DE</option>
+        <option value="it">IT</option>
+        <option value="pt">PT</option>
+        <option value="nl">NL</option>
+        <option value="pl">PL</option>
+        <option value="ru">RU</option>
+        <option value="zh">ZH</option>
+        <option value="ja">JA</option>
+        <option value="ko">KO</option>
+        <option value="ar">AR</option>
+      </select>
+    </div>
+
+    {/* Writing Style */}
+    <div className="flex flex-col gap-0.5 relative">
+      <label className="text-[10px] sm:text-xs text-gray-500 font-semibold uppercase tracking-wider">
+        Writing Style
+        {!isPro && (
+          <span className="inline-flex items-center gap-1 py-0.5 px-2 bg-gradient-to-r from-indigo-500 to-purple-500 text-white text-[9px] font-semibold rounded-full ml-1">
+            PRO
+          </span>
+        )}
+      </label>
+      <select
+        value={style}
+        onChange={(e) => handleStyleChange(e.target.value)}
+        className="
+          py-1 sm:py-2
+          pl-2 sm:pl-3
+          pr-6 sm:pr-8
+          border-2 border-gray-800
+          rounded-md
+          bg-white text-black
+          text-xs sm:text-sm
+          cursor-pointer
+          transition-colors
+          hover:border-indigo-500
+          focus:outline-none
+          focus:border-indigo-500
+          focus:ring-[3px]
+          focus:ring-indigo-500/10
+        "
+      >
+        <option value="neutral">Neutral</option>
+        <option value="formal">Formal</option>
+        <option value="casual">Casual</option>
+        <option value="academic">Academic</option>
+        <option value="creative">Creative</option>
+        <option value="professional">Professional</option>
+        <option value="conversational">Conversational</option>
+      </select>
+    </div>
+
+    {/* Tone */}
+    <div className="flex flex-col gap-0.5">
+      <label className="text-[10px] sm:text-xs text-gray-500 font-semibold uppercase tracking-wider">
+        Tone
+      </label>
+      <select
+        value={tone}
+        onChange={(e) => setTone(e.target.value)}
+        className="
+          py-1 sm:py-2
+          pl-2 sm:pl-3
+          pr-6 sm:pr-8
+          border-2 border-gray-800
+          rounded-md
+          bg-white text-black
+          text-xs sm:text-sm
+          cursor-pointer
+          transition-colors
+          hover:border-indigo-500
+          focus:outline-none
+          focus:border-indigo-500
+          focus:ring-[3px]
+          focus:ring-indigo-500/10
+        "
+      >
+        <option value="preserve">Preserve</option>
+        <option value="natural">Natural</option>
+        <option value="confident">Confident</option>
+        <option value="friendly">Friendly</option>
+        <option value="concise">Concise</option>
+      </select>
+    </div>
+
   </div>
 </div>
 

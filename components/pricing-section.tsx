@@ -21,7 +21,7 @@ const tiers = [
     price: "Free",
     cta: "Register",
     isButton: true,
-    href: "/register",
+    href: "/sign-up",
     borderColor: "border-slate-800",
     // Indigo-Gradient für den "Free"-User
     buttonStyles: "bg-gradient-to-r from-indigo-600 to-violet-600 hover:from-indigo-500 hover:to-violet-500 shadow-[0_0_15px_rgba(79,70,229,0.4)]",
