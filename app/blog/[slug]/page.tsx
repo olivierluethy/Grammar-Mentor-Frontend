@@ -26,7 +26,7 @@ export async function generateMetadata({
 }
 
 function renderMarkdown(content: string) {
-  const lines = content.trim().split("\n")
+  const lines = content.trimStart().split("\n") // trimStart entfernt führende Leerzeilen
   const elements: React.ReactNode[] = []
   let inList = false
   let listItems: React.ReactNode[] = []
@@ -43,44 +43,37 @@ function renderMarkdown(content: string) {
     }
   }
 
+  const formatInline = (text: string) =>
+    text
+      .replace(/\*\*(.*?)\*\*/g, '<strong class="text-foreground">$1</strong>')
+      .replace(/\*(.*?)\*/g, '<em>$1</em>')
+
   lines.forEach((line, i) => {
     const trimmed = line.trim()
 
-    if (trimmed.startsWith("## ")) {
+    if (trimmed === "---") {
+      flushList()
+      elements.push(<hr key={`hr-${i}`} className="my-6 border-muted-foreground" />)
+    } else if (trimmed.startsWith("## ")) {
       flushList()
       elements.push(
-        <h2
-          key={`h2-${i}`}
-          className="mt-8 mb-3 text-xl font-bold text-foreground"
-        >
+        <h2 key={`h2-${i}`} className="mt-8 mb-3 text-xl font-bold text-foreground">
           {trimmed.replace("## ", "")}
         </h2>
       )
     } else if (trimmed.startsWith("### ")) {
       flushList()
       elements.push(
-        <h3
-          key={`h3-${i}`}
-          className="mt-6 mb-2 text-lg font-semibold text-foreground"
-        >
+        <h3 key={`h3-${i}`} className="mt-6 mb-2 text-lg font-semibold text-foreground">
           {trimmed.replace("### ", "")}
         </h3>
       )
-    } else if (trimmed.startsWith("- ")) {
+    } else if (trimmed.startsWith("- ") || trimmed.startsWith("* ")) {
       inList = true
-      const content = trimmed.replace("- ", "")
+      const itemContent = trimmed.replace(/^[-*] /, "")
       listItems.push(
         <li key={`li-${i}`}>
-          <span
-            dangerouslySetInnerHTML={{
-              __html: content
-                .replace(
-                  /\*\*(.*?)\*\*/g,
-                  '<strong class="text-foreground">$1</strong>'
-                )
-                .replace(/\*(.*?)\*/g, "<em>$1</em>"),
-            }}
-          />
+          <span dangerouslySetInnerHTML={{ __html: formatInline(itemContent) }} />
         </li>
       )
     } else if (trimmed === "") {
@@ -88,18 +81,9 @@ function renderMarkdown(content: string) {
     } else {
       flushList()
       elements.push(
-        <p
-          key={`p-${i}`}
-          className="leading-relaxed"
-          dangerouslySetInnerHTML={{
-            __html: trimmed
-              .replace(
-                /\*\*(.*?)\*\*/g,
-                '<strong class="text-foreground">$1</strong>'
-              )
-              .replace(/\*(.*?)\*/g, "<em>$1</em>"),
-          }}
-        />
+        <p key={`p-${i}`} className="leading-relaxed">
+          <span dangerouslySetInnerHTML={{ __html: formatInline(trimmed) }} />
+        </p>
       )
     }
   })
