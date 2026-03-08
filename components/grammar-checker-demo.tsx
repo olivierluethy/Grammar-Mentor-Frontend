@@ -297,7 +297,7 @@ class SubscriptionManagerClass {
   canUseAIExplanation(): CheckPermissionResult {
     if (this.hasProAccess()) return { allowed: true };
 
-    const limit = 5;
+    const limit = 1;
     const used = this.dailyUsage.aiExplanations;
 
     if (used >= limit) {
