@@ -1,9 +1,9 @@
-// app/pricing/PricingClient.tsx
-"use client"
+"use client";
 
-import { useState } from "react"
-import { Check } from "lucide-react"
-import { Button } from "@/components/ui/button"
+import { useState } from "react";
+import { Check } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { useEffect } from "react";
 import {
   Card,
   CardContent,
@@ -11,9 +11,9 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card"
-import { Switch } from "@/components/ui/switch"
-import { Label } from "@/components/ui/label"
+} from "@/components/ui/card";
+import { Switch } from "@/components/ui/switch";
+import { Label } from "@/components/ui/label";
 
 const LEMONSQUEEZY_LINKS = {
   free: "https://grammar-mentor.com/",
@@ -23,20 +23,134 @@ const LEMONSQUEEZY_LINKS = {
     "https://grammar-mentor.lemonsqueezy.com/checkout/buy/4f3f8322-6efa-41d6-b884-8176cbcac195",
   lifetime:
     "https://grammar-mentor.lemonsqueezy.com/checkout/buy/d9b6bd65-57d6-47eb-851e-47278b468439",
-}
+};
 
 export default function PricingClient() {
-  const [isYearly, setIsYearly] = useState(true)
+  useEffect(() => {
+    if (typeof window === "undefined") return;
 
-  const proPrice = isYearly ? "$6" : "$10"
+    // Page view event
+    window.gtag?.("event", "enter_subscribe", {
+      event_category: "content",
+      event_label: "Subscribe Page View",
+    });
+
+    // Pricing cards view
+    const pricingCards = document.querySelector("#pricing-cards");
+    if (pricingCards) {
+      const pricingObserver = new IntersectionObserver(
+        (entries) => {
+          if (entries[0].isIntersecting) {
+            window.gtag?.("event", "pricing_view_cards", {
+              event_category: "pricing",
+            });
+            pricingObserver.disconnect();
+          }
+        },
+        { threshold: 0.5 },
+      );
+
+      pricingObserver.observe(pricingCards);
+    }
+
+    // Feature comparison view
+    const features = document.querySelector("#features");
+    if (features) {
+      const featuresObserver = new IntersectionObserver(
+        (entries) => {
+          if (entries[0].isIntersecting) {
+            window.gtag?.("event", "pricing_view_features", {
+              event_category: "pricing",
+            });
+            featuresObserver.disconnect();
+          }
+        },
+        { threshold: 0.5 },
+      );
+
+      featuresObserver.observe(features);
+    }
+
+    // FAQ view
+    const faq = document.querySelector("#faq");
+    if (faq) {
+      const faqObserver = new IntersectionObserver(
+        (entries) => {
+          if (entries[0].isIntersecting) {
+            window.gtag?.("event", "pricing_view_faq", {
+              event_category: "pricing",
+            });
+            faqObserver.disconnect();
+          }
+        },
+        { threshold: 0.5 },
+      );
+
+      faqObserver.observe(faq);
+    }
+    // Track which pricing plan users view
+    const plans = ["free", "pro", "lifetime"];
+
+    plans.forEach((plan) => {
+      const el = document.querySelector(`#plan-${plan}`);
+
+      if (!el) return;
+
+      const observer = new IntersectionObserver(
+        (entries) => {
+          if (entries[0].isIntersecting) {
+            window.gtag?.("event", "pricing_view_plan", {
+              event_category: "pricing",
+              plan: plan,
+            });
+          }
+        },
+        { threshold: 0.6 },
+      );
+
+      observer.observe(el);
+    });
+  }, []);
+  const [isYearly, setIsYearly] = useState(true);
+
+  const proPrice = isYearly ? "$6" : "$10";
   const proBillingText = isYearly
     ? "Billed yearly at $72 (save $48)"
-    : "Billed monthly at $10"
+    : "Billed monthly at $10";
 
   const handleProClick = () => {
-    const url = isYearly ? LEMONSQUEEZY_LINKS.pro_yearly : LEMONSQUEEZY_LINKS.pro_monthly
-    window.location.href = url
-  }
+    window.gtag?.("event", "pricing_click_pro", {
+      event_category: "pricing",
+      plan: "pro",
+      billing: isYearly ? "yearly" : "monthly",
+      price: isYearly ? 72 : 10,
+    });
+
+    const url = isYearly
+      ? LEMONSQUEEZY_LINKS.pro_yearly
+      : LEMONSQUEEZY_LINKS.pro_monthly;
+
+    window.location.href = url;
+  };
+
+  const trackPlanHover = (plan: string) => {
+    let startTime = 0;
+
+    return {
+      onMouseEnter: () => {
+        startTime = Date.now();
+      },
+      onMouseLeave: () => {
+        const duration = (Date.now() - startTime) / 1000;
+
+        window.gtag?.("event", "pricing_hover_plan", {
+          event_category: "pricing",
+          plan: plan,
+          duration: duration,
+        });
+      },
+    };
+  };
 
   return (
     <div className="min-h-screen bg-[#0a0a0a] text-gray-100 antialiased">
@@ -51,7 +165,8 @@ export default function PricingClient() {
             Start free. Upgrade when you need more. Cancel anytime.
           </p>
           <p className="mt-2 text-sm text-gray-400 max-w-2xl mx-auto sm:mt-4 sm:text-lg">
-            No hidden fees. No surprise charges. No aggressive upsells. Just honest pricing from a Swiss company that values trust.
+            No hidden fees. No surprise charges. No aggressive upsells. Just
+            honest pricing from a Swiss company that values trust.
           </p>
         </div>
       </section>
@@ -60,7 +175,9 @@ export default function PricingClient() {
       <section className="pb-4 sm:pb-8">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="flex flex-col items-center gap-2 sm:gap-4">
-            <p className="text-xs text-gray-400 sm:text-sm">Choose your billing period</p>
+            <p className="text-xs text-gray-400 sm:text-sm">
+              Choose your billing period
+            </p>
             <div className="inline-flex items-center gap-1 rounded-xl border border-gray-700 bg-[#1a1a1a] p-1 sm:p-1.5">
               <Label
                 htmlFor="billing-monthly"
@@ -69,7 +186,13 @@ export default function PricingClient() {
                     ? "bg-gradient-to-r from-indigo-600 to-purple-600 text-white"
                     : "text-gray-300 hover:text-white"
                 }`}
-                onClick={() => setIsYearly(false)}
+                onClick={() => {
+                  setIsYearly(false);
+                  window.gtag?.("event", "pricing_toggle", {
+                    event_category: "pricing",
+                    billing: "monthly",
+                  });
+                }}
               >
                 Monthly
               </Label>
@@ -77,7 +200,13 @@ export default function PricingClient() {
               <Switch
                 id="billing-yearly"
                 checked={isYearly}
-                onCheckedChange={setIsYearly}
+                onCheckedChange={(value) => {
+                  setIsYearly(value);
+                  window.gtag?.("event", "pricing_toggle", {
+                    event_category: "pricing",
+                    billing: value ? "yearly" : "monthly",
+                  });
+                }}
                 className="data-[state=checked]:bg-indigo-600 scale-90 sm:scale-100"
               />
 
@@ -96,28 +225,40 @@ export default function PricingClient() {
               </Label>
             </div>
             <p className="text-xs text-gray-500 sm:text-sm">
-              💰 Save <span className="font-semibold text-emerald-400">$48/year</span> with yearly billing
+              💰 Save{" "}
+              <span className="font-semibold text-emerald-400">$48/year</span>{" "}
+              with yearly billing
             </p>
           </div>
         </div>
       </section>
 
       {/* Pricing Cards */}
-      <section className="py-6 pb-10 sm:py-12 sm:pb-20">
+      <section id="pricing-cards" className="py-6 pb-10 sm:py-12 sm:pb-20">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="grid gap-4 sm:gap-8 lg:grid-cols-3 max-w-6xl mx-auto">
             {/* Free */}
-            <Card className="flex flex-col rounded-xl sm:rounded-2xl border border-gray-700 bg-[#1a1a1a] p-4 sm:p-8">
+            <Card
+              id="plan-free"
+              {...trackPlanHover("free")}
+              className="flex flex-col rounded-xl sm:rounded-2xl border border-gray-700 bg-[#1a1a1a] p-4 sm:p-8"
+            >
               <CardHeader className="mb-3 sm:mb-6 p-0">
-                <CardTitle className="text-lg font-bold text-white sm:text-2xl">Registered</CardTitle>
+                <CardTitle className="text-lg font-bold text-white sm:text-2xl">
+                  Registered
+                </CardTitle>
                 <CardDescription className="text-xs text-gray-400 sm:text-sm">
                   For trying it out and occasional use
                 </CardDescription>
               </CardHeader>
               <CardContent className="flex-1 p-0">
                 <div className="mb-4 sm:mb-8 flex items-baseline gap-1 sm:gap-2">
-                  <span className="text-3xl font-bold text-white sm:text-5xl">$0</span>
-                  <span className="text-gray-500 text-sm sm:text-base">/forever</span>
+                  <span className="text-3xl font-bold text-white sm:text-5xl">
+                    $0
+                  </span>
+                  <span className="text-gray-500 text-sm sm:text-base">
+                    /forever
+                  </span>
                 </div>
                 <ul className="mb-4 sm:mb-8 space-y-2 sm:space-y-4">
                   {[
@@ -142,11 +283,18 @@ export default function PricingClient() {
                       sub: "Dismiss suggestions you disagree with, no friction",
                     },
                   ].map((f) => (
-                    <li key={f.main} className="flex items-start gap-2 sm:gap-3">
+                    <li
+                      key={f.main}
+                      className="flex items-start gap-2 sm:gap-3"
+                    >
                       <Check className="mt-0.5 h-4 w-4 flex-shrink-0 text-emerald-500 sm:h-5 sm:w-5" />
                       <div>
-                        <p className="text-sm font-medium text-white sm:text-base">{f.main}</p>
-                        <p className="mt-0.5 text-xs text-gray-400 sm:mt-1 sm:text-sm">{f.sub}</p>
+                        <p className="text-sm font-medium text-white sm:text-base">
+                          {f.main}
+                        </p>
+                        <p className="mt-0.5 text-xs text-gray-400 sm:mt-1 sm:text-sm">
+                          {f.sub}
+                        </p>
                       </div>
                     </li>
                   ))}
@@ -158,21 +306,39 @@ export default function PricingClient() {
                   className="w-full border-gray-600 bg-[#2a2a2a] py-2.5 text-sm text-white hover:bg-[#3a3a3a] sm:py-3.5 sm:text-base"
                   asChild
                 >
-                  <a href={LEMONSQUEEZY_LINKS.free}>Start Free</a>
+                  <a
+                    href={LEMONSQUEEZY_LINKS.free}
+                    onClick={() =>
+                      window.gtag?.("event", "pricing_click_free", {
+                        event_category: "pricing",
+                        plan: "free",
+                      })
+                    }
+                  >
+                    Start Free
+                  </a>
                 </Button>
               </CardFooter>
-              <p className="mt-2 text-center text-[10px] text-gray-500 sm:mt-3 sm:text-xs">No credit card required</p>
+              <p className="mt-2 text-center text-[10px] text-gray-500 sm:mt-3 sm:text-xs">
+                No credit card required
+              </p>
             </Card>
 
             {/* Pro */}
-            <Card className="relative flex flex-col scale-100 lg:scale-105 rounded-xl sm:rounded-2xl border-2 border-indigo-500 bg-gradient-to-br from-indigo-900/40 to-purple-900/40 p-4 sm:p-8 shadow-xl sm:shadow-2xl shadow-indigo-900/50">
+            <Card
+              id="plan-pro"
+              {...trackPlanHover("pro")}
+              className="relative flex flex-col scale-100 lg:scale-105 rounded-xl sm:rounded-2xl border-2 border-indigo-500 bg-gradient-to-br from-indigo-900/40 to-purple-900/40 p-4 sm:p-8 shadow-xl sm:shadow-2xl shadow-indigo-900/50"
+            >
               <div className="absolute -top-3 left-1/2 -translate-x-1/2 sm:-top-4">
                 <span className="rounded-full bg-gradient-to-r from-indigo-500 to-purple-600 px-4 py-1 text-xs font-semibold text-white sm:px-6 sm:py-1.5 sm:text-sm">
                   Most Popular
                 </span>
               </div>
               <CardHeader className="mb-3 sm:mb-6 p-0 pt-2 sm:pt-0">
-                <CardTitle className="text-lg font-bold text-white sm:text-2xl">Pro</CardTitle>
+                <CardTitle className="text-lg font-bold text-white sm:text-2xl">
+                  Pro
+                </CardTitle>
                 <CardDescription className="text-xs text-gray-300 sm:text-sm">
                   For serious writers who want to improve
                 </CardDescription>
@@ -180,10 +346,16 @@ export default function PricingClient() {
               <CardContent className="flex-1 p-0">
                 <div className="mb-4 sm:mb-8">
                   <div className="flex items-baseline gap-1 sm:gap-2">
-                    <span className="text-3xl font-bold text-white sm:text-5xl">{proPrice}</span>
-                    <span className="text-gray-400 text-sm sm:text-base">/month</span>
+                    <span className="text-3xl font-bold text-white sm:text-5xl">
+                      {proPrice}
+                    </span>
+                    <span className="text-gray-400 text-sm sm:text-base">
+                      /month
+                    </span>
                   </div>
-                  <p className="mt-1 text-xs font-medium text-emerald-400 sm:mt-2 sm:text-sm">{proBillingText}</p>
+                  <p className="mt-1 text-xs font-medium text-emerald-400 sm:mt-2 sm:text-sm">
+                    {proBillingText}
+                  </p>
                 </div>
                 <ul className="mb-4 sm:mb-8 space-y-2 sm:space-y-4">
                   {[
@@ -213,11 +385,20 @@ export default function PricingClient() {
                       sub: "Get help when you need it from real people who care.",
                     },
                   ].map((f) => (
-                    <li key={f.main} className="flex items-start gap-2 sm:gap-3">
+                    <li
+                      key={f.main}
+                      className="flex items-start gap-2 sm:gap-3"
+                    >
                       <Check className="mt-0.5 h-4 w-4 flex-shrink-0 text-emerald-400 sm:h-5 sm:w-5" />
                       <div>
-                        <p className="text-sm font-medium text-white sm:text-base">{f.main}</p>
-                        {f.sub && <p className="mt-0.5 text-xs text-gray-300 sm:mt-1 sm:text-sm">{f.sub}</p>}
+                        <p className="text-sm font-medium text-white sm:text-base">
+                          {f.main}
+                        </p>
+                        {f.sub && (
+                          <p className="mt-0.5 text-xs text-gray-300 sm:mt-1 sm:text-sm">
+                            {f.sub}
+                          </p>
+                        )}
                       </div>
                     </li>
                   ))}
@@ -231,13 +412,21 @@ export default function PricingClient() {
                   Buy
                 </Button>
               </CardFooter>
-              <p className="mt-2 text-center text-[10px] text-gray-400 sm:mt-3 sm:text-xs">Cancel anytime, no questions asked</p>
+              <p className="mt-2 text-center text-[10px] text-gray-400 sm:mt-3 sm:text-xs">
+                Cancel anytime, no questions asked
+              </p>
             </Card>
 
             {/* Lifetime */}
-            <Card className="flex flex-col rounded-xl sm:rounded-2xl border border-gray-700 bg-[#1a1a1a] p-4 sm:p-8">
+            <Card
+              id="plan-lifetime"
+              {...trackPlanHover("lifetime")}
+              className="flex flex-col rounded-xl sm:rounded-2xl border border-gray-700 bg-[#1a1a1a] p-4 sm:p-8"
+            >
               <CardHeader className="mb-3 sm:mb-6 p-0">
-                <CardTitle className="text-lg font-bold text-white sm:text-2xl">Lifetime</CardTitle>
+                <CardTitle className="text-lg font-bold text-white sm:text-2xl">
+                  Lifetime
+                </CardTitle>
                 <CardDescription className="text-xs text-gray-400 sm:text-sm">
                   One payment. Forever access.
                 </CardDescription>
@@ -245,15 +434,23 @@ export default function PricingClient() {
               <CardContent className="flex-1 p-0">
                 <div className="mb-4 sm:mb-6">
                   <div className="flex items-baseline gap-1 sm:gap-2">
-                    <span className="text-3xl font-bold text-white sm:text-5xl">$199</span>
-                    <span className="text-gray-500 text-sm sm:text-base">/forever</span>
+                    <span className="text-3xl font-bold text-white sm:text-5xl">
+                      $199
+                    </span>
+                    <span className="text-gray-500 text-sm sm:text-base">
+                      /forever
+                    </span>
                   </div>
-                  <p className="mt-1 text-xs font-medium text-emerald-400 sm:mt-2 sm:text-sm">Pay once, own it forever</p>
+                  <p className="mt-1 text-xs font-medium text-emerald-400 sm:mt-2 sm:text-sm">
+                    Pay once, own it forever
+                  </p>
                   <div className="mt-3 sm:mt-5 inline-flex items-center gap-1.5 sm:gap-2 rounded-lg border border-amber-700/40 bg-amber-950/60 px-2.5 py-1.5 sm:px-4 sm:py-2.5">
                     <span className="uppercase tracking-wider text-[10px] font-semibold text-amber-400 sm:text-xs">
                       Limited:
                     </span>
-                    <span className="text-xs font-medium text-white sm:text-sm">First 50 people only</span>
+                    <span className="text-xs font-medium text-white sm:text-sm">
+                      First 50 people only
+                    </span>
                   </div>
                 </div>
                 <ul className="mb-4 sm:mb-8 space-y-2 sm:space-y-4">
@@ -276,11 +473,20 @@ export default function PricingClient() {
                       sub: "You own it. Use it on any device, keep it forever.",
                     },
                   ].map((f) => (
-                    <li key={f.main} className="flex items-start gap-2 sm:gap-3">
+                    <li
+                      key={f.main}
+                      className="flex items-start gap-2 sm:gap-3"
+                    >
                       <Check className="mt-0.5 h-4 w-4 flex-shrink-0 text-emerald-500 sm:h-5 sm:w-5" />
                       <div>
-                        <p className="text-sm font-medium text-white sm:text-base">{f.main}</p>
-                        {f.sub && <p className="mt-0.5 text-xs text-gray-400 sm:mt-1 sm:text-sm">{f.sub}</p>}
+                        <p className="text-sm font-medium text-white sm:text-base">
+                          {f.main}
+                        </p>
+                        {f.sub && (
+                          <p className="mt-0.5 text-xs text-gray-400 sm:mt-1 sm:text-sm">
+                            {f.sub}
+                          </p>
+                        )}
                       </div>
                     </li>
                   ))}
@@ -288,13 +494,23 @@ export default function PricingClient() {
               </CardContent>
               <CardFooter className="p-0">
                 <Button
-                  onClick={() => (window.location.href = LEMONSQUEEZY_LINKS.lifetime)}
+                  onClick={() => {
+                    window.gtag?.("event", "pricing_click_lifetime", {
+                      event_category: "pricing",
+                      plan: "lifetime",
+                      price: 199,
+                    });
+
+                    window.location.href = LEMONSQUEEZY_LINKS.lifetime;
+                  }}
                   className="w-full bg-gradient-to-r from-emerald-600 to-emerald-700 py-2.5 text-sm text-white hover:from-emerald-500 hover:to-emerald-600 shadow-lg shadow-emerald-900/30 sm:py-3.5 sm:text-base"
                 >
                   Buy
                 </Button>
               </CardFooter>
-              <p className="mt-2 text-center text-[10px] text-gray-500 sm:mt-3 sm:text-xs">One-time payment • Only first 50 spots</p>
+              <p className="mt-2 text-center text-[10px] text-gray-500 sm:mt-3 sm:text-xs">
+                One-time payment • Only first 50 spots
+              </p>
             </Card>
           </div>
         </div>
@@ -310,15 +526,25 @@ export default function PricingClient() {
             <table className="w-full border-collapse text-left text-gray-300 text-xs sm:text-base">
               <thead>
                 <tr className="border-b border-gray-700">
-                  <th className="py-2 px-2 font-medium text-gray-400 sm:py-4 sm:px-4">Feature</th>
-                  <th className="py-2 px-2 text-center font-semibold text-white sm:py-4 sm:px-4">Free</th>
-                  <th className="py-2 px-2 text-center font-semibold text-white sm:py-4 sm:px-4">Pro</th>
-                  <th className="py-2 px-2 text-center font-semibold text-white sm:py-4 sm:px-4">Lifetime</th>
+                  <th className="py-2 px-2 font-medium text-gray-400 sm:py-4 sm:px-4">
+                    Feature
+                  </th>
+                  <th className="py-2 px-2 text-center font-semibold text-white sm:py-4 sm:px-4">
+                    Free
+                  </th>
+                  <th className="py-2 px-2 text-center font-semibold text-white sm:py-4 sm:px-4">
+                    Pro
+                  </th>
+                  <th className="py-2 px-2 text-center font-semibold text-white sm:py-4 sm:px-4">
+                    Lifetime
+                  </th>
                 </tr>
               </thead>
               <tbody>
                 <tr className="border-b border-gray-700/50">
-                  <td className="py-2 px-2 sm:py-4 sm:px-4">Basic grammar & spelling</td>
+                  <td className="py-2 px-2 sm:py-4 sm:px-4">
+                    Basic grammar & spelling
+                  </td>
                   <td className="py-2 px-2 text-center sm:py-4 sm:px-4">
                     <Check className="mx-auto h-4 w-4 text-emerald-500 sm:h-5 sm:w-5" />
                   </td>
@@ -331,19 +557,35 @@ export default function PricingClient() {
                 </tr>
                 <tr className="border-b border-gray-700/50">
                   <td className="py-2 px-2 sm:py-4 sm:px-4">AI explanations</td>
-                  <td className="py-2 px-2 text-center text-gray-500 sm:py-4 sm:px-4">5/day</td>
-                  <td className="py-2 px-2 text-center font-medium text-emerald-400 sm:py-4 sm:px-4">Unlimited</td>
-                  <td className="py-2 px-2 text-center font-medium text-emerald-400 sm:py-4 sm:px-4">Unlimited</td>
+                  <td className="py-2 px-2 text-center text-gray-500 sm:py-4 sm:px-4">
+                    5/day
+                  </td>
+                  <td className="py-2 px-2 text-center font-medium text-emerald-400 sm:py-4 sm:px-4">
+                    Unlimited
+                  </td>
+                  <td className="py-2 px-2 text-center font-medium text-emerald-400 sm:py-4 sm:px-4">
+                    Unlimited
+                  </td>
                 </tr>
                 <tr className="border-b border-gray-700/50">
                   <td className="py-2 px-2 sm:py-4 sm:px-4">Document length</td>
-                  <td className="py-2 px-2 text-center text-gray-500 sm:py-4 sm:px-4">10K</td>
-                  <td className="py-2 px-2 text-center font-medium text-emerald-400 sm:py-4 sm:px-4">∞</td>
-                  <td className="py-2 px-2 text-center font-medium text-emerald-400 sm:py-4 sm:px-4">∞</td>
+                  <td className="py-2 px-2 text-center text-gray-500 sm:py-4 sm:px-4">
+                    10K
+                  </td>
+                  <td className="py-2 px-2 text-center font-medium text-emerald-400 sm:py-4 sm:px-4">
+                    ∞
+                  </td>
+                  <td className="py-2 px-2 text-center font-medium text-emerald-400 sm:py-4 sm:px-4">
+                    ∞
+                  </td>
                 </tr>
                 <tr className="border-b border-gray-700/50">
-                  <td className="py-2 px-2 sm:py-4 sm:px-4">Advanced style checking</td>
-                  <td className="py-2 px-2 text-center text-gray-600 sm:py-4 sm:px-4">—</td>
+                  <td className="py-2 px-2 sm:py-4 sm:px-4">
+                    Advanced style checking
+                  </td>
+                  <td className="py-2 px-2 text-center text-gray-600 sm:py-4 sm:px-4">
+                    —
+                  </td>
                   <td className="py-2 px-2 text-center sm:py-4 sm:px-4">
                     <Check className="mx-auto h-4 w-4 text-emerald-500 sm:h-5 sm:w-5" />
                   </td>
@@ -353,23 +595,37 @@ export default function PricingClient() {
                 </tr>
                 <tr className="border-b border-gray-700/50">
                   <td className="py-2 px-2 sm:py-4 sm:px-4">Snippet storage</td>
-                  <td className="py-2 px-2 text-center text-gray-500 sm:py-4 sm:px-4">10</td>
-                  <td className="py-2 px-2 text-center font-medium text-emerald-400 sm:py-4 sm:px-4">∞</td>
-                  <td className="py-2 px-2 text-center font-medium text-emerald-400 sm:py-4 sm:px-4">∞</td>
+                  <td className="py-2 px-2 text-center text-gray-500 sm:py-4 sm:px-4">
+                    10
+                  </td>
+                  <td className="py-2 px-2 text-center font-medium text-emerald-400 sm:py-4 sm:px-4">
+                    ∞
+                  </td>
+                  <td className="py-2 px-2 text-center font-medium text-emerald-400 sm:py-4 sm:px-4">
+                    ∞
+                  </td>
                 </tr>
                 <tr className="border-b border-gray-700/50">
-                  <td className="py-2 px-2 sm:py-4 sm:px-4">Multilingual awareness</td>
-                  <td className="py-2 px-2 text-center text-gray-600 sm:py-4 sm:px-4">—</td>
-                  <td className="py-2 px-2 text-center sm:py-4 sm:px-4">
-                    <Check className="mx-auto h-4 w-4 text-emerald-500 sm:h-5 sm:w-5" />
+                  <td className="py-2 px-2 sm:py-4 sm:px-4">
+                    Multilingual awareness
+                  </td>
+                  <td className="py-2 px-2 text-center text-gray-600 sm:py-4 sm:px-4">
+                    —
                   </td>
                   <td className="py-2 px-2 text-center sm:py-4 sm:px-4">
                     <Check className="mx-auto h-4 w-4 text-emerald-500 sm:h-5 sm:w-5" />
                   </td>
+                  <td className="py-2 px-2 text-center sm:py-4 sm:px-4">
+                    <Check className="mx-auto h-4 w-4 text-emerald-500 sm:h-5 sm:w-5" />
+                  </td>
                 </tr>
                 <tr className="border-b border-gray-700/50">
-                  <td className="py-2 px-2 sm:py-4 sm:px-4">Priority support</td>
-                  <td className="py-2 px-2 text-center text-gray-600 sm:py-4 sm:px-4">—</td>
+                  <td className="py-2 px-2 sm:py-4 sm:px-4">
+                    Priority support
+                  </td>
+                  <td className="py-2 px-2 text-center text-gray-600 sm:py-4 sm:px-4">
+                    —
+                  </td>
                   <td className="py-2 px-2 text-center sm:py-4 sm:px-4">
                     <Check className="mx-auto h-4 w-4 text-emerald-500 sm:h-5 sm:w-5" />
                   </td>
@@ -431,13 +687,16 @@ export default function PricingClient() {
                 q: "Do you offer refunds?",
                 a: (
                   <>
-                    Yes. If you're not satisfied within 30 days of purchase, we'll refund you in full, no questions asked. Just email us at{" "}
+                    Yes. If you're not satisfied within 30 days of purchase,
+                    we'll refund you in full, no questions asked. Just email us
+                    at{" "}
                     <a
                       href="mailto:hello@grammar-mentor.ch"
                       className="text-indigo-400 hover:text-indigo-300"
                     >
                       hello@grammar-mentor.ch
-                    </a>.
+                    </a>
+                    .
                   </>
                 ),
               },
@@ -446,13 +705,17 @@ export default function PricingClient() {
                 key={item.q}
                 className="rounded-lg sm:rounded-xl border border-gray-700 bg-[#0a0a0a] p-4 sm:p-6"
               >
-                <h3 className="mb-1.5 sm:mb-3 text-sm font-semibold text-white sm:text-lg">{item.q}</h3>
-                <p className="leading-relaxed text-xs text-gray-400 sm:text-base">{item.a}</p>
+                <h3 className="mb-1.5 sm:mb-3 text-sm font-semibold text-white sm:text-lg">
+                  {item.q}
+                </h3>
+                <p className="leading-relaxed text-xs text-gray-400 sm:text-base">
+                  {item.a}
+                </p>
               </div>
             ))}
           </div>
         </div>
       </section>
     </div>
-  )
+  );
 }

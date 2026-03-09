@@ -1,4 +1,5 @@
 import type { Metadata } from "next"
+import { useEffect } from "react";
 
 export const metadata: Metadata = {
   title: "About",
@@ -30,6 +31,14 @@ const values = [
 ]
 
 export default function AboutPage() {
+  useEffect(() => {
+    if (typeof window !== "undefined" && window.gtag) {
+      window.gtag("event", "enter_about", {
+        event_category: "content",
+        event_label: "About Page View"
+      });
+    }
+  }, []);
   return (
     <section className="px-4 pt-4 pb-8 sm:pt-10 sm:pb-14 lg:py-12">
       <div className="mx-auto max-w-3xl">

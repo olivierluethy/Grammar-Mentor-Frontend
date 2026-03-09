@@ -2,8 +2,17 @@
 
 import React, { useState } from "react"
 import { Send, Mail, User, MessageSquare } from "lucide-react"
+import { useEffect } from "react";
 
 export default function ContactPage() {
+  useEffect(() => {
+    if (typeof window !== "undefined" && window.gtag) {
+      window.gtag("event", "enter_contact", {
+        event_category: "content",
+        event_label: "Contact Page View"
+      });
+    }
+  }, []);
   const [formData, setFormData] = useState({
     fullName: "",
     email: "",

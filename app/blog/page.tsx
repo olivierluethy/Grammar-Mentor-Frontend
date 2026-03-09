@@ -2,6 +2,7 @@ import type { Metadata } from "next"
 import Link from "next/link"
 import { ArrowRight, Calendar, Clock } from "lucide-react"
 import { blogPosts } from "@/lib/blog-data"
+import { useEffect } from "react";
 
 export const metadata: Metadata = {
   title: "Blog",
@@ -10,6 +11,14 @@ export const metadata: Metadata = {
 }
 
 export default function BlogPage() {
+  useEffect(() => {
+    if (typeof window !== "undefined" && window.gtag) {
+      window.gtag("event", "enter_blog", {
+        event_category: "content",
+        event_label: "Blog Page View"
+      });
+    }
+  }, []);
   return (
     <section className="px-4 pt-2 pb-4 sm:pt-6 sm:pb-8 lg:py-16">
       <div className="mx-auto max-w-6xl">

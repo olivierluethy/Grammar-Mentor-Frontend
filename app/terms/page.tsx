@@ -1,4 +1,5 @@
 import type { Metadata } from "next"
+import { useEffect } from "react";
 
 export const metadata: Metadata = {
   title: "Terms of Service",
@@ -6,6 +7,14 @@ export const metadata: Metadata = {
 }
 
 export default function TermsPage() {
+  useEffect(() => {
+    if (typeof window !== "undefined" && window.gtag) {
+      window.gtag("event", "enter_terms", {
+        event_category: "content",
+        event_label: "Terms of Service Page View"
+      });
+    }
+  }, []);
   return (
     <article className="px-4 py-20 lg:py-28">
       <div className="prose-invert mx-auto max-w-3xl">

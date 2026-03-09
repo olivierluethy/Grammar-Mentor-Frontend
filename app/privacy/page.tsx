@@ -1,4 +1,5 @@
 import type { Metadata } from "next"
+import { useEffect } from "react";
 
 export const metadata: Metadata = {
   title: "Privacy Policy",
@@ -6,6 +7,14 @@ export const metadata: Metadata = {
 }
 
 export default function PrivacyPage() {
+  useEffect(() => {
+    if (typeof window !== "undefined" && window.gtag) {
+      window.gtag("event", "enter_privacy", {
+        event_category: "content",
+        event_label: "Privacy Policy Page View"
+      });
+    }
+  }, []);
   return (
     <article className="px-4 py-20 lg:py-28">
       <div className="prose-invert mx-auto max-w-3xl">
