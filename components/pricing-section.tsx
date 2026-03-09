@@ -39,10 +39,17 @@ const tiers = [
 
 export function PricingSection() {
   const { isSignedIn } = useUser()
+
+  const handleClick = (tierName: string) => {
+    window.gtag?.("event", "pricing_tier_click", {
+      event_category: "engagement",
+      event_label: tierName,
+    });
+  }
+
   return (
     <section className="bg-slate-950 py-6 sm:py-12 text-slate-200">
       <div className="mx-auto max-w-6xl px-4 sm:px-6">
-        {/* Gap am Handy auf 4 reduziert */}
         <div className="flex flex-col gap-4 md:flex-row md:gap-6">
           {tiers.map((tier, index) => (
             <div
@@ -71,7 +78,6 @@ export function PricingSection() {
                 )}
               </div>
 
-              {/* MT-6 statt MT-12 am Handy */}
               <div className="mt-6 sm:mt-12">
                 <div className="flex items-baseline gap-1 mb-4 sm:mb-6">
                   <span className="text-3xl sm:text-4xl font-extrabold text-white">
@@ -87,6 +93,7 @@ export function PricingSection() {
                  (tier.name !== "Registered" && tier.name !== "Subscribe" && tier.isButton) ? (
                   <Link href={tier.href || "#"} className="group">
                     <button
+                      onClick={() => handleClick(tier.name)}
                       className={`flex w-full items-center justify-center gap-2 rounded-lg px-4 py-2.5 text-sm font-bold text-white transition-all active:scale-[0.98] ${tier.buttonStyles}`}
                     >
                       {tier.name === "Subscribe" && isSignedIn ? "Subscribe" : tier.cta}

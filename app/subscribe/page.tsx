@@ -110,6 +110,9 @@ export default function PricingClient() {
 
       observer.observe(el);
     });
+    window.gtag?.("event", "pricing_default_billing", {
+  billing: isYearly ? "yearly" : "monthly"
+});
   }, []);
   const [isYearly, setIsYearly] = useState(true);
 
