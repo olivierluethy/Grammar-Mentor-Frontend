@@ -13,7 +13,15 @@ import {
 } from "react";
 import Script from "next/script";
 import Head from "next/head";
-import { Search, CheckCheck, Trash2, ClipboardPaste, Copy, Loader2 } from "lucide-react"
+import {
+  Search,
+  CheckCheck,
+  Trash2,
+  ClipboardPaste,
+  Copy,
+  Loader2,
+} from "lucide-react";
+import Image from "next/image";
 
 // ========================================
 // TYPE DEFINITIONS
@@ -135,7 +143,7 @@ interface SubscriptionState {
 
 function debounce<T extends (...args: Parameters<T>) => void>(
   func: T,
-  wait: number
+  wait: number,
 ): T & { cancel: () => void } {
   let timeoutId: ReturnType<typeof setTimeout> | null = null;
 
@@ -271,7 +279,7 @@ class SubscriptionManagerClass {
     if (typeof window === "undefined") return;
     localStorage.setItem(
       "grammar_mentor_daily_usage",
-      JSON.stringify(this.dailyUsage)
+      JSON.stringify(this.dailyUsage),
     );
   }
 
@@ -393,7 +401,7 @@ class SubscriptionManagerClass {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ email }),
-        }
+        },
       );
 
       const data: LoginResponse = await res.json();
@@ -445,7 +453,8 @@ const subscriptionManager = new SubscriptionManagerClass();
 // SUBSCRIPTION CONTEXT
 // ========================================
 
-const SubscriptionContext = createContext<SubscriptionManagerClass>(subscriptionManager);
+const SubscriptionContext =
+  createContext<SubscriptionManagerClass>(subscriptionManager);
 
 function useSubscription(): SubscriptionState {
   const manager = useContext(SubscriptionContext);
@@ -490,8 +499,12 @@ function RuleModalContent({
   if (error) {
     return (
       <div className="mb-4 sm:mb-8">
-        <h3 className="text-lg sm:text-xl font-semibold text-white mb-3 sm:mb-4">📖 Rule Explanation</h3>
-        <p className="text-white leading-relaxed mb-3 sm:mb-4 text-sm sm:text-base">{correction.explanation}</p>
+        <h3 className="text-lg sm:text-xl font-semibold text-white mb-3 sm:mb-4">
+          📖 Rule Explanation
+        </h3>
+        <p className="text-white leading-relaxed mb-3 sm:mb-4 text-sm sm:text-base">
+          {correction.explanation}
+        </p>
         <p className="mt-3 sm:mt-4 text-red-500 text-xs sm:text-sm">
           Could not load detailed examples. {error}
         </p>
@@ -508,16 +521,25 @@ function RuleModalContent({
   return (
     <>
       <div className="mb-4 sm:mb-8">
-        <h3 className="text-lg sm:text-xl font-semibold text-white mb-3 sm:mb-4">📖 Rule Explanation</h3>
-        <p className="text-white leading-relaxed mb-3 sm:mb-4 text-sm sm:text-base">{explanation}</p>
+        <h3 className="text-lg sm:text-xl font-semibold text-white mb-3 sm:mb-4">
+          📖 Rule Explanation
+        </h3>
+        <p className="text-white leading-relaxed mb-3 sm:mb-4 text-sm sm:text-base">
+          {explanation}
+        </p>
       </div>
 
       {hasCorrectExamples && (
         <div className="mb-4 sm:mb-8">
-          <h3 className="text-lg sm:text-xl font-semibold text-white mb-3 sm:mb-4">✅ Correct Examples</h3>
+          <h3 className="text-lg sm:text-xl font-semibold text-white mb-3 sm:mb-4">
+            ✅ Correct Examples
+          </h3>
           <div className="grid gap-2 sm:gap-3 mt-3 sm:mt-4">
             {correctExamples.map((ex, index) => (
-              <div key={index} className="p-3 sm:p-4 rounded-lg border-l-4 bg-emerald-100 border-emerald-500">
+              <div
+                key={index}
+                className="p-3 sm:p-4 rounded-lg border-l-4 bg-emerald-100 border-emerald-500"
+              >
                 <div className="text-[10px] sm:text-xs font-semibold uppercase mb-1 sm:mb-2 text-emerald-800">
                   ✓ Correct
                 </div>
@@ -530,10 +552,15 @@ function RuleModalContent({
 
       {hasIncorrectExamples && (
         <div className="mb-4 sm:mb-8">
-          <h3 className="text-lg sm:text-xl font-semibold text-white mb-3 sm:mb-4">❌ Incorrect Examples</h3>
+          <h3 className="text-lg sm:text-xl font-semibold text-white mb-3 sm:mb-4">
+            ❌ Incorrect Examples
+          </h3>
           <div className="grid gap-2 sm:gap-3 mt-3 sm:mt-4">
             {incorrectExamples.map((ex, index) => (
-              <div key={index} className="p-3 sm:p-4 rounded-lg border-l-4 bg-red-100 border-red-500">
+              <div
+                key={index}
+                className="p-3 sm:p-4 rounded-lg border-l-4 bg-red-100 border-red-500"
+              >
                 <div className="text-[10px] sm:text-xs font-semibold uppercase mb-1 sm:mb-2 text-red-800">
                   ✗ Incorrect
                 </div>
@@ -546,8 +573,12 @@ function RuleModalContent({
 
       {rule?.quiz && (
         <div className="mb-4 sm:mb-8">
-          <h3 className="text-lg sm:text-xl font-semibold text-white mb-3 sm:mb-4">🎯 Quick Quiz</h3>
-          <p className="text-white mb-3 sm:mb-4 text-sm sm:text-base"><strong>Question:</strong> {rule.quiz.question}</p>
+          <h3 className="text-lg sm:text-xl font-semibold text-white mb-3 sm:mb-4">
+            🎯 Quick Quiz
+          </h3>
+          <p className="text-white mb-3 sm:mb-4 text-sm sm:text-base">
+            <strong>Question:</strong> {rule.quiz.question}
+          </p>
           <div className="grid gap-2">
             {rule.quiz.options.map((option, index) => (
               <button
@@ -558,8 +589,8 @@ function RuleModalContent({
                   } else {
                     alert(
                       `❌ Not quite. The correct answer is option ${String.fromCharCode(
-                        65 + rule.quiz!.correct
-                      )}.`
+                        65 + rule.quiz!.correct,
+                      )}.`,
                     );
                   }
                 }}
@@ -603,13 +634,16 @@ export default function GrammarMentor(): JSX.Element {
   const [ruleData, setRuleData] = useState<RuleData | null>(null);
   const [ruleLoading, setRuleLoading] = useState<boolean>(false);
   const [ruleError, setRuleError] = useState<string | null>(null);
-  const [activeCorrection, setActiveCorrection] = useState<Correction | null>(null);
+  const [activeCorrection, setActiveCorrection] = useState<Correction | null>(
+    null,
+  );
   const [showUpgradeModal, setShowUpgradeModal] = useState<boolean>(false);
   const [showLoginModal, setShowLoginModal] = useState<boolean>(false);
   const [showStylePaywall, setShowStylePaywall] = useState<boolean>(false);
   const [showSnippetPaywall, setShowSnippetPaywall] = useState<boolean>(false);
   const [usageLimitWarning, setUsageLimitWarning] = useState<string>("");
-  const [showUsageLimitWarning, setShowUsageLimitWarning] = useState<boolean>(false);
+  const [showUsageLimitWarning, setShowUsageLimitWarning] =
+    useState<boolean>(false);
   const [loginEmail, setLoginEmail] = useState<string>("");
   const [toast, setToast] = useState<{
     message: string;
@@ -704,7 +738,7 @@ export default function GrammarMentor(): JSX.Element {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ id_token: idToken }),
-          }
+          },
         );
 
         const data = await res.json();
@@ -725,7 +759,7 @@ export default function GrammarMentor(): JSX.Element {
             if (data.plan === "free" || data.status !== "active") {
               showToastMessage(
                 "Welcome! You are on the Free plan. Upgrade for unlimited features?",
-                "warning"
+                "warning",
               );
               setTimeout(() => setShowUpgradeModal(true), 1200);
             } else {
@@ -777,7 +811,7 @@ export default function GrammarMentor(): JSX.Element {
         const count = trimmedText ? trimmedText.split(/\s+/).length : 0;
         setWordCountValue(count);
       }, 150),
-    [text]
+    [text],
   );
 
   useEffect(() => {
@@ -793,7 +827,7 @@ export default function GrammarMentor(): JSX.Element {
           localStorage.setItem("grammar_mentor_text", text);
         }
       }, 500),
-    [text]
+    [text],
   );
 
   useEffect(() => {
@@ -812,7 +846,7 @@ export default function GrammarMentor(): JSX.Element {
         setToast((prev) => ({ ...prev, show: false }));
       }, 4000);
     },
-    []
+    [],
   );
 
   // ========================================
@@ -912,7 +946,8 @@ export default function GrammarMentor(): JSX.Element {
       text.substring(0, start) + correction.correction + text.substring(end);
     setText(newText);
 
-    const lengthDiff = correction.correction.length - correction.original.length;
+    const lengthDiff =
+      correction.correction.length - correction.original.length;
 
     const updatedCorrections = corrections.map((c, i) => {
       if (i === index) {
@@ -964,7 +999,7 @@ export default function GrammarMentor(): JSX.Element {
 
     const updatedCorrections = corrections.map((c, index) => {
       const activeCorrection = activeCorrections.find(
-        (ac) => ac.originalIndex === index
+        (ac) => ac.originalIndex === index,
       );
       if (activeCorrection) {
         return { ...c, ignored: true };
@@ -1033,7 +1068,7 @@ export default function GrammarMentor(): JSX.Element {
       const remaining = 5 - subscriptionManager.dailyUsage.aiExplanations;
       if (remaining <= 2 && remaining > 0) {
         setUsageLimitWarning(
-          `ℹ️ Only ${remaining} detailed explanations left today.`
+          `ℹ️ Only ${remaining} detailed explanations left today.`,
         );
         setShowUsageLimitWarning(true);
       }
@@ -1065,7 +1100,10 @@ export default function GrammarMentor(): JSX.Element {
         event_category: "Tool",
         event_label: correction.rule_name || correction.type || "Unknown Rule",
         value: 1,
-        has_examples: data.rule?.correct_examples || data.rule?.incorrect_examples ? "yes" : "no",
+        has_examples:
+          data.rule?.correct_examples || data.rule?.incorrect_examples
+            ? "yes"
+            : "no",
         has_quiz: data.rule?.quiz ? "yes" : "no",
       });
     } catch (error) {
@@ -1093,7 +1131,7 @@ export default function GrammarMentor(): JSX.Element {
       setShowSnippetPaywall(true);
       showToastMessage(
         "Free plan limited to 10 snippets. Upgrade to Pro for unlimited storage.",
-        "warning"
+        "warning",
       );
       return;
     }
@@ -1210,15 +1248,15 @@ export default function GrammarMentor(): JSX.Element {
     if (result.success) {
       setShowLoginModal(false);
 
-      if (
-        subscription?.plan === "pro" &&
-        subscription?.status === "active"
-      ) {
-        showToastMessage("Welcome back! All Pro features are unlocked.", "success");
+      if (subscription?.plan === "pro" && subscription?.status === "active") {
+        showToastMessage(
+          "Welcome back! All Pro features are unlocked.",
+          "success",
+        );
       } else {
         showToastMessage(
           "Welcome! You are on the Free plan. Upgrade for unlimited features?",
-          "warning"
+          "warning",
         );
         setTimeout(() => setShowUpgradeModal(true), 1200);
       }
@@ -1356,7 +1394,7 @@ export default function GrammarMentor(): JSX.Element {
         parts.push(
           <span key={`text-${currentPos}`}>
             {text.substring(currentPos, start)}
-          </span>
+          </span>,
         );
       }
 
@@ -1367,7 +1405,7 @@ export default function GrammarMentor(): JSX.Element {
           data-index={actualIndex}
         >
           {correction.original}
-        </span>
+        </span>,
       );
 
       currentPos = end;
@@ -1375,7 +1413,9 @@ export default function GrammarMentor(): JSX.Element {
 
     if (currentPos < text.length) {
       parts.push(
-        <span key={`text-end-${currentPos}`}>{text.substring(currentPos)}</span>
+        <span key={`text-end-${currentPos}`}>
+          {text.substring(currentPos)}
+        </span>,
       );
     }
 
@@ -1388,7 +1428,9 @@ export default function GrammarMentor(): JSX.Element {
 
   const activeCorrections = corrections.filter((c) => !c.ignored);
   const issueCountValue = activeCorrections.length;
-  const snippetCountText = subscriptionManager.updateSnippetCount(snippets.length);
+  const snippetCountText = subscriptionManager.updateSnippetCount(
+    snippets.length,
+  );
 
   // ========================================
   // RENDER
@@ -1585,14 +1627,49 @@ export default function GrammarMentor(): JSX.Element {
               </button>
 
               {activeCorrections.length > 0 && (
-                <button
-                  onClick={acceptAllCorrections}
-                  className="flex-1 sm:flex-none flex items-center justify-center gap-1.5 sm:gap-2 py-2 sm:py-3.5 px-3 sm:px-8 rounded-lg font-semibold cursor-pointer transition-all duration-300 border-none text-xs sm:text-base bg-emerald-500 text-white shadow-[0_4px_12px_rgba(16,185,129,0.4)] hover:-translate-y-0.5 hover:shadow-[0_6px_20px_rgba(16,185,129,0.5)]"
-                >
-                  <CheckCheck className="h-4 w-4 sm:h-5 sm:w-5" />
-                  <span className="hidden sm:inline">Accept All</span>
-                  <span className="sm:hidden">All</span>
-                </button>
+                <>
+                  <button
+                    onClick={acceptAllCorrections}
+                    className="flex-1 sm:flex-none flex items-center justify-center gap-1.5 sm:gap-2 py-2 sm:py-3.5 px-3 sm:px-8 rounded-lg font-semibold cursor-pointer transition-all duration-300 border-none text-xs sm:text-base bg-emerald-500 text-white shadow-[0_4px_12px_rgba(16,185,129,0.4)] hover:-translate-y-0.5 hover:shadow-[0_6px_20px_rgba(16,185,129,0.5)]"
+                  >
+                    <CheckCheck className="h-4 w-4 sm:h-5 sm:w-5" />
+                    <span className="hidden sm:inline">Accept All</span>
+                    <span className="sm:hidden">All</span>
+                  </button>
+
+                  <div className="relative inline-block">
+                    {/* Sparkles */}
+                    <span className="pointer-events-none absolute -top-1 left-3 text-yellow-300 text-[8px] animate-[ping_1.8s_infinite]">
+                      ✦
+                    </span>
+                    <span className="pointer-events-none absolute -top-2 right-4 text-yellow-200 text-[7px] animate-[ping_2.2s_infinite]">
+                      ✧
+                    </span>
+                    <span className="pointer-events-none absolute -bottom-1 left-5 text-yellow-300 text-[8px] animate-[ping_2s_infinite]">
+                      ✦
+                    </span>
+                    <span className="pointer-events-none absolute -bottom-2 right-3 text-yellow-200 text-[7px] animate-[ping_1.6s_infinite]">
+                      ✧
+                    </span>
+
+                    <button
+                      className="flex-1 sm:flex-none flex items-center justify-center gap-1.5 sm:gap-2
+        py-2 sm:py-3.5 px-3 sm:px-8 rounded-lg font-semibold cursor-pointer
+        transition-all duration-300 text-xs sm:text-base
+        bg-blue-500 text-white shadow-[0_4px_12px_rgba(59,130,246,0.4)]
+        hover:-translate-y-0.5 hover:shadow-[0_6px_20px_rgba(59,130,246,0.5)]"
+                      onClick={() => {
+                        window.gtag?.("event", "overall_quiz");
+                      }}
+                    >
+                      <span className="h-4 w-4 sm:h-5 sm:w-5 flex items-center justify-center">
+                        🎲
+                      </span>
+                      <span className="hidden sm:inline">Start Quiz</span>
+                      <span className="sm:hidden">Quiz</span>
+                    </button>
+                  </div>
+                </>
               )}
 
               {/* Utility buttons row */}
@@ -1670,11 +1747,23 @@ export default function GrammarMentor(): JSX.Element {
               <div className="flex justify-between items-center mb-2 sm:mb-4">
                 <span className="font-semibold text-gray-800 text-xs sm:text-base flex items-center gap-1 sm:gap-2">
                   📎 <span className="hidden sm:inline">Saved </span>Snippets
-                  <span className="text-[10px] sm:text-sm">{snippetCountText}</span>
+                  <span className="text-[10px] sm:text-sm">
+                    {snippetCountText}
+                  </span>
                   {!isPro && (
                     <span className="inline-flex items-center gap-0.5 py-0.5 px-1 sm:px-2 bg-gradient-to-r from-indigo-500 to-purple-500 text-white text-[8px] sm:text-[10px] font-semibold rounded-full">
-                      <svg width="8" height="8" fill="currentColor" viewBox="0 0 20 20" className="hidden sm:block">
-                        <path fillRule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clipRule="evenodd" />
+                      <svg
+                        width="8"
+                        height="8"
+                        fill="currentColor"
+                        viewBox="0 0 20 20"
+                        className="hidden sm:block"
+                      >
+                        <path
+                          fillRule="evenodd"
+                          d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z"
+                          clipRule="evenodd"
+                        />
                       </svg>
                       PRO
                     </span>
@@ -1684,7 +1773,7 @@ export default function GrammarMentor(): JSX.Element {
                   className="bg-purple-500 text-white py-1 px-2 text-[10px] sm:text-xs rounded hover:bg-purple-600 transition-colors"
                   onClick={() => setShowSnippets(!showSnippets)}
                 >
-                  {showSnippets ? 'Hide' : 'Show'}
+                  {showSnippets ? "Hide" : "Show"}
                 </button>
               </div>
 
@@ -1779,7 +1868,8 @@ export default function GrammarMentor(): JSX.Element {
                     />
                   </svg>
                   <p className="text-xs sm:text-base">
-                    Enter text and click &quot;Check Grammar&quot; to see suggestions
+                    Enter text and click &quot;Check Grammar&quot; to see
+                    suggestions
                   </p>
                 </div>
               ) : activeCorrections.length === 0 ? (
@@ -1815,21 +1905,44 @@ export default function GrammarMentor(): JSX.Element {
                       className="bg-white rounded-lg sm:rounded-xl p-3 sm:p-5 mb-2 sm:mb-4 border-2 border-gray-200 transition-all duration-300 cursor-pointer hover:border-indigo-500 hover:shadow-[0_4px_12px_rgba(102,126,234,0.15)] hover:translate-x-1"
                     >
                       <div className="text-red-500 font-semibold mb-1 sm:mb-2 text-xs sm:text-[15px]">
-                        <strong>Issue:</strong> &quot;{correction.original}&quot;
+                        <strong>Issue:</strong> &quot;{correction.original}
+                        &quot;
                       </div>
                       <div className="text-emerald-500 font-semibold mb-1 sm:mb-2 text-xs sm:text-[15px]">
-                        <strong>Fix:</strong> &quot;{correction.correction}&quot;
+                        <strong>Fix:</strong> &quot;{correction.correction}
+                        &quot;
                       </div>
                       <div className="text-gray-500 text-[11px] sm:text-sm mb-2 sm:mb-4 leading-relaxed">
                         <strong>Why:</strong> {correction.explanation}
                       </div>
                       <div className="flex gap-1.5 sm:gap-2 flex-wrap">
-                        <button
-                          className="flex-1 sm:flex-none bg-blue-500 text-white py-1.5 sm:py-2 px-2 sm:px-4 text-[10px] sm:text-sm rounded-lg font-semibold cursor-pointer transition-colors hover:bg-blue-600"
-                          onClick={() => showGrammarRule(actualIndex)}
-                        >
-                          📚 Learn
-                        </button>
+                        <div className="relative inline-block">
+                          {/* Sparkles */}
+                          <span className="pointer-events-none absolute -top-1 left-3 text-yellow-300 text-[8px] animate-[ping_1.8s_infinite]">
+                            ✦
+                          </span>
+                          <span className="pointer-events-none absolute -top-2 right-4 text-yellow-200 text-[7px] animate-[ping_2.2s_infinite]">
+                            ✧
+                          </span>
+                          <span className="pointer-events-none absolute -bottom-1 left-5 text-yellow-300 text-[8px] animate-[ping_2s_infinite]">
+                            ✦
+                          </span>
+                          <span className="pointer-events-none absolute -bottom-2 right-3 text-yellow-200 text-[7px] animate-[ping_1.6s_infinite]">
+                            ✧
+                          </span>
+
+                          <button
+                            className="flex-1 sm:flex-none flex items-center justify-center gap-2
+    bg-blue-500 text-white py-1.5 sm:py-2 px-2 sm:px-4 text-[10px] sm:text-sm
+    rounded-lg font-semibold cursor-pointer
+    transition-all duration-300 hover:bg-blue-600
+    shadow-[0_0_12px_rgba(59,130,246,0.8)]"
+                            onClick={() => showGrammarRule(actualIndex)}
+                          >
+                            <span className="text-sm sm:text-base">🎲</span>
+                            <span>Start Quiz</span>
+                          </button>
+                        </div>
                         <button
                           className="flex-1 sm:flex-none bg-emerald-500 text-white py-1.5 sm:py-2 px-2 sm:px-4 text-[10px] sm:text-sm rounded-lg font-semibold cursor-pointer transition-colors hover:bg-emerald-600"
                           onClick={() => acceptCorrection(actualIndex)}
@@ -1913,7 +2026,8 @@ export default function GrammarMentor(): JSX.Element {
                   Unlock All Premium Features
                 </h3>
                 <p className="text-slate-400 text-sm sm:text-base">
-                  Get unlimited AI explanations, advanced style checking, and more
+                  Get unlimited AI explanations, advanced style checking, and
+                  more
                 </p>
               </div>
 
@@ -1922,7 +2036,9 @@ export default function GrammarMentor(): JSX.Element {
                   <span className="text-2xl sm:text-4xl font-bold text-white">
                     $6
                   </span>
-                  <span className="text-slate-400 text-sm sm:text-base">/month</span>
+                  <span className="text-slate-400 text-sm sm:text-base">
+                    /month
+                  </span>
                 </div>
                 <p className="text-xs sm:text-sm text-emerald-400">
                   Billed yearly at $72 (save $48)
@@ -2036,7 +2152,10 @@ export default function GrammarMentor(): JSX.Element {
             </div>
 
             {/* Email Form */}
-            <form onSubmit={handleEmailLogin} className="space-y-3 sm:space-y-5">
+            <form
+              onSubmit={handleEmailLogin}
+              className="space-y-3 sm:space-y-5"
+            >
               <div>
                 <label
                   htmlFor="loginEmail"
@@ -2079,7 +2198,8 @@ export default function GrammarMentor(): JSX.Element {
             </p>
 
             <p className="text-center text-[10px] sm:text-xs text-slate-600 mt-3 sm:mt-4">
-              Your data is secure – we only store what is necessary (GDPR compliant).
+              Your data is secure – we only store what is necessary (GDPR
+              compliant).
             </p>
           </div>
         </div>
@@ -2121,7 +2241,8 @@ export default function GrammarMentor(): JSX.Element {
             </div>
 
             <div className="text-gray-600 text-xs sm:text-sm mb-5 sm:mb-7 leading-relaxed">
-              Unlock advanced writing styles to preserve your voice while catching tone inconsistencies
+              Unlock advanced writing styles to preserve your voice while
+              catching tone inconsistencies
             </div>
 
             <a
@@ -2175,7 +2296,8 @@ export default function GrammarMentor(): JSX.Element {
             </div>
 
             <div className="text-gray-600 text-xs sm:text-sm mb-5 sm:mb-7 leading-relaxed">
-              Build your personal library of templates, sign-offs, and repeated phrases
+              Build your personal library of templates, sign-offs, and repeated
+              phrases
             </div>
 
             <a
