@@ -8,7 +8,7 @@ const tiers = [
   {
     name: "Anonymous",
     description: "No sign up needed",
-    features: ["1 AI explanation every 24 hours"],
+    features: ["1 AI quiz explanation every 24 hours"],
     price: "Free",
     isButton: false,
     borderColor: "border-slate-800",
@@ -17,7 +17,7 @@ const tiers = [
   {
     name: "Registered",
     description: "Registration is free",
-    features: ["5 pages AI explanations every 24 hours"],
+    features: ["5 AI quiz explanations every 24 hours"],
     price: "Free",
     cta: "Register",
     isButton: true,
@@ -27,7 +27,7 @@ const tiers = [
   },
   {
     name: "Subscribe",
-    description: "Subscribe to get more AI explanations",
+    description: "Subscribe to get more AI quiz explanations",
     features: [],
     cta: "Register",
     isButton: true,

@@ -44,9 +44,14 @@ function renderMarkdown(content: string) {
   }
 
   const formatInline = (text: string) =>
-    text
-      .replace(/\*\*(.*?)\*\*/g, '<strong class="text-foreground">$1</strong>')
-      .replace(/\*(.*?)\*/g, '<em>$1</em>')
+  text
+    .replace(/\*\*(.*?)\*\*/g, '<strong class="text-foreground">$1</strong>')
+    .replace(/\*(.*?)\*/g, '<em>$1</em>')
+    // Neuer Regex für Links: [Anzeigetext](URL)
+    .replace(
+      /\[([^\]]+)\]\(([^)]+)\)/g, 
+      '<a href="$2" class="text-primary underline hover:text-primary/80 transition-colors" target="_blank" rel="noopener noreferrer">$1</a>'
+    )
 
   lines.forEach((line, i) => {
     const trimmed = line.trim()
@@ -150,7 +155,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
             Try AI Grammar Mentor free and learn from every correction.
           </p>
           <Link
-            href="/sign-up"
+            href="/"
             className="mt-4 inline-flex rounded-lg bg-primary px-4 py-2 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90"
           >
             Get Started Free

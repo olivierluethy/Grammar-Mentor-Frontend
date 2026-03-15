@@ -654,6 +654,10 @@ export default function GrammarMentor(): JSX.Element {
   // Debounced word count state
   const [wordCountValue, setWordCountValue] = useState<number>(0);
 
+  // ── NEW: quiz interest overlay state ──────────────────────────────────────
+  const [showQuizOverlay, setShowQuizOverlay] = useState<boolean>(false);
+  // ─────────────────────────────────────────────────────────────────────────
+
   // Refs
   const textEditorRef = useRef<HTMLTextAreaElement>(null);
   const highlightLayerRef = useRef<HTMLDivElement>(null);
@@ -875,6 +879,8 @@ export default function GrammarMentor(): JSX.Element {
     });
 
     setIsChecking(true);
+    // Reset the quiz overlay whenever a new check begins
+    setShowQuizOverlay(false);
 
     try {
       const response = await fetch(API_ENDPOINT, {
@@ -920,6 +926,10 @@ export default function GrammarMentor(): JSX.Element {
         issues_found: issues,
         language: language || "auto",
       });
+
+      // ── NEW: show the quiz interest overlay after check completes ─────────
+      setShowQuizOverlay(true);
+      // ──────────────────────────────────────────────────────────────────────
     } catch (error) {
       console.error("Error:", error);
       const errorMessage =
@@ -1349,6 +1359,9 @@ export default function GrammarMentor(): JSX.Element {
     setCorrections([]);
     setFixedCount(0);
     setShowStats(false);
+    // ── NEW: also reset the quiz overlay on clear ─────────────────────────
+    setShowQuizOverlay(false);
+    // ──────────────────────────────────────────────────────────────────────
     localStorage.removeItem("grammar_mentor_text");
 
     gtag("event", "button_click", {
@@ -1587,6 +1600,7 @@ export default function GrammarMentor(): JSX.Element {
         <div className="grid grid-cols-1 lg:grid-cols-[1fr_400px] gap-0 min-h-[400px] sm:min-h-[600px]">
           {/* Editor Section - Compact padding on mobile */}
           <div className="p-3 sm:p-8 text-white border-r border-gray-800 lg:border-b-0 border-b border-gray-200">
+            {/* ── MODIFIED: textarea wrapper is now relative for overlay positioning ── */}
             <div className="relative w-full min-h-[200px] sm:min-h-[400px] border-2 border-gray-200 rounded-lg sm:rounded-xl bg-slate-950 transition-colors focus-within:border-indigo-500 focus-within:ring-[3px] focus-within:ring-indigo-500/10">
               <div
                 ref={highlightLayerRef}
@@ -1601,8 +1615,32 @@ export default function GrammarMentor(): JSX.Element {
                 value={text}
                 onChange={(e) => setText(e.target.value)}
                 onScroll={handleEditorScroll}
-                className="w-full min-h-[200px] sm:min-h-[400px] p-3 sm:p-6 text-sm sm:text-lg leading-[1.6] sm:leading-[1.8] font-['Crimson_Pro',serif] border-none outline-none resize-y bg-transparent relative z-[2] text-white placeholder:text-gray-500"
+                className={`w-full min-h-[200px] sm:min-h-[400px] p-3 sm:p-6 text-sm sm:text-lg leading-[1.6] sm:leading-[1.8] font-['Crimson_Pro',serif] border-none outline-none resize-y bg-transparent relative z-[2] text-white placeholder:text-gray-500 transition-all duration-300${
+                  showQuizOverlay ? " blur-sm select-none pointer-events-none" : ""
+                }`}
               />
+
+              {/* ── NEW: Quiz interest overlay ───────────────────────────────────── */}
+              {showQuizOverlay && (
+                <div className="absolute inset-0 z-[10] flex flex-col items-center justify-center rounded-lg sm:rounded-xl bg-slate-950/60 backdrop-blur-[2px]">
+                  <button
+                    onClick={() => {
+                      gtag("event", "quiz_start_clicked", {
+                        event_category: "engagement",
+                        event_label: "grammar_quiz_interest",
+                      });
+                    }}
+                    className="flex items-center gap-2 sm:gap-3 py-3 sm:py-4 px-6 sm:px-10 rounded-xl font-bold text-base sm:text-lg bg-gradient-to-br from-indigo-500 to-purple-600 text-white shadow-[0_8px_30px_rgba(102,126,234,0.5)] hover:-translate-y-1 hover:shadow-[0_12px_36px_rgba(102,126,234,0.65)] transition-all duration-200 cursor-pointer border-none"
+                  >
+                    <span className="text-xl sm:text-2xl">🎲</span>
+                    <span>Start Quiz</span>
+                  </button>
+                  <p className="mt-3 sm:mt-4 text-slate-300 text-xs sm:text-sm font-medium tracking-wide">
+                    Start learning from your mistakes.
+                  </p>
+                </div>
+              )}
+              {/* ─────────────────────────────────────────────────────────────────── */}
             </div>
 
             {/* Action buttons - Mobile optimized */}
@@ -1628,15 +1666,6 @@ export default function GrammarMentor(): JSX.Element {
 
               {activeCorrections.length > 0 && (
                 <>
-                  <button
-                    onClick={acceptAllCorrections}
-                    className="flex-1 sm:flex-none flex items-center justify-center gap-1.5 sm:gap-2 py-2 sm:py-3.5 px-3 sm:px-8 rounded-lg font-semibold cursor-pointer transition-all duration-300 border-none text-xs sm:text-base bg-emerald-500 text-white shadow-[0_4px_12px_rgba(16,185,129,0.4)] hover:-translate-y-0.5 hover:shadow-[0_6px_20px_rgba(16,185,129,0.5)]"
-                  >
-                    <CheckCheck className="h-4 w-4 sm:h-5 sm:w-5" />
-                    <span className="hidden sm:inline">Accept All</span>
-                    <span className="sm:hidden">All</span>
-                  </button>
-
                   <div className="relative inline-block">
                     {/* Sparkles */}
                     <span className="pointer-events-none absolute -top-1 left-3 text-yellow-300 text-[8px] animate-[ping_1.8s_infinite]">
@@ -1849,7 +1878,15 @@ export default function GrammarMentor(): JSX.Element {
                   <div className="w-8 h-8 sm:w-10 sm:h-10 border-[3px] border-gray-100 border-t-indigo-500 rounded-full animate-spin mx-auto mb-3 sm:mb-4"></div>
                   <p className="text-sm sm:text-base">Analyzing your text...</p>
                 </div>
+              ) : showQuizOverlay ? (
+                /* ── NEW: hide suggestions while quiz overlay is shown ───────── */
+                <div className="text-center py-6 sm:py-12 px-4 sm:px-8 text-gray-400">
+                  <p className="text-slate-500 text-xs sm:text-sm">
+                    Complete the quiz to unlock your suggestions.
+                  </p>
+                </div>
               ) : corrections.length === 0 ? (
+                /* ───────────────────────────────────────────────────────────── */
                 <div className="text-center py-6 sm:py-12 px-4 sm:px-8 text-gray-400">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
