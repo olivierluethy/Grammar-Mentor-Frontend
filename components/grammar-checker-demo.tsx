@@ -1743,44 +1743,6 @@ export default function GrammarMentor(): JSX.Element {
               </div>
             </div>
 
-            {/* Stats - Compact mobile layout */}
-            {showStats && (
-              <div className="grid grid-cols-4 gap-2 sm:flex sm:gap-8 mt-3 sm:mt-4 p-2 sm:p-4 bg-gray-50 rounded-lg">
-                <div className="flex flex-col items-center sm:items-start">
-                  <span className="text-[9px] sm:text-xs text-gray-500 uppercase tracking-wider">
-                    Words
-                  </span>
-                  <span className="text-lg sm:text-2xl font-bold text-gray-800">
-                    {wordCountValue}
-                  </span>
-                </div>
-                <div className="flex flex-col items-center sm:items-start">
-                  <span className="text-[9px] sm:text-xs text-gray-500 uppercase tracking-wider">
-                    Issues
-                  </span>
-                  <span className="text-lg sm:text-2xl font-bold text-gray-800">
-                    {issueCountValue}
-                  </span>
-                </div>
-                <div className="flex flex-col items-center sm:items-start">
-                  <span className="text-[9px] sm:text-xs text-gray-500 uppercase tracking-wider">
-                    Fixed
-                  </span>
-                  <span className="text-lg sm:text-2xl font-bold text-gray-800">
-                    {fixedCount}
-                  </span>
-                </div>
-                <div className="flex flex-col items-center sm:items-start">
-                  <span className="text-[9px] sm:text-xs text-gray-500 uppercase tracking-wider">
-                    Lang
-                  </span>
-                  <span className="text-sm sm:text-base font-bold text-gray-800">
-                    {detectedLanguage}
-                  </span>
-                </div>
-              </div>
-            )}
-
             {/* Snippet Manager - Compact mobile layout */}
             <div className="mt-3 sm:mt-6 p-2 sm:p-4 bg-gray-50 text-black rounded-lg border-2 border-dashed border-gray-300 relative">
               <div className="flex justify-between items-center mb-2 sm:mb-4">
