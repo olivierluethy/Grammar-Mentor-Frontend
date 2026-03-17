@@ -1622,24 +1622,34 @@ export default function GrammarMentor(): JSX.Element {
 
               {/* ── NEW: Quiz interest overlay ───────────────────────────────────── */}
               {showQuizOverlay && (
-                <div className="absolute inset-0 z-[10] flex flex-col items-center justify-center rounded-lg sm:rounded-xl bg-slate-950/60 backdrop-blur-[2px]">
-                  <button
-                    onClick={() => {
-                      gtag("event", "quiz_start_clicked", {
-                        event_category: "engagement",
-                        event_label: "grammar_quiz_interest",
-                      });
-                    }}
-                    className="flex items-center gap-2 sm:gap-3 py-3 sm:py-4 px-6 sm:px-10 rounded-xl font-bold text-base sm:text-lg bg-gradient-to-br from-indigo-500 to-purple-600 text-white shadow-[0_8px_30px_rgba(102,126,234,0.5)] hover:-translate-y-1 hover:shadow-[0_12px_36px_rgba(102,126,234,0.65)] transition-all duration-200 cursor-pointer border-none"
-                  >
-                    <span className="text-xl sm:text-2xl">🎲</span>
-                    <span>Start Quiz</span>
-                  </button>
-                  <p className="mt-3 sm:mt-4 text-slate-300 text-xs sm:text-sm font-medium tracking-wide">
-                    Start learning from your mistakes.
-                  </p>
-                </div>
-              )}
+  <div className="absolute inset-0 z-[10] flex flex-col items-center justify-center rounded-lg sm:rounded-xl bg-slate-950/75 backdrop-blur-[3px] p-6 text-center">
+    
+    <button
+      onClick={() => {
+        gtag("event", "quiz_start_clicked", {
+          event_category: "engagement",
+          event_label: "grammar_quiz_interest",
+        });
+      }}
+      className="flex items-center gap-3 py-4 px-8 rounded-2xl font-bold text-lg bg-gradient-to-r from-indigo-600 to-violet-600 text-white shadow-xl hover:-translate-y-0.5 active:scale-95 transition-all duration-200 border-none"
+    >
+      <span className="text-2xl">🎯</span>
+      <span>Start Learning</span>
+    </button>
+
+    {/* Der motivierende Counter direkt unter dem Button */}
+    <div className="mt-5 flex flex-col items-center">
+      <p className="text-white text-base sm:text-lg font-semibold tracking-tight">
+        Learn from your <span className="text-red-400 underline decoration-red-500/50 underline-offset-4">{5} mistakes</span> now
+      </p>
+      <p className="mt-1 text-slate-400 text-xs sm:text-sm font-medium">
+        Fix them today so you won't make them again.
+      </p>
+    </div>
+    
+  </div>
+)}
+
               {/* ─────────────────────────────────────────────────────────────────── */}
             </div>
 
