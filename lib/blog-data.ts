@@ -11,6 +11,357 @@ export interface BlogPost {
 
 export const blogPosts: BlogPost[] = [
   {
+    title: "Week 10 - Google Analytics Is Finally Showing Promise — Even Without Ads",
+  slug: "2026-04-13-google-analytics-organic-traffic-progress",
+  description: "Organic traffic continues to grow without Google Ads. The 'Start Quiz' button is getting real clicks, and we're now ready to fully build the learning experience to attract our first paying customers.",
+  date: "2026-04-13",
+  author: "Sarah Chen",
+  category: "Growth & Analytics",
+  readTime: "4 min read",
+  content: `
+## Good News from Google Analytics
+
+After weeks without running Google Ads, something encouraging is finally showing up in our analytics:
+
+Traffic hasn’t dried up.
+
+Even without paid promotion, people are still finding AI Grammar Mentor every day. The numbers are smaller, of course, but they’re consistent and clearly organic.
+
+This tells us two important things:
+
+- There is real, ongoing interest in better grammar tools
+- Our content and SEO efforts are starting to work — even if visibility isn’t perfect yet
+
+That’s a legitimate and exciting foundation to build on.
+
+## The 'Start Quiz' Button Is Getting Traction
+
+One feature in particular is showing early promise: the “Start Quiz” button we added after corrections.
+
+Not everyone clicks it — and that’s okay. But a meaningful portion of users do engage with it, especially during our earlier ad periods.
+
+This suggests we’ve found a smart, motivated segment of users who don’t just want their text fixed — they actually want to understand their mistakes and improve.
+
+That’s exactly the audience we’re excited to serve.
+
+## Next Step: Fully Build the Learning Experience
+
+Seeing these signals gives us confidence to move forward.
+
+We’re now prioritizing the complete implementation of the quiz and learning features. The goal is to turn that initial curiosity into a genuinely helpful, repeatable learning experience.
+
+Once the feature is solid, we’ll restart Google Ads with better targeting and clearer messaging around the learning benefits.
+
+Our ultimate hope? To welcome our very first paying customer soon — someone who sees enough value in the tool to upgrade and keep coming back.
+
+## The Journey Continues
+
+We’re still early, but the combination of steady organic traffic and positive engagement with the learning prompts feels like the right direction.
+
+Every day we get a little closer to a tool that doesn’t just correct writing — it actually helps people become better writers.
+
+## Try AI Grammar Mentor Today
+
+If you’re someone who wants more than just red underlines — if you’d like to understand *why* you make certain mistakes and improve over time — you’re in the right place.
+
+Paste any text right now (email, essay, blog post, report — whatever you’re working on). See the corrections and try the “Start Quiz” button if it appears.
+
+No sign-up required. No pressure.
+
+Just honest, helpful feedback that respects your voice.
+
+Give it a try and let us know what you think — the chat bubble is always ready for your thoughts.
+`
+},
+  
+  {
+    title: "Week 9 - Our Vision: Turning AI Grammar Mentor into Micro-Practice for Real Writing Improvement",
+  slug: "2026-04-06-future-vision-micro-practice-grammar-learning",
+  description: "From simple corrections to personalized micro-practice: how we're evolving AI Grammar Mentor into a true learning tool with quizzes, PDF homework, and targeted repetition based on your own writing mistakes.",
+  date: "2026-04-06",
+  author: "Sarah Chen",
+  category: "Product Vision",
+  readTime: "4 min read",
+  content: `
+## Moving Beyond Basic Grammar Checks
+
+As AI Grammar Mentor grows, we’re asking ourselves a bigger question:  
+What should the app ultimately become?
+
+Our clear direction is to evolve from a simple grammar checker into a **micro-practice platform** — a tool that doesn’t just fix your writing, but helps you genuinely improve it through focused, personalized practice.
+
+We want to make learning from your own mistakes faster, clearer, and more effective than traditional methods.
+
+## Why We Need to Go Deeper
+
+Over the past weeks we’ve hit a point where basic corrections feel like a dead end. Many users paste text, get fixes, and leave — without truly learning why mistakes happened or how to avoid them in the future.
+
+That’s not enough if we want to create lasting improvement.
+
+The real opportunity lies in turning every piece of writing into actionable learning moments. Instead of generic quizzes or explanations, we want to build a system centered entirely around *your* text and *your* errors.
+
+## The Future Vision: Micro-Practice Powered by Your Writing
+
+Here’s what we’re working toward:
+
+- **Instant Error Analysis** — After you submit text, the tool identifies your personal mistake patterns
+- **Smart Quizzes** — Targeted questions based specifically on the errors in *your* writing
+- **Printable PDF Homework** — One-click download of custom practice sheets with blank fields for you to rewrite sentences correctly
+- **Focused Repetition** — Exercises designed around the exact rules you struggle with most
+
+Imagine a student writing an essay for school, pasting it into AI Grammar Mentor, running a quick quiz on their unique mistakes, and then downloading a clean PDF with targeted practice sentences to complete at home. No more generic worksheets — just practice based on real errors they actually made.
+
+This creates a powerful loop:  
+**Write → Get corrected → Learn why → Practice deliberately → Improve**
+
+## From Passive Fixes to Active Learning
+
+Traditional grammar tools stop at the correction.  
+We want to go further: help you internalize the rules so you make fewer mistakes next time.
+
+By combining instant feedback, personalized quizzes, and printable micro-practice materials, we believe we can make grammar improvement feel less like schoolwork and more like effective, rewarding training.
+
+## We’re Still Early — But the Direction Is Clear
+
+We don’t have all the features built yet, but the vision is sharp. Every update we ship is chosen with this long-term goal in mind: turning passive users into actively improving writers.
+
+The journey from “just another checker” to a true micro-practice platform won’t happen overnight, but the foundation is already there.
+
+## Ready to Experience the Current Version?
+
+While we work on these bigger learning features, you can already try the core tool today.
+
+Paste any text — an email, essay, blog post, or report — and see how clearly it highlights issues while preserving your voice.
+
+Whether you just want fast corrections or you're curious about the emerging learning side, AI Grammar Mentor is ready for you.
+
+No sign-up needed. No complicated setup.
+
+Just paste your text and try it now. Let us know what you think — your feedback helps shape where we go next.
+
+The chat bubble is always open.
+`
+},
+  
+  {
+    title: "Week 8 - How Blog Posts Replaced Google Ads: The Surprising SEO Power We're Seeing",
+  slug: "2026-03-30-blog-posts-seo-impact-google-search-console",
+  description: "Even after pausing Google Ads, organic traffic continues thanks to consistent blogging. What the Google Search Console data reveals and why we're doubling down on content.",
+  date: "2026-03-30",
+  author: "Sarah Chen",
+  category: "SEO & Content",
+  readTime: "4 min read",
+  content: `
+## The Unexpected Power of Consistent Blogging
+
+One of the most exciting discoveries in the last few weeks has been the real impact of our blog posts on Google Search Console.
+
+Even after we paused Google Ads, traffic didn’t completely stop. It slowed down, of course, but it kept coming in — steadily and organically.
+
+That’s huge.
+
+What started as simple journey updates and lessons learned is now driving real, sustainable visitors without spending a single franc on advertising.
+
+## What the Data Is Telling Us
+
+Looking at Search Console, we can clearly see:
+
+- Blog posts are ranking for relevant long-tail keywords
+- Organic impressions and clicks continue even without paid support
+- Some older posts are still bringing in traffic weeks later
+
+This confirms what many successful indie makers already know: **consistency compounds**.
+
+Writing honest, useful posts about building the product — the wins, the mistakes, the small improvements — creates content that Google actually likes and real people find helpful.
+
+## The New Leverage Point
+
+This shift feels like moving to a completely different level.
+
+Instead of paying for every click, we’re earning attention through content that works 24/7. It’s slower at the beginning, but far more sustainable and trustworthy in the long run.
+
+The best part? Every new post we publish adds another asset to the site that can bring visitors for months or even years.
+
+## The Challenge Ahead
+
+Of course, we still face limitations with our analytics. Google Analytics isn’t giving us the clean, detailed picture we’d like yet, so some insights remain fuzzy.
+
+But that doesn’t stop us.
+
+We’re choosing to keep the momentum: publish regularly, document the journey transparently, and trust that better data and clearer patterns will emerge over time.
+
+Sometimes you have to keep moving even when the full map isn’t visible yet.
+
+## Why This Matters for AI Grammar Mentor
+
+Every new reader who finds us through a blog post is someone genuinely interested in better writing tools — not just someone clicking an ad out of curiosity.
+
+That organic interest feels more valuable and more likely to turn into loyal users who care about learning and improving.
+
+We’re committed to this path: building in public, sharing real lessons, and creating content that actually helps writers.
+
+If you found this article through Google or another search, welcome! You’re exactly the kind of person we’re building for.
+
+Whether you’re looking for quick grammar fixes or want to truly level up your writing skills, AI Grammar Mentor is here to help.
+
+Paste any text — an email, blog draft, report, or casual message — and see how it feels.
+
+No sign-up required. No pressure.
+
+Just clearer, more confident writing that still sounds like you.
+
+Try it now and let us know what you think — the chat bubble is always open.
+`
+},
+  
+  {
+    title: "Week 7 - Should AI Grammar Mentor Become the Duolingo of Grammar?",
+  slug: "2026-03-23-duolingo-style-grammar-learning-app",
+  description: "We're rethinking the future of AI Grammar Mentor: moving from a simple checker toward a fun, engaging learning experience inspired by Duolingo. Early user interest and the big decision ahead.",
+  date: "2026-03-23",
+  author: "Sarah Chen",
+  category: "Product Vision",
+  readTime: "4 min read",
+  content: `
+## The Big Question: What Kind of App Do We Want to Build?
+
+As more people discover AI Grammar Mentor, one strategic question keeps coming up:
+
+Should we stay a straightforward grammar checker — or evolve into something much more ambitious?
+
+We’re increasingly leaning toward the second path: turning the tool into a **real learning experience**, heavily inspired by Duolingo’s addictive, game-like approach to language learning.
+
+Instead of just highlighting errors and offering quick fixes, the vision is to help users genuinely *improve* their English over time — through explanations, quizzes, streaks, progress tracking, and bite-sized lessons that actually stick.
+
+## Why Duolingo-Style Learning Makes Sense
+
+Traditional grammar checkers solve the immediate problem (“fix this text”), but they rarely help writers stop making the same mistakes.
+
+A Duolingo-inspired grammar tool could change that by making learning:
+
+- Fun and rewarding instead of feeling like homework
+- Habit-forming with daily streaks and gentle nudges
+- Interactive — turning every mistake into a mini-lesson
+- Measurable — so users can actually see their progress week after week
+
+We already see growing interest in the app. More visitors are trying the core correction feature, and some are engaging with the early quiz prompts. That signal is exciting, but it also pulls us toward a clearer long-term direction.
+
+## The Trade-Offs We’re Weighing
+
+Going full “grammar Duolingo” means:
+
+- Building more gamified elements (levels, hearts, XP, leaderboards)
+- Creating structured learning paths based on common error patterns
+- Investing heavily in the learning experience rather than just polishing corrections
+- Potentially slowing down some short-term features to focus on retention and education
+
+Staying as a pure checker would be simpler and faster to scale — but it risks becoming “just another tool” in a crowded market.
+
+We believe the bigger opportunity lies in helping people become better writers, not just cleaner ones.
+
+## Where We Stand Today
+
+Right now the app is still very much in the “useful checker” phase, but we’re already testing elements that lean toward learning:
+
+- Clearer explanations of *why* a correction was made
+- The recent “Start Quiz” overlay experiment
+- Plans for bulk learning from all errors in one text
+
+The early data is promising, but we still have a lot to validate before going all-in.
+
+## What Do You Think?
+
+We’re genuinely curious about your preferences as a writer.
+
+Would you rather have a lightning-fast grammar fixer, or would you enjoy a tool that also helps you level up your skills over time — even if it feels a bit more like a learning app?
+
+If you’ve ever wished grammar tools did more than just correct your text — if you want to actually understand and remember the rules — you might love where we’re heading.
+
+Try AI Grammar Mentor today. Paste any text (short email or long draft) and see the current mix of corrections + optional learning prompts.
+
+No sign-up required. No pressure.
+
+Just write better — and maybe even have a bit more fun while doing it.
+
+Drop a comment or use the chat bubble and tell us what kind of grammar tool you actually want. Your feedback will directly influence the next steps.
+`
+},
+  
+  {
+    title: "Week 6 - Enforcing the 'Start Quiz' Button: Early Data and the Analytics Headache",
+  slug: "2026-03-16-enforcing-start-quiz-button-analytics",
+  description: "We made the quiz harder to ignore — now we're seeing clicks, but Google Analytics isn't giving us the full picture. The tracking challenges we're facing and what it means for product decisions.",
+  date: "2026-03-16",
+  author: "Sarah Chen",
+  category: "Product Insights",
+  readTime: "4 min read",
+  content: `
+## Rolling Out the Aggressive Quiz Prompt
+
+After the conversation with my colleague, we decided to test the more forceful approach: after corrections finish, we blur the text area and place a prominent "Start Quiz" button front and center.
+
+The goal was simple — remove the easy way out and see whether people actually care about learning from their mistakes.
+
+## First Signals Look Encouraging
+
+Early data is coming in, and the change is working as intended:
+
+- More users are clicking the "Start Quiz" button than before
+- The overlay forces attention exactly where we want it
+
+It feels like a validation win — at least some people are willing to engage with the learning side when it's made obvious.
+
+## The Tracking Problem Nobody Warned Us About
+
+Unfortunately, we're hitting a frustrating limitation with Google Analytics.
+
+We can see *that* someone clicked the button, but we don't have clean, reliable visibility into:
+
+- How many people actually reach the correction step
+- What percentage of those users click "Start Quiz"
+- The exact conversion rate from correction → quiz interest
+
+The numbers are noisy, incomplete, and sometimes delayed. Basic event tracking works, but building a clear funnel overview (visitors → correction → quiz click) is much harder than expected.
+
+This creates real decision paralysis. We know *something* is happening, but we can't confidently say how strong the signal is or whether it's worth doubling down on the full quiz experience.
+
+## What We're Doing About It
+
+Instead of guessing or waiting weeks for better data, we're taking a pragmatic step:
+
+- Improve event tracking immediately (more precise gtags, clearer event names, better timing)
+- Add fallback logging where possible
+- Keep the aggressive overlay live while we fix the measurement layer
+- Avoid building the full interactive quiz until the numbers are trustworthy
+
+We'd rather have slightly messy data now than perfect data too late.
+
+## Why This Matters for Early-Stage Products
+
+When you're iterating fast, imperfect analytics are common. The important part is recognizing the gap and fixing it before making big feature bets.
+
+In our case, the "Start Quiz" experiment is teaching us two things at once:
+
+1. People *can* be nudged toward learning features
+2. Our current tracking isn't good enough to guide serious investment
+
+Both insights are valuable.
+
+## Want to Help Shape the Next Version?
+
+If you've used grammar tools before and wished they did more than just fix mistakes — if you've ever wanted to understand *why* something was wrong so you stop repeating it — you're exactly the person we built this for.
+
+Paste any text (short or long) and try the current version. You'll likely hit the new quiz prompt after corrections.
+
+Click it or skip it — either way, your behavior helps us decide what to build next.
+
+No sign-up required, no pressure. Just honest writing improvement.
+
+Use the chat bubble if anything feels off or if you have strong opinions about the quiz idea. Your input matters more than you know.
+`
+},
+  
+  {
     title:
       "When a Colleague's Brutal Idea Changed How We Push Learning in AI Grammar Mentor",
     slug: "2026-03-14-offensive-quiz-button-colleague-idea",

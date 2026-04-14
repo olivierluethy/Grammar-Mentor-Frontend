@@ -20,6 +20,8 @@ import {
   ClipboardPaste,
   Copy,
   Loader2,
+  X,
+  ChevronRight,
 } from "lucide-react";
 import Image from "next/image";
 
@@ -136,6 +138,37 @@ interface SubscriptionState {
   dailyUsage: DailyUsage;
   isPro: boolean;
 }
+
+type QuizQuestionType = "correct-sentence" | "choose-option" | "identify-mistake";
+
+interface QuizQuestion {
+  type: QuizQuestionType;
+  correctionIndex: number;
+  question: string;
+  options: string[];
+  correctIndex: number;
+  explanation: string;
+  original: string;
+  correctionText: string;
+}
+
+interface QuizState {
+  active: boolean;
+  questions: QuizQuestion[];
+  currentIndex: number;
+  answers: (number | null)[];
+  showingResult: boolean;
+  completed: boolean;
+}
+
+const INITIAL_QUIZ_STATE: QuizState = {
+  active: false,
+  questions: [],
+  currentIndex: 0,
+  answers: [],
+  showingResult: false,
+  completed: false,
+};
 
 // ========================================
 // DEBOUNCE UTILITY
@@ -607,6 +640,154 @@ function RuleModalContent({
 }
 
 // ========================================
+// QUIZ HELPERS
+// ========================================
+
+function shuffleOptions(
+  items: string[],
+  correctIndex: number,
+): { items: string[]; correctIndex: number } {
+  const tagged = items.map((item, i) => ({ item, isCorrect: i === correctIndex }));
+  for (let i = tagged.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [tagged[i], tagged[j]] = [tagged[j], tagged[i]];
+  }
+  return {
+    items: tagged.map((t) => t.item),
+    correctIndex: tagged.findIndex((t) => t.isCorrect),
+  };
+}
+
+function getQuizContext(
+  text: string,
+  pos: number,
+  len: number,
+): { before: string; after: string } {
+  const start = Math.max(0, pos - 60);
+  const end = Math.min(text.length, pos + len + 60);
+  let before = text.substring(start, pos);
+  let after = text.substring(pos + len, end);
+
+  if (start > 0) {
+    const sp = before.indexOf(" ");
+    if (sp >= 0) before = "\u2026" + before.substring(sp);
+  }
+  if (end < text.length) {
+    const sp = after.lastIndexOf(" ");
+    if (sp >= 0) after = after.substring(0, sp) + "\u2026";
+  }
+  return { before, after };
+}
+
+function generateQuizQuestions(
+  corrections: Correction[],
+  fullText: string,
+): QuizQuestion[] {
+  const active = corrections.filter((c) => !c.ignored);
+  if (active.length === 0) return [];
+
+  return active.map((correction, idx) => {
+    const actualIndex = corrections.indexOf(correction);
+    const { before, after } = getQuizContext(
+      fullText,
+      correction.position,
+      correction.original.length,
+    );
+
+    const questionType = idx % 3;
+
+    if (questionType === 0) {
+      const correctSentence = `${before}${correction.correction}${after}`;
+      const wrongSentence = `${before}${correction.original}${after}`;
+      const shuffled = shuffleOptions([correctSentence, wrongSentence], 0);
+      return {
+        type: "correct-sentence" as QuizQuestionType,
+        correctionIndex: actualIndex,
+        question: "Which version is correct?",
+        options: shuffled.items,
+        correctIndex: shuffled.correctIndex,
+        explanation: correction.explanation,
+        original: correction.original,
+        correctionText: correction.correction,
+      };
+    } else if (questionType === 1) {
+      const blankSentence = `${before}______${after}`;
+      const shuffled = shuffleOptions(
+        [correction.correction, correction.original],
+        0,
+      );
+      return {
+        type: "choose-option" as QuizQuestionType,
+        correctionIndex: actualIndex,
+        question: `Fill in the blank:\n\u201C${blankSentence.trim()}\u201D`,
+        options: shuffled.items,
+        correctIndex: shuffled.correctIndex,
+        explanation: correction.explanation,
+        original: correction.original,
+        correctionText: correction.correction,
+      };
+    } else {
+      const sentence = `${before}${correction.original}${after}`;
+      const shuffled = shuffleOptions(
+        [
+          `"${correction.original}" should be "${correction.correction}"`,
+          "The sentence is already correct",
+          "A different part of the sentence has the error",
+        ],
+        0,
+      );
+      return {
+        type: "identify-mistake" as QuizQuestionType,
+        correctionIndex: actualIndex,
+        question: `Find the mistake:\n\u201C${sentence.trim()}\u201D`,
+        options: shuffled.items,
+        correctIndex: shuffled.correctIndex,
+        explanation: correction.explanation,
+        original: correction.original,
+        correctionText: correction.correction,
+      };
+    }
+  });
+}
+
+function splitTextIntoChunks(
+  text: string,
+  maxChunkSize: number = 800,
+): { chunk: string; offset: number }[] {
+  if (text.length <= maxChunkSize) {
+    return [{ chunk: text, offset: 0 }];
+  }
+
+  const chunks: { chunk: string; offset: number }[] = [];
+  let currentOffset = 0;
+
+  while (currentOffset < text.length) {
+    let endPos = Math.min(currentOffset + maxChunkSize, text.length);
+
+    if (endPos < text.length) {
+      const searchArea = text.substring(currentOffset, endPos);
+      const lastPeriod = searchArea.lastIndexOf(". ");
+      const lastExcl = searchArea.lastIndexOf("! ");
+      const lastQuestion = searchArea.lastIndexOf("? ");
+      const lastNewline = searchArea.lastIndexOf("\n");
+      const bestBreak = Math.max(lastPeriod, lastExcl, lastQuestion, lastNewline);
+
+      if (bestBreak > maxChunkSize * 0.3) {
+        endPos = currentOffset + bestBreak + 1;
+      }
+    }
+
+    chunks.push({
+      chunk: text.substring(currentOffset, endPos),
+      offset: currentOffset,
+    });
+    currentOffset = endPos;
+  }
+
+  return chunks;
+}
+
+// ========================================
 // MAIN COMPONENT
 // ========================================
 
@@ -654,8 +835,11 @@ export default function GrammarMentor(): JSX.Element {
   // Debounced word count state
   const [wordCountValue, setWordCountValue] = useState<number>(0);
 
-  // ── NEW: quiz interest overlay state ──────────────────────────────────────
+  // ── Quiz state ────────────────────────────────────────────────────────────
   const [showQuizOverlay, setShowQuizOverlay] = useState<boolean>(false);
+  const [quizState, setQuizState] = useState<QuizState>(INITIAL_QUIZ_STATE);
+  const quizStartTimeRef = useRef<number>(0);
+  const questionStartTimeRef = useRef<number>(0);
   // ─────────────────────────────────────────────────────────────────────────
 
   // Refs
@@ -879,45 +1063,98 @@ export default function GrammarMentor(): JSX.Element {
     });
 
     setIsChecking(true);
-    // Reset the quiz overlay whenever a new check begins
     setShowQuizOverlay(false);
+    setQuizState(INITIAL_QUIZ_STATE);
 
     try {
-      const response = await fetch(API_ENDPOINT, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          text: trimmedText,
-          language: language,
-          style: style,
-          tone: tone,
-        }),
-      });
+      let allCorrections: Correction[] = [];
+      let detectedLang = "";
 
-      if (!response.ok) {
-        throw new Error(`API request failed with status ${response.status}`);
+      if (trimmedText.length <= 800) {
+        // Single request for short texts
+        const response = await fetch(API_ENDPOINT, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            text: trimmedText,
+            language: language,
+            style: style,
+            tone: tone,
+          }),
+        });
+
+        if (!response.ok) {
+          throw new Error(`API request failed with status ${response.status}`);
+        }
+
+        const data: GrammarCheckResponse = await response.json();
+        if (data.error) throw new Error(data.error);
+
+        allCorrections = data.corrections || [];
+        detectedLang = data.detected_language || "";
+      } else {
+        // Batch processing for long texts
+        const chunks = splitTextIntoChunks(trimmedText, 800);
+        const BATCH_SIZE = 3;
+
+        for (let i = 0; i < chunks.length; i += BATCH_SIZE) {
+          const batch = chunks.slice(i, i + BATCH_SIZE);
+          const results = await Promise.all(
+            batch.map(async ({ chunk, offset }) => {
+              const response = await fetch(API_ENDPOINT, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                  text: chunk,
+                  language: language,
+                  style: style,
+                  tone: tone,
+                }),
+              });
+
+              if (!response.ok) {
+                throw new Error(
+                  `API request failed with status ${response.status}`,
+                );
+              }
+
+              const data: GrammarCheckResponse = await response.json();
+              if (data.error) throw new Error(data.error);
+
+              const adjusted = (data.corrections || []).map((c) => ({
+                ...c,
+                position: c.position + offset,
+              }));
+
+              return {
+                corrections: adjusted,
+                language: data.detected_language,
+              };
+            }),
+          );
+
+          for (const result of results) {
+            allCorrections.push(...result.corrections);
+            if (!detectedLang && result.language) {
+              detectedLang = result.language;
+            }
+          }
+        }
+
+        allCorrections.sort((a, b) => a.position - b.position);
       }
 
-      const data: GrammarCheckResponse = await response.json();
-
-      if (data.error) {
-        throw new Error(data.error);
-      }
-
-      const newCorrections = data.corrections || [];
-      setCorrections(newCorrections);
+      setCorrections(allCorrections);
       setFixedCount(0);
 
-      if (data.detected_language) {
-        setDetectedLanguage(data.detected_language.toUpperCase());
+      if (detectedLang) {
+        setDetectedLanguage(detectedLang.toUpperCase());
       }
 
       setShowStats(true);
 
       const words = trimmedText.split(/\s+/).filter(Boolean).length;
-      const issues = newCorrections.filter((c) => !c.ignored).length;
+      const issues = allCorrections.filter((c) => !c.ignored).length;
 
       gtag("event", "text_checked", {
         event_category: "Tool",
@@ -927,9 +1164,16 @@ export default function GrammarMentor(): JSX.Element {
         language: language || "auto",
       });
 
-      // ── NEW: show the quiz interest overlay after check completes ─────────
-      setShowQuizOverlay(true);
-      // ──────────────────────────────────────────────────────────────────────
+      if (issues > 0) {
+        setShowQuizOverlay(true);
+
+        gtag("event", "quiz_overlay_shown", {
+          event_category: "quiz_funnel",
+          event_label: "overlay_presented",
+          issues_found: issues,
+          character_count: characterCount,
+        });
+      }
     } catch (error) {
       console.error("Error:", error);
       const errorMessage =
@@ -1359,9 +1603,8 @@ export default function GrammarMentor(): JSX.Element {
     setCorrections([]);
     setFixedCount(0);
     setShowStats(false);
-    // ── NEW: also reset the quiz overlay on clear ─────────────────────────
     setShowQuizOverlay(false);
-    // ──────────────────────────────────────────────────────────────────────
+    setQuizState(INITIAL_QUIZ_STATE);
     localStorage.removeItem("grammar_mentor_text");
 
     gtag("event", "button_click", {
@@ -1383,10 +1626,10 @@ export default function GrammarMentor(): JSX.Element {
   };
 
   // ========================================
-  // HIGHLIGHT RENDERING
+  // HIGHLIGHT RENDERING (memoized)
   // ========================================
 
-  const renderHighlights = (): JSX.Element | null => {
+  const highlightElements = useMemo((): JSX.Element | null => {
     if (corrections.length === 0) {
       return null;
     }
@@ -1433,17 +1676,145 @@ export default function GrammarMentor(): JSX.Element {
     }
 
     return <>{parts}</>;
-  };
+  }, [corrections, text]);
 
   // ========================================
   // COMPUTED VALUES
   // ========================================
 
-  const activeCorrections = corrections.filter((c) => !c.ignored);
+  const activeCorrections = useMemo(
+    () => corrections.filter((c) => !c.ignored),
+    [corrections],
+  );
   const issueCountValue = activeCorrections.length;
   const snippetCountText = subscriptionManager.updateSnippetCount(
     snippets.length,
   );
+
+  // ========================================
+  // QUIZ HANDLERS
+  // ========================================
+
+  const startQuiz = useCallback((): void => {
+    const questions = generateQuizQuestions(corrections, text);
+    if (questions.length === 0) return;
+
+    quizStartTimeRef.current = Date.now();
+    questionStartTimeRef.current = Date.now();
+
+    setQuizState({
+      active: true,
+      questions,
+      currentIndex: 0,
+      answers: new Array(questions.length).fill(null),
+      showingResult: false,
+      completed: false,
+    });
+
+    const typeCounts = questions.reduce(
+      (acc, q) => {
+        acc[q.type] = (acc[q.type] || 0) + 1;
+        return acc;
+      },
+      {} as Record<string, number>,
+    );
+
+    gtag("event", "quiz_started", {
+      event_category: "quiz_funnel",
+      event_label: "grammar_quiz_started",
+      total_questions: questions.length,
+      question_types: JSON.stringify(typeCounts),
+    });
+  }, [corrections, text]);
+
+  const handleQuizAnswer = useCallback(
+    (optionIndex: number): void => {
+      const answerTimeMs = Date.now() - questionStartTimeRef.current;
+
+      setQuizState((prev) => {
+        if (prev.answers[prev.currentIndex] !== null) return prev;
+        const newAnswers = [...prev.answers];
+        newAnswers[prev.currentIndex] = optionIndex;
+        const currentQuestion = prev.questions[prev.currentIndex];
+        const isCorrect = optionIndex === currentQuestion.correctIndex;
+
+        gtag("event", "quiz_answer_selected", {
+          event_category: "quiz_funnel",
+          event_label: isCorrect ? "correct" : "incorrect",
+          question_index: prev.currentIndex + 1,
+          total_questions: prev.questions.length,
+          question_type: currentQuestion.type,
+          is_correct: isCorrect,
+          time_spent_ms: answerTimeMs,
+        });
+
+        return { ...prev, answers: newAnswers, showingResult: true };
+      });
+    },
+    [],
+  );
+
+  const handleQuizNext = useCallback((): void => {
+    questionStartTimeRef.current = Date.now();
+
+    setQuizState((prev) => {
+      const nextIndex = prev.currentIndex + 1;
+
+      gtag("event", "quiz_next_clicked", {
+        event_category: "quiz_funnel",
+        event_label: nextIndex >= prev.questions.length ? "view_results" : "next_question",
+        question_index: prev.currentIndex + 1,
+        total_questions: prev.questions.length,
+      });
+
+      if (nextIndex >= prev.questions.length) {
+        const correctCount = prev.answers.filter(
+          (a, i) => a === prev.questions[i].correctIndex,
+        ).length;
+        const totalTimeMs = Date.now() - quizStartTimeRef.current;
+
+        gtag("event", "quiz_completed", {
+          event_category: "quiz_funnel",
+          event_label: "grammar_quiz_completed",
+          value: correctCount,
+          total_questions: prev.questions.length,
+          score_percent: Math.round(
+            (correctCount / prev.questions.length) * 100,
+          ),
+          total_time_seconds: Math.round(totalTimeMs / 1000),
+        });
+
+        return { ...prev, completed: true, showingResult: false };
+      }
+      return {
+        ...prev,
+        currentIndex: nextIndex,
+        showingResult: false,
+      };
+    });
+  }, []);
+
+  const closeQuiz = useCallback((): void => {
+    setQuizState((prev) => {
+      if (prev.active && !prev.completed) {
+        const answeredCount = prev.answers.filter((a) => a !== null).length;
+        const totalTimeMs = Date.now() - quizStartTimeRef.current;
+
+        gtag("event", "quiz_abandoned", {
+          event_category: "quiz_funnel",
+          event_label: "early_exit",
+          questions_answered: answeredCount,
+          total_questions: prev.questions.length,
+          abandoned_at_index: prev.currentIndex + 1,
+          progress_percent: Math.round(
+            (answeredCount / prev.questions.length) * 100,
+          ),
+          total_time_seconds: Math.round(totalTimeMs / 1000),
+        });
+      }
+      return INITIAL_QUIZ_STATE;
+    });
+  }, []);
 
   // ========================================
   // RENDER
@@ -1606,7 +1977,7 @@ export default function GrammarMentor(): JSX.Element {
                 ref={highlightLayerRef}
                 className="absolute top-0 left-0 w-full min-h-[200px] sm:min-h-[400px] p-3 sm:p-6 text-sm sm:text-lg leading-[1.6] sm:leading-[1.8] font-['Crimson_Pro',serif] pointer-events-none whitespace-pre-wrap break-words text-transparent overflow-hidden z-[1]"
               >
-                {renderHighlights()}
+                {highlightElements}
               </div>
               <textarea
                 ref={textEditorRef}
@@ -1620,35 +1991,44 @@ export default function GrammarMentor(): JSX.Element {
                 }`}
               />
 
-              {/* ── NEW: Quiz interest overlay ───────────────────────────────────── */}
-              {showQuizOverlay && (
-  <div className="absolute inset-0 z-[10] flex flex-col items-center justify-center rounded-lg sm:rounded-xl bg-slate-950/75 backdrop-blur-[3px] p-6 text-center">
-    
-    <button
-      onClick={() => {
-        gtag("event", "quiz_start_clicked", {
-          event_category: "engagement",
-          event_label: "grammar_quiz_interest",
-        });
-      }}
-      className="flex items-center gap-3 py-4 px-8 rounded-2xl font-bold text-lg bg-gradient-to-r from-indigo-600 to-violet-600 text-white shadow-xl hover:-translate-y-0.5 active:scale-95 transition-all duration-200 border-none"
-    >
-      <span className="text-2xl">🎯</span>
-      <span>Start Learning</span>
-    </button>
-
-    {/* Der motivierende Counter direkt unter dem Button */}
-    <div className="mt-5 flex flex-col items-center">
-      <p className="text-white text-base sm:text-lg font-semibold tracking-tight">
-        Learn from your <span className="text-red-400 underline decoration-red-500/50 underline-offset-4">{5} mistakes</span> now
-      </p>
-      <p className="mt-1 text-slate-400 text-xs sm:text-sm font-medium">
-        Fix them today so you won't make them again.
-      </p>
-    </div>
-    
-  </div>
-)}
+              {/* ── Quiz interest overlay ──────────────────────────────────────── */}
+              {showQuizOverlay && activeCorrections.length > 0 && (
+                <div className="absolute inset-0 z-[10] flex flex-col items-center justify-center rounded-lg sm:rounded-xl bg-slate-950/75 backdrop-blur-[3px] p-6 text-center">
+                  <button
+                    onClick={startQuiz}
+                    className="flex items-center gap-3 py-4 px-8 rounded-2xl font-bold text-lg bg-gradient-to-r from-indigo-600 to-violet-600 text-white shadow-xl hover:-translate-y-0.5 active:scale-95 transition-all duration-200 border-none"
+                  >
+                    <span className="text-2xl">🎯</span>
+                    <span>Start Learning</span>
+                  </button>
+                  <div className="mt-5 flex flex-col items-center">
+                    <p className="text-white text-base sm:text-lg font-semibold tracking-tight">
+                      Learn from your{" "}
+                      <span className="text-red-400 underline decoration-red-500/50 underline-offset-4">
+                        {activeCorrections.length}{" "}
+                        {activeCorrections.length === 1 ? "mistake" : "mistakes"}
+                      </span>{" "}
+                      now
+                    </p>
+                    <p className="mt-1 text-slate-400 text-xs sm:text-sm font-medium">
+                      Fix them today so you won&apos;t make them again.
+                    </p>
+                  </div>
+                  <button
+                    onClick={() => {
+                      setShowQuizOverlay(false);
+                      gtag("event", "quiz_overlay_skipped", {
+                        event_category: "quiz_funnel",
+                        event_label: "skip_to_suggestions",
+                        issues_found: activeCorrections.length,
+                      });
+                    }}
+                    className="mt-4 text-slate-500 hover:text-slate-300 text-xs sm:text-sm underline transition-colors"
+                  >
+                    Skip and view suggestions
+                  </button>
+                </div>
+              )}
 
               {/* ─────────────────────────────────────────────────────────────────── */}
             </div>
@@ -1850,15 +2230,25 @@ export default function GrammarMentor(): JSX.Element {
                   <div className="w-8 h-8 sm:w-10 sm:h-10 border-[3px] border-gray-100 border-t-indigo-500 rounded-full animate-spin mx-auto mb-3 sm:mb-4"></div>
                   <p className="text-sm sm:text-base">Analyzing your text...</p>
                 </div>
-              ) : showQuizOverlay ? (
-                /* ── NEW: hide suggestions while quiz overlay is shown ───────── */
+              ) : showQuizOverlay && activeCorrections.length > 0 ? (
                 <div className="text-center py-6 sm:py-12 px-4 sm:px-8 text-gray-400">
-                  <p className="text-slate-500 text-xs sm:text-sm">
-                    Complete the quiz to unlock your suggestions.
+                  <div className="text-3xl sm:text-4xl mb-3">🎯</div>
+                  <p className="text-white font-semibold text-sm sm:text-base mb-2">
+                    {activeCorrections.length}{" "}
+                    {activeCorrections.length === 1 ? "issue" : "issues"} found
                   </p>
+                  <p className="text-slate-500 text-xs sm:text-sm mb-4">
+                    Start the quiz to learn from your mistakes, or skip to view
+                    suggestions directly.
+                  </p>
+                  <button
+                    onClick={startQuiz}
+                    className="inline-flex items-center gap-2 py-2.5 px-6 rounded-xl font-semibold text-sm bg-gradient-to-r from-indigo-600 to-violet-600 text-white shadow-lg hover:-translate-y-0.5 active:scale-95 transition-all duration-200"
+                  >
+                    <span>🎯</span> Start Quiz
+                  </button>
                 </div>
               ) : corrections.length === 0 ? (
-                /* ───────────────────────────────────────────────────────────── */
                 <div className="text-center py-6 sm:py-12 px-4 sm:px-8 text-gray-400">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -2323,6 +2713,281 @@ export default function GrammarMentor(): JSX.Element {
           </div>
         </div>
       )}
+
+      {/* ── Interactive Quiz Modal ──────────────────────────────────────── */}
+      {quizState.active && (
+        <div className="fixed inset-0 bg-slate-950 z-[2000] flex flex-col overflow-hidden">
+          {/* Header with progress */}
+          <div className="flex items-center gap-3 sm:gap-4 p-4 sm:p-6 border-b border-slate-800">
+            <button
+              onClick={closeQuiz}
+              className="text-slate-400 hover:text-white transition-colors p-1"
+            >
+              <X size={24} />
+            </button>
+            <div className="flex-1 h-2.5 sm:h-3 bg-slate-800 rounded-full overflow-hidden">
+              <div
+                className="h-full bg-gradient-to-r from-indigo-500 to-violet-500 rounded-full transition-all duration-500 ease-out"
+                style={{
+                  width: `${((quizState.currentIndex + (quizState.completed ? 1 : 0)) / quizState.questions.length) * 100}%`,
+                }}
+              />
+            </div>
+            <span className="text-slate-400 text-xs sm:text-sm font-medium min-w-[3rem] text-right">
+              {Math.min(quizState.currentIndex + 1, quizState.questions.length)}/
+              {quizState.questions.length}
+            </span>
+          </div>
+
+          {/* Content */}
+          <div className="flex-1 overflow-y-auto flex items-start sm:items-center justify-center p-4 sm:p-8 pt-8 sm:pt-8">
+            {!quizState.completed ? (
+              (() => {
+                const q = quizState.questions[quizState.currentIndex];
+                if (!q) return null;
+                const userAnswer = quizState.answers[quizState.currentIndex];
+                const hasAnswered =
+                  userAnswer !== null && userAnswer !== undefined;
+                const isCorrect = hasAnswered && userAnswer === q.correctIndex;
+
+                return (
+                  <div className="w-full max-w-2xl">
+                    {/* Question type badge */}
+                    <div className="mb-4 sm:mb-6">
+                      <span className="inline-block px-3 py-1 rounded-full text-xs font-semibold bg-indigo-500/20 text-indigo-300 border border-indigo-500/30">
+                        {q.type === "correct-sentence"
+                          ? "Choose the correct version"
+                          : q.type === "choose-option"
+                            ? "Fill in the blank"
+                            : "Find the mistake"}
+                      </span>
+                    </div>
+
+                    {/* Question */}
+                    <h2 className="text-xl sm:text-2xl font-bold text-white mb-6 sm:mb-8 leading-relaxed whitespace-pre-line font-['Crimson_Pro',serif]">
+                      {q.question}
+                    </h2>
+
+                    {/* Options */}
+                    <div className="space-y-3">
+                      {q.options.map((option, idx) => {
+                        let optionStyle =
+                          "border-slate-700 bg-slate-900 hover:border-indigo-500 hover:bg-slate-800 text-white cursor-pointer";
+
+                        if (hasAnswered) {
+                          if (idx === q.correctIndex) {
+                            optionStyle =
+                              "border-emerald-500 bg-emerald-500/10 text-emerald-300";
+                          } else if (idx === userAnswer && !isCorrect) {
+                            optionStyle =
+                              "border-red-500 bg-red-500/10 text-red-300";
+                          } else {
+                            optionStyle =
+                              "border-slate-800 bg-slate-900/50 text-slate-600";
+                          }
+                        }
+
+                        return (
+                          <button
+                            key={idx}
+                            disabled={hasAnswered}
+                            onClick={() => handleQuizAnswer(idx)}
+                            className={`w-full text-left p-4 sm:p-5 rounded-xl border-2 transition-all duration-200 text-sm sm:text-base ${optionStyle} ${!hasAnswered ? "active:scale-[0.98]" : ""}`}
+                          >
+                            <span className="font-semibold mr-3 opacity-60">
+                              {String.fromCharCode(65 + idx)}
+                            </span>
+                            {option}
+                          </button>
+                        );
+                      })}
+                    </div>
+
+                    {/* Feedback */}
+                    {hasAnswered && (
+                      <div
+                        className={`mt-6 p-4 sm:p-5 rounded-xl border ${isCorrect ? "bg-emerald-500/10 border-emerald-500/30" : "bg-amber-500/10 border-amber-500/30"}`}
+                      >
+                        <p
+                          className={`font-bold text-base sm:text-lg mb-2 ${isCorrect ? "text-emerald-400" : "text-amber-400"}`}
+                        >
+                          {isCorrect ? "Correct!" : "Not quite right"}
+                        </p>
+                        <p className="text-slate-300 text-sm sm:text-base leading-relaxed">
+                          {q.explanation}
+                        </p>
+                        <p className="text-slate-400 text-xs sm:text-sm mt-2">
+                          <span className="text-red-400 line-through">
+                            {q.original}
+                          </span>
+                          {" \u2192 "}
+                          <span className="text-emerald-400">
+                            {q.correctionText}
+                          </span>
+                        </p>
+                      </div>
+                    )}
+
+                    {/* Next button */}
+                    {hasAnswered && (
+                      <button
+                        onClick={handleQuizNext}
+                        className="mt-6 w-full py-3.5 sm:py-4 rounded-xl font-bold text-base sm:text-lg bg-gradient-to-r from-indigo-600 to-violet-600 text-white shadow-lg hover:-translate-y-0.5 active:scale-[0.98] transition-all duration-200 flex items-center justify-center gap-2"
+                      >
+                        {quizState.currentIndex <
+                        quizState.questions.length - 1 ? (
+                          <>
+                            Continue <ChevronRight size={20} />
+                          </>
+                        ) : (
+                          "See Results"
+                        )}
+                      </button>
+                    )}
+                  </div>
+                );
+              })()
+            ) : (
+              /* Summary screen */
+              <div className="w-full max-w-2xl">
+                <div className="text-center mb-8 sm:mb-10">
+                  <div className="text-5xl sm:text-6xl mb-4">
+                    {(() => {
+                      const correctCount = quizState.answers.filter(
+                        (a, i) => a === quizState.questions[i].correctIndex,
+                      ).length;
+                      const total = quizState.questions.length;
+                      if (correctCount === total) return "\uD83C\uDFC6";
+                      if (correctCount >= total * 0.7) return "\uD83C\uDF89";
+                      return "\uD83D\uDCAA";
+                    })()}
+                  </div>
+                  <h2 className="text-2xl sm:text-3xl font-bold text-white mb-2 font-['Crimson_Pro',serif]">
+                    Quiz Complete!
+                  </h2>
+                  <p className="text-slate-400 text-base sm:text-lg">
+                    You got{" "}
+                    <span className="text-emerald-400 font-bold">
+                      {
+                        quizState.answers.filter(
+                          (a, i) =>
+                            a === quizState.questions[i].correctIndex,
+                        ).length
+                      }
+                    </span>{" "}
+                    out of{" "}
+                    <span className="text-white font-bold">
+                      {quizState.questions.length}
+                    </span>{" "}
+                    correct
+                  </p>
+                </div>
+
+                {/* Score bar */}
+                <div className="mb-8 sm:mb-10">
+                  <div className="h-4 bg-slate-800 rounded-full overflow-hidden">
+                    <div
+                      className="h-full bg-gradient-to-r from-emerald-500 to-emerald-400 rounded-full transition-all duration-1000"
+                      style={{
+                        width: `${(quizState.answers.filter((a, i) => a === quizState.questions[i].correctIndex).length / quizState.questions.length) * 100}%`,
+                      }}
+                    />
+                  </div>
+                </div>
+
+                {/* Mistake review */}
+                <h3 className="text-lg sm:text-xl font-bold text-white mb-4 font-['Crimson_Pro',serif]">
+                  Review Your Mistakes
+                </h3>
+                <div className="space-y-3 mb-8">
+                  {quizState.questions.map((q, idx) => {
+                    const wasCorrect =
+                      quizState.answers[idx] === q.correctIndex;
+                    return (
+                      <div
+                        key={idx}
+                        className={`p-4 rounded-xl border ${wasCorrect ? "border-emerald-500/20 bg-emerald-500/5" : "border-red-500/20 bg-red-500/5"}`}
+                      >
+                        <div className="flex items-start gap-3">
+                          <span
+                            className={`text-lg mt-0.5 ${wasCorrect ? "text-emerald-400" : "text-red-400"}`}
+                          >
+                            {wasCorrect ? "\u2713" : "\u2717"}
+                          </span>
+                          <div className="flex-1 min-w-0">
+                            <p className="text-slate-300 text-sm mb-1">
+                              <span className="text-red-400 line-through">
+                                {q.original}
+                              </span>
+                              {" \u2192 "}
+                              <span className="text-emerald-400">
+                                {q.correctionText}
+                              </span>
+                            </p>
+                            <p className="text-slate-500 text-xs sm:text-sm">
+                              {q.explanation}
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+
+                {/* Action buttons */}
+                <div className="flex flex-col sm:flex-row gap-3">
+                  <button
+                    onClick={() => {
+                      gtag("event", "quiz_summary_action", {
+                        event_category: "quiz_funnel",
+                        event_label: "back_to_editor",
+                        total_questions: quizState.questions.length,
+                        score_percent: Math.round(
+                          (quizState.answers.filter(
+                            (a, i) =>
+                              a === quizState.questions[i].correctIndex,
+                          ).length /
+                            quizState.questions.length) *
+                            100,
+                        ),
+                      });
+                      closeQuiz();
+                      setShowQuizOverlay(false);
+                    }}
+                    className="flex-1 py-3.5 rounded-xl font-semibold text-base bg-slate-800 text-white hover:bg-slate-700 transition-colors"
+                  >
+                    Back to Editor
+                  </button>
+                  <button
+                    onClick={() => {
+                      gtag("event", "quiz_summary_action", {
+                        event_category: "quiz_funnel",
+                        event_label: "enter_new_text",
+                        total_questions: quizState.questions.length,
+                        score_percent: Math.round(
+                          (quizState.answers.filter(
+                            (a, i) =>
+                              a === quizState.questions[i].correctIndex,
+                          ).length /
+                            quizState.questions.length) *
+                            100,
+                        ),
+                      });
+                      closeQuiz();
+                      setShowQuizOverlay(false);
+                      handleClear();
+                    }}
+                    className="flex-1 py-3.5 rounded-xl font-semibold text-base bg-gradient-to-r from-indigo-600 to-violet-600 text-white hover:shadow-lg transition-all"
+                  >
+                    Enter New Text
+                  </button>
+                </div>
+              </div>
+            )}
+          </div>
+        </div>
+      )}
+      {/* ─────────────────────────────────────────────────────────────────── */}
 
       {/* Toast Notification - Mobile optimized */}
       {toast.show && (
