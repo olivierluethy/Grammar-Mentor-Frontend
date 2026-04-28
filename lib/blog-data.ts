@@ -11,6 +11,132 @@ export interface BlogPost {
 
 export const blogPosts: BlogPost[] = [
   {
+    title: "Week 12 - Why Google Ads Feel Like a Massive Roadblock Right Now",
+  slug: "2026-04-28-google-ads-not-delivering-traffic",
+  description: "Despite our best efforts, Google Ads are delivering almost no traffic to AI Grammar Mentor. Here's what we're experiencing and why the lack of data makes iteration so difficult.",
+  date: "2026-04-28",
+  author: "Sarah Chen",
+  category: "Growth & Marketing",
+  readTime: "4 min read",
+  content: `
+## The Google Ads Struggle Is Real
+
+Google Ads have become one of our biggest stumbling blocks at the moment.
+
+We’ve kept the campaigns relatively simple — same conservative budget, similar targeting, and refined ad copy based on previous learnings. Yet the results are frustratingly quiet.
+
+We’re barely getting any traffic.
+
+## The Real Problem Behind No Traffic
+
+The lack of visitors isn’t just disappointing — it’s paralyzing from a product perspective.
+
+Without enough people reaching the tool, we can’t:
+
+- Observe real user behavior
+- Understand what works and what doesn’t
+- Learn from how people actually use (or don’t use) the features
+- Make meaningful improvements based on data
+
+It creates a vicious cycle: no traffic → no usage data → harder to improve the product → even less effective ads.
+
+We know there is interest in better grammar tools. Organic traffic from our blog posts proves that. But turning that interest into consistent, paid acquisition has proven much more difficult than expected.
+
+## What We’re Learning
+
+This experience is a classic early-stage reality check:
+
+Sometimes the biggest blocker isn’t the product itself — it’s getting enough qualified eyes on it in the first place.
+
+We’re now carefully reviewing our ad setup, landing page alignment, offer clarity, and targeting. Something clearly isn’t resonating yet, and we need to figure out exactly what it is.
+
+The good news? Every failed campaign still teaches us something valuable about our market and messaging.
+
+## Staying Patient While Iterating
+
+We refuse to burn money on ineffective ads, but we also can’t afford to stay invisible.
+
+The plan moving forward is to keep testing smarter, smaller experiments while continuing to grow organic channels that are already showing promise.
+
+Slow and steady data beats fast but meaningless spend.
+
+## Want to Help Us Test the Tool?
+
+While we work on improving our acquisition channels, the best way to move forward is still real user feedback.
+
+If you write in English — whether emails, reports, blog posts, or casual messages — I’d love for you to try AI Grammar Mentor.
+
+Paste any text and see how the tool currently handles corrections and suggestions. The experience is simple, fast, and designed to respect your natural writing voice.
+
+No sign-up required. No payment pressure.
+
+Just honest, helpful feedback on your writing.
+
+Try it now and tell me what you think — your input is incredibly valuable at this stage.
+
+The chat bubble is always open.
+`
+},
+  {
+    title: "Week 11 - Still in the Validation Phase: Why Building the Vision Is Harder Than It Looks",
+  slug: "2026-04-20-validation-phase-ai-grammar-mentor",
+  description: "We're deep in the early validation stage of AI Grammar Mentor. The vision is clear to us, but making it obvious and valuable to users remains our biggest challenge.",
+  date: "2026-04-20",
+  author: "Sarah Chen",
+  category: "Indie Hacking",
+  readTime: "4 min read",
+  content: `
+## The Honest Truth About Early-Stage Products
+
+We are still firmly in the validation phase.
+
+Even though we have a clear vision for what AI Grammar Mentor could become, we’re constantly reminded how difficult it is to turn that vision into something users immediately understand and love.
+
+This is one of the hardest parts of building a new product: you see the full potential so clearly, but users often don’t — at least not yet.
+
+## The Gap Between Vision and User Perception
+
+We keep noticing the same pattern:
+
+- We know the long-term goal is to create a powerful, engaging learning tool that helps people truly improve their writing.
+- Users, however, mostly see a grammar checker — nothing more, nothing less.
+- Many don’t yet understand (or trust) the deeper learning experience we’re trying to build.
+
+That mismatch is completely normal at this stage, but it’s also frustrating. It means we still have work to do to bridge the gap between what we’re building and what people instantly recognize as valuable.
+
+Sometimes the idea feels too ambitious or too vague from the outside. People need to experience the benefit quickly and clearly before they can believe in the bigger vision.
+
+## What This Phase Really Means
+
+Being in validation mode means:
+
+- Constantly testing assumptions against real user behavior
+- Accepting that your beautiful internal vision might not yet be obvious to others
+- Iterating fast based on what people actually do, not just what you hope they’ll do
+
+It’s a humbling but necessary stage. The products that eventually succeed are usually the ones that survive this uncomfortable period of “people don’t quite get it yet.”
+
+## Staying Focused While Shipping
+
+Our job right now is to make the value as obvious as possible with every small improvement. Clearer onboarding, better explanations, faster results, and more intuitive learning features — all of it serves one purpose: helping users feel the benefit quickly.
+
+We’re making steady progress, but we know we still have a way to go before the vision clicks for most people.
+
+## Try It for Yourself
+
+If you’ve ever felt that grammar tools were missing something — that they fix your text but don’t really help you get better — you’re exactly the kind of person we’re building for.
+
+AI Grammar Mentor is still early, but it’s already more than just another checker. Paste any text and experience the current version for yourself.
+
+You might be surprised how much clearer and more helpful the suggestions feel compared to other tools.
+
+No sign-up required. No pressure. Just try it and see what you think.
+
+We’d love to hear your honest feedback — the chat bubble is always there.
+`
+},
+  
+  {
     title: "Week 10 - Google Analytics Is Finally Showing Promise — Even Without Ads",
   slug: "2026-04-13-google-analytics-organic-traffic-progress",
   description: "Organic traffic continues to grow without Google Ads. The 'Start Quiz' button is getting real clicks, and we're now ready to fully build the learning experience to attract our first paying customers.",
