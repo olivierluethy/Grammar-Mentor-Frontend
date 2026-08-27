@@ -22,8 +22,15 @@ import {
   Loader2,
   X,
   ChevronRight,
+  Volume2,
+  History,
+  Printer,
 } from "lucide-react";
 import Image from "next/image";
+import { mistakeHistory } from "@/lib/mistake-history";
+import { speak, isTTSSupported } from "@/lib/tts";
+import { openPracticeSheet, type PracticeItem } from "@/lib/practice-pdf";
+import MistakeHistoryModal from "@/components/mistake-history-modal";
 
 // ========================================
 // TYPE DEFINITIONS
@@ -835,6 +842,12 @@ export default function GrammarMentor(): JSX.Element {
   // Debounced word count state
   const [wordCountValue, setWordCountValue] = useState<number>(0);
 
+  // ── Mistake history + text-to-speech ────────────────────────────────────────
+  const [showHistoryModal, setShowHistoryModal] = useState<boolean>(false);
+  const [ttsSupported, setTtsSupported] = useState<boolean>(false);
+  const [speakingKey, setSpeakingKey] = useState<string | null>(null);
+  // ─────────────────────────────────────────────────────────────────────────
+
   // ── Quiz state ────────────────────────────────────────────────────────────
   const [showQuizOverlay, setShowQuizOverlay] = useState<boolean>(false);
   const [quizState, setQuizState] = useState<QuizState>(INITIAL_QUIZ_STATE);
@@ -903,6 +916,32 @@ export default function GrammarMentor(): JSX.Element {
       window.removeEventListener("beforeunload", handleBeforeUnload);
     };
   }, []);
+
+  // ========================================
+  // TEXT-TO-SPEECH AVAILABILITY
+  // ========================================
+
+  useEffect(() => {
+    setTtsSupported(isTTSSupported());
+  }, []);
+
+  const speakText = useCallback(
+    (text: string, key: string): void => {
+      if (!isTTSSupported()) return;
+      speak(text, {
+        language: detectedLanguage !== "--" ? detectedLanguage : language,
+        onStart: () => setSpeakingKey(key),
+        onEnd: () => setSpeakingKey(null),
+        onError: () => setSpeakingKey(null),
+      });
+      gtag("event", "tts_play", {
+        event_category: "Tool",
+        event_label: "Correction Read Aloud",
+        value: 1,
+      });
+    },
+    [detectedLanguage, language],
+  );
 
   // ========================================
   // GOOGLE SIGN-IN CALLBACK
@@ -1151,6 +1190,19 @@ export default function GrammarMentor(): JSX.Element {
         setDetectedLanguage(detectedLang.toUpperCase());
       }
 
+      // Record the mistakes found so the learner can track them over time.
+      const recorded = mistakeHistory.record(
+        allCorrections.filter((c) => !c.ignored),
+        detectedLang || language,
+      );
+      if (recorded > 0) {
+        gtag("event", "mistakes_recorded", {
+          event_category: "History",
+          event_label: "Mistakes Added To History",
+          value: recorded,
+        });
+      }
+
       setShowStats(true);
 
       const words = trimmedText.split(/\s+/).filter(Boolean).length;
@@ -1289,6 +1341,42 @@ export default function GrammarMentor(): JSX.Element {
       rule_name: correction?.rule_name || "unknown",
     });
   };
+
+  // ========================================
+  // PRACTICE SHEET (PDF)
+  // ========================================
+
+  const generatePracticeSheet = useCallback((): void => {
+    const active = corrections.filter((c) => !c.ignored);
+    if (active.length === 0) return;
+
+    const items: PracticeItem[] = active.map((c) => {
+      const { before, after } = getQuizContext(
+        text,
+        c.position,
+        c.original.length,
+      );
+      return {
+        original: c.original,
+        correction: c.correction,
+        explanation: c.explanation,
+        ruleName: c.rule_name,
+        contextBefore: before,
+        contextAfter: after,
+      };
+    });
+
+    const opened = openPracticeSheet(items);
+    if (opened) {
+      showToastMessage("Practice sheet ready — print or save as PDF.", "success");
+      gtag("event", "practice_sheet_generated", {
+        event_category: "Tool",
+        event_label: "Practice PDF Generated",
+        value: items.length,
+        source: "current_check",
+      });
+    }
+  }, [corrections, text, showToastMessage]);
 
   // ========================================
   // GRAMMAR RULE MODAL
@@ -2091,6 +2179,35 @@ export default function GrammarMentor(): JSX.Element {
                 </>
               )}
 
+              {activeCorrections.length > 0 && (
+                <button
+                  onClick={generatePracticeSheet}
+                  title="Generate a printable practice sheet from these mistakes"
+                  className="flex-1 sm:flex-none flex items-center justify-center gap-1.5 sm:gap-2 py-2 sm:py-3.5 px-3 sm:px-6 rounded-lg font-semibold cursor-pointer transition-all duration-300 text-xs sm:text-base bg-emerald-600 text-white shadow-[0_4px_12px_rgba(16,185,129,0.4)] hover:-translate-y-0.5 hover:shadow-[0_6px_20px_rgba(16,185,129,0.5)]"
+                >
+                  <Printer className="h-4 w-4 sm:h-5 sm:w-5" />
+                  <span className="hidden sm:inline">Practice PDF</span>
+                  <span className="sm:hidden">PDF</span>
+                </button>
+              )}
+
+              <button
+                onClick={() => {
+                  setShowHistoryModal(true);
+                  gtag("event", "history_open", {
+                    event_category: "History",
+                    event_label: "Mistake History Opened",
+                    value: 1,
+                  });
+                }}
+                title="View your mistake history and progress"
+                className="flex-1 sm:flex-none flex items-center justify-center gap-1.5 sm:gap-2 py-2 sm:py-3.5 px-3 sm:px-6 rounded-lg font-semibold cursor-pointer transition-all duration-300 text-xs sm:text-base bg-slate-700 text-white border border-slate-600 hover:bg-slate-600 hover:-translate-y-0.5"
+              >
+                <History className="h-4 w-4 sm:h-5 sm:w-5" />
+                <span className="hidden sm:inline">History</span>
+                <span className="sm:hidden">History</span>
+              </button>
+
               {/* Utility buttons row */}
               <div className="flex gap-2 w-full sm:w-auto">
                 <button
@@ -2354,6 +2471,25 @@ export default function GrammarMentor(): JSX.Element {
                         >
                           Ignore
                         </button>
+                        {ttsSupported && (
+                          <button
+                            title="Hear the correct version"
+                            aria-label="Hear the correct version read aloud"
+                            className={`flex-none flex items-center justify-center py-1.5 sm:py-2 px-2 sm:px-3 text-[10px] sm:text-sm rounded-lg font-semibold cursor-pointer transition-colors ${
+                              speakingKey === `sug-${actualIndex}`
+                                ? "bg-indigo-600 text-white animate-pulse"
+                                : "bg-indigo-100 text-indigo-700 hover:bg-indigo-200"
+                            }`}
+                            onClick={() =>
+                              speakText(
+                                correction.correction,
+                                `sug-${actualIndex}`,
+                              )
+                            }
+                          >
+                            <Volume2 className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
+                          </button>
+                        )}
                       </div>
                     </div>
                   );
@@ -2816,7 +2952,7 @@ export default function GrammarMentor(): JSX.Element {
                         <p className="text-slate-300 text-sm sm:text-base leading-relaxed">
                           {q.explanation}
                         </p>
-                        <p className="text-slate-400 text-xs sm:text-sm mt-2">
+                        <p className="text-slate-400 text-xs sm:text-sm mt-2 flex items-center flex-wrap gap-1">
                           <span className="text-red-400 line-through">
                             {q.original}
                           </span>
@@ -2824,6 +2960,23 @@ export default function GrammarMentor(): JSX.Element {
                           <span className="text-emerald-400">
                             {q.correctionText}
                           </span>
+                          {ttsSupported && (
+                            <button
+                              type="button"
+                              title="Hear the correct version"
+                              aria-label="Hear the correct version read aloud"
+                              onClick={() =>
+                                speakText(q.correctionText, "quiz-fb")
+                              }
+                              className={`ml-1 inline-flex items-center justify-center w-6 h-6 rounded-md transition-colors ${
+                                speakingKey === "quiz-fb"
+                                  ? "bg-indigo-600 text-white animate-pulse"
+                                  : "text-slate-400 hover:text-white hover:bg-slate-800"
+                              }`}
+                            >
+                              <Volume2 className="h-3.5 w-3.5" />
+                            </button>
+                          )}
                         </p>
                       </div>
                     )}
@@ -2988,6 +3141,24 @@ export default function GrammarMentor(): JSX.Element {
         </div>
       )}
       {/* ─────────────────────────────────────────────────────────────────── */}
+
+      {/* Mistake History Modal */}
+      <MistakeHistoryModal
+        open={showHistoryModal}
+        onClose={() => setShowHistoryModal(false)}
+        onGeneratePractice={(count) => {
+          showToastMessage(
+            "Practice sheet ready — print or save as PDF.",
+            "success",
+          );
+          gtag("event", "practice_sheet_generated", {
+            event_category: "Tool",
+            event_label: "Practice PDF Generated",
+            value: count,
+            source: "history",
+          });
+        }}
+      />
 
       {/* Toast Notification - Mobile optimized */}
       {toast.show && (
